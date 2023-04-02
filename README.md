@@ -30,4 +30,5 @@ sudo service postgresql start
 
 TODOS
 - Figure out issue with postgres needing to be started manually
+  - This is probably due to systemd not being used as the init system
 - Figure out issue with bin/dev script throwing an error
