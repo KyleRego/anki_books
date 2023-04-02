@@ -86,7 +86,6 @@ GEM
     date (3.3.3)
     debug (1.7.1)
     diff-lcs (1.5.0)
-    dotenv (2.8.1)
     erubi (1.12.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -226,7 +225,6 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-  dotenv (~> 2.8)
   importmap-rails
   jbuilder
   pg (~> 1.1)
