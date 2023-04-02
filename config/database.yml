@@ -82,5 +82,7 @@ test:
 production:
   <<: *default
   database: anki_books_production
+  host: localhost
+  port: 5432
   username: anki_books
-  password: <%= ENV["ANKI_BOOKS_DATABASE_PASSWORD"] %>
+  password: <%= Rails.application.credentials.anki_books_database_password %>
