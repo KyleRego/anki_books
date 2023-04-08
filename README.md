@@ -26,5 +26,4 @@ Things you may want to cover:
 Development plan
 - Set up web server and production database
 - Set up build script and GitHub action
-- Figure out issue with bin/dev script throwing an error
 - Start application development
