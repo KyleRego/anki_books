@@ -10,7 +10,7 @@ The application uses a PostgreSQL database. The `config/database.yml` file has t
 
 ## The bin/dev script
 
-The `bin/dev` script starts the development environment. It installs the foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` which currently are a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind.
+The `bin/dev` script starts the development environment. It installs the foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` (a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind).
 
 If you are using RVM to manage Ruby versions, it's possible this script will throw this error:
 
@@ -21,3 +21,7 @@ If you are using RVM to manage Ruby versions, it's possible this script will thr
 In my case, this was due to the Ruby executable being missing from the directory specified in `$PATH`. I was able to fix the issue with `rvm remove 3.2.1` and `rvm install 3.2.1`.
 
 If you need to debug further, `echo $PATH | tr ':' '\n'` will print the `$PATH` variable with each directory on its own line.
+
+## TailwindCSS
+
+The Tailwind CSS IntelliSense VS Code extension makes working with Tailwind even nicer. Add the suggested mapping between plaintext and html in the extension settings to enable it for ERB files.
