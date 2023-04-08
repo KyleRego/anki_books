@@ -29,6 +29,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Also ignore the encrypted credentials.
+/config/credentials.yml.enc
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
