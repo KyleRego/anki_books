@@ -8,7 +8,7 @@ local:
 
 production:
   service: Disk
-  root: <%= Rails.application.credentials.dig(:storage, :root) %>
+  root: <%= Rails.application.credentials.config[:storage][:root] %>
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
