@@ -85,4 +85,4 @@ production:
   host: localhost
   port: 5432
   username: anki_books
-  password: <%= Rails.application.credentials.anki_books_database_password %>
+  password: <%= Rails.application.credentials.config[:production][:password] %>
