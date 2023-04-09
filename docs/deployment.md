@@ -3,7 +3,7 @@
 - `git fetch`
 - `git pull`
 - `bundle install`
-- `bundle exec db:migrate`
+- `RAILS_ENV=production bundle exec rails db:migrate`
 - `rails assets:precompile`
 - `RAILS_ENV=production bundle exec passenger start`
 
@@ -29,5 +29,11 @@ The plan is to automate the build and deploy with a script executed by a GitHub 
 - Configure Apache/Passenger to serve the Rails application.
   - Install passenger as a system gem (`gem install passenger`) and execute the `passenger-install-apache2-module` command to have it walk you through most of the steps.
 - Test that you can see the Rails application on your domain name over HTTPS.
+
+The server will also need libvips installed:
+
+```
+sudo apt-get install libvips libvips-tools
+```
 
 Of course you can use other Linux distributions/operating systems, RDBMSs, web servers, and application servers, or do this on the cloud instead of a local machine. This is just generally what I did. It may also be good to get the application running locally before doing any of the above.

@@ -4,6 +4,14 @@
 
 The `Gemfile` specifies what gems are required by the application. With the Bundler package manager, `bundle install` will download and install the gems and their gem dependencies.
 
+## System dependencies
+
+The application uses libvips which is needed by Active Storage for images:
+
+```
+sudo apt-get install libvips libvips-tools
+```
+
 ## The database
 
 The application uses a PostgreSQL database. The `config/database.yml` file has the configuration settings. Executing `rails db:create` should create the databases specified in that file. Pending migrations are run with `rails db:migrate`. 
