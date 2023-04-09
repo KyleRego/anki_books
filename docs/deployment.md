@@ -25,7 +25,7 @@ The plan is to automate the build and deploy with a script executed by a GitHub 
 - Configure Apache.
 - Test that you can see the Apache test page by visiting your domain name over HTTPS.
 - Pull the Rails application to the server and set up the Postgres database.
-  - Set up the `credentials.yml.enc` to store the database password.
+  - Set up the `credentials.yml.enc` to store the database password and storage path.
 - Configure Apache/Passenger to serve the Rails application.
   - Install passenger as a system gem (`gem install passenger`) and execute the `passenger-install-apache2-module` command to have it walk you through most of the steps.
 - Test that you can see the Rails application on your domain name over HTTPS.
