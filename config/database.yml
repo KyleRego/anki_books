@@ -85,4 +85,5 @@ production:
   host: localhost
   port: 5432
   username: anki_books
-  password: <%= Rails.application.credentials.config[:production][:password] %>
+  # The ternary statement is to prevent a syntax error when ERB parses the file which is before the YAML is loaded.
+  password: <%= (ENV["RAILS_ENV"] == "production") ? Rails.application.credentials.config[:production][:password] : nil %>
