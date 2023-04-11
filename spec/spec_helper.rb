@@ -91,4 +91,9 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # Tag all examples in spec/features with type: :feature
+  config.define_derived_metadata(file_path: %r{/spec/features/}) do |metadata|
+    metadata[:type] = :feature
+  end
 end
