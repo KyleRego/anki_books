@@ -96,4 +96,32 @@ RSpec.configure do |config|
   config.define_derived_metadata(file_path: %r{/spec/features/}) do |metadata|
     metadata[:type] = :feature
   end
+
+  # This truncates the test database before the test suite runs at all.
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  # The transaction strategy will roll back any changes 
+  # made to the test database during the test.
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  # The truncation strategy will truncate all the tables
+  # before each test; this works better for JavaScript tests.
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  # This initializes the database cleaner and prepares
+  # it for cleaning the test database.
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  # After each test, clean the database.
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
