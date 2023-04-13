@@ -24,7 +24,6 @@ Things you may want to cover:
 * ...
 
 Development plan
-- Figure out automated web browser for testing
 - Rake task create default articles
 - Favicon
 - Set up GitHub action to automate deployment
