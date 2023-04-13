@@ -8,7 +8,8 @@ local:
 
 production:
   service: Disk
-  root: <%= Rails.application.credentials.config[:storage][:root] %>
+  # The ternary statement is to prevent a syntax error when ERB parses the file which is before the YAML is loaded.
+  root: <%= (ENV["RAILS_ENV"] == "production") ? Rails.application.credentials.config[:storage][:root] : nil %>
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
