@@ -4,8 +4,20 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
+require "pry"
+
 require 'cucumber/rails'
 require 'capybara/cucumber'
+require 'selenium-webdriver'
+
+Capybara.register_driver :selenium_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.default_driver = :selenium_chrome
+Capybara.javascript_driver = :selenium_chrome
 
 # frozen_string_literal: true
 

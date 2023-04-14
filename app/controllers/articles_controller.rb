@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
+require "pry"
+
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update]
 
   def show
     @article = Article.first
+    binding.pry
   end
 
   def edit

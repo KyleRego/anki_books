@@ -61,6 +61,7 @@ group :development do
   gem "web-console"
   gem "rspec-rails"
   gem "rubocop-rails", require: false
+  gem "pry"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -73,6 +74,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "webdrivers"
+  gem "selenium-webdriver"
+  gem "puma"
   gem "database_cleaner"
   gem "cucumber"
   gem "cucumber-rails", require: false
