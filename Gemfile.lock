@@ -313,7 +313,6 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.2)
   rspec-rails
   rubocop-rails
-  selenium-webdriver
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
