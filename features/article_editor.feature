@@ -30,3 +30,15 @@ Feature: Editing an article
     And I click the "Update Article" button
     Then I should be redirected to the article
     And I should see "some strikethrough text" with a strikethrough
+
+  Scenario: Clicking the Link button 
+    When I click the "Link" button
+    Then I should see a "Enter a URL…" placeholder
+
+  Scenario: Adding a link to the article and saving it
+    When I click the "Link" button
+    And I fill in the link URL form with "https://kylerego.github.io"
+    And I click the URL form "Link" button
+    Then I should see the text "https://kylerego.github.io" linking to "https://kylerego.github.io"
+    And I click the "Update Article" button
+    Then I should see the text "https://kylerego.github.io" linking to "https://kylerego.github.io"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Saves a screenshot to tmp/capybara
-Then "show me the page" do
+Then "screenshot" do
   @i ||= 0
   @i += 1
   page.save_screenshot("screenshot#{@i}.png", full: true)
@@ -9,7 +9,7 @@ Then "show me the page" do
 end
 
 # rubocop:disable Lint/Debugger
-Then "I want to debug with pry" do
+Then "pry" do
   binding.pry
 end
 # rubocop:enable Lint/Debugger
