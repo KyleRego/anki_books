@@ -11,4 +11,5 @@ AllCops:
     - db/schema.rb
     - db/migrate/*.rb
 
-
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

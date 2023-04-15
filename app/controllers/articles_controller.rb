@@ -4,7 +4,7 @@ require "pry"
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update]
+  before_action :set_article, only: %i[show edit update]
 
   def show; end
 
