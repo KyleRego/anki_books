@@ -8,6 +8,8 @@ Then "show me the page" do
   puts "Page screenshot saved to screenshot.png"
 end
 
+# rubocop:disable Lint/Debugger
 Then "I want to debug with pry" do
   binding.pry
 end
+# rubocop:enable Lint/Debugger

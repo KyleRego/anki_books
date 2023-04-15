@@ -2,9 +2,9 @@
 
 require "pry"
 
-require 'cucumber/rails'
-require 'capybara/cucumber'
-require 'selenium-webdriver'
+require "cucumber/rails"
+require "capybara/cucumber"
+require "selenium-webdriver"
 
 ActionController::Base.allow_rescue = false
 
@@ -13,7 +13,7 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Capybara.register_driver :selenium_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('--headless')
+  options.add_argument("--headless")
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 

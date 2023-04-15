@@ -4,11 +4,11 @@ Given "there is an article" do
   @article = Article.create! title: "Hello world"
 end
 
-Given "I am viewing the article" do
+And "I am viewing the article" do
   visit article_path @article
 end
 
-Given "I am editing the article" do
+And "I am editing the article" do
   visit edit_article_path @article
 end
 
@@ -23,6 +23,7 @@ And "I click the Update Article button" do
 end
 
 Then "I should be redirected to the article" do
+  sleep 0.2
   expect(current_path).to eq article_path @article
 end
 

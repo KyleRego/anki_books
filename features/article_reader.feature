@@ -1,7 +1,9 @@
 Feature: Reading an article
 
-  Scenario: Clicking the Edit link
+  Background:
     Given there is an article
-    Given I am viewing the article
+    And I am viewing the article
+
+  Scenario: Clicking the Edit link
     When I click the "Edit" link
     Then I should be redirected to the editor for the article
