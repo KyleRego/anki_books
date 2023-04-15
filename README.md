@@ -24,7 +24,6 @@ Things you may want to cover:
 * ...
 
 Development plan
-- Look into Poltergeist for tests that involve JS
 - Initial tests of article editing (trix editor)
 - Rake task to create default articles
 - Favicon

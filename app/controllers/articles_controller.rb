@@ -6,12 +6,9 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update]
 
   def show
-    @article = Article.first
-    binding.pry
   end
 
   def edit
-    @article = Article.first
   end
 
   def update

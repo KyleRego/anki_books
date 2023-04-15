@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 Given "there is an article" do
-  @article = Article.create! title: "Hello World"
-  binding.pry
+  @article = Article.create! title: "Hello world"
 end
 
-Given "I am viewing an article" do
+Given "I am viewing the article" do
   visit article_path @article
 end
 
-Given "I am editing an article" do
+Given "I am editing the article" do
   visit edit_article_path @article
 end
 
@@ -28,5 +27,6 @@ Then "I should be redirected to the article" do
 end
 
 Then "I should be redirected to the editor for the article" do
+  sleep 0.2
   expect(current_path).to eq edit_article_path @article
 end
