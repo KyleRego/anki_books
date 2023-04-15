@@ -2,3 +2,11 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - bin/bundle
+    - config/environments/*.rb
+    - features/support/env.rb
+    - lib/tasks/cucumber.rake
+    - db/schema.rb
+    - db/migrate/*.rb
