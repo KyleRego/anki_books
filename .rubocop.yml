@@ -10,3 +10,5 @@ AllCops:
     - lib/tasks/cucumber.rake
     - db/schema.rb
     - db/migrate/*.rb
+
+
