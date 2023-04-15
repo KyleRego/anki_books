@@ -25,13 +25,13 @@ Things you may want to cover:
 
 Development plan
 - Initial tests of article editing (trix editor)
-- Rake task to create default articles
-- Favicon
-- Set up GitHub action to automate deployment
 - Extend functionality of Trix editor
   - MathJax
   - Different header levels
   - Syntax highlighting
+- Rake task to create default articles
+- Favicon
+- Set up GitHub action to automate deployment
 - Users
 - Continue application development
 - Add flashcards
