@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TestsController < ApplicationController
+class TestsController < ApplicationController # :nodoc:
   def show
     @hello = "world"
     @random = ["red", "blue", "black", "yellow",
