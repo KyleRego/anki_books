@@ -4,9 +4,9 @@
     <%= form.text_field :title %>
   </div>
 
-  <div class="field">
+  <div class="field" data-controller="article-editor">
     <%= form.label :content %>
-    <%= form.rich_text_area :content %>
+    <%= form.rich_text_area :content, data: { article_editor_target: "editor" } %>
   </div>
 
   <%= form.submit %>

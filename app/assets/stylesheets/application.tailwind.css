@@ -12,3 +12,8 @@
 
 */
 @import 'actiontext.css';
+
+/* FIXME: Probably there is a better place to put this hidden-important class */
+.hidden-important {
+  display: none !important;
+}
