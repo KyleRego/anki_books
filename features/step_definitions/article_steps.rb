@@ -18,6 +18,11 @@ When "I fill in the article editor with {string}" do |text|
   editor.set(text)
 end
 
+When "I select the text in the article editor" do
+  editor = find(".trix-content")
+  editor.native.send_keys(:home, :shift, :end)
+end
+
 When "I fill in the link URL form with {string}" do |url|
   within "[data-trix-dialog='href']" do
     url_input = find("input.trix-input.trix-input--dialog")

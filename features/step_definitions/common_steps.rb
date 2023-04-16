@@ -26,6 +26,11 @@ Then "I should see the text {string} linking to {string}" do |text, url|
   expect(page).to have_link(text, href: url)
 end
 
+Then "I should see the text {string} but it should not be a link" do |text|
+  expect(page).to have_content(text)
+  expect(page).to_not have_link(text)
+end
+
 Then "I should see {string} in bold" do |text|
   expect(page).to have_css("strong", text:)
 end
