@@ -1,11 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "editor" ];
+  static targets = [ "editorContainer" ];
 
   connect() {
+    this.toolbarTarget = this.editorContainerTarget.querySelector("[id^='trix-toolbar-']");
     this.setupHeaderButtons();
-    this.toolbarTarget = document.querySelector("[id^='trix-toolbar-']");
     this.changeOriginalHeaderButtonToToggleNewHeaderButtonsRow();
     this.toolbarTarget.appendChild(this.headerButtonsRow);
   }
