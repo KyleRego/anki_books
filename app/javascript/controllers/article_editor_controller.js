@@ -38,6 +38,8 @@ export default class extends Controller {
       button.setAttribute("class", `trix-button`);
       button.setAttribute("data-trix-attribute", `heading${heading}`);
       button.setAttribute("title", `H${heading}`);
+      button.setAttribute("tabindex", "-1");
+      button.setAttribute("data-trix-active", "");
       this.headersButtonGroup.appendChild(button);
     });
   }
