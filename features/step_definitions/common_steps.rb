@@ -43,6 +43,10 @@ Then "I should see {string} with a strikethrough" do |text|
   expect(page).to have_css("del", text:)
 end
 
+Then "I should see a {string} heading with the text {string}" do |heading_element, text|
+  expect(page).to have_css(heading_element, text:)
+end
+
 Then "I should not see {string}" do |text|
   expect(page).not_to have_content(text)
 end

@@ -13,9 +13,8 @@ When "I am editing the article" do
 end
 
 When "I fill in the article editor with {string}" do |text|
-  editor = find(".trix-content")
-  editor.click
-  editor.set(text)
+  editor = find("trix-editor")
+  editor.set(editor.text + text)
 end
 
 When "I select the text in the article editor" do
