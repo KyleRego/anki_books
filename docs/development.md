@@ -18,7 +18,7 @@ The application uses a PostgreSQL database. The `config/database.yml` file has t
 
 ## The bin/dev script
 
-The `bin/dev` script starts the development environment. It installs the foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` (a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind).
+The `bin/dev` script starts the development environment. First it runs the `rails assets:precompile` which compiles the front-end assets. Then it installs the foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` (a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind).
 
 If you are using RVM to manage Ruby versions, it's possible this script will throw this error:
 

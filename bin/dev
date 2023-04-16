@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+bundle exec bin/rails assets:precompile
+
 if ! gem list foreman -i --silent; then
   echo "Installing foreman..."
   gem install foreman
