@@ -17,6 +17,7 @@
 
 PreCommit:
   RuboCop:
+    config: .rubocop.yml
     enabled: true
     on_warn: fail
 

@@ -102,12 +102,12 @@ RSpec.configure do |config|
 
   # The transaction strategy will roll back any changes
   # made to the test database during the test.
-  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before { DatabaseCleaner.strategy = :transaction }
 
   # This initializes the database cleaner and prepares
   # it for cleaning the test database.
-  config.before(:each) { DatabaseCleaner.start }
+  config.before { DatabaseCleaner.start }
 
   # After each test, clean the database.
-  config.after(:each) { DatabaseCleaner.clean }
+  config.after { DatabaseCleaner.clean }
 end

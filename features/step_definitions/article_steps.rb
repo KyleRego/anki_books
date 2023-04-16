@@ -43,9 +43,9 @@ When "I click the Update Article button" do
 end
 
 Then "I should be redirected to the article" do
-  expect(current_path).to eq article_path @article
+  expect(page).to have_current_path article_path @article
 end
 
 Then "I should be redirected to the editor for the article" do
-  expect(current_path).to eq edit_article_path @article
+  expect(page).to have_current_path edit_article_path @article
 end

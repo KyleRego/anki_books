@@ -60,8 +60,12 @@ group :development, :test do
 end
 
 group :development do
+  gem "overcommit", "~> 0.60.0"
   gem "rspec-rails"
+  gem "rubocop-capybara", "~> 2.17"
+  gem "rubocop-performance", "~> 1.17"
   gem "rubocop-rails", require: false
+  gem "rubocop-rspec", "~> 2.19"
   gem "web-console"
 end
 
@@ -74,5 +78,3 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
-
-gem "overcommit", "~> 0.60.0"
