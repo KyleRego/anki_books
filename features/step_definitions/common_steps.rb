@@ -50,3 +50,7 @@ end
 Then "I should not see {string}" do |text|
   expect(page).not_to have_content(text)
 end
+
+Then "the {string} button should be disabled" do |button|
+  expect(page).to have_button(button, disabled: true)
+end

@@ -88,6 +88,13 @@ Feature: Editing an article
     And I click the "Update Article" button
     Then I should see a "H1" heading with the text "My H1 heading"
 
+  Scenario: Using the headers button group to add an H2 subheading
+    When I click the "Headers" button
+    And I fill in the article editor with "My H3 heading"
+    And I click the "H2" button
+    And I click the "Update Article" button
+    Then I should see a "H2" heading with the text "My H3 heading"
+
   Scenario: Using the headers button group to add an H3 subheading
     When I click the "Headers" button
     And I fill in the article editor with "My H3 heading"
@@ -115,3 +122,8 @@ Feature: Editing an article
     And I click the "H6" button
     And I click the "Update Article" button
     Then I should see a "H6" heading with the text "My H6 heading"
+
+  Scenario: Using one of the subheading buttons disables the other subheading buttons
+    When I click the "Headers" button
+    And I click the "H3" button
+    Then the "H4" button should be disabled
