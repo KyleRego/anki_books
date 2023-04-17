@@ -43,6 +43,15 @@ Then "I should see {string} with a strikethrough" do |text|
   expect(page).to have_css("del", text:)
 end
 
+Then "I should see {string} as a quote" do |text|
+  expect(page).to have_css("blockquote", text:)
+end
+
+Then "I should see {string} but not as a quote" do |text|
+  expect(page).to have_content(text)
+  expect(page).to_not have_css("blockquote", text:)
+end
+
 Then "I should see a {string} heading with the text {string}" do |heading_element, text|
   expect(page).to have_css(heading_element, text:)
 end
