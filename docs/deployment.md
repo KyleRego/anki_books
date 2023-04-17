@@ -16,14 +16,14 @@ The plan is to automate the build and deploy with a script executed by a GitHub 
 - Flash a USB (recommended at least 16 Gb) with Ubuntu and use it to install Ubuntu on an old laptop.
 - Set up a port forwarding rule for port 22 (SSH) on your gateway router to your new Ubuntu server.
 - Open port 22 on the machine with `ufw` (Uncomplicated Firewall, a frontend for managing firewall rules).
-- Test that you can login to your user on the machine remotely using SSH and set up SSH keys (recommended).
+  - Test that you can login to your user on the machine remotely using SSH and set up SSH keys (recommended).
 - Install the Apache web server on the machine and test that you can see the Apache test page by visiting the IP address.
-- At this time you might replace that `index.html` with something else since it may give away your server's operating system and Apache version.
+  - At this time you might replace that `index.html` with something else since it may give away your server's operating system and Apache version.
 - Buy a domain name and get a digital certificate.
-- Set up a port forwarding rule for port 443 (HTTPS) and possibly 80 as well (HTTP).
-- Also open these ports on the firewall.
+  - If your IP address is dynamic, get an A+ Dynamic DNS record and use `ddclient` to update the DNS record's IP address as it changes.
+- Set up a port forwarding rule for port 443 (HTTPS) and possibly 80 as well (HTTP), and open these ports on the firewall with `ufw`.
 - Configure Apache.
-- Test that you can see the Apache test page by visiting your domain name over HTTPS.
+  - Test that you can see the Apache test page by visiting your domain name over HTTPS.
 - Pull the Rails application to the server and set up the Postgres database.
   - Set up the `credentials.yml.enc` to store the database password and storage path.
 - Configure Apache/Passenger to serve the Rails application.
@@ -36,4 +36,4 @@ The server will also need libvips installed:
 sudo apt-get install libvips libvips-tools
 ```
 
-Of course you can use other Linux distributions/operating systems, RDBMSs, web servers, and application servers, or do this on the cloud instead of a local machine. This is just generally what I did. It may also be good to get the application running locally before doing any of the above.
+You can use other Linux distributions/operating systems, web servers, and application servers, or do this on the cloud instead of a local machine (the above is just generally what I did). Other relational databases could be used, but Postgres is recommended because the migrations assume that the `pgcrypto` extension is being used and I'm not sure what changes may need to made to account for that. It may also be good to get the application running locally before doing any of the above.

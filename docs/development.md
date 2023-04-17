@@ -33,3 +33,9 @@ If you need to debug further, `echo $PATH | tr ':' '\n'` will print the `$PATH` 
 ## TailwindCSS
 
 The Tailwind CSS IntelliSense VS Code extension makes working with Tailwind even nicer. Add the suggested mapping between plaintext and html in the extension settings to enable it for ERB files.
+
+# Known issues
+
+## Changes to Stimulus controllers are not automatically reloaded
+
+For now, I have added the `rails assets:precompile` command to the beginning of the `bin/dev` script. After making changes to the Stimulus files, the application serving needs to be stopped and restarted to reload the changes.
