@@ -34,6 +34,26 @@ If you need to debug further, `echo $PATH | tr ':' '\n'` will print the `$PATH` 
 
 The Tailwind CSS IntelliSense VS Code extension makes working with Tailwind even nicer. Add the suggested mapping between plaintext and html in the extension settings to enable it for ERB files.
 
+## Overcommit
+
+Overcommit is a gem being used to manage the Git hooks. It (hopefully) outputs something like the following when commiting a change:
+```
+Running pre-commit hooks
+Analyze with RuboCop........................................[RuboCop] OK
+
+✓ All pre-commit hooks passed
+
+Running commit-msg hooks
+Check for trailing periods in subject................[TrailingPeriod] OK
+Check text width..........................................[TextWidth] OK
+Check subject line................................[SingleLineSubject] OK
+Check subject capitalization.....................[CapitalizedSubject] OK
+
+✓ All commit-msg hooks passed
+```
+
+Changes to the `.overcommit.yml` file may require you to verify the changes and sign with `overcommit --sign`. This is a security mechanism since Git hooks could be used in general to do something malicious.
+
 # Known issues
 
 ## Changes to Stimulus controllers are not automatically reloaded
