@@ -8,6 +8,7 @@ Feature: Editing an article
     When I fill in the article editor with "some plain text"
     And I click the "Update Article" button
     Then I should be redirected to the article
+    And I should see "Article updated successfully."
     And I should see "some plain text"
 
   Scenario: Adding bold text to the article and saving it

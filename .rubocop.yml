@@ -25,3 +25,7 @@ Style/GlobalStdStream:
 Style/RedundantFetchBlock:
   Exclude:
     - 'config/puma.rb'
+
+# Not going to support translations to begin with.
+Rails/I18nLocaleTexts:
+  Enabled: false
