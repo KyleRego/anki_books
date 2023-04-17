@@ -5,5 +5,13 @@ import "trix"
 import "@rails/actiontext"
 
 import Trix from "trix"
-import hljs from 'highlight.js';
-hljs.highlightAll();
+
+import hljs from "highlight.js";
+
+function highlightCodeBlocks() {
+  document.querySelectorAll("pre").forEach((block) => {
+    hljs.highlightElement(block);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", highlightCodeBlocks);

@@ -27,8 +27,7 @@ Development plan
 - Initial tests of article editing (trix editor)
 - Extend functionality of Trix editor
   - MathJax
-  - Different header levels
-  - Syntax highlighting
+  - Issue with syntax highlighting needing page refresh when redirected from article editor
 - Rake task to create default articles
 - Favicon
 - Set up GitHub action to automate deployment

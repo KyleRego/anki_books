@@ -56,6 +56,6 @@ Changes to the `.overcommit.yml` file may require you to verify the changes and 
 
 # Known issues
 
-## Changes to Stimulus controllers are not automatically reloaded
+## Changes to files in app/javascript are not automatically reloaded
 
-For now, I have added the `rails assets:precompile` command to the beginning of the `bin/dev` script. After making changes to the Stimulus files, the application serving needs to be stopped and restarted to reload the changes.
+For now, I have added the `rails assets:precompile` command to the beginning of the `bin/dev` script. After making changes to the Stimulus files or the other JavaScript files, the application server needs to be stopped and restarted to reload the changes.
