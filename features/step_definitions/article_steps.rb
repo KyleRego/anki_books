@@ -48,3 +48,7 @@ end
 Then "I should be redirected to the editor for the article" do
   expect(page).to have_current_path edit_article_path @article
 end
+
+Then("I should see a code block with syntax highlighting") do
+  expect(page).to have_selector("pre.hljs[class*=language-]")
+end

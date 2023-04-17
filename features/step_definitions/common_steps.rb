@@ -4,6 +4,10 @@ When "I visit the root path" do
   visit "/"
 end
 
+When("I refresh the page") do
+  visit current_path
+end
+
 When "I click the {string} link" do |link|
   click_link link
   sleep 0.5

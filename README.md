@@ -28,6 +28,8 @@ Development plan
 - Extend functionality of Trix editor
   - MathJax
   - Issue with syntax highlighting needing page refresh when redirected from article editor
+- CSS changes
+  - Use >= 16px everywhere
 - Rake task to create default articles
 - Favicon
 - Set up GitHub action to automate deployment
