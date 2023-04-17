@@ -1,4 +1,4 @@
-<% content_for :page_specific_custom_js do %>
+<% content_for :head do %>
   <script>
     // Changes the Trix.config to support the subheadings.
     document.addEventListener("trix-before-initialize", () => {
@@ -39,6 +39,10 @@
     })
   </script>
 <% end %>
+
+<pre><code>
+puts "hello world"
+</code></pre>
 
 <%= form_with model: @article do |form| %>
   <div class="field">

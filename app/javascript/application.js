@@ -5,3 +5,5 @@ import "trix"
 import "@rails/actiontext"
 
 import Trix from "trix"
+import hljs from 'highlight.js';
+hljs.highlightAll();
