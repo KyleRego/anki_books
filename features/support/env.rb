@@ -6,6 +6,14 @@ require "cucumber/rails"
 require "capybara/cucumber"
 require "selenium-webdriver"
 
+require "simplecov"
+
+SimpleCov.add_filter do |source_file|
+  source_file.filename.include?('/features/step_definitions/')
+end
+
+SimpleCov.start
+
 ActionController::Base.allow_rescue = false
 
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
