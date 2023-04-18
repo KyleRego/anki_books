@@ -2,18 +2,28 @@
 
 require "rails_helper"
 
-# Specs in this file have access to a helper object that includes
-# the SessionsHelper. For example:
-#
-# describe SessionsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
-# rubocop:disable RSpec/PendingWithoutReason
 RSpec.describe SessionsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { User.create username: "test_user", email: "example@test.com", password: "abc1" * 4 }
+
+  describe "#current_user" do
+    it "returns nil if no user is logged in" do
+      expect(helper.current_user).to be_nil
+    end
+
+    it "returns the currently logged-in user" do
+      session[:user_id] = user.id
+      expect(helper.current_user).to eq(user)
+    end
+  end
+
+  describe "#logged_in?" do
+    it "returns false if no user is logged in" do
+      expect(helper).not_to be_logged_in
+    end
+
+    it "returns true if a user is currently logged in" do
+      session[:user_id] = user.id
+      expect(helper).to be_logged_in
+    end
+  end
 end
-# rubocop:enable RSpec/PendingWithoutReason
