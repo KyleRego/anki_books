@@ -12,14 +12,10 @@ RSpec.describe "Sessions" do
 
   describe "POST /login" do
     context "with user credentials that exist" do
-      let(:username) { "test_user" }
-      let(:email) { "example@test.com" }
-      let(:password) { "123a" * 5 }
-
-      before { @user = User.create username:, email:, password: }
+      let(:user) { create(:user) }
 
       it "returns http success" do
-        post "/login", params: { session: { username: "test_user", email: "exam" } }
+        post "/login", params: { session: { username: user.username, email: user.email } }
         expect(response).to have_http_status(:success)
       end
     end

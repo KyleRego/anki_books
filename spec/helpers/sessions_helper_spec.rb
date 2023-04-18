@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe SessionsHelper do
-  let(:user) { User.create username: "test_user", email: "example@test.com", password: "abc1" * 4 }
+  let(:user) { create(:user) }
 
   describe "#current_user" do
     it "returns nil if no user is logged in" do
