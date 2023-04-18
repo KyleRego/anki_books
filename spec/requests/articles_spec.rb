@@ -8,7 +8,7 @@ RSpec.describe "Articles" do
     context "when user is logged in" do
       before do
         post "/login", params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        get edit_article_path(article)
+        get edit_article_path(article, title: article.title_slug)
       end
 
       it "returns a success response" do
@@ -18,7 +18,7 @@ RSpec.describe "Articles" do
 
     context "when user is not logged in" do
       before do
-        get edit_article_path(article)
+        get edit_article_path(article, title: article.title_slug)
       end
 
       it "redirects to the root page" do
@@ -42,7 +42,7 @@ RSpec.describe "Articles" do
         let(:valid_params) { { article: { title: "New Title" } } }
 
         before do
-          patch article_path(article), params: valid_params
+          patch article_path(article, title: article.title_slug), params: valid_params
         end
 
         it "updates the article" do
@@ -54,7 +54,7 @@ RSpec.describe "Articles" do
         end
 
         it "redirects to the article" do
-          expect(response).to redirect_to(article_path(article))
+          expect(response).to redirect_to(article_path(article, title: article.reload.title_slug))
         end
       end
 
@@ -62,7 +62,7 @@ RSpec.describe "Articles" do
         let(:invalid_params) { { article: { title: "" } } }
 
         before do
-          patch article_path(article), params: invalid_params
+          patch article_path(article, title: article.title_slug), params: invalid_params
         end
 
         it "does not update the article" do
@@ -73,7 +73,7 @@ RSpec.describe "Articles" do
 
     context "when user is not logged in" do
       before do
-        patch article_path(article), params: { article: { title: "New Title" } }
+        patch article_path(article, title: article.title_slug), params: { article: { title: "New Title" } }
       end
 
       it "redirects to the root page" do

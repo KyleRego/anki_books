@@ -5,11 +5,11 @@ Given "there is an article" do
 end
 
 When "I am viewing the article" do
-  visit article_path @test_article
+  visit article_path(@test_article, title: @test_article.title_slug)
 end
 
 When "I am editing the article" do
-  visit edit_article_path @test_article
+  visit edit_article_path(@test_article, title: @test_article.title_slug)
 end
 
 When "I fill in the article editor with {string}" do |text|
@@ -42,11 +42,11 @@ When "I click the Update Article button" do
 end
 
 Then "I should be redirected to the article" do
-  expect(page).to have_current_path article_path @test_article
+  expect(page).to have_current_path article_path(@test_article, title: @test_article.title_slug)
 end
 
 Then "I should be redirected to the editor for the article" do
-  expect(page).to have_current_path edit_article_path @test_article
+  expect(page).to have_current_path edit_article_path(@test_article, title: @test_article.title_slug)
 end
 
 Then "I should see a code block with syntax highlighting" do

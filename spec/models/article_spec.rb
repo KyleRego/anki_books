@@ -19,4 +19,11 @@ RSpec.describe Article do
       expect(article).to be_invalid
     end
   end
+
+  describe "#title_slug" do
+    it "sluggifies the article title" do
+      article = build(:article, title: "Example Title")
+      expect(article.title_slug).to eq "example-title"
+    end
+  end
 end

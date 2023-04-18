@@ -6,4 +6,8 @@ class Article < ApplicationRecord
   has_rich_text :content
 
   validates :title, presence: true
+
+  def title_slug
+    title.parameterize
+  end
 end
