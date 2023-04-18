@@ -17,3 +17,11 @@ Feature: User authentication
     And I fill in the "Password" field with "123456789abc"
     And I click the "Log in" button
     Then I should see "Invalid email or password."
+
+  Scenario: Logging out
+    When I click the "Login" link
+    And I fill in the "Email" field with "test@example.com"
+    And I fill in the "Password" field with "123abc777www"
+    And I click the "Log in" button
+    And I click the "Logout" link
+    Then I should see "Logged out successfully."
