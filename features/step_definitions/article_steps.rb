@@ -52,3 +52,7 @@ end
 Then "I should see a code block with syntax highlighting" do
   expect(page).to have_selector("pre.hljs[class*=language-]")
 end
+
+Then "I should see the homepage" do
+  expect(page).to have_content("This is the system article to serve as the homepage.")
+end

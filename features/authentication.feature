@@ -25,3 +25,8 @@ Feature: User authentication
     And I click the "Log in" button
     And I click the "Logout" link
     Then I should see "Logged out successfully."
+
+  Scenario: Navigating from the homepage to the login page and back
+    When I click the "Login" link
+    When I click the "Home" link
+    Then I should see the homepage
