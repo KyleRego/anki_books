@@ -13,6 +13,8 @@
   </head>
 
   <body>
+    <% if logged_in? %> <%= link_to 'Logout', logout_path, data: { "turbo-method": :delete } %>
+    <% else %> <%= link_to 'Login', login_path %> <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <main class="container mx-auto mt-28 px-5 flex">

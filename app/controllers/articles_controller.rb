@@ -15,7 +15,6 @@ class ArticlesController < ApplicationController
       flash[:notice] = "Article updated successfully."
       redirect_to @article
     else
-      flash[:alert] = "There was an error updating the record."
       render :edit
     end
   end

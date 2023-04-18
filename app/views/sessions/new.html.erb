@@ -1,0 +1,11 @@
+<%= form_with(url: login_path, local: true, class: 'max-w-sm mx-auto mt-8') do |form| %>
+  <div class="mb-4">
+    <%= form.label :email, class: 'block font-semibold mb-2' %>
+    <%= form.email_field :email, class: 'w-full rounded-md px-3 py-2', name: 'session[email]' %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :password, class: 'block font-semibold mb-2' %>
+    <%= form.password_field :password, class: 'w-full rounded-md px-3 py-2', name: 'session[password]' %>
+  </div>
+  <%= form.submit 'Log in', class: 'w-full bg-blue-500 text-white font-semibold py-2 rounded-md' %>
+<% end %>

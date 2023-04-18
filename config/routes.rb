@@ -5,4 +5,7 @@ Rails.application.routes.draw do
 
   root "tests#show"
   resources :articles, only: %i[show edit update], param: :uuid
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy", as: "logout"
 end
