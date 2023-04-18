@@ -4,7 +4,7 @@ When "I visit the root path" do
   visit "/"
 end
 
-When("I refresh the page") do
+When "I refresh the page" do
   visit current_path
 end
 
@@ -16,6 +16,10 @@ end
 When "I click the {string} button" do |button|
   click_button button
   sleep 0.5
+end
+
+When "I fill in the {string} field with {string}" do |field, value|
+  fill_in field, with: value
 end
 
 Then "I should see {string}" do |text|
