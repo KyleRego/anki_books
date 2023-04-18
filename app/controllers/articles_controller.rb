@@ -2,6 +2,7 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
+  before_action :require_login, only: %i[edit update]
   before_action :set_article, only: %i[show edit update]
 
   def show; end
@@ -16,8 +17,6 @@ class ArticlesController < ApplicationController
       render :edit
     end
   end
-
-  private
 
   def set_article
     @article = Article.first

@@ -2,6 +2,7 @@ Feature: Editing an article
 
   Background:
     Given there is an article
+    And I am logged in
     And I am editing the article
 
   Scenario: Adding plain text to the article and saving it

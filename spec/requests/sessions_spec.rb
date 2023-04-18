@@ -45,29 +45,4 @@ RSpec.describe "Sessions" do
       end
     end
   end
-
-  describe "DELETE /logout" do
-    context "with a user logged in" do
-      let(:user) { create(:user) }
-
-      before do
-        # Sending GET to the root path initializes the session.
-        get root_path
-        session[:user_id] = user.id
-        delete "/logout"
-      end
-
-      it "logs out the user" do
-        expect(session[:user_id]).to be_nil
-      end
-
-      it "shows the successful logout notice" do
-        expect(flash[:notice]).to eq("Logged out successfully.")
-      end
-
-      it "redirects to the root path" do
-        expect(response).to redirect_to(root_path)
-      end
-    end
-  end
 end

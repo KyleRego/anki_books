@@ -1,21 +1,89 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "Articles" do
-  let!(:article) { Article.create(title: "Hello World") }
+  let(:user) { create(:user) }
+  let(:article) { create(:article) }
 
-  after { article.destroy }
+  describe "GET /articles/:id/edit" do
+    context "when user is logged in" do
+      before do
+        post "/login", params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
+        get edit_article_path(article)
+      end
 
-  describe "GET /articles/anything", :temporary_spec do
-    # rubocop:disable RSpec/MultipleExpectations
-    it "is a basic test of the temporary root page" do
-      get "/articles/a"
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include(article.title)
-      expect(response.body).to include(article.content.to_s)
-      expect(response.body).to include("Edit")
+      it "returns a success response" do
+        expect(response).to be_successful
+      end
     end
-    # rubocop:enable RSpec/MultipleExpectations
+
+    context "when user is not logged in" do
+      before do
+        get edit_article_path(article)
+      end
+
+      it "redirects to the root page" do
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "shows a flash alert message" do
+        expect(flash[:alert]).to eq("You must be logged in to access this page.")
+      end
+    end
   end
+
+  # rubocop:disable RSpec/NestedGroups
+  describe "PATCH /articles/:id" do
+    context "when user is logged in" do
+      before do
+        post "/login", params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
+      end
+
+      context "with valid params" do
+        let(:valid_params) { { article: { title: "New Title" } } }
+
+        before do
+          patch article_path(article), params: valid_params
+        end
+
+        it "updates the article" do
+          expect(article.reload.title).to eq("New Title")
+        end
+
+        it "shows a notice flash message" do
+          expect(flash[:notice]).to eq("Article updated successfully.")
+        end
+
+        it "redirects to the article" do
+          expect(response).to redirect_to(article_path(article))
+        end
+      end
+
+      context "with invalid params" do
+        let(:invalid_params) { { article: { title: "" } } }
+
+        before do
+          patch article_path(article), params: invalid_params
+        end
+
+        it "does not update the article" do
+          expect(article.reload.title).not_to eq("")
+        end
+      end
+    end
+
+    context "when user is not logged in" do
+      before do
+        patch article_path(article), params: { article: { title: "New Title" } }
+      end
+
+      it "redirects to the root page" do
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "shows an alert flash message" do
+        expect(flash[:alert]).to eq("You must be logged in to access this page.")
+      end
+    end
+  end
+  # rubocop:enable RSpec/NestedGroups
 end
