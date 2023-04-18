@@ -18,8 +18,17 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def homepage
+    # Plan is to have more than one system article in the future.
+    # For now, just have one and it will serve as the homepage.
+    @article = Article.find_by system: true
+    render :show
+  end
+
+  private
+
   def set_article
-    @article = Article.first
+    @article = Article.find_by id: params[:uuid]
   end
 
   def article_params
