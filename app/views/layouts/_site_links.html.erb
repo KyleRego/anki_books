@@ -1,9 +1,11 @@
-<% if logged_in? %>
-  <%= link_to 'Logout', logout_path, data: { "turbo-method": :delete } %>
-<% else %>
-  <% if current_page?(login_path) %>
-    <%= link_to 'Home', root_path %>
+<div class="text-right pr-4 pt-2">
+  <% if logged_in? %>
+    <%= link_to 'Logout', logout_path, data: { "turbo-method": :delete }, class: 'text-blue-500 hover:text-blue-600 font-semibold' %>
   <% else %>
-    <%= link_to 'Login', login_path %>
+    <% if current_page?(login_path) %>
+      <%= link_to 'Home', root_path, class: 'text-blue-500 hover:text-blue-600 font-semibold' %>
+    <% else %>
+      <%= link_to 'Login', login_path, class: 'text-blue-500 hover:text-blue-600 font-semibold' %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
