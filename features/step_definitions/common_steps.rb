@@ -71,3 +71,11 @@ end
 Then "the {string} button should be disabled" do |button|
   expect(page).to have_button(button, disabled: true)
 end
+
+Then "I should see an unordered list with the list item {string}" do |list_item|
+  expect(page).to have_css("ul li", text: list_item)
+end
+
+Then "I should see an ordered list with the list item {string}" do |list_item|
+  expect(page).to have_css("ol li", text: list_item)
+end

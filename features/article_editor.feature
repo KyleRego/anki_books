@@ -151,3 +151,15 @@ Feature: Editing an article
     And I click the "Update Article" button
     And I refresh the page
     Then I should see a code block with syntax highlighting
+
+  Scenario: Adding an unordered list 
+    When I click the "Bullets" button
+    And I fill in the article editor with "my bullet point"
+    And I click the "Update Article" button
+    Then I should see an unordered list with the list item "my bullet point"
+
+  Scenario: Adding an ordered list
+    When I click the "Numbers" button
+    And I fill in the article editor with "my first numbered bullet point"
+    And I click the "Update Article" button
+    Then I should see an ordered list with the list item "my first numbered bullet point"
