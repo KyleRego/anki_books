@@ -29,3 +29,37 @@
   padding: 0 !important;
   max-width: 100% !important;
 }
+
+.trix-content * {
+  font-size: 16px;
+}
+
+.trix-content h1 {
+  font-size: 36px !important;
+  font-weight: bold;
+}
+
+.trix-content h2 {
+  font-size: 32px !important;
+  font-weight: bold;
+}
+
+.trix-content h3 {
+  font-size: 28px !important;
+  font-weight: bold;
+}
+
+.trix-content h4 {
+  font-size: 24px !important;
+  font-weight: bold;
+}
+
+.trix-content h5 {
+  font-size: 20px !important;
+  font-weight: bold;
+}
+
+.trix-content h6 {
+  font-size: 16px !important;
+  font-weight: bold;
+}
