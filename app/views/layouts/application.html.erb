@@ -13,9 +13,9 @@
   </head>
 
   <body>
-    <%= render "layouts/site_links" %>
-    <%= render "layouts/flash_messages" %>
-    <main class="container mx-auto px-5 flex">
+    <main class="container mx-auto px-5 flex-col">
+      <%= render "layouts/site_links" %>
+      <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>
   </body>

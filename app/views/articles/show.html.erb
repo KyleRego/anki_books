@@ -1,3 +1,5 @@
 <p><%= @article.content %></p>
 
-<%= link_to "Edit", edit_article_path(@article, title: @article.title_slug) %>
+<% content_for :top_left_links do %>
+  <%= link_to "Edit", edit_article_path(@article, title: @article.title_slug), class: "font-semibold" %>
+<% end %>
