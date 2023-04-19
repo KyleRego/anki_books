@@ -63,3 +63,19 @@
   font-size: 16px !important;
   font-weight: bold;
 }
+
+.trix-content pre {
+  overflow-x: auto;
+  background-color: #272822;
+  padding: 1em !important;
+  font-size: 16px;
+  font-family: "Monaco", "Menlo", "Consolas", monospace;
+  line-height: 1.5;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  padding: 0;
+}
+
+trix-editor pre {
+  background-color: white !important;
+}
