@@ -4,7 +4,7 @@ Technical debt is added when the decision is made to develop quickly with the in
 
 ## Development environment issues
 
-- Tailwind CSS classes do not load until the application server is restarted. Same with changes to `app/javascript` files.
+- Changes to `app/javascript` files do not reload automatically.
 
 ## Testing issues
 
@@ -14,7 +14,6 @@ Technical debt is added when the decision is made to develop quickly with the in
 
 ## Application issues
 
-- Syntax highlighting does not work on first page load when updating article -- not clear why.
 - Current users approach is temporary and in the future, Devise can be used but this will require a mail server.
 - New, create, and destroy article actions not implemented
 - Seems to be a bug where the "Headers" button in the article editor is activated, but that button only toggles the headers button group
