@@ -10,19 +10,6 @@ export default class extends Controller {
     this.toolbarTarget.appendChild(this.headerButtonsRow);
   }
 
-  changeOriginalHeaderButtonToToggleHeaderButtonsGroup() {
-    this.showHeadersButtonGroup = this.toolbarTarget.querySelector(".trix-button--icon-heading-1");
-    this.showHeadersButtonGroup.removeAttribute("data-trix-attribute");
-    this.showHeadersButtonGroup.removeAttribute("data-trix-active");
-    this.showHeadersButtonGroup.classList.remove("trix-active");
-    this.showHeadersButtonGroup.setAttribute("title", "Headers");
-    this.showHeadersButtonGroup.addEventListener("click", () => this.toggleHeaderButtonsGroupVisibility());
-  }
-
-  toggleHeaderButtonsGroupVisibility() {
-    this.headerButtonsRow.classList.toggle("hidden-important");
-  }
-
   setupHeaderButtonsGroup() {
     this.headerButtonsRow = document.createElement("div");
     this.headerButtonsRow.setAttribute("class", "trix-button-row");
@@ -44,5 +31,18 @@ export default class extends Controller {
       button.setAttribute("data-trix-active", "");
       this.headersButtonGroup.appendChild(button);
     });
+  }
+
+  changeOriginalHeaderButtonToToggleHeaderButtonsGroup() {
+    this.showHeadersButtonGroup = this.toolbarTarget.querySelector(".trix-button--icon-heading-1");
+    this.showHeadersButtonGroup.removeAttribute("data-trix-attribute");
+    this.showHeadersButtonGroup.removeAttribute("data-trix-active");
+    this.showHeadersButtonGroup.classList.remove("trix-active");
+    this.showHeadersButtonGroup.setAttribute("title", "Headers");
+    this.showHeadersButtonGroup.addEventListener("click", () => this.toggleHeaderButtonsGroupVisibility());
+  }
+
+  toggleHeaderButtonsGroupVisibility() {
+    this.headerButtonsRow.classList.toggle("hidden-important");
   }
 }
