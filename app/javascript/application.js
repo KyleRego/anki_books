@@ -11,7 +11,6 @@ import hljs from "highlight.js";
 hljs.configure({lineNumbers: true})
 
 function highlightCodeBlocks() {
-  console.log("content loaded");
   document.querySelectorAll("pre").forEach((block) => {
     hljs.highlightElement(block);
   });
