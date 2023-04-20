@@ -1,6 +1,6 @@
 # Technical debt
 
-Technical debt is added when the decision is made to develop quickly with the intention to return later and improve the work. This document trackes areas to return to and improve later.
+Technical debt is added when the decision is made to develop quickly with the intention to return later and improve the work. This document tracks areas to return to and improve later.
 
 ## Testing issues
 
@@ -11,5 +11,5 @@ Technical debt is added when the decision is made to develop quickly with the in
 ## Application issues
 
 - Current users approach is temporary and in the future, Devise can be used but this will require a mail server.
-- New, create, and destroy article actions not implemented
-- Seems to be a bug where the "Headers" button in the article editor is activated, but that button only toggles the headers button group
+- Not possible to delete articles yet
+- More CSS needed.
