@@ -1,0 +1,10 @@
+<h1 class="text-3xl font-bold mb-4">
+  Hi, <%= current_user.username %>
+</h1>
+
+<div class="my-4">
+  <% @articles.each do |article| %>
+    <%= link_to article.title, article_path(article, article.title_slug), class: "text-blue-500 hover:text-blue-600" %>
+    <br>
+  <% end %>
+</div>
