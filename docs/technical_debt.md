@@ -2,10 +2,6 @@
 
 Technical debt is added when the decision is made to develop quickly with the intention to return later and improve the work. This document trackes areas to return to and improve later.
 
-## Development environment issues
-
-- Changes to `app/javascript` files do not reload automatically.
-
 ## Testing issues
 
 - Difficulty with simulating the web browser filling in the editor, pressing Enter, and filling in the editor more.

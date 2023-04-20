@@ -56,3 +56,8 @@ end
 Then "I should see the homepage" do
   expect(page).to have_content("This is the system article to serve as the homepage.")
 end
+
+Then "I should see the Headers button is not active" do
+  expect(page).to have_css(".trix-button--icon-heading-1")
+  expect(page).not_to have_css(".trix-button--icon-heading-1[data-trix-active]")
+end

@@ -83,6 +83,14 @@ Feature: Editing an article
     And I should not see "H5"
     And I should not see "H6"
 
+  Scenario: The Headers button should load correctly when the article starts with a header
+    When I click the "Headers" button
+    And I click the "H1" button
+    And I fill in the article editor with "A heading"
+    And I click the "Update Article" button
+    And I click the "Edit" link
+    Then I should see the Headers button is not active
+
   Scenario: Using the headers button group to add an H1 main heading
     When I click the "Headers" button
     And I click the "H1" button

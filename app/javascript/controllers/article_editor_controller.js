@@ -5,23 +5,25 @@ export default class extends Controller {
 
   connect() {
     this.toolbarTarget = this.editorContainerTarget.querySelector("[id^='trix-toolbar-']");
-    this.setupHeaderButtons();
-    this.changeOriginalHeaderButtonToToggleNewHeaderButtonsRow();
+    this.setupHeaderButtonsGroup();
+    this.changeOriginalHeaderButtonToToggleHeaderButtonsGroup();
     this.toolbarTarget.appendChild(this.headerButtonsRow);
   }
 
-  changeOriginalHeaderButtonToToggleNewHeaderButtonsRow() {
+  changeOriginalHeaderButtonToToggleHeaderButtonsGroup() {
     this.showHeadersButtonGroup = this.toolbarTarget.querySelector(".trix-button--icon-heading-1");
     this.showHeadersButtonGroup.removeAttribute("data-trix-attribute");
+    this.showHeadersButtonGroup.removeAttribute("data-trix-active");
+    this.showHeadersButtonGroup.classList.remove("trix-active");
     this.showHeadersButtonGroup.setAttribute("title", "Headers");
-    this.showHeadersButtonGroup.addEventListener("click", () => this.toggleHeadersButtonsVisibility());
+    this.showHeadersButtonGroup.addEventListener("click", () => this.toggleHeaderButtonsGroupVisibility());
   }
 
-  toggleHeadersButtonsVisibility() {
+  toggleHeaderButtonsGroupVisibility() {
     this.headerButtonsRow.classList.toggle("hidden-important");
   }
 
-  setupHeaderButtons() {
+  setupHeaderButtonsGroup() {
     this.headerButtonsRow = document.createElement("div");
     this.headerButtonsRow.setAttribute("class", "trix-button-row");
     this.headerButtonsRow.classList.add("hidden-important");
