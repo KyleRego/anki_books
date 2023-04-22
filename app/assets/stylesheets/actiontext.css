@@ -76,15 +76,6 @@
   padding: 0;
 }
 
-.trix-content a {
-  color: #6000bb;
-  font-weight: 600;
-}
-
-.trix-content a:hover {
-  color: #3d0077;
-}
-
 trix-editor pre {
   background-color: white !important;
 }

@@ -2,18 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
+@import "actiontext.css";
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
-}
-
-*/
-@import 'actiontext.css';
-
-/* FIXME: Probably there is a better place to put this hidden-important class */
 .hidden-important {
   display: none !important;
+}
+
+@layer components {
+  .trix-content a {
+    @apply text-blue-500;
+  }
+
+  .trix-content a:hover {
+    @apply text-blue-600; 
+  }
 }
