@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Sessions" do
   describe "GET /login" do
     it "returns http success" do
-      get "/login"
+      get login_path
       expect(response).to have_http_status(:success)
     end
   end
@@ -14,7 +14,7 @@ RSpec.describe "Sessions" do
     context "with user credentials that exist" do
       let(:user) { create(:user) }
 
-      before { post "/login", params: { session: { email: user.email, password: TEST_USER_PASSWORD } } }
+      before { post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } } }
 
       it "logs the user in successfully" do
         expect(session[:user_id]).to eq(user.id)
@@ -30,7 +30,7 @@ RSpec.describe "Sessions" do
     end
 
     context "with user credentials that don't exist" do
-      before { post "/login", params: { session: { email: "stannis@themannis.com", password: "wrongpassword123" } } }
+      before { post login_path, params: { session: { email: "stannis@themannis.com", password: "wrongpassword123" } } }
 
       it "doesn't log the user in" do
         expect(session[:user_id]).to be_nil

@@ -31,9 +31,9 @@ Feature: The My articles page
     Given I am logged in
     When I visit the root path
     And I click the "My articles" link
-    And I click the "New article" button
-    And I fill in the article editor with "this is a new article"
+    And I click the "Create new" button
+    And I fill in the article editor with "content of a new article"
     And I click the "Update Article" button
     And I click the "My articles" link
-    And I click the "New article" link
-    Then I should see "this is a new article"
+    And I click the "My new article" link
+    Then I should see "content of a new article"

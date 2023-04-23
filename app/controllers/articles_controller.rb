@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-# :nodoc:
+##
+# ArticlesController handles actions related to articles.
 class ArticlesController < ApplicationController
-  before_action :require_login, only: %i[new edit update]
+  before_action :require_login, only: %i[edit create update]
   before_action :set_article, only: %i[show edit update]
 
   def show; end
 
-  def new
-    @article = Article.create title: "New article"
+  def edit; end
+
+  def create
+    @article = Article.create title: "My new article"
     redirect_to edit_article_path(@article, title: @article.title_slug)
   end
-
-  def edit; end
 
   def update
     if @article.update(article_params)

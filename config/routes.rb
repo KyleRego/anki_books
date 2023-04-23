@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
   get "/users/:uuid/articles", to: "users#articles", as: "user_articles"
-  post "/users/:uuid/articles/new", to: "articles#new", as: "new_article"
+  post "/users/:uuid/articles/new", to: "articles#create", as: "new_article"
 end

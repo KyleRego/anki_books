@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 ##
-# UsersController handles user registration and management.
+# UsersController handles user registration and management and other actions
+# related to users.
 class UsersController < ApplicationController
   ##
   # Index of the user's articles.

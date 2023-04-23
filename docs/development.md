@@ -14,7 +14,9 @@ sudo apt-get install libvips libvips-tools
 
 ## The database
 
-The application uses a PostgreSQL database. The `config/database.yml` file has the configuration settings. Executing `rails db:create` should create the databases specified in that file. Pending migrations are run with `rails db:migrate`. 
+The application uses a PostgreSQL database. The `config/database.yml` file has the configuration settings. Executing `rails db:create` should create the databases specified in that file. Pending migrations are run with `rails db:migrate`.
+
+The homepage of the website is an article with system: true. This can be added with `rails db:seed` or using the Rails console.
 
 ## The bin/dev script
 
