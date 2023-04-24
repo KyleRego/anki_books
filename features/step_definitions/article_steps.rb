@@ -14,7 +14,17 @@ end
 
 When "I fill in the article editor with {string}" do |text|
   editor = find("trix-editor")
-  editor.set(editor.text + text)
+  editor.send_keys text
+end
+
+When "I press the Enter key while the article editor is focused" do
+  editor = find("trix-editor")
+  editor.native.send_keys(:enter)
+end
+
+When "I press the Tab key while the article editor is focused" do
+  editor = find("trix-editor")
+  editor.native.send_keys(:tab)
 end
 
 When "I select the text in the article editor" do

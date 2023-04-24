@@ -79,3 +79,10 @@ end
 Then "I should see an ordered list with the list item {string}" do |list_item|
   expect(page).to have_css("ol li", text: list_item)
 end
+
+# rubocop:disable Layout/LineLength
+Then "I should see a nested list element with text {string} under the list element with text {string}" do |nested_text, parent_text|
+  parent_element = find("li", text: parent_text)
+  expect(parent_element).to have_css("li", text: nested_text)
+end
+# rubocop:enable Layout/LineLength
