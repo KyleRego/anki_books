@@ -51,6 +51,12 @@ When "I click the Update Article button" do
   sleep 0.5
 end
 
+When "I drop the fixture image {string} on the article editor" do |string|
+  editor = find(".trix-content")
+  editor.drop("./spec/fixtures/#{string}")
+  sleep 0.5
+end
+
 Then "I should be redirected to the article" do
   expect(page).to have_current_path article_path(@test_article, title: @test_article.title_slug)
 end
@@ -70,4 +76,8 @@ end
 Then "I should see the Headers button is not active" do
   expect(page).to have_css(".trix-button--icon-heading-1")
   expect(page).not_to have_css(".trix-button--icon-heading-1[data-trix-active]")
+end
+
+Then "I should see the fixture image {string} on the page" do |string|
+  expect(page).to have_css("img[src$='#{string}']")
 end
