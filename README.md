@@ -3,8 +3,6 @@
 ### Development plan
 
 - Initial work of article editor
-  - Work out simulating multi-step user input
-  - Automated tests for nested lists
   - Automated tests for file upload
   - Automated tests for undo and redo
   - Automated tests for keyboard shortcuts
