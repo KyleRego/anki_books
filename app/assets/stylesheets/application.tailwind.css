@@ -4,10 +4,6 @@
 
 @import "actiontext.css";
 
-.hidden-important {
-  display: none !important;
-}
-
 @layer components {
   .trix-content a {
     @apply text-blue-500;
