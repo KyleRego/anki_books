@@ -3,7 +3,6 @@
 ### Development plan
 
 - Initial work of article editor
-  - Automated tests for file upload
   - Automated tests for undo and redo
   - Automated tests for keyboard shortcuts
   - Add missing keyboard shortcuts

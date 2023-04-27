@@ -22,6 +22,18 @@ When "I fill in the {string} field with {string}" do |field, value|
   fill_in field, with: value
 end
 
+When "I click on the image {string} on the page" do |string|
+  find("img[src$='#{string}']").click
+end
+
+When "I click on the span with text {string}" do |string|
+  find("span", text: string).click
+end
+
+When "I type {string} on the focused element" do |keys|
+  page.driver.browser.switch_to.active_element.send_keys(keys)
+end
+
 Then "I should see {string}" do |text|
   expect(page).to have_content(text)
 end
@@ -86,3 +98,11 @@ Then "I should see a nested list element with text {string} under the list eleme
   expect(parent_element).to have_css("li", text: nested_text)
 end
 # rubocop:enable Layout/LineLength
+
+Then "I should not see the image {string} on the page" do |string|
+  expect(page).to_not have_css("img[src$='#{string}']")
+end
+
+Then "I should see the textarea placeholder {string}" do |string|
+  expect(page).to have_css("textarea[placeholder='#{string}']")
+end
