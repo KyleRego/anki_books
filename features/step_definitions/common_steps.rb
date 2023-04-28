@@ -34,6 +34,10 @@ When "I type {string} on the focused element" do |keys|
   page.driver.browser.switch_to.active_element.send_keys(keys)
 end
 
+When "I use the ctrl + {string} keyboard shortcut" do |string|
+  page.send_keys([:control, string])
+end
+
 Then "I should see {string}" do |text|
   expect(page).to have_content(text)
 end

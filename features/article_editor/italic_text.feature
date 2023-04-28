@@ -11,3 +11,11 @@ Feature: Editing an article
     And I click the "Update Article" button
     Then I should be redirected to the article
     And I should see "some italic text" in italics
+
+  Scenario: Using the keyboard shortcut to add italic text
+    When I focus the article editor
+    And I use the ctrl + "i" keyboard shortcut
+    And I fill in the article editor with "some italic text"
+    And I click the "Update Article" button
+    Then I should be redirected to the article
+    And I should see "some italic text" in italics

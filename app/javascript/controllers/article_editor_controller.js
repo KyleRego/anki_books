@@ -8,6 +8,7 @@ export default class extends Controller {
     this.setupHeaderButtonsGroup();
     this.addHeaderButtonsGroupToButtonsRow();
     this.removeOriginalHeadersButton();
+    this.changeKeyboardShortcuts();
   }
 
   setupHeaderButtonsGroup() {
@@ -42,7 +43,12 @@ export default class extends Controller {
     this.showHeadersButtonGroup.parentNode.removeChild(this.showHeadersButtonGroup);
   }
 
-  toggleHeaderButtonsGroupVisibility() {
-    this.headerButtonsRow.classList.toggle("hidden-important");
+  changeKeyboardShortcuts() {
+    this.changeRedoButtonKeyboardShortcut();
+  }
+
+  changeRedoButtonKeyboardShortcut() {
+    const redoButton = document.querySelector("button.trix-button--icon-redo");
+    redoButton.setAttribute("data-trix-key", "y");
   }
 }

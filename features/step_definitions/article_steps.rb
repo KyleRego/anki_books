@@ -57,6 +57,11 @@ When "I drop the fixture image {string} on the article editor" do |string|
   sleep 0.5
 end
 
+When "I focus the article editor" do
+  element = find(".trix-content")
+  page.execute_script("arguments[0].focus();", element)
+end
+
 Then "I should be redirected to the article" do
   expect(page).to have_current_path article_path(@test_article, title: @test_article.title_slug)
 end

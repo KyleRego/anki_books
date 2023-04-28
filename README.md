@@ -3,11 +3,7 @@
 ### Development plan
 
 - Initial work of article editor
-  - Automated tests for undo and redo
-  - Automated tests for keyboard shortcuts
-  - Add missing keyboard shortcuts
   - Add inline code button
-  - Toolbar work - need to determine best UI
   - Add MathJax button
 - Flash messages need a hide button
 - Edit, Create new article buttons need CSS
