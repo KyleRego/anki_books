@@ -1,11 +1,46 @@
 <% if notice.present? %>
-  <p class="notice bg-green-400 text-black font-semibold py-2 px-4 rounded-md text-center mx-auto max-w-sm">
-    <%= notice %>
+  <p class="flex justify-between align-middle
+            border
+            border-green-400 bg-green-50 text-green-900
+            font-semibold rounded-md text-center
+            py-3 px-4 my-4 mx-auto max-w-sm"
+     data-controller="flash-messages"
+     data-flash-messages-target="message"
+  >
+    <span class="flex flex-col justify-center">
+      <%= render "layouts/heroicons/check" %>
+    </span>
+    <span>
+      <%= notice %>
+    </span>
+    <button class="flex flex-col justify-center cursor-pointer"
+          data-flash-messages-target="closeIcon"
+          title="Dismiss"
+    >
+      <%= render "layouts/heroicons/x_mark" %>
+    </button>
   </p>
 <% end %>
 
 <% if alert.present? %>
-  <p class="alert bg-red-600 text-white font-semibold py-2 px-4 rounded-md text-center mx-auto max-w-sm">
-    <%= alert %>
+  <p class="flex justify-between align-middle
+            border border-red-400
+          bg-red-50 text-red-900 font-semibold
+            py-3 px-4 rounded-md text-center my-4 mx-auto max-w-sm"
+     data-controller="flash-messages"
+     data-flash-messages-target="message"
+  >
+    <span class="flex flex-col justify-center">
+      <%= render "layouts/heroicons/exclamation_triangle" %>
+    </span>
+    <span>
+      <%= alert %>
+    </span>
+    <button class="flex flex-col justify-center cursor-pointer"
+          data-flash-messages-target="closeIcon"
+          title="Dismiss"
+    >
+      <%= render "layouts/heroicons/x_mark" %>
+    </button>
   </p>
 <% end %>

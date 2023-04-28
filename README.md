@@ -2,9 +2,9 @@
 
 ### Development plan
 
-- Initial work of article editor
-  - Add inline code button
-  - Add MathJax button
+- Features to add to the article editor
+  - Inline code
+  - MathJax
 - Flash messages need a hide button
 - Edit, Create new article buttons need CSS
 - Favicon
