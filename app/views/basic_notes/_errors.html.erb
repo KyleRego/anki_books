@@ -1,0 +1,17 @@
+<% if @basic_note.errors.any? %>
+  <div class="p-2 border border-red-400 bg-red-50 text-red-900 font-semibold">
+    <div class="flex justify-center align-middle">
+      <span class="flex flex-col justify-center mr-4">
+        <%= render "layouts/heroicons/x_mark" %>
+      </span>
+      <span>
+        <%= pluralize(@basic_note.errors.count, "validation error") %> occurred:
+      </span>
+    </div>
+    <ul>
+      <% @basic_note.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

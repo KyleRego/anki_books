@@ -15,10 +15,10 @@ class BasicNotesController < ApplicationController
   def edit; end
 
   def create
-    @basic_note = @article.basic_notes.create(basic_note_params)
+    @basic_note = @article.basic_notes.new(basic_note_params)
 
-    if @basic_note
-      redirect_to article_path(@article, title: @article.title_slug)
+    if @basic_note.save
+      render turbo_stream: turbo_stream.append("article-notes", template: "basic_notes/show")
     else
       render :new
     end
@@ -26,7 +26,7 @@ class BasicNotesController < ApplicationController
 
   def update
     if @basic_note.update(basic_note_params)
-      redirect_to article_basic_note_path(@basic_note.article, @basic_note)
+      redirect_to article_basic_note_path(@article, @basic_note)
     else
       render :edit
     end
