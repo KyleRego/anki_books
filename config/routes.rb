@@ -1,16 +1,21 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   root "articles#homepage"
-  get "/articles/:uuid/:title/edit", to: "articles#edit", as: "edit_article"
-  get "/articles/:uuid/:title", to: "articles#show", as: "article"
-  patch "/articles/:uuid/:title", to: "articles#update"
-  put "/articles/:uuid/:title", to: "articles#update"
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
-  get "/users/:uuid/articles", to: "users#articles", as: "user_articles"
-  post "/users/:uuid/articles/new", to: "articles#create", as: "new_article"
+
+  get "/articles/:id/:title/edit", to: "articles#edit", as: "edit_article"
+  get "/articles/:id/:title", to: "articles#show", as: "article"
+  patch "/articles/:id/:title", to: "articles#update"
+  put "/articles/:id/:title", to: "articles#update"
+
+  get "/users/:user_id/articles", to: "users#articles", as: "user_articles"
+  post "/users/:user_id/articles", to: "articles#create", as: "new_article"
+
+  resources :articles, only: [], param: :id do
+    resources :basic_notes, only: %i[new create edit update show]
+  end
 end

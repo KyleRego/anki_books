@@ -1,0 +1,11 @@
+<div>
+  <p>
+    <strong>Front:</strong>
+    <%= @basic_note.front %>
+  </p>
+  <p>
+    <strong>Back:</strong>
+    <%= @basic_note.back %>
+  </p>
+  <%= link_to "Edit", edit_article_basic_note_path(@article, @basic_note) %>
+</div>

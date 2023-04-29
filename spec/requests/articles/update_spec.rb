@@ -5,7 +5,7 @@ RSpec.describe "Articles" do
   let(:article) { create(:article) }
 
   # rubocop:disable RSpec/NestedGroups
-  describe "PATCH /articles/:uuid/:title" do
+  describe "PATCH /articles/:id/:title" do
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }

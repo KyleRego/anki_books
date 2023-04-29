@@ -15,5 +15,4 @@ Feature: Flash messages
     And I fill in the "Password" field with "123abc777www"
     And I click the "Log in" button
     And I click the "Dismiss" button
-    Then screenshot
     Then I should not see "Logged in successfully"

@@ -18,7 +18,6 @@ Feature: Editing an article
   Scenario: Uploading an image should show the filename as the image caption
     When I drop the fixture image "test_image.png" on the article editor
     Then I should see "test_image.png"
-    Then screenshot
 
   Scenario: Clicking on the default filename image caption should change it to show: Add a caption…
     When I drop the fixture image "test_image.png" on the article editor

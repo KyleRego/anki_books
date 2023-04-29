@@ -1,0 +1,13 @@
+<%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= form.label :front %>
+    <%= form.text_area :front %>
+  </div>
+  <div class="my-5">
+    <%= form.label :back %>
+    <%= form.text_area :back %>
+  </div>
+  <div class="inline">
+    <%= form.submit %>
+  </div>
+<% end %>
