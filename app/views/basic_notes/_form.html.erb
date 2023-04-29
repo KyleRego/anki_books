@@ -1,13 +1,39 @@
 <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-  <div class="my-5">
-    <%= form.label :front %>
-    <%= form.text_area :front %>
-  </div>
-  <div class="my-5">
-    <%= form.label :back %>
-    <%= form.text_area :back %>
-  </div>
-  <div class="inline">
-    <%= form.submit %>
+  <div class="border border-blue-400 bg-blue-50 text-blue-900
+              font-semibold rounded-md text-center
+              py-3 px-4 my-4 sm:ml-4 md:ml-12">
+
+    <% if @basic_note.errors.any? %>
+      <div class="p-2 border border-red-400 bg-red-50 text-red-900 font-semibold">
+        <div class="flex justify-between align-middle">
+          <span class="flex flex-col justify-center">
+            <%= render "layouts/heroicons/x_mark" %>
+          </span>
+          <span>
+            <%= pluralize(@basic_note.errors.count, "error") %> prohibited this note from being updated:
+          </span>
+        </div>
+        <ul>
+          <% @basic_note.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div>
+      <%= form.label :front %>
+      <%= form.text_area :front, class: "w-full" %>
+    </div>
+
+    <div>
+      <%= form.label :back %>
+      <%= form.text_area :back, class: "w-full" %>
+    </div>
+
+    <div class="inline">
+      <%= form.submit %>
+    </div>
+
   </div>
 <% end %>

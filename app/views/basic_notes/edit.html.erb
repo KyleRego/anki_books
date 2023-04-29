@@ -1,4 +1,3 @@
-<div>
-  <h1>Editing basic note</h1>
-  <%= render "form", url: edit_article_basic_note_path(@article, @basic_note) %>
-</div>
+<%= turbo_frame_tag turbo_name_for_basic_note(@basic_note) do %>
+  <%= render "form", url: article_basic_note_path(@basic_note.article.id, @basic_note) %>
+<% end %>

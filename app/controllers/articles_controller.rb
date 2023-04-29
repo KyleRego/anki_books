@@ -6,7 +6,9 @@ class ArticlesController < ApplicationController
   before_action :require_login, only: %i[edit create update]
   before_action :set_article, only: %i[show edit update]
 
-  def show; end
+  def show
+    @basic_notes = @article.basic_notes.order(:anki_id)
+  end
 
   def edit; end
 
