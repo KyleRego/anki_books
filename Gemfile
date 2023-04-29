@@ -83,3 +83,5 @@ group :test do
 end
 
 gem "bcrypt", "~> 3.1"
+
+gem "anki_record", "~> 0.3.1"
