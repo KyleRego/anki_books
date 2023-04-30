@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_30_141813) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_30_142300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_30_141813) do
     t.boolean "system", default: false, null: false
   end
 
-  create_table "basic_notes", force: :cascade do |t|
+  create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "front"
     t.text "back"
     t.bigint "anki_id"
