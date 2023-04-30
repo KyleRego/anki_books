@@ -76,6 +76,10 @@
   padding: 0;
 }
 
+.trix-content img {
+  margin: auto;
+}
+
 trix-editor pre {
   background-color: white !important;
 }
