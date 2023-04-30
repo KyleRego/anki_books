@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 ##
-# Handles actions related to Basic notes.
+# Handles actions related to Basic notes. Basic notes do not have any
+# standalone views so all requests this handles should come through Turbo.
 class BasicNotesController < ApplicationController
+  before_action :require_turbo_request
+  before_action :require_login, only: %i[create edit update]
   before_action :set_article, only: %i[new create show edit update]
   before_action :set_basic_note, only: %i[show edit update]
 

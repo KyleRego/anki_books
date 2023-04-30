@@ -5,6 +5,10 @@
 class ApplicationController < ActionController::Base
   private
 
+  def require_turbo_request
+    head :forbidden if request.headers["Turbo-Frame"].blank?
+  end
+
   def require_login
     return if logged_in?
 

@@ -10,6 +10,6 @@
         <%= turbo_frame_tag turbo_name_for_basic_note(basic_note), src: article_basic_note_path(@article, basic_note) %>
       <% end %>
     </div>
-    <%= turbo_frame_tag "new_basic_note", src: new_article_basic_note_path(@article) %>
+    <%= turbo_frame_tag turbo_frame_for_new_basic_note, src: new_article_basic_note_path(@article) %>
   </div>
 </div>
