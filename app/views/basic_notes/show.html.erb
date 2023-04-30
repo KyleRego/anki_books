@@ -2,9 +2,11 @@
   <div class="flex border border-blue-400 bg-blue-50 text-blue-900
               font-semibold rounded-md text-center
               py-3 px-4 my-4 sm:ml-4 md:ml-12">
-      <div class="flex flex-col justify-end">
-        <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
-      </div>
+      <% if logged_in? %>
+        <div class="flex flex-col justify-end">
+          <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
+        </div>
+      <% end %>
       <div class="w-full">
         <%= @basic_note.front %>
         <br>
