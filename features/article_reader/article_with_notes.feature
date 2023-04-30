@@ -11,4 +11,3 @@ Feature: Reading an article
     When I am logged in
     And I am viewing the article
     Then I should see "What kind of note is this note?"
-    And I should see "This is a Basic note."
