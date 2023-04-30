@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
     # Plan is to have more than one system article in the future.
     # For now, just have one and it will serve as the homepage.
     @article = Article.find_by system: true
-    render :show
+    @basic_notes = @article.basic_notes.order(:anki_id)
   end
 
   private
