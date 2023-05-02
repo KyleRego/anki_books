@@ -6,15 +6,19 @@
     <div class="mt-2"><%= link_to("Edit", edit_article_path(@article, title: @article.title_slug), class: "font-semibold") if logged_in? %></div>
   </div>
 
+  <% if logged_in? || @basic_notes.any? %>
   <div id="notes-area" class="sm:w-4/12 flex flex-col">
 
     <div id="article-notes" class="flex flex-col h-full justify-evenly">
+      <%= render "note_droppable_area" %>
       <% @basic_notes&.each do |basic_note| %>
         <%= turbo_frame_tag turbo_name_for_basic_note(basic_note), src: article_basic_note_path(@article, basic_note) %>
+        <%= render "note_droppable_area" %>
       <% end %>
     </div>
   
     <%= turbo_frame_tag(turbo_frame_for_new_basic_note, src: new_article_basic_note_path(@article)) if logged_in? %>
   </div>
+  <% end %>
 
 </div>
