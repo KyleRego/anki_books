@@ -3,8 +3,8 @@
 ##
 # ArticlesController handles actions related to articles.
 class ArticlesController < ApplicationController
-  before_action :require_login, only: %i[edit create update]
-  before_action :set_article, only: %i[show edit update]
+  before_action :require_login, only: %i[edit create update change_note_ordinal_position]
+  before_action :set_article, only: %i[show edit update change_note_ordinal_position]
 
   def show
     @basic_notes = @article.basic_notes.order(:anki_id)
@@ -31,6 +31,14 @@ class ArticlesController < ApplicationController
     # For now, just have one and it will serve as the homepage.
     @article = Article.find_by system: true
     @basic_notes = @article.basic_notes.order(:anki_id)
+  end
+
+  def change_note_ordinal_position
+    # TODO: Change the note's ordinal position and also adjust the rest of the notes.
+    # note = @article.basic_notes.find(params[:note_id])
+    # new_position = params[:new_ordinal_position].to_i
+
+    # head :ok
   end
 
   private

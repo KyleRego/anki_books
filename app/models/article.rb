@@ -8,6 +8,10 @@ class Article < ApplicationRecord
 
   validates :title, presence: true
 
+  def notes_count
+    basic_notes.count
+  end
+
   def title_slug
     title.parameterize
   end

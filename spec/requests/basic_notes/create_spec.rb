@@ -19,11 +19,25 @@ RSpec.describe "BasicNotes" do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
-      it "creates a new Basic note" do
+      it "creates a new Basic note if the user is logged in" do
         expect do
           post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
                headers: { "Turbo-Frame": turbo_frame_for_new_basic_note }
         end.to change(BasicNote, :count).by(1)
+      end
+
+      it "creates a Basic note with ordinal_position 0 if it is the article's first note" do
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+             headers: { "Turbo-Frame": turbo_frame_for_new_basic_note }
+        expect(article.basic_notes.first.ordinal_position).to eq 0
+      end
+
+      it "creates a Basic note with ordinal_position 1 if it is the article's second note" do
+        create(:basic_note, article:)
+
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+             headers: { "Turbo-Frame": turbo_frame_for_new_basic_note }
+        expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end
     end
 

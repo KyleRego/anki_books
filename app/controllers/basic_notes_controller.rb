@@ -19,6 +19,7 @@ class BasicNotesController < ApplicationController
 
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
+    @basic_note.ordinal_position = @article.notes_count
 
     if @basic_note.save
       render turbo_stream: turbo_stream.append("article-notes", template: "basic_notes/show")

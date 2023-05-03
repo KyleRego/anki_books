@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-# TODO: Should the factories be used to create the test objects here?
 CUCUMBER_TEST_ARTICLE_TITLE = "This is the test article for Cucumber tests"
 CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
 Given "there is an article" do
-  @test_article = Article.create! title: CUCUMBER_TEST_ARTICLE_TITLE
+  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE)
 end
 
 Given "there is an article with a basic note" do
-  @test_article = Article.create! title: CUCUMBER_TEST_ARTICLE_TITLE
-  @test_article.basic_notes.create! front: CUCUMBER_TEST_BASIC_NOTE_FRONT, back: CUCUMBER_TEST_BASIC_NOTE_BACK
+  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE)
+  create(:basic_note, article: @test_article, front: CUCUMBER_TEST_BASIC_NOTE_FRONT,
+                      back: CUCUMBER_TEST_BASIC_NOTE_BACK)
 end
 
 When "I am viewing the article" do

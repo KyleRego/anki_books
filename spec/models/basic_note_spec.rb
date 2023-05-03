@@ -30,5 +30,11 @@ RSpec.describe BasicNote do
       basic_note = build(:basic_note, article:, anki_id: 123_456_789)
       expect(basic_note).not_to be_valid
     end
+
+    it "is not valid with the same ordinal_position as a different note of the article" do
+      existing_basic_note = create(:basic_note, article:)
+      basic_note = build(:basic_note, article:, ordinal_position: existing_basic_note.ordinal_position)
+      expect(basic_note).not_to be_valid
+    end
   end
 end
