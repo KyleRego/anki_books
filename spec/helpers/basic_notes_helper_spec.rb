@@ -8,7 +8,7 @@ RSpec.describe "BasicNotesHelper" do
 
   describe "#turbo_name_for_basic_note" do
     it "returns a string with the note's anki_id" do
-      expect(helper.turbo_name_for_basic_note(basic_note)).to eq "basic-note-#{basic_note.anki_id}"
+      expect(helper.turbo_name_for_basic_note(basic_note)).to eq "basic-note-#{basic_note.id}"
     end
   end
 end

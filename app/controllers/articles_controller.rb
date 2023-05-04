@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show edit update change_note_ordinal_position]
 
   def show
-    @basic_notes = @article.basic_notes.order(:anki_id)
+    @basic_notes = @article.basic_notes.order(:ordinal_position)
   end
 
   def edit; end
@@ -30,15 +30,19 @@ class ArticlesController < ApplicationController
     # Plan is to have more than one system article in the future.
     # For now, just have one and it will serve as the homepage.
     @article = Article.find_by system: true
-    @basic_notes = @article.basic_notes.order(:anki_id)
+    @basic_notes = @article.basic_notes.order(:ordinal_position)
   end
 
   def change_note_ordinal_position
-    # TODO: Change the note's ordinal position and also adjust the rest of the notes.
-    # note = @article.basic_notes.find(params[:note_id])
-    # new_position = params[:new_ordinal_position].to_i
+    note = @article.basic_notes.find(params[:note_id])
+    new_ordinal_position = params[:new_ordinal_position].to_i
 
-    # head :ok
+    if valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
+      @article.move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)
+      head :ok
+    else
+      head :unprocessable_entity
+    end
   end
 
   private
@@ -49,5 +53,13 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :content)
+  end
+
+  def valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
+    return false if new_ordinal_position >= @article.notes_count || new_ordinal_position.negative?
+
+    return false if note.ordinal_position == new_ordinal_position
+
+    true
   end
 end
