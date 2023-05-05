@@ -6,6 +6,7 @@ end
 
 When "I refresh the page" do
   visit current_path
+  sleep 1 if @test_article&.basic_notes&.any?
 end
 
 When "I click the {string} link" do |link|

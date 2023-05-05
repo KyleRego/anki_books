@@ -1,7 +1,7 @@
 Feature: Reading an article
 
   Background:
-    Given there is an article with a basic note
+    Given there is an article with "1" basic note(s)
 
   Scenario: I should see no Edit links if I am not logged in
     And I am viewing the article

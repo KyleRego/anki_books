@@ -4,9 +4,11 @@ Technical debt is added when the decision is made to develop quickly with the in
 
 ## Testing issues
 
-- Difficulty with simulating the web browser filling in the editor, pressing Enter, and filling in the editor more.
-  - Preventing a feature test that would test adding all 6 subheadings
-  - Preventing tests of adding nested lists
+- There is an upstream issue with the drivers used by Capybara/Selenium preventing testing a user interacting with the HTML drag and drop API reordering notes.
+  - https://github.com/w3c/webdriver/issues/1488#issuecomment-1474112065
+  - https://github.com/mozilla/geckodriver/issues/1450
+  - https://github.com/bormando/selenium-tools/issues/6
+  - https://github.com/w3c/webdriver/issues/1488
 
 ## Application issues
 
