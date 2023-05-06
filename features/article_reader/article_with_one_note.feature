@@ -1,4 +1,4 @@
-Feature: Reading an article
+Feature: Reading an article with one note
 
   Background:
     Given there is an article with "1" basic note(s)

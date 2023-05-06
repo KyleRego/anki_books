@@ -5,7 +5,7 @@
       <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
     <% end %>
 
-    <% if @article&.notes_count&.positive? %>
+    <% if @article&.notes_count&.positive? && !on_study_cards? %>
       <%= link_to("Study cards", article_study_cards_path(@article, title: @article.title), class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
     <% end %>
 

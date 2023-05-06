@@ -10,6 +10,9 @@ Feature: Reading an article
     And I should see "First card"
     And I should see "Random card"
 
+  Scenario: The Study cards page should not have the Study cards link
+    Then I should not see "Study cards"
+
   Scenario: Clicking the First card option should replace it with Next card
     When I click on the span with text "First card"
     Then I should not see "First card"

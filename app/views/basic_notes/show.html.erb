@@ -1,10 +1,10 @@
-<% @basic_note ||= basic_note %>
-<%= turbo_frame_tag turbo_name_for_basic_note(@basic_note) do %>
+<% basic_note ||= @basic_note %>
+<%= turbo_frame_tag turbo_name_for_basic_note(basic_note) do %>
   <div class="flex sm:ml-4 md:ml-12"
         data-controller="basic-note">
       <% if logged_in? %>
         <div class="flex flex-col justify-end border-right mr-2">
-          <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
+          <%= link_to "Edit", edit_article_basic_note_path(basic_note.article.id, basic_note), class: "font-semibold" %>
         </div>
       <% end %>
       <div class="w-full cursor-pointer py-3 px-2
@@ -14,10 +14,10 @@
             data-basic-note-target="note"
             draggable="<%= logged_in? %>">
         <div>
-          <span class="whitespace-pre-wrap"><%= @basic_note.front %></span>
+          <span class="whitespace-pre-wrap"><%= basic_note.front %></span>
         </div>
         <div data-basic-note-target="back" class="border-t border-blue-400 mt-2 pt-2" hidden>
-          <span class="whitespace-pre-wrap"><%= @basic_note.back %></span>
+          <span class="whitespace-pre-wrap"><%= basic_note.back %></span>
         </div>
       </div>
   </div>
