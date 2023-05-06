@@ -36,7 +36,6 @@ class ArticlesController < ApplicationController
   def change_note_ordinal_position
     note = @article.basic_notes.find(params[:note_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
-
     if valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
       @article.move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)
       head :ok

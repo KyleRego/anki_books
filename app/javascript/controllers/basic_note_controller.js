@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "note", "front", "back" ];
+  static targets = [ "note", "back" ];
 
   initialize() {
     this.boundChangeNoteState = this.changeNoteState.bind(this);
@@ -14,7 +14,6 @@ export default class extends Controller {
   }
 
   changeNoteState = () => {
-    this.frontTarget.hidden = !this.frontTarget.hidden;
     this.backTarget.hidden = !this.backTarget.hidden;
   }
 

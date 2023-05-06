@@ -10,6 +10,10 @@ Technical debt is added when the decision is made to develop quickly with the in
   - https://github.com/bormando/selenium-tools/issues/6
   - https://github.com/w3c/webdriver/issues/1488
 
+## Where manual testing should be performed
+
+- Reordering the notes with drag and drop
+
 ## Application issues
 
 - Current users approach is temporary and in the future, Devise can be used but this will require a mail server.

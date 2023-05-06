@@ -32,7 +32,10 @@ export default class extends Controller {
     const noteId = noteTurboId.split("-").slice(2).join("-");
     this.draggedNote = document.getElementById(noteTurboId);
     const oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
-    const newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.dropzoneTarget.parentNode);
+    let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.dropzoneTarget.parentNode);
+    if (newOrdinalPosition < oldOrdinalPosition) {
+      newOrdinalPosition += 1;
+    }
     if (this.dropDoesNotMoveDraggedNote(oldOrdinalPosition, newOrdinalPosition)) {
       return;
     } else {
@@ -42,10 +45,10 @@ export default class extends Controller {
 
   // TODO: Iterate through article notes only once and find both ordinal positions rather than iterating
   // through twice--refactor after feature tests are complete. 
-  ordinalPositionInArticleNotesOf(note) {
+  ordinalPositionInArticleNotesOf(targetElement) {
     let position = null;
     for (let i = 0; i < this.articleNotes.length; i++) {
-      if (this.articleNotes[i] === note) {
+      if (this.articleNotes[i] === targetElement) {
         position = i;
         break;
       }
@@ -54,14 +57,14 @@ export default class extends Controller {
   }
 
   dropDoesNotMoveDraggedNote(oldOrdinalPosition, newOrdinalPosition) {
-    return ((oldOrdinalPosition === newOrdinalPosition) || ((oldOrdinalPosition - 1) === newOrdinalPosition));
+    return ((oldOrdinalPosition === newOrdinalPosition));
   }
 
   changeNoteOrdinalPosition(articleId, noteId, newOrdinalPosition) {
     const url = `/articles/${articleId}/change_note_ordinal_position`;
     const params = {note_id: noteId, new_ordinal_position: newOrdinalPosition};
     const authenticityToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
+    console.log(newOrdinalPosition);
     fetch(url, {
       method: "POST",
       headers: {
@@ -70,11 +73,20 @@ export default class extends Controller {
       },
       body: JSON.stringify(params),
     })
-    .then(() => {
-      this.dropzoneTarget.parentNode.insertAdjacentElement("afterend", this.draggedNote);
+    .then((response) => {
+      if (response.status === 200) {
+        this.dropzoneTarget.parentNode.insertAdjacentElement("afterend", this.draggedNote);
+      }
+      else {
+        this.logSomethingWentWrongReordering();
+      }
     })
     .catch(() => {
-      console.log("Something went wrong reordering the notes.");
+      this.logSomethingWentWrongReordering();
     });
+  }
+
+  logSomethingWentWrongReordering() {
+    console.log("Something went wrong reordering the notes.");
   }
 }
