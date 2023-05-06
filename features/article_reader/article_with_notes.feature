@@ -11,3 +11,8 @@ Feature: Reading an article
     When I am logged in
     And I am viewing the article
     Then I should see "What kind of note is this note?"
+
+  Scenario: I should see the Study cards link
+    When I am logged in
+    And I am viewing the article
+    Then I should see "Study cards"

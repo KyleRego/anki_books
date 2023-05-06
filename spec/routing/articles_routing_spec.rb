@@ -36,5 +36,10 @@ RSpec.describe ArticlesController do
       path = "/articles/#{article_id}/change_note_ordinal_position"
       expect(post: path).to route_to("articles#change_note_ordinal_position", id: article_id)
     end
+
+    it "routes to #study_cards" do
+      path = "/articles/#{article_id}/#{article_title}/study_cards"
+      expect(get: path).to route_to("articles#study_cards", id: article_id, title: article_title)
+    end
   end
 end

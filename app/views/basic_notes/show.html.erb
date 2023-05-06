@@ -1,3 +1,4 @@
+<% @basic_note ||= basic_note %>
 <%= turbo_frame_tag turbo_name_for_basic_note(@basic_note) do %>
   <div class="flex sm:ml-4 md:ml-12"
         data-controller="basic-note">

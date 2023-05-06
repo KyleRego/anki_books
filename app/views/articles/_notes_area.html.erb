@@ -1,0 +1,9 @@
+<div id="article-notes" class="flex flex-col h-full justify-evenly">
+      
+  <% @basic_notes&.each do |basic_note| %>
+    <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
+  <% end %>
+
+  <%= turbo_frame_tag(turbo_frame_for_new_basic_note, src: new_article_basic_note_path(@article)) if logged_in? %>
+
+</div>

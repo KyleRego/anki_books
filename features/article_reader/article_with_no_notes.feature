@@ -21,3 +21,8 @@ Feature: Reading an article
     When I am logged in
     And I am viewing the article
     Then I should see an input with value "Create Basic note"
+
+  Scenario: I should not see the Study cards link
+    When I am logged in
+    And I am viewing the article
+    Then I should not see "Study cards"

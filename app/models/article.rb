@@ -8,6 +8,10 @@ class Article < ApplicationRecord
 
   validates :title, presence: true
 
+  def notes
+    basic_notes.order(:ordinal_position)
+  end
+
   def notes_count
     basic_notes.count
   end
