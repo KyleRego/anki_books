@@ -35,7 +35,7 @@ RSpec.describe "BasicNotes" do
       it "creates a Basic note with ordinal_position 1 if it is the article's second note" do
         create(:basic_note, article:)
 
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
              headers: { "Turbo-Frame": turbo_frame_for_new_basic_note }
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end

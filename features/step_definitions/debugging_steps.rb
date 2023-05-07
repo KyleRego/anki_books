@@ -8,6 +8,10 @@ Then "screenshot" do
   puts "Page screenshot saved to screenshot.png"
 end
 
+Then "show JavaScript console" do
+  puts page.driver.browser.logs.get(:browser)
+end
+
 # rubocop:disable Lint/Debugger
 Then "pry" do
   binding.pry

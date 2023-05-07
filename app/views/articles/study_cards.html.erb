@@ -9,24 +9,8 @@
       </div>
 
       <div class="my-8">
-        <% @basic_notes.each do |basic_note| %>
-          <div data-controller="basic-note">
-            <div id="note-at-ordinal-position-<%=basic_note.ordinal_position %>" class="w-full cursor-pointer py-3 px-2
-                        border border-blue-400 bg-blue-50
-                        font-semibold text-center
-                        studiable-note"
-                data-basic-note-target="note"
-                hidden>
-              <div>
-                <span class="whitespace-pre-wrap"><%= basic_note.front %></span>
-              </div>
-              <div class="border-t border-blue-400 mt-2 pt-2"
-                    data-basic-note-target="back"
-                    hidden>
-                <span class="whitespace-pre-wrap"><%= basic_note.back %></span>
-              </div>
-            </div>
-          </div>
+        <% @basic_notes&.each do |basic_note| %>
+          <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
         <% end %>
       </div>
 

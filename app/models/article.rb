@@ -20,6 +20,10 @@ class Article < ApplicationRecord
     title.parameterize
   end
 
+  def allowed_note_ordinal_position?(note_ordinal_position:)
+    (note_ordinal_position < notes_count) && (note_ordinal_position >= 0)
+  end
+
   def move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)
     old_ordinal_position = note.ordinal_position
     return if old_ordinal_position == new_ordinal_position

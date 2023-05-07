@@ -31,8 +31,9 @@ export default class extends Controller {
     const articleId = document.querySelector("[id^=\"article-\"]").id.split("-").slice(1).join("-");
     const noteId = noteTurboId.split("-").slice(2).join("-");
     this.draggedNote = document.getElementById(noteTurboId);
+    this.noteOfDropzone = this.dropzoneTarget.parentNode.parentNode;
     const oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
-    let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.dropzoneTarget.parentNode);
+    let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.noteOfDropzone);
     if (newOrdinalPosition < oldOrdinalPosition) {
       newOrdinalPosition += 1;
     }
@@ -64,7 +65,6 @@ export default class extends Controller {
     const url = `/articles/${articleId}/change_note_ordinal_position`;
     const params = {note_id: noteId, new_ordinal_position: newOrdinalPosition};
     const authenticityToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    console.log(newOrdinalPosition);
     fetch(url, {
       method: "POST",
       headers: {
@@ -75,7 +75,7 @@ export default class extends Controller {
     })
     .then((response) => {
       if (response.status === 200) {
-        this.dropzoneTarget.parentNode.insertAdjacentElement("afterend", this.draggedNote);
+        this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
       }
       else {
         this.logSomethingWentWrongReordering();

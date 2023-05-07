@@ -21,6 +21,8 @@ Feature: Reading an article
   Scenario: I should see the Create Basic note form if I am logged in
     When I am logged in
     And I am viewing the article
+    Then I should see "New note"
+    When I click the "New note" link
     Then I should see an input with value "Create Basic note"
 
   Scenario: I should not see the Study cards link

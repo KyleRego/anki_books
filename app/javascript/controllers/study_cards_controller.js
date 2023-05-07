@@ -14,7 +14,7 @@ export default class extends Controller {
   }
 
   cardsToStudy() {
-    return Array.from(document.querySelectorAll("div[id^=\"note-at-ordinal-position-\"]"));
+    return Array.from(document.querySelectorAll(".studiable-note"));
   }
 
   startStudyWithFirstCard() {

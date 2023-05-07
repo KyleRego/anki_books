@@ -61,7 +61,7 @@ class ArticlesController < ApplicationController
   end
 
   def valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
-    return false if new_ordinal_position >= @article.notes_count || new_ordinal_position.negative?
+    return false unless @article.allowed_note_ordinal_position?(note_ordinal_position: new_ordinal_position)
 
     return false if note.ordinal_position == new_ordinal_position
 

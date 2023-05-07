@@ -1,9 +1,11 @@
 <div id="article-notes" class="flex flex-col">
-      
+
+  <%= turbo_frame_tag turbo_frame_for_new_basic_note do %>
+    <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+  <% end %>
+
   <% @basic_notes&.each do |basic_note| %>
     <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
   <% end %>
 
 </div>
-
-<%= turbo_frame_tag(turbo_frame_for_new_basic_note, src: new_article_basic_note_path(@article)) if logged_in? %>
