@@ -1,50 +1,48 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "startStudyWithFirstCard", "studyRandomCard", "studyNextCard" ];
+  static targets = [ "startStudyWithFirstCard", "startRandomOrderStudy", "studyPreviousCard", "studyNextCard" ];
 
   connect() {
     this.cardsToStudy = this.cardsToStudy();
     this.numberOfCards = this.cardsToStudy.length;
     this.startStudyWithFirstCardTarget.addEventListener("click", () => this.startStudyWithFirstCard());
-    this.studyRandomCardTarget.addEventListener("click", () => this.studyRandomCard());
+    this.startRandomOrderStudyTarget.addEventListener("click", () => this.startRandomOrderStudy());
+    this.studyPreviousCardTarget.addEventListener("click", () => this.studyPreviousCard());
     this.studyNextCardTarget.addEventListener("click", () => this.studyNextCard());
-  }
-
-  cardsToStudy() {
-    return document.querySelectorAll("div[id^=\"note-at-ordinal-position-\"]");
-  }
-
-  startStudyWithFirstCard() {
-    this.startStudyWithFirstCardTarget.hidden = true;
-    this.studyNextCardTarget.hidden = false;
-    this.cardsToStudy[0].hidden = false;
     this.ordinalPositionOfCurrentCard = 0;
   }
 
-  studyRandomCard() {
-    if (this.startStudyWithFirstCardTarget.hidden === false) {
-      this.startStudyWithFirstCardTarget.hidden = true;
-      this.studyNextCardTarget.hidden = false;
-    } else {
-      this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = true;
-    }
-    this.ordinalPositionOfCurrentCard = this.randomOrdinalPosition();
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
+  cardsToStudy() {
+    return Array.from(document.querySelectorAll("div[id^=\"note-at-ordinal-position-\"]"));
   }
 
-  randomOrdinalPosition() {
-    let newRandomOrdinalPosition = Math.floor(Math.random() * this.numberOfCards);
-    if (newRandomOrdinalPosition !== this.ordinalPositionOfCurrentCard) {
-      return newRandomOrdinalPosition;
-    } else {
-      return this.nextOrdinalPosition();
-    }
+  startStudyWithFirstCard() {
+    this.startStudy();
+    this.cardsToStudy[0].hidden = false;
+  }
+
+  startRandomOrderStudy() {
+    this.startStudy();
+    this.randomizeCards();
+  }
+
+  startStudy() {
+    this.startStudyWithFirstCardTarget.hidden = true;
+    this.startRandomOrderStudyTarget.hidden = true;
+    this.studyPreviousCardTarget.hidden = false;
+    this.studyNextCardTarget.hidden = false;
   }
 
   studyNextCard() {
     this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = true;
     this.ordinalPositionOfCurrentCard = this.nextOrdinalPosition();
+    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
+  }
+
+  studyPreviousCard() {
+    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = true;
+    this.ordinalPositionOfCurrentCard = this.previousOrdinalPosition();
     this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
   }
 
@@ -54,5 +52,18 @@ export default class extends Controller {
     } else {
       return this.ordinalPositionOfCurrentCard + 1;
     }
+  }
+
+  previousOrdinalPosition() {
+    if (this.ordinalPositionOfCurrentCard === 0) {
+      return this.numberOfCards - 1;
+    } else {
+      return this.ordinalPositionOfCurrentCard - 1;
+    }
+  }
+
+  randomizeCards() {
+    this.cardsToStudy.sort(() => Math.random() - 0.5);
+    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
   }
 }

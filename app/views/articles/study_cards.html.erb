@@ -3,40 +3,44 @@
 
     <div data-controller="study-cards">
 
-      <div class="mb-8">
-          <%= link_to "Back to article", article_path_or_root_path_if_system(@article),
-                      class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
+      <div>
+        <%= link_to "Back to article", article_path_or_root_path_if_system(@article),
+                    class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
       </div>
 
-      <% @basic_notes.each do |basic_note| %>
-        <div data-controller="basic-note">
-          <div id="note-at-ordinal-position-<%=basic_note.ordinal_position %>" class="w-full cursor-pointer py-3 px-2
-                      border border-blue-400 bg-blue-50
-                      font-semibold text-center
-                      studiable-note"
-              data-basic-note-target="note"
-              hidden>
-            <div>
-              <span class="whitespace-pre-wrap"><%= basic_note.front %></span>
-            </div>
-            <div class="border-t border-blue-400 mt-2 pt-2"
-                  data-basic-note-target="back"
-                  hidden>
-              <span class="whitespace-pre-wrap"><%= basic_note.back %></span>
+      <div class="my-8">
+        <% @basic_notes.each do |basic_note| %>
+          <div data-controller="basic-note">
+            <div id="note-at-ordinal-position-<%=basic_note.ordinal_position %>" class="w-full cursor-pointer py-3 px-2
+                        border border-blue-400 bg-blue-50
+                        font-semibold text-center
+                        studiable-note"
+                data-basic-note-target="note"
+                hidden>
+              <div>
+                <span class="whitespace-pre-wrap"><%= basic_note.front %></span>
+              </div>
+              <div class="border-t border-blue-400 mt-2 pt-2"
+                    data-basic-note-target="back"
+                    hidden>
+                <span class="whitespace-pre-wrap"><%= basic_note.back %></span>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
 
-      <div class="m-auto w-max flex flex-row mt-4">
-        <span data-study-cards-target="studyNextCard"
+      <div class="m-auto w-max flex flex-row">
+        <span data-study-cards-target="studyPreviousCard"
                 class="mr-4 cursor-pointer text-blue-500 hover:text-blue-600 font-semibold"
-                hidden>Next card</span>
+                hidden>Previous card</span>
         <span data-study-cards-target="startStudyWithFirstCard"
               class="mr-4 cursor-pointer text-blue-500 hover:text-blue-600 font-semibold">First card</span>
-        <span data-study-cards-target="studyRandomCard"
-              class="cursor-pointer text-blue-500 hover:text-blue-600 font-semibold">Random card</span>
-        
+        <span data-study-cards-target="startRandomOrderStudy"
+              class="cursor-pointer text-blue-500 hover:text-blue-600 font-semibold">Random order</span>
+        <span data-study-cards-target="studyNextCard"
+                class="cursor-pointer text-blue-500 hover:text-blue-600 font-semibold"
+                hidden>Next card</span>
       </div>
     </div>
 
