@@ -7,6 +7,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards]
 
   def show
+    redirect_to root_path, status: :moved_permanently if @article.system
+
     @basic_notes = @article.notes
   end
 
@@ -20,7 +22,7 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       flash[:notice] = "Article updated successfully."
-      redirect_to article_path(@article, title: @article.title_slug)
+      redirect_to @article.system ? root_path : article_path(@article, title: @article.title_slug)
     else
       render :edit
     end

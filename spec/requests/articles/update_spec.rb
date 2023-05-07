@@ -2,10 +2,11 @@
 
 RSpec.describe "Articles" do
   let(:user) { create(:user) }
-  let(:article) { create(:article) }
 
   # rubocop:disable RSpec/NestedGroups
-  describe "PATCH /articles/:id/:title" do
+  describe "PATCH /articles/:id/:title for a non-system article" do
+    let(:article) { create(:article) }
+
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
@@ -59,4 +60,18 @@ RSpec.describe "Articles" do
     end
   end
   # rubocop:enable RSpec/NestedGroups
+
+  describe "PATCH /articles/:id/:title for a system article" do
+    let(:system_article) { create(:article, system: true) }
+    let(:valid_params) { { article: { title: "New Title" } } }
+
+    before do
+      post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
+      patch article_path(system_article, title: system_article.title_slug), params: valid_params
+    end
+
+    it "redirects to the root path (homepage)" do
+      expect(response).to redirect_to root_path
+    end
+  end
 end

@@ -39,6 +39,10 @@ When "I use the ctrl + {string} keyboard shortcut" do |string|
   page.send_keys([:control, string])
 end
 
+Then "I should be on the root path" do
+  expect(page).to have_current_path "/"
+end
+
 Then "I should see {string}" do |text|
   expect(page).to have_content(text)
 end
