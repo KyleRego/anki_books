@@ -1,4 +1,5 @@
-Feature: Editing an article
+@javascript
+Feature: Using the undo and redo when editing an article
 
   Background:
     Given there is an article

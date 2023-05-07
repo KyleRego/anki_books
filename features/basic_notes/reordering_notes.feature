@@ -1,3 +1,4 @@
+@javascript
 Feature: Flipping a basic note between front and back
 
   Background:

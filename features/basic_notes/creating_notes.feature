@@ -1,3 +1,4 @@
+@javascript
 Feature: Creating a basic note
 
   Background:

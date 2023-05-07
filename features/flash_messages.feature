@@ -1,3 +1,4 @@
+@javascript
 Feature: Flash messages
 
   Scenario: Dismissing an alert flash message

@@ -1,4 +1,5 @@
-Feature: Editing an article
+@javascript
+Feature: Adding strikethrough when editing an article
 
   Background:
     Given there is an article

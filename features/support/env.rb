@@ -18,6 +18,11 @@ World(FactoryBot::Syntax::Methods)
 
 ActionController::Base.allow_rescue = false
 
+# See https://cucumber.io/docs/cucumber/state/?lang=ruby#browser-automation-and-transactions
+DatabaseCleaner.strategy = :truncation
+Before { DatabaseCleaner.start }
+After { DatabaseCleaner.clean }
+
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
@@ -27,9 +32,4 @@ Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
-Capybara.default_driver = :selenium_chrome
-
-# See https://cucumber.io/docs/cucumber/state/?lang=ruby#browser-automation-and-transactions
-DatabaseCleaner.strategy = :truncation
-Before { DatabaseCleaner.start }
-After { DatabaseCleaner.clean }
+Capybara.javascript_driver = :selenium_chrome

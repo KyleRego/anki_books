@@ -17,6 +17,7 @@ Feature: Reading an article
     When I am viewing the article
     Then I should not see an input with value "Create Basic note"
 
+  @javascript
   Scenario: I should see the Create Basic note form if I am logged in
     When I am logged in
     And I am viewing the article

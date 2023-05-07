@@ -1,3 +1,4 @@
+@javascript
 Feature: Reading an article
 
   Background:

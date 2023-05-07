@@ -27,6 +27,7 @@ Feature: The My articles page
     And I click the "My articles" link
     Then I should see "Logout"
 
+  @javascript
   Scenario: Creating a new article
     Given I am logged in
     When I visit the root path
