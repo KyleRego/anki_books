@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row">
+<div class="flex flex-col sm:flex-row mt-4">
 
   <div id="article-<%= @article.id %>" class="<% if logged_in? || @basic_notes.any? %>sm:w-8/12<% end %>">
     <%= @article.content %>

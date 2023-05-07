@@ -1,4 +1,4 @@
-<div id="article-notes" class="flex flex-col h-full justify-evenly">
+<div id="article-notes" class="flex flex-col">
       
   <% @basic_notes&.each do |basic_note| %>
     <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
