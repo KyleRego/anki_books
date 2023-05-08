@@ -13,3 +13,7 @@
     @apply text-blue-600; 
   }
 }
+
+.min-h-8 {
+  min-height: 2rem;
+}
