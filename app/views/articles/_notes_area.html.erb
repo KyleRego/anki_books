@@ -1,7 +1,11 @@
 <div id="article-notes" class="flex flex-col">
 
-  <%= turbo_frame_tag turbo_frame_for_new_basic_note do %>
-    <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+  <% if logged_in? %>
+    <div class="flex justify-end">
+      <%= turbo_frame_tag turbo_frame_for_new_basic_note do %>
+        <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+      <% end %>
+    </div>
   <% end %>
 
   <% @basic_notes&.each do |basic_note| %>

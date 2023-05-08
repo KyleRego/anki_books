@@ -7,6 +7,10 @@ Feature: Reading an article with one note
     And I am viewing the article
     Then I should not see "Edit"
 
+  Scenario: I should see no New note links if I am not logged in
+    When I am viewing the article
+    Then I should not see "New note"
+
   Scenario: The note should be present
     When I am logged in
     And I am viewing the article

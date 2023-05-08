@@ -13,9 +13,9 @@ Feature: Reading an article
     When I am viewing the article
     Then I should not see "Edit"
 
-  Scenario: I should not see the Create Basic note form if I am not logged in
+  Scenario: I should not see the New note link if I am not logged in
     When I am viewing the article
-    Then I should not see an input with value "Create Basic note"
+    Then I should not see "New note"
 
   @javascript
   Scenario: I should see the Create Basic note form if I am logged in
