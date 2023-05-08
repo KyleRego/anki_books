@@ -14,6 +14,13 @@ When "I click the {string} link" do |link|
   sleep 0.5
 end
 
+When(/^I click the (\d+)(?:st|nd|rd|th)? link with text "(.*?)"$/) do |position, text|
+  index = position.to_i - 1
+  links = all("a", text:)
+  link = links[index]
+  link.click
+end
+
 When "I click the {string} button" do |button|
   click_button button
   sleep 0.5
