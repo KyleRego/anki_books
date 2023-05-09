@@ -59,8 +59,8 @@ class BasicNotesController < ApplicationController
       render turbo_stream: turbo_stream.replace("new_basic_note", template: "basic_notes/show",
                                                                   locals: { basic_note: @basic_note })
     else
-      render turbo_stream: turbo_stream.append(turbo_name_for_basic_note(sibling), template: "basic_notes/show",
-                                                                                   locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.after(turbo_name_for_basic_note(sibling), template: "basic_notes/show",
+                                                                                  locals: { basic_note: @basic_note })
     end
   end
 end

@@ -78,15 +78,11 @@ export default class extends Controller {
         this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
       }
       else {
-        this.logSomethingWentWrongReordering();
+        console.log("Something went wrong, the server responded with a non-200 status code, and the note was not reordered.");
       }
     })
     .catch(() => {
-      this.logSomethingWentWrongReordering();
+      console.log("Something went wrong and the note was not reordered.");
     });
-  }
-
-  logSomethingWentWrongReordering() {
-    console.log("Something went wrong reordering the notes.");
   }
 }
