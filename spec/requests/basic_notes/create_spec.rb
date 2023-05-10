@@ -21,13 +21,13 @@ RSpec.describe "BasicNotes" do
 
       it "creates a new Basic note if the user is logged in" do
         expect do
-          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
                headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
         end.to change(BasicNote, :count).by(1)
       end
 
       it "creates a Basic note with ordinal_position 0 if it is the article's first note" do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
              headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
         expect(article.basic_notes.first.ordinal_position).to eq 0
       end
@@ -43,7 +43,7 @@ RSpec.describe "BasicNotes" do
 
     it "does not create a new Basic note if the user is not logged in" do
       expect do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }),
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
              headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
       end.not_to change(BasicNote, :count)
     end

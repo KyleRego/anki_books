@@ -22,16 +22,20 @@ class BasicNotesController < ApplicationController
 
   def edit; end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
     new_ordinal_position = params[:ordinal_position].to_i
+    @previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
     if @basic_note.save && @article.allowed_note_ordinal_position?(note_ordinal_position: new_ordinal_position)
       order_notes_and_render_appropriate_turbo_stream(new_ordinal_position:)
     else
-      render :new
+      render turbo_stream: turbo_stream.replace(turbo_id_for_new_basic_note(sibling: @previous_sibling),
+                                                template: "basic_notes/new", locals: { basic_note: @basic_note })
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def update
     if @basic_note.update(basic_note_params)

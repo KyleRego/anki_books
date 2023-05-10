@@ -21,7 +21,9 @@ class Article < ApplicationRecord
   end
 
   def allowed_note_ordinal_position?(note_ordinal_position:)
-    (note_ordinal_position < notes_count) && (note_ordinal_position >= 0)
+    return true if note_ordinal_position.zero?
+
+    (note_ordinal_position < notes_count) && note_ordinal_position.positive?
   end
 
   def move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)

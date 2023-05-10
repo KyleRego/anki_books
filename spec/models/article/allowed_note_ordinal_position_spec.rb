@@ -20,4 +20,12 @@ RSpec.describe Article, "#allowed_note_ordinal_position?" do
     # rubocop:enable RSpec/ExampleLength
     # rubocop:enable RSpec/MultipleExpectations
   end
+
+  context "when the article has 0 notes" do
+    let(:article) { create(:article) }
+
+    it "returns true for ordinal position 0" do
+      expect(article.allowed_note_ordinal_position?(note_ordinal_position: 0)).to be true
+    end
+  end
 end
