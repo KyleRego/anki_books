@@ -14,6 +14,9 @@ class BasicNotesController < ApplicationController
   def show; end
 
   def new
+    turbo_id = request.headers["Turbo-Frame"]
+    sibling_note_id = turbo_id.slice(TURBO_NEW_BASIC_NOTE_ID_PREFIX.length..-1)
+    @previous_sibling = BasicNote.find_by(id: sibling_note_id)
     @basic_note = @article.basic_notes.new
   end
 
@@ -54,13 +57,14 @@ class BasicNotesController < ApplicationController
 
   def order_notes_and_render_appropriate_turbo_stream(new_ordinal_position:)
     @article.move_note_to_new_ordinal_position_and_shift_notes(note: @basic_note, new_ordinal_position:)
-    sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
+    previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
     if new_ordinal_position.zero?
       render turbo_stream: turbo_stream.prepend("article-notes", template: "basic_notes/show",
                                                                  locals: { basic_note: @basic_note })
     else
-      render turbo_stream: turbo_stream.after(turbo_id_for_basic_note(sibling), template: "basic_notes/show",
-                                                                                locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.after(turbo_id_for_new_basic_note(sibling: previous_sibling),
+                                              template: "basic_notes/show",
+                                              locals: { basic_note: @basic_note })
     end
   end
 end

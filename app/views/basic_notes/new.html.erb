@@ -1,5 +1,5 @@
-<%= turbo_frame_tag turbo_id_for_new_basic_note do %>
+<%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: @previous_sibling) do %>
   <div data-controller="new-basic-note" data-new-basic-note-target="newBasicNoteFormContainer">
-    <%= render "form", url: article_basic_notes_path(@basic_note.article.id) %>
+    <%= render "form", url: article_basic_notes_path(@article) %>
   </div>
 <% end %>

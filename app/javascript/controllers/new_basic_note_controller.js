@@ -46,21 +46,19 @@ export default class extends Controller {
   }
 
   getOrdinalPosition() {
-    // Check if the new note form is under an existing note.
-    // If it's not, this note is the first note and ordinal position will be 0.
-    const parentDropzone = this.newBasicNoteFormContainerTarget.closest(".note-droppable-area");
-    if (!!parentDropzone) {
-      const allDropZones = document.querySelectorAll(".note-droppable-area");
-      let position = null;
-      for (let i = 0; i < allDropZones.length; i++) {
-        if (parentDropzone === allDropZones[i]) {
-          position = i + 1;
-          break;
-        }
-      }
-      return position;
-    } else {
+    const parentTurboNewNote = this.newBasicNoteFormContainerTarget.closest("[id^='turbo-new-basic-note-']");
+    if (parentTurboNewNote === null) {
       return 0;
     }
+    const siblingNote = parentTurboNewNote.previousElementSibling;
+    const allNotes = document.querySelectorAll("[id^='turbo-basic-note-']");
+    let position = null;
+    for (let i = 0; i < allNotes.length; i++) {
+      if (siblingNote === allNotes[i]) {
+        position = i + 1;
+        break;
+      }
+    }
+    return position;
   }
 }
