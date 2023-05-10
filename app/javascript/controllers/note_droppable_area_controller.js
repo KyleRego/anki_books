@@ -26,12 +26,14 @@ export default class extends Controller {
 
   handleDrop(event) {
     event.preventDefault();
-    this.articleNotes = document.querySelectorAll("[id^=\"basic-note-\"]");
+    this.articleNotes = document.querySelectorAll("[id^=\"turbo-basic-note-\"]");
     const noteTurboId = event.dataTransfer.getData("text/plain");
     const articleId = document.querySelector("[id^=\"article-\"]").id.split("-").slice(1).join("-");
-    const noteId = noteTurboId.split("-").slice(2).join("-");
+    const noteId = noteTurboId.split("-").slice(3).join("-");
     this.draggedNote = document.getElementById(noteTurboId);
+    this.draggedNoteNewNoteSibling = this.draggedNote.nextElementSibling;
     this.noteOfDropzone = this.dropzoneTarget.parentNode.parentNode;
+    this.noteOfDropzoneNewNoteSibling = this.noteOfDropzone.nextElementSibling;
     const oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
     let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.noteOfDropzone);
     if (newOrdinalPosition < oldOrdinalPosition) {
@@ -75,7 +77,8 @@ export default class extends Controller {
     })
     .then((response) => {
       if (response.status === 200) {
-        this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+        this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("afterend", this.draggedNote);
+        this.draggedNote.insertAdjacentElement("afterend", this.draggedNoteNewNoteSibling);
       }
       else {
         console.log("Something went wrong, the server responded with a non-200 status code, and the note was not reordered.");
