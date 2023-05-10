@@ -1,5 +1,5 @@
 <% basic_note ||= @basic_note %>
-<%= turbo_frame_tag turbo_name_for_basic_note(basic_note) do %>
+<%= turbo_frame_tag turbo_id_for_basic_note(basic_note) do %>
   <div data-controller="basic-note" class="studiable-note" <%= "hidden" if on_study_cards? %>>
 
       <div class="w-full cursor-pointer py-3 px-2
@@ -26,7 +26,7 @@
               <div class="flex flex-row justify-between">
                 <%= link_to "Edit", edit_article_basic_note_path(basic_note.article.id, basic_note), class: "font-semibold" %>
 
-                <%= turbo_frame_tag turbo_frame_for_new_basic_note do %>
+                <%= turbo_frame_tag turbo_id_for_new_basic_note do %>
                   <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
                 <% end %>
               </div>

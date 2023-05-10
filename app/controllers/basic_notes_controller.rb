@@ -56,11 +56,11 @@ class BasicNotesController < ApplicationController
     @article.move_note_to_new_ordinal_position_and_shift_notes(note: @basic_note, new_ordinal_position:)
     sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
     if new_ordinal_position.zero?
-      render turbo_stream: turbo_stream.replace("new_basic_note", template: "basic_notes/show",
-                                                                  locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.prepend("article-notes", template: "basic_notes/show",
+                                                                 locals: { basic_note: @basic_note })
     else
-      render turbo_stream: turbo_stream.after(turbo_name_for_basic_note(sibling), template: "basic_notes/show",
-                                                                                  locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.after(turbo_id_for_basic_note(sibling), template: "basic_notes/show",
+                                                                                locals: { basic_note: @basic_note })
     end
   end
 end

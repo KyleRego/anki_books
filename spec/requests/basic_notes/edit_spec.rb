@@ -16,7 +16,7 @@ RSpec.describe "BasicNotes" do
 
     it "redirects to the root page if user is not logged in" do
       get edit_article_basic_note_path(article, basic_note),
-          headers: { "Turbo-Frame": turbo_name_for_basic_note(basic_note) }
+          headers: { "Turbo-Frame": turbo_id_for_basic_note(basic_note) }
       expect(response).to redirect_to(root_path)
     end
   end
