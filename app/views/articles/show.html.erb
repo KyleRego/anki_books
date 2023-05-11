@@ -7,7 +7,7 @@
   </div>
 
   <% if logged_in? || @basic_notes.any? %>
-    <div id="notes-area" class="sm:w-4/12 flex flex-col">
+    <div id="notes-area" class="sm:w-4/12 sm:ml-4">
       <%= render "articles/notes_area" %>
     </div>
   <% end %>

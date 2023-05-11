@@ -1,4 +1,4 @@
-<div id="article-notes" class="flex flex-col">
+<div id="article-notes" class="flex flex-col justify-between h-full">
 
   <% if logged_in? %>
     <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: nil) do %>
