@@ -34,6 +34,9 @@ export default class extends Controller {
     this.draggedNoteNewNoteSibling = this.draggedNote.nextElementSibling;
     this.noteOfDropzone = this.dropzoneTarget.parentNode.parentNode;
     this.noteOfDropzoneNewNoteSibling = this.noteOfDropzone.nextElementSibling;
+    if (!this.noteOfDropzoneNewNoteSibling.classList.contains("new-note-turbo-frame")) {
+      this.noteOfDropzoneNewNoteSibling = null;
+    }
     const oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
     let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.noteOfDropzone);
     if (newOrdinalPosition < oldOrdinalPosition) {
@@ -77,8 +80,12 @@ export default class extends Controller {
     })
     .then((response) => {
       if (response.status === 200) {
-        this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("afterend", this.draggedNote);
-        this.draggedNote.insertAdjacentElement("afterend", this.draggedNoteNewNoteSibling);
+        if (!!this.noteOfDropzoneNewNoteSibling) {
+          this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("afterend", this.draggedNote);
+          this.draggedNote.insertAdjacentElement("afterend", this.draggedNoteNewNoteSibling);
+        } else {
+          this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+        }
       }
       else {
         console.log("Something went wrong, the server responded with a non-200 status code, and the note was not reordered.");
