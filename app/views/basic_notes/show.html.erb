@@ -34,3 +34,9 @@
 
   </div>
 <% end %>
+
+<% if logged_in? %>
+  <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: basic_note), class: "new-note-turbo-frame" do %>
+    <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+  <% end %>
+<% end %>

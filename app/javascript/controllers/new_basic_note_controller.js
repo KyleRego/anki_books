@@ -30,6 +30,7 @@ export default class extends Controller {
       if (response.ok) {
         response.text().then(html => {
           Turbo.renderStreamMessage(html);
+          this.newBasicNoteFormContainerTarget.parentNode.hidden = true;
         });
       }
     })
