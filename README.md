@@ -4,10 +4,11 @@
 
 ### Development plan
 
-- Automated tests of note reordering
 - Refactoring
+- Set up more robust seeding
 - Javascript and ERB code linting
 - Stimulus unit testing
+- Read mode
 - Add inline code elements and MathJax button to add to article editor
 - Articles and basic note delete actions
 - Add downloading Anki decks

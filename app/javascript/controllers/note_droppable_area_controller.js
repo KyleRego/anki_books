@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { parseCSRFTokenFromHTML } from "./shared_methods";
 
 export default class extends Controller {
   static targets = ["dropzone"];
@@ -38,15 +39,15 @@ export default class extends Controller {
     if (!this.noteOfDropzoneNewNoteSibling.classList.contains("new-note-turbo-frame")) {
       this.noteOfDropzoneNewNoteSibling = null;
     }
-    const oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
-    let newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.noteOfDropzone);
-    if (newOrdinalPosition < oldOrdinalPosition) {
-      newOrdinalPosition += 1;
+    this.oldOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.draggedNote);
+    this.newOrdinalPosition = this.ordinalPositionInArticleNotesOf(this.noteOfDropzone);
+    if (this.newOrdinalPosition < this.oldOrdinalPosition) {
+      this.newOrdinalPosition += 1;
     }
-    if (this.dropDoesNotMoveDraggedNote(oldOrdinalPosition, newOrdinalPosition)) {
+    if (this.dropDoesNotMoveDraggedNote()) {
       return;
     } else {
-      this.changeNoteOrdinalPosition(articleId, noteId, newOrdinalPosition);
+      this.changeNoteOrdinalPosition(articleId, noteId);
     }
   }
 
@@ -65,14 +66,14 @@ export default class extends Controller {
     return position;
   }
 
-  dropDoesNotMoveDraggedNote(oldOrdinalPosition, newOrdinalPosition) {
-    return ((oldOrdinalPosition === newOrdinalPosition));
+  dropDoesNotMoveDraggedNote() {
+    return ((this.oldOrdinalPosition === this.newOrdinalPosition));
   }
 
-  changeNoteOrdinalPosition(articleId, noteId, newOrdinalPosition) {
+  changeNoteOrdinalPosition(articleId, noteId) {
     const url = `/articles/${articleId}/change_note_ordinal_position`;
-    const params = {note_id: noteId, new_ordinal_position: newOrdinalPosition};
-    const authenticityToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const params = {note_id: noteId, new_ordinal_position: this.newOrdinalPosition};
+    const authenticityToken = parseCSRFTokenFromHTML();
     fetch(url, {
       method: "POST",
       headers: {
@@ -96,8 +97,15 @@ export default class extends Controller {
 
   updateNoteOrdinalPositionInHTML() {
     if (!!this.noteOfDropzoneNewNoteSibling) {
-      this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("afterend", this.draggedNote);
-      this.draggedNote.insertAdjacentElement("afterend", this.draggedNoteNewNoteSibling);
+      console.log(this.newOrdinalPosition);
+      console.log(this.oldOrdinalPosition);
+      if (this.newOrdinalPosition === 1 && this.oldOrdinalPosition === 0) {
+        this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("beforebegin", this.draggedNote);
+        this.draggedNote.insertAdjacentElement("beforebegin", this.draggedNoteNewNoteSibling);
+      } else {
+        this.noteOfDropzoneNewNoteSibling.insertAdjacentElement("afterend", this.draggedNote);
+        this.draggedNote.insertAdjacentElement("afterend", this.draggedNoteNewNoteSibling);
+      }
     } else {
       this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
     }

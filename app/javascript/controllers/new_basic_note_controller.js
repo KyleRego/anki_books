@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { parseCSRFTokenFromHTML } from "./shared_methods";
 
 export default class extends Controller {
   static targets = [ "newBasicNoteFormContainer" ];
@@ -16,7 +17,7 @@ export default class extends Controller {
     event.preventDefault();
     const url = this.formTarget.action;
     const params = { basic_note: { front: this.getFront(), back: this.getBack() }, ordinal_position: this.getOrdinalPosition() };
-    const authenticityToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ?? null;
+    const authenticityToken = parseCSRFTokenFromHTML();
 
     fetch(url, {
       method: "POST",
