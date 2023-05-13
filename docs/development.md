@@ -55,9 +55,3 @@ Check subject capitalization.....................[CapitalizedSubject] OK
 ```
 
 Changes to the `.overcommit.yml` file may require you to verify the changes and sign with `overcommit --sign`. This is a security mechanism since Git hooks could be used in general to do something malicious.
-
-# Known issues
-
-## Changes to files in app/javascript are not automatically reloaded
-
-For now, I have added the `rails assets:precompile` command to the beginning of the `bin/dev` script. After making changes to the Stimulus files or the other JavaScript files, the application server needs to be stopped and restarted to reload the changes.

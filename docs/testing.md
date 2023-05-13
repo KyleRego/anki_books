@@ -51,9 +51,3 @@ end
 This step definition will match both the "When" and "And" steps in the test.
 
 It may be a good practice to define the step definitions in each file grouped with all the "Given" ones first, followed by the "When" ones, and ending with the "Then" ones.
-
-# Known issues
-
-## Difficulty simulating the user pressing the enter key with the article editor
-
-I have had some difficulty doing automated tests of the article editor that involve pressing the Enter key. It seems that this adds a `<div>` but when getting the editor content in the step definitions, the `<div>` is not represented by anything. I am considering what the best way to deal with this issue may because it is preventing larger end-to-end tests of the editor.

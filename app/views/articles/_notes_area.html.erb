@@ -1,4 +1,4 @@
-<div id="article-notes" class="flex flex-col justify-start h-full">
+<div id="article-notes" class="<%= class_for_notes_area %>">
 
   <% if logged_in? %>
     <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: nil), class: "new-note-turbo-frame" do %>
@@ -7,11 +7,7 @@
   <% end %>
 
   <% @basic_notes&.each do |basic_note| %>
-
     <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
-
-    
-
   <% end %>
 
 </div>

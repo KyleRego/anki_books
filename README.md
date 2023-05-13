@@ -1,14 +1,16 @@
 ## README
 
+[Live application](https://ankibooks.io)
+
 ### Development plan
 
-- Features to add to the article editor
-  - Inline code
-  - MathJax
-- Edit, Create new article buttons need CSS
-- Favicon
-- Add Anki Record gem and note/deck schema requirements
-- Front-end work on flashcards user interface
-- Add Anki deck package generation/downloads
+- Automated tests of note reordering
+- Refactoring
+- Javascript and ERB code linting
+- Stimulus unit testing
+- Add inline code elements and MathJax button to add to article editor
+- Articles and basic note delete actions
+- Add downloading Anki decks
 - Develop Anki client
-- Email server and permanent users table
+- S3 for files
+- Devise users
