@@ -1,4 +1,4 @@
-<div id="article-notes" class="<%= class_for_notes_area %>">
+<div id="article-notes" class="sm:scrollable-notes">
 
   <% if logged_in? %>
     <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: nil), class: "new-note-turbo-frame" do %>

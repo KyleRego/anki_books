@@ -11,12 +11,4 @@ module ArticlesHelper
 
     article_path(article, title: article.title_slug)
   end
-
-  def class_for_notes_area
-    if logged_in?
-      "h-full flex flex-col justify-start"
-    else
-      "h-full flex flex-col justify-around"
-    end
-  end
 end

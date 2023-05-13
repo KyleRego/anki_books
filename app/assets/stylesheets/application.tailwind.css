@@ -17,3 +17,13 @@
 .min-h-8 {
   min-height: 2rem;
 }
+
+@media (min-width: 640px) {
+  .sm\:scrollable-notes {
+    max-height: 90vh;
+    overflow-x: auto;
+    overflow-y: scroll;
+    position: sticky;
+    top: 32px;
+  }
+}

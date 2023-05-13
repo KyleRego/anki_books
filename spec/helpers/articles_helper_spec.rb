@@ -16,18 +16,4 @@ RSpec.describe "ArticlesHelper" do
       expect(helper.article_path_or_root_path_if_system(system_article)).to eq "/"
     end
   end
-
-  describe "#class_for_notes_area" do
-    it "returns the class list including justify-start when user is logged in" do
-      allow(helper).to receive(:logged_in?).and_return(true)
-
-      expect(helper.class_for_notes_area).to eq("h-full flex flex-col justify-start")
-    end
-
-    it "returns the class list including justify-around when user is not logged in" do
-      allow(helper).to receive(:logged_in?).and_return(false)
-
-      expect(helper.class_for_notes_area).to eq("h-full flex flex-col justify-around")
-    end
-  end
 end
