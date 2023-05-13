@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { parseCSRFTokenFromHTML } from "./shared_methods";
 
 export default class extends Controller {
   static targets = ["dropzone"];
@@ -73,7 +72,7 @@ export default class extends Controller {
   changeNoteOrdinalPosition(articleId, noteId) {
     const url = `/articles/${articleId}/change_note_ordinal_position`;
     const params = {note_id: noteId, new_ordinal_position: this.newOrdinalPosition};
-    const authenticityToken = parseCSRFTokenFromHTML();
+    const authenticityToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ?? null;
     fetch(url, {
       method: "POST",
       headers: {
