@@ -3,8 +3,8 @@
 ##
 # ArticlesController handles actions related to articles.
 class ArticlesController < ApplicationController
-  before_action :require_login, only: %i[edit create update change_note_ordinal_position]
-  before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards]
+  before_action :require_login, only: %i[edit create update change_note_ordinal_position destroy]
+  before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards destroy]
 
   def show
     redirect_to root_path, status: :moved_permanently if @article.system
@@ -25,6 +25,15 @@ class ArticlesController < ApplicationController
       redirect_to @article.system ? root_path : article_path(@article, title: @article.title_slug)
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @article.system
+      head :unprocessable_entity
+    else
+      @article.destroy
+      redirect_to user_articles_path(user_id: current_user.id)
     end
   end
 

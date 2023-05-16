@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   get "/articles/:id/:title", to: "articles#show", as: "article"
   patch "/articles/:id/:title", to: "articles#update"
   put "/articles/:id/:title", to: "articles#update"
+  delete "/articles/:id/:title", to: "articles#destroy"
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
                                                      as: "article_change_note_ordinal_position"
   get "/articles/:id/:title/study_cards", to: "articles#study_cards", as: "article_study_cards"
 
+  # TODO: Use :id instead of :user_id here
   get "/users/:user_id/articles", to: "users#articles", as: "user_articles"
   post "/users/:user_id/articles", to: "articles#create", as: "new_article"
 

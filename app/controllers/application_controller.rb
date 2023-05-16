@@ -5,6 +5,8 @@
 class ApplicationController < ActionController::Base
   private
 
+  include SessionsHelper
+
   def require_turbo_request
     head :forbidden if request.headers["Turbo-Frame"].blank?
   end
@@ -14,9 +16,5 @@ class ApplicationController < ActionController::Base
 
     flash[:alert] = "You must be logged in to access this page."
     redirect_to root_path
-  end
-
-  def logged_in?
-    session[:user_id]
   end
 end

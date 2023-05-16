@@ -26,6 +26,18 @@ When "I click the {string} button" do |button|
   sleep 0.5
 end
 
+When "I click the {string} button and accept the confirmation" do |string|
+  accept_confirm do
+    click_button(string)
+  end
+end
+
+When "I click the {string} button and dismiss the confirmation" do |string|
+  dismiss_confirm do
+    click_button(string)
+  end
+end
+
 When "I fill in the {string} field with {string}" do |field, value|
   fill_in field, with: value
 end
