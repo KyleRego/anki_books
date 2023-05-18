@@ -1,0 +1,14 @@
+<h1 class="text-3xl font-bold mb-4">
+  Manage articles
+</h1>
+
+<div class="my-4">
+  <% @articles.each do |article| %>
+    <% next if article.system %>
+    <%= button_to "Delete #{article.title}",
+        article_path_or_root_path_if_system(article),
+        method: :delete,
+        form: { data: { turbo_confirm: "Are you sure you want to delete #{article.title}"} }
+    %>
+  <% end %>
+</div>

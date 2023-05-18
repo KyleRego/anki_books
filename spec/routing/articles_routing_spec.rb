@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe ArticlesController do
   let(:user_id) { "6" }
+  let(:book_id) { "3" }
   let(:article_id) { "1e8e5d81-09b4-4757-bbea-f024997d6b35" }
   let(:article_title) { "slug-title" }
 
@@ -12,9 +13,13 @@ RSpec.describe ArticlesController do
       expect(get: "/").to route_to("articles#homepage")
     end
 
+    it "routes to #new" do
+      expect(get: "/books/#{book_id}/articles/new").to route_to("articles#new", book_id:)
+    end
+
     it "routes to #create" do
       path = "/users/#{user_id}/articles"
-      expect(post: path).to route_to("articles#create", user_id:)
+      expect(post: path).to route_to("articles#create", id: user_id)
     end
 
     it "routes to #edit" do

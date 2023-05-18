@@ -4,7 +4,8 @@ Feature: Deleting an article
     Given there is an article with "3" basic note(s)
     And I am logged in
     And I am viewing the article
-    And I click the "My articles" link
+    And I click the "My books" link
+    And I click the "Manage articles" link
 
   @javascript
   Scenario: Confirmation before deleting an article and confirming deletes the article

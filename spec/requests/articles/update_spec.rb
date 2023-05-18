@@ -5,7 +5,8 @@ RSpec.describe "Articles" do
 
   # rubocop:disable RSpec/NestedGroups
   describe "PATCH /articles/:id/:title for a non-system article" do
-    let(:article) { create(:article) }
+    let(:book) { create(:book) }
+    let(:article) { create(:article, book:) }
 
     context "when user is logged in" do
       before do

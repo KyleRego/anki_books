@@ -5,11 +5,13 @@ CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
 Given "there is an article" do
-  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE)
+  @test_book = create(:book)
+  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)
 end
 
 Given "there is an article with {string} basic note\\(s)" do |string|
-  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE)
+  @test_book = create(:book)
+  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)
   num_notes = string.to_i
   if num_notes == 1
     create(:basic_note, article: @test_article, front: CUCUMBER_TEST_BASIC_NOTE_FRONT,

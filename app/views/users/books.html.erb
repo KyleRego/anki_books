@@ -1,0 +1,18 @@
+<h1 class="text-4xl font-bold mb-4">
+  Hi, <%= current_user.username %>
+</h1>
+
+<div>
+  <% @books.each do |book| %>
+    <%= link_to book.title, book_path(book, title: book.title), class: "text-blue-500 hover:text-blue-600" %>
+    <br>
+  <% end %>
+</div>
+
+<div class="mt-4 mb-2">
+  <%= link_to "New book", new_book_path %>
+</div>
+
+<div>
+  <%= link_to "Manage articles", user_manage_articles_path(current_user) %>
+</div>

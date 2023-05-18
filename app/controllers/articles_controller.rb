@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-##
-# ArticlesController handles actions related to articles.
+# :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, only: %i[edit create update change_note_ordinal_position destroy]
   before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards destroy]
@@ -12,11 +11,22 @@ class ArticlesController < ApplicationController
     @basic_notes = @article.notes
   end
 
-  def edit; end
+  def new
+    @book = Book.find(params[:book_id])
+    @article = Article.new title: "My new article"
+  end
+
+  def edit
+    @book = @article.book
+  end
 
   def create
-    @article = Article.create title: "My new article"
-    redirect_to edit_article_path(@article, title: @article.title_slug)
+    @article = Article.new(article_params)
+    if @article.save
+      redirect_to article_path(@article, title: @article.title_slug)
+    else
+      render :new
+    end
   end
 
   def update
@@ -24,6 +34,7 @@ class ArticlesController < ApplicationController
       flash[:notice] = "Article updated successfully."
       redirect_to @article.system ? root_path : article_path(@article, title: @article.title_slug)
     else
+      @book = @article.book
       render :edit
     end
   end
@@ -33,7 +44,7 @@ class ArticlesController < ApplicationController
       head :unprocessable_entity
     else
       @article.destroy
-      redirect_to user_articles_path(user_id: current_user.id)
+      redirect_to user_books_path(user_id: current_user.id)
     end
   end
 
@@ -66,7 +77,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :content)
+    params.require(:article).permit(:title, :content, :book_id)
   end
 
   def valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)

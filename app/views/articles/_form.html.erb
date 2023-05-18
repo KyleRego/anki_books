@@ -2,7 +2,7 @@
   <%= render "trix_config" %>
 <% end %>
 
-<%= form_with model: @article do |form| %>
+<%= form_with(model: @article, url:) do |form| %>
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -12,6 +12,8 @@
     <%= form.label :content %>
     <%= form.rich_text_area :content %>
   </div>
+
+  <%= form.hidden_field :book_id, value: @book.id %>
 
   <%= form.submit %>
 <% end %>

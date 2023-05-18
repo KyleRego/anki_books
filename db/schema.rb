@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_03_002008) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_17_213315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_002008) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "system", default: false, null: false
+    t.uuid "book_id"
   end
 
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -69,6 +70,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_002008) do
     t.uuid "article_id", null: false
     t.integer "ordinal_position", null: false
     t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
+  end
+
+  create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "user_id"
+    t.uuid "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -83,5 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_002008) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "articles", "books"
   add_foreign_key "basic_notes", "articles"
 end

@@ -3,6 +3,7 @@
 ##
 # Articles represent where the user can write long-form text content.
 class Article < ApplicationRecord
+  belongs_to :book, optional: true
   has_rich_text :content
   has_many :basic_notes, dependent: :destroy
 

@@ -3,6 +3,7 @@
 Given "I am logged in" do
   password = "1234abcd1234"
   user = create(:user, password:)
+  @test_user = user
   visit login_path
   fill_in "Email", with: user.email
   fill_in "Password", with: password

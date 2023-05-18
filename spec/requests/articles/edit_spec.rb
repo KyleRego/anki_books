@@ -2,7 +2,8 @@
 
 RSpec.describe "Articles" do
   let(:user) { create(:user) }
-  let(:article) { create(:article) }
+  let(:book) { create(:book) }
+  let(:article) { create(:article, book:) }
 
   describe "GET /articles/:id/:title/edit" do
     context "when user is logged in" do
