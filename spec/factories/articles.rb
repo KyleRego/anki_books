@@ -3,5 +3,6 @@
 FactoryBot.define do
   factory :article do
     title { "Hello World" }
+    book { create(:book) }
   end
 end

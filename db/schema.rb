@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_17_213315) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_212048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_213315) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "system", default: false, null: false
-    t.uuid "book_id"
+    t.uuid "book_id", null: false
   end
 
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -79,8 +79,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_213315) do
   end
 
   create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "user_id"
-    t.uuid "book_id"
+    t.bigint "user_id", null: false
+    t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
