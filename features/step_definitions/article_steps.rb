@@ -9,6 +9,11 @@ Given "there is an article" do
   @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)
 end
 
+Given "there is an article with the title {string}" do |title|
+  @test_book = create(:book)
+  @test_article = create(:article, title:, book: @test_book)
+end
+
 Given "there is an article with {string} basic note\\(s)" do |string|
   @test_book = create(:book)
   @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)

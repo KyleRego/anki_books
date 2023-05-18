@@ -6,7 +6,7 @@ module ArticlesHelper
     request.path.end_with?("study_cards")
   end
 
-  def article_path_or_root_path_if_system(article)
+  def back_to_article_path(article)
     return root_path if article.system
 
     article_path(article, title: article.title_slug)

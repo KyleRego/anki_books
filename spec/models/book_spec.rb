@@ -19,4 +19,11 @@ RSpec.describe Book do
       expect(book).to be_invalid
     end
   end
+
+  describe "title_slug" do
+    it "sluggifies the article title" do
+      book = build(:book, title: "Example Title . . for book")
+      expect(book.title_slug).to eq "example-title-for-book"
+    end
+  end
 end

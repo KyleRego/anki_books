@@ -3,6 +3,8 @@
 ##
 # Articles represent where the user can write long-form text content.
 class Article < ApplicationRecord
+  include TitleSluggable
+
   belongs_to :book, optional: true
   has_rich_text :content
   has_many :basic_notes, dependent: :destroy
@@ -15,10 +17,6 @@ class Article < ApplicationRecord
 
   def notes_count
     basic_notes.count
-  end
-
-  def title_slug
-    title.parameterize
   end
 
   def allowed_note_ordinal_position?(note_ordinal_position:)
