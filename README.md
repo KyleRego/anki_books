@@ -1,17 +1,3 @@
 ## README
 
-[Live application](https://ankibooks.io)
-
-### Development plan
-
-- Refactoring
-- Set up more robust seeding
-- Javascript and ERB code linting
-- Stimulus unit testing
-- Read mode
-- Add inline code elements and MathJax button to add to article editor
-- Articles and basic note delete actions
-- Add downloading Anki decks
-- Develop Anki client
-- S3 for files
-- Devise users
+Anki Books is a note-taking and flashcards app developing towards the goal of syncing flashcards to the desktop app Anki. You can usually see it at [ankibooks.io](https://ankibooks.io).
