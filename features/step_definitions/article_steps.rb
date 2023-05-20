@@ -14,9 +14,13 @@ Given "there is an article with the title {string}" do |title|
   @test_article = create(:article, title:, book: @test_book)
 end
 
-Given "there is an article with {string} basic note\\(s)" do |string|
-  @test_book = create(:book)
-  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)
+book_article_notes_setup = <<-DESC
+  there is a book titled {string} with an article titled {string} that has {string} basic note\\(s)
+DESC
+book_article_notes_setup = book_article_notes_setup.strip
+Given(book_article_notes_setup) do |book_title, article_title, string|
+  @test_book = create(:book, title: book_title, users: [@test_user])
+  @test_article = create(:article, title: article_title, book: @test_book)
   num_notes = string.to_i
   if num_notes == 1
     create(:basic_note, article: @test_article, front: CUCUMBER_TEST_BASIC_NOTE_FRONT,

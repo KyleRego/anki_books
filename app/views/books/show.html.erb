@@ -1,4 +1,4 @@
-<h1 class="text-4xl font-bold mb-4">
+<h1 class="text-4xl font-bold">
   <%= @book.title %>
 </h1>
 
@@ -12,4 +12,8 @@
 
 <div class="my-4">
   <%= link_to "New article", new_book_article_path(@book) %>
+</div>
+
+<div>
+  <%= link_to "Manage articles", book_manage_articles_path(@book, title: @book.title) %>
 </div>

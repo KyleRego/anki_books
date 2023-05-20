@@ -6,11 +6,12 @@ RSpec.describe "BasicNotes" do
   include BasicNotesHelper
 
   let(:user) { create(:user) }
-  let(:article) { create(:article) }
+  let(:book) { create(:book) }
+  let(:article) { create(:article, book:) }
 
-  describe "GET /users/:id/articles" do
+  describe "GET /books/:id/manage_articles" do
     it "redirects to the root page if user is not logged in" do
-      get user_manage_articles_path(user)
+      get book_manage_articles_path(book, title: book.title_slug)
       expect(response).to redirect_to(root_path)
     end
 
@@ -20,7 +21,7 @@ RSpec.describe "BasicNotes" do
       end
 
       it "returns a success response" do
-        get user_manage_articles_path(user)
+        get book_manage_articles_path(book, title: book.title_slug)
         expect(response).to be_successful
       end
     end

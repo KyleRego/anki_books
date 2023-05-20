@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 Given "I am logged in" do
-  password = "1234abcd1234"
-  user = create(:user, password:)
-  @test_user = user
   visit login_path
-  fill_in "Email", with: user.email
-  fill_in "Password", with: password
+  fill_in "Email", with: @test_user.email
+  fill_in "Password", with: @test_user_password
   click_button "Log in"
   sleep 0.5
 end

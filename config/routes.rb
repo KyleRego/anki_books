@@ -23,9 +23,9 @@ Rails.application.routes.draw do
   resources :books, only: %i[new create] do
     resources :articles, only: :new
   end
+  get "/books/:id/:title/manage_articles", to: "books#manage_articles", as: "book_manage_articles"
 
   get "/users/:id/books", to: "users#books", as: "user_books"
-  get "/users/:id/manage_articles", to: "users#manage_articles", as: "user_manage_articles"
   post "/users/:id/articles", to: "articles#create", as: "new_article"
 
   resources :articles, only: [], param: :id do

@@ -20,12 +20,15 @@ Style/StringLiterals:
 
 Style/GlobalStdStream:
   Exclude:
-    - 'config/environments/production.rb'
+    - config/environments/production.rb
 
 Style/RedundantFetchBlock:
   Exclude:
-    - 'config/puma.rb'
+    - config/puma.rb
 
-# Not going to support translations to begin with.
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/requests/**/*.rb
+
 Rails/I18nLocaleTexts:
   Enabled: false

@@ -3,11 +3,9 @@
 # :nodoc:
 class BooksController < ApplicationController
   before_action :require_login
+  before_action :set_book_and_articles, only: %w[show manage_articles]
 
-  def show
-    @book = Book.find params[:id]
-    @articles = @book.articles
-  end
+  def show; end
 
   def new
     @book = Book.new
@@ -21,11 +19,22 @@ class BooksController < ApplicationController
     end
   end
 
+  def manage_articles; end
+
   # TODO: Edit and update actions
 
   private
 
   def book_params
     params.require(:book).permit(:title)
+  end
+
+  def book_articles
+    @book.articles.order(:title)
+  end
+
+  def set_book_and_articles
+    @book = Book.find(params[:id])
+    @articles = book_articles
   end
 end

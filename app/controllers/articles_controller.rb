@@ -43,8 +43,9 @@ class ArticlesController < ApplicationController
     if @article.system
       head :unprocessable_entity
     else
+      @book = @article.book
       @article.destroy
-      redirect_to user_books_path(user_id: current_user.id)
+      redirect_to book_path(@book, title: @book.title_slug)
     end
   end
 

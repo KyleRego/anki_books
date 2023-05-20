@@ -1,7 +1,7 @@
 Feature: Reading an article with one note
 
   Background:
-    Given there is an article with "1" basic note(s)
+    Given there is a book titled "test book 1" with an article titled "test article 1" that has "1" basic note(s)
 
   Scenario: I should see no Edit links if I am not logged in
     And I am viewing the article

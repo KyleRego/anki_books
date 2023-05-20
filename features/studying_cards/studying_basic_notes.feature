@@ -2,7 +2,7 @@
 Feature: Reading an article
 
   Background:
-    Given there is an article with "3" basic note(s)
+    Given there is a book titled "test book 1" with an article titled "test article 1" that has "3" basic note(s)
     And I am viewing the article
     And I click the "Study cards" link
 

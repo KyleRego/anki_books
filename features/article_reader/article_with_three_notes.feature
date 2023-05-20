@@ -1,7 +1,7 @@
 Feature: Reading an article with one note
 
   Background:
-    Given there is an article with "3" basic note(s)
+    Given there is a book titled "test book 1" with an article titled "test article 1" that has "3" basic note(s)
 
   Scenario: I should see all three notes
     When I am viewing the article
