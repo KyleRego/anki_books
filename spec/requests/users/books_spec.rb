@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "BasicNotes" do
+RSpec.describe "Users" do
   include BasicNotesHelper
 
   let(:user) { create(:user) }

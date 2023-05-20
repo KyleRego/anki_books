@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get "/books/:id/:title/manage_articles", to: "books#manage_articles", as: "book_manage_articles"
 
   get "/users/:id/books", to: "users#books", as: "user_books"
+  get "/users/:id/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
   post "/users/:id/articles", to: "articles#create", as: "new_article"
 
   resources :articles, only: [], param: :id do

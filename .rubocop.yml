@@ -18,6 +18,10 @@ AllCops:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+
 Style/GlobalStdStream:
   Exclude:
     - config/environments/production.rb

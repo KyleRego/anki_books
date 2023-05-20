@@ -2,16 +2,16 @@
 
 require "rails_helper"
 
-RSpec.describe "Books" do
+RSpec.describe "Users" do
   include BasicNotesHelper
 
   let(:user) { create(:user) }
-  let(:book) { create(:book) }
-  let(:article) { create(:article, book:) }
+  let(:book1) { create(:book) }
+  let(:article) { create(:article, book: book1) }
 
-  describe "GET /books/:id/manage_articles" do
+  describe "GET /users/:id/download_anki_deck" do
     it "redirects to the root page if user is not logged in" do
-      get book_manage_articles_path(book, title: book.title_slug)
+      get user_download_anki_deck_path(user)
       expect(response).to redirect_to(root_path)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe "Books" do
       end
 
       it "returns a success response" do
-        get book_manage_articles_path(book, title: book.title_slug)
+        get user_download_anki_deck_path(user)
         expect(response).to be_successful
       end
     end

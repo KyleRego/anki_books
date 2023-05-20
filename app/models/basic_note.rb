@@ -4,8 +4,9 @@
 # Represents a note of the default Basic Anki note type.
 class BasicNote < ApplicationRecord
   include AnkiRecord::Helpers::TimeHelper
+  include AnkiRecord::NoteGuidHelper
 
-  before_validation :set_anki_id_if_nil
+  before_validation :set_anki_id_if_nil, :set_anki_guid_if_nil
 
   belongs_to :article
 
@@ -18,5 +19,9 @@ class BasicNote < ApplicationRecord
 
   def set_anki_id_if_nil
     self.anki_id ||= milliseconds_since_epoch
+  end
+
+  def set_anki_guid_if_nil
+    self.anki_guid ||= globally_unique_id
   end
 end
