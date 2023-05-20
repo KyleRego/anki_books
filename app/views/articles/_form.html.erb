@@ -3,9 +3,9 @@
 <% end %>
 
 <%= form_with(model: @article, url:) do |form| %>
-  <div class="field">
+  <div class="field mb-4">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: "w-full" %>
   </div>
 
   <div class="field" data-controller="article-editor" data-article-editor-target="editorContainer">
