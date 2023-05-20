@@ -21,7 +21,6 @@ Feature: Creating basic notes at different ordinal positions
     And I fill in the "Front" field with "test insert note"
     And I fill in the "Back" field with "test insert note back"
     And I click the "Create Basic note" button
-    Then screenshot
     Then the article's basic note with front "test insert note" should be at ordinal position "2"
     And I should see the 3rd basic note of the article has front "test insert note"
     And the article's basic note with front "Front of note 2" should be at ordinal position "3"

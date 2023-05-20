@@ -15,4 +15,9 @@ Feature: The website homepage
     And I click the "Study cards" link
     And I click the "Back to article" link
     Then I should be on the root path
-  
+
+  Scenario: Visiting the homepage when logged in
+    Given I am logged in
+    When I visit the root path
+    Then I should see "My books"
+    And I should not see a link to the homepage article's book

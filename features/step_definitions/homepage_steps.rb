@@ -6,3 +6,7 @@ HOMEPAGE_BASIC_NOTE_BACK = "back of homepage basic note"
 When "the homepage has a basic note" do
   create(:basic_note, article: @system_article, front: HOMEPAGE_BASIC_NOTE_FRONT, back: HOMEPAGE_BASIC_NOTE_BACK)
 end
+
+Then "I should not see a link to the homepage article's book" do
+  expect(page).not_to have_content(@system_book.title)
+end

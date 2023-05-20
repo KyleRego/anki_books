@@ -2,7 +2,7 @@
 Feature: Adding code blocks when editing an article
 
   Background:
-    Given there is an article
+    Given there is a book titled "test book 0" with an article titled "test article 0"
     And I am logged in
     And I am editing the article
 

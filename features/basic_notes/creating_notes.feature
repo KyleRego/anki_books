@@ -2,7 +2,7 @@
 Feature: Creating a basic note
 
   Background:
-    Given there is an article
+    Given there is a book titled "test book 0" with an article titled "test article 0"
     And I am logged in
     And I am viewing the article
 
@@ -11,7 +11,6 @@ Feature: Creating a basic note
     And I fill in the "Front" field with "Front of my note"
     And I fill in the "Back" field with "Back of my note"
     And I click the "Create Basic note" button
-    Then screenshot
     Then I should see "Front of my note" in a basic note
     And I should see "Edit" in a basic note
 

@@ -74,7 +74,8 @@ class ArticlesController < ApplicationController
   private
 
   def set_article
-    @article = Article.find_by id: params[:id]
+    @article = Article.find_by(id: params[:id])
+    @book = @article.book
   end
 
   def article_params

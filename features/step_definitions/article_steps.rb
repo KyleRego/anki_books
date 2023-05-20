@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
-CUCUMBER_TEST_ARTICLE_TITLE = "This is the test article for Cucumber tests"
 CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
-Given "there is an article" do
-  @test_book = create(:book)
-  @test_article = create(:article, title: CUCUMBER_TEST_ARTICLE_TITLE, book: @test_book)
-end
-
-Given "there is an article with the title {string}" do |title|
-  @test_book = create(:book)
-  @test_article = create(:article, title:, book: @test_book)
+Given "there is a book titled {string} with an article titled {string}" do |book_title, article_title|
+  @test_book = create(:book, title: book_title)
+  @test_article = create(:article, title: article_title, book: @test_book)
 end
 
 book_article_notes_setup = <<-DESC

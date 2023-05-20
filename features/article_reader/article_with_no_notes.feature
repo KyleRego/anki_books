@@ -1,7 +1,7 @@
 Feature: Reading an article
 
   Background:
-    Given there is an article
+    Given there is a book titled "test book 0" with an article titled "test article 0"
 
   Scenario: Clicking the Edit link if I am logged in
     When I am logged in
