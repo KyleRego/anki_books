@@ -80,6 +80,10 @@
   margin: auto;
 }
 
+.trix-content li {
+  list-style-type: circle ;
+}
+
 trix-editor pre {
   background-color: white !important;
 }

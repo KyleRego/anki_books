@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row mt-4">
+<div class="flex flex-col sm:flex-row my-4">
 
   <div id="article-<%= @article.id %>" class="<% if logged_in? || @basic_notes.any? %>sm:w-8/12<% end %>">
     <%= @article.content %>
@@ -7,7 +7,7 @@
   </div>
 
   <% if logged_in? || @basic_notes.any? %>
-    <div id="notes-area" class="sm:w-4/12 sm:ml-4">
+    <div id="notes-area" class="mt-4 sm:w-4/12 sm:ml-4 sm:mt-4">
       <%= render "articles/notes_area" %>
     </div>
   <% end %>
