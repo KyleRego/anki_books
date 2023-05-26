@@ -14,6 +14,13 @@ RSpec.describe "BasicNotes" do
       expect(response).to have_http_status(:forbidden)
     end
 
+    it "does not create a new Basic note if the user is not logged in" do
+      expect do
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
+             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+      end.not_to change(BasicNote, :count)
+    end
+
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
@@ -35,17 +42,37 @@ RSpec.describe "BasicNotes" do
       it "creates a Basic note with ordinal_position 1 if it is the article's second note" do
         sibling = create(:basic_note, article:)
 
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
-             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling:) }
+        expect do
+          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
+               headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling:) }
+        end.to change(BasicNote, :count).by(1)
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end
-    end
 
-    it "does not create a new Basic note if the user is not logged in" do
-      expect do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
+      it "creates a Basic note between two notes that the article already has" do
+        sibling = create(:basic_note, article:)
+        create(:basic_note, article:)
+
+        expect do
+          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
+               headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling:) }
+        end.to change(BasicNote, :count).by(1)
+        expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+      end
+
+      it "returns a 422 response if the ordinal_position param is less than 0" do
+        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: -1),
              headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
-      end.not_to change(BasicNote, :count)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "returns a 422 response if the ordinal_position param is more than the article's number of notes" do
+        post article_basic_notes_path(article,
+                                      basic_note: { front: "Front", back: "Back" },
+                                      ordinal_position: article.notes_count + 1),
+             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end

@@ -19,10 +19,16 @@ class Article < ApplicationRecord
     basic_notes.count
   end
 
-  def allowed_note_ordinal_position?(note_ordinal_position:)
+  def current_ordinal_position_range_includes?(note_ordinal_position:)
     return true if note_ordinal_position.zero?
 
     (note_ordinal_position < notes_count) && note_ordinal_position.positive?
+  end
+
+  def valid_ordinal_position_for_new_note?(note_ordinal_position:)
+    return true if note_ordinal_position == notes_count
+
+    current_ordinal_position_range_includes?(note_ordinal_position:)
   end
 
   def move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)

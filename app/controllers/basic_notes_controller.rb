@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-##
-# Handles actions related to Basic notes. Basic notes do not have any
-# standalone views so all requests this handles should come through Turbo.
+# :nodoc:
 class BasicNotesController < ApplicationController
   include BasicNotesHelper
 
@@ -22,20 +20,28 @@ class BasicNotesController < ApplicationController
 
   def edit; end
 
+  # TODO: A service that manages the ordinal position of a new note and also moves
+  # the note to new ordinal position in articles#change_ordinal_position?
+  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
-    new_ordinal_position = params[:ordinal_position].to_i
-    @previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
-    if @basic_note.save && @article.allowed_note_ordinal_position?(note_ordinal_position: new_ordinal_position)
-      order_notes_and_render_appropriate_turbo_stream(new_ordinal_position:)
+
+    if !@article.valid_ordinal_position_for_new_note?(note_ordinal_position: ordinal_position_param)
+      head :unprocessable_entity
+    elsif @basic_note.save
+      @article.move_note_to_new_ordinal_position_and_shift_notes(note: @basic_note,
+                                                                 new_ordinal_position: ordinal_position_param)
+      render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
     else
+      @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
       render turbo_stream: turbo_stream.replace(turbo_id_for_new_basic_note(sibling: @previous_sibling),
                                                 template: "basic_notes/new", locals: { basic_note: @basic_note })
     end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def update
     if @basic_note.update(basic_note_params)
@@ -59,9 +65,11 @@ class BasicNotesController < ApplicationController
     params.require(:basic_note).permit(:front, :back)
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def order_notes_and_render_appropriate_turbo_stream(new_ordinal_position:)
-    @article.move_note_to_new_ordinal_position_and_shift_notes(note: @basic_note, new_ordinal_position:)
+  def ordinal_position_param
+    @ordinal_position_param ||= params[:ordinal_position].to_i
+  end
+
+  def render_appropriate_turbo_stream_for_create(new_ordinal_position:)
     if new_ordinal_position.zero?
       render turbo_stream: turbo_stream.before(turbo_id_for_new_basic_note(sibling: nil),
                                                template: "basic_notes/show",
@@ -73,5 +81,4 @@ class BasicNotesController < ApplicationController
                                                locals: { basic_note: @basic_note })
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end
