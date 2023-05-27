@@ -27,7 +27,7 @@ Feature: Adding links when editing an article
     Then I should see the text "this is my link" linking to "https://kylerego.github.io"
 
   Scenario: Selecting a link and making it not a link
-    When I fill in the article editor with "this is my link"
+    When I fill in the article editor with "this is my link to test making it not a link"
     And I select the text in the article editor
     And I click the "Link" button
     And I fill in the link URL form with "https://kylerego.github.io"
@@ -35,4 +35,6 @@ Feature: Adding links when editing an article
     And I select the text in the article editor
     And I click the "Link" button
     And I click the URL form "Unlink" button
-    Then I should see the text "this is my link" but it should not be a link
+    Then I should see "this is my link to test making it not a link"
+    Then I should see "this is my link to test making it not a link"
+    And I should not see a "this is my link to test making it not a link" link

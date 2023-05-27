@@ -2,8 +2,8 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login, only: %i[edit create update change_note_ordinal_position destroy]
-  before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards destroy]
+  before_action :require_login, only: %i[edit create update change_note_ordinal_position manage destroy]
+  before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards manage destroy]
 
   def show
     redirect_to root_path, status: :moved_permanently if @article.system
@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
 
   def new
     @book = Book.find(params[:book_id])
-    @article = Article.new title: "My new article"
+    @article = Article.new(title: "My new article")
   end
 
   def edit
@@ -52,7 +52,7 @@ class ArticlesController < ApplicationController
   def homepage
     # Plan is to have more than one system article in the future.
     # For now, just have one and it will serve as the homepage.
-    @article = Article.find_by system: true
+    @article = Article.find_by(system: true)
     @basic_notes = @article.notes
   end
 
@@ -70,6 +70,8 @@ class ArticlesController < ApplicationController
   def study_cards
     @basic_notes = @article.notes
   end
+
+  def manage; end
 
   private
 

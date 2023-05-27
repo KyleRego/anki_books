@@ -74,17 +74,16 @@ Then "I should not see an input with value {string}" do |string|
   expect(page).not_to have_selector("input[type='submit'][value='#{string}']")
 end
 
+Then "I should not see a {string} link" do |text|
+  expect(page).not_to have_link(text)
+end
+
 Then "I should see a {string} placeholder" do |placeholder|
   expect(page).to have_selector("input[placeholder='#{placeholder}']")
 end
 
 Then "I should see the text {string} linking to {string}" do |text, url|
   expect(page).to have_link(text, href: url)
-end
-
-Then "I should see the text {string} but it should not be a link" do |text|
-  expect(page).to have_content(text)
-  expect(page).to_not have_link(text)
 end
 
 Then "I should see {string} in bold" do |text|

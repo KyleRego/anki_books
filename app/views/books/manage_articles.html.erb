@@ -1,14 +1,14 @@
-<h1 class="text-3xl font-bold mb-4">
+<h1 class="text-4xl font-bold">
   Manage articles
 </h1>
 
 <div class="my-4">
   <% @articles.each do |article| %>
     <% next if article.system %>
-    <%= button_to "Delete #{article.title}",
-        back_to_article_path(article),
-        method: :delete,
-        form: { data: { turbo_confirm: "Are you sure you want to delete #{article.title}"} }
+    <%= link_to "Manage #{article.title}",
+        manage_article_path(article, title: article.title_slug),
+        class: "text-blue-500 hover:text-blue-600"
     %>
+    <br>
   <% end %>
 </div>
