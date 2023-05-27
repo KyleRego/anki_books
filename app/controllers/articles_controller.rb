@@ -6,9 +6,12 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards manage destroy]
 
   def show
-    redirect_to root_path, status: :moved_permanently if @article.system
-
-    @basic_notes = @article.notes
+    if @article.nil? || @article.system
+      flash[:alert] = "No article was found for that URL path or identifier."
+      redirect_to root_path, status: :moved_permanently
+    else
+      @basic_notes = @article.notes
+    end
   end
 
   def new
@@ -77,7 +80,7 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.find_by(id: params[:id])
-    @book = @article.book
+    @book = @article&.book
   end
 
   def article_params
