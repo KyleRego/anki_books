@@ -80,8 +80,14 @@
   margin: auto;
 }
 
-.trix-content li {
-  list-style-type: circle ;
+.trix-content ul li {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+.trix-content ol li {
+  list-style-type: decimal;
+  list-style-position: inside;
 }
 
 trix-editor pre {
