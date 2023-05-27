@@ -5,7 +5,7 @@
 <div class="mt-4">
   <% @articles.each do |article| %>
     <% next if article.system %>
-    <%= link_to article.title, article_path(article, article.title_slug), class: "text-blue-500 hover:text-blue-600" %>
+    <%= link_to article.title, article.custom_path, class: "text-blue-500 hover:text-blue-600" %>
     <br>
   <% end %>
 </div>
@@ -15,5 +15,5 @@
 </div>
 
 <div>
-  <%= link_to "Manage articles", book_manage_articles_path(@book, title: @book.title_slug) %>
+  <%= link_to "Manage articles", @book.custom_manage_path %>
 </div>

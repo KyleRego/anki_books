@@ -8,7 +8,7 @@ RSpec.describe "ArticlesHelper" do
     let(:system_article) { create(:article, system: true) }
 
     it "returns article path for non-system article" do
-      expect(helper.back_to_article_path(article)).to eq helper.article_path(article, title: article.title_slug)
+      expect(helper.back_to_article_path(article)).to eq article.custom_path
     end
 
     it "returns root path for system article" do

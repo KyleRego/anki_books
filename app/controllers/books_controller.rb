@@ -3,7 +3,7 @@
 # :nodoc:
 class BooksController < ApplicationController
   before_action :require_login
-  before_action :set_book_and_articles, only: %w[show manage_articles]
+  before_action :set_book_and_articles, only: %w[show manage]
 
   def show; end
 
@@ -19,7 +19,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def manage_articles; end
+  def manage; end
 
   # TODO: Edit and update actions
 

@@ -6,13 +6,13 @@
     <% end %>
 
     <% if show_study_cards_link?(@article) %>
-      <%= link_to("Study cards", article_study_cards_path(@article, title: @article.title_slug), class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
+      <%= link_to("Study cards", @article.custom_study_cards_path, class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
     <% end %>
 
     <% if logged_in? %>
-      <% if (@book&.persisted? && !current_page?(book_path(@book, @book.title_slug))) %>
+      <% if (@book&.persisted? && !current_page?(@book.custom_path)) %>
         <%= link_to("#{@book.title}",
-                  book_path(@book, @book.title_slug),
+                  @book.custom_path,
                   class: "text-blue-500 hover:text-blue-600 font-semibold ml-4")  %>
       <% elsif !current_page?(user_books_path(current_user)) %>
         <%= link_to("My books",

@@ -40,3 +40,7 @@ RSpec/ExampleLength:
 
 Rails/I18nLocaleTexts:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - app/models/**/*.rb

@@ -6,7 +6,7 @@ RSpec.describe "Articles" do
 
   describe "GET /articles/:id/:title/study_cards" do
     it "returns a successful response" do
-      get article_study_cards_path(article, title: article.title)
+      get article.custom_study_cards_path
       expect(response).to be_successful
     end
   end

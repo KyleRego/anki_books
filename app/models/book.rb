@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 ##
-# A book is a container for articles
+# A book is a group of articles.
 class Book < ApplicationRecord
+  include Book::PathHelpers
   include TitleSluggable
 
   has_many :articles, dependent: :destroy

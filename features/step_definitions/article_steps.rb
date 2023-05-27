@@ -27,12 +27,12 @@ Given(book_article_notes_setup) do |book_title, article_title, string|
 end
 
 When "I am viewing the article" do
-  visit article_path(@test_article, title: @test_article.title_slug)
+  visit @test_article.custom_path
   sleep 1 if @test_article&.basic_notes&.any?
 end
 
 When "I am editing the article" do
-  visit edit_article_path(@test_article, title: @test_article.title_slug)
+  visit @test_article.custom_edit_path
 end
 
 When "I fill in the article editor with {string}" do |text|
@@ -86,11 +86,11 @@ When "I focus the article editor" do
 end
 
 Then "I should be redirected to the article" do
-  expect(page).to have_current_path article_path(@test_article, title: @test_article.title_slug)
+  expect(page).to have_current_path @test_article.custom_path
 end
 
 Then "I should be redirected to the editor for the article" do
-  expect(page).to have_current_path edit_article_path(@test_article, title: @test_article.title_slug)
+  expect(page).to have_current_path @test_article.custom_edit_path
 end
 
 Then "I should see a code block with syntax highlighting" do

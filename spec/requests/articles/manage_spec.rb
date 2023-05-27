@@ -9,7 +9,7 @@ RSpec.describe "Articles" do
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        get manage_article_path(article, title: article.title_slug)
+        get article.custom_manage_path
       end
 
       it "returns a success response" do
@@ -19,7 +19,7 @@ RSpec.describe "Articles" do
 
     context "when user is not logged in" do
       before do
-        get manage_article_path(article, title: article.title_slug)
+        get article.custom_manage_path
       end
 
       it "redirects to the root page" do

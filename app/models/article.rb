@@ -2,7 +2,9 @@
 
 ##
 # Articles represent where the user can write long-form text content.
+# The article is also a container for a group of notes.
 class Article < ApplicationRecord
+  include Article::PathHelpers
   include TitleSluggable
 
   belongs_to :book, optional: true

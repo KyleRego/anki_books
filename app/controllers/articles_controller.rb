@@ -23,7 +23,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      redirect_to article_path(@article, title: @article.title_slug)
+      redirect_to @article.custom_path
     else
       render :new
     end
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       flash[:notice] = "Article updated successfully."
-      redirect_to @article.system ? root_path : article_path(@article, title: @article.title_slug)
+      redirect_to @article.system ? root_path : @article.custom_path
     else
       @book = @article.book
       render :edit
@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     else
       @book = @article.book
       @article.destroy
-      redirect_to book_path(@book, title: @book.title_slug)
+      redirect_to @book.custom_path
     end
   end
 

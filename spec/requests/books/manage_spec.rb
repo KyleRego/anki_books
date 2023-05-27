@@ -9,9 +9,9 @@ RSpec.describe "Books" do
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
-  describe "GET /books/:id/manage_articles" do
+  describe "GET /books/:id/manage" do
     it "redirects to the root page if user is not logged in" do
-      get book_manage_articles_path(book, title: book.title_slug)
+      get book_manage_path(book, title: book.title_slug)
       expect(response).to redirect_to(root_path)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe "Books" do
       end
 
       it "returns a success response" do
-        get book_manage_articles_path(book, title: book.title_slug)
+        get book_manage_path(book, title: book.title_slug)
         expect(response).to be_successful
       end
     end

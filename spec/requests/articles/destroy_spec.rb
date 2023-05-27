@@ -16,20 +16,20 @@ RSpec.describe "Articles" do
       end
 
       it "deletes the article and redirects to show the book" do
-        expect { delete article_path(id: article.id, title: article.title_slug) }.to change(Article, :count).by(-1)
-        expect(response).to redirect_to book_path(book, title: book.title_slug)
+        expect { delete article.custom_path }.to change(Article, :count).by(-1)
+        expect(response).to redirect_to book.custom_path
       end
 
       it "returns a 422 response if the article is a system article" do
         article.update(system: true)
-        delete article_path(id: article.id, title: article.title_slug)
+        delete article.custom_path
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
     context "when not logged in" do
       it "does not delete the article" do
-        expect { delete article_path(id: article.id, title: article.title_slug) }.not_to change(Article, :count)
+        expect { delete article.custom_path }.not_to change(Article, :count)
       end
     end
   end

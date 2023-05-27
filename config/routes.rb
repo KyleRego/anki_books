@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :books, only: %i[new create] do
     resources :articles, only: :new
   end
-  get "/books/:id/:title/manage_articles", to: "books#manage_articles", as: "book_manage_articles"
+  get "/books/:id/:title/manage", to: "books#manage", as: "book_manage"
 
   get "/users/:id/books", to: "users#books", as: "user_books"
   get "/users/:id/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"

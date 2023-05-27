@@ -2,8 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/DescribeMethod
-RSpec.describe Article, "validations" do
+RSpec.describe Article, "#valid?" do
   it "is valid with a title" do
     article = build(:article, title: "Example Title")
     expect(article).to be_valid
@@ -19,4 +18,3 @@ RSpec.describe Article, "validations" do
     expect(article).to be_invalid
   end
 end
-# rubocop:enable RSpec/DescribeMethod

@@ -17,6 +17,6 @@ module ArticlesHelper
   def back_to_article_path(article)
     return root_path if article.system
 
-    article_path(article, title: article.title_slug)
+    article.custom_path
   end
 end
