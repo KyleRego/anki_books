@@ -1,5 +1,6 @@
 # Deployment
 
+- `pg_dump -U <username> -W -F tar -d <database_name> -f <date>_anki_books_backup.tar`
 - `git fetch`
 - `git pull`
 - `bundle install`

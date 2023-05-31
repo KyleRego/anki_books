@@ -6,7 +6,7 @@ There are two categories of tests in Anki Books:
 
 ## RSpec
 
-The RSpec examples cover the unit tests and small integration tests. It should be used to test the granular behavior of objects. The examples should be written such that when the RSpec test suite is run with the `--format doc` option, the output provides documentation of what the objects should do. The RSpec examples are in `spec` and should generally have a 1-to-1 mapping with the source code files (e.g. the RSpec tests for `article.rb` should be in `article_spec.rb`).
+The RSpec examples cover the unit tests and small integration tests. It should be used to test the granular behavior of objects. The examples should be written such that when the RSpec test suite is run with the `--format doc` option, the output provides documentation of what the objects should do. As soon as there is a significant number of RSpec examples for a class, each method being tested should get its own test code file.
 
 ## Cucumber
 
