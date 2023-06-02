@@ -62,6 +62,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "erb_lint", require: false
   gem "overcommit", "~> 0.60.0"
   gem "rspec-rails"
   gem "rubocop-capybara", "~> 2.17"
@@ -85,3 +86,5 @@ end
 gem "bcrypt", "~> 3.1"
 
 gem "anki_record", "~> 0.3.2"
+
+gem "better_html", "~> 2.0"

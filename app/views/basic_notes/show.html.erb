@@ -1,6 +1,10 @@
 <% basic_note ||= @basic_note %>
 <%= turbo_frame_tag turbo_id_for_basic_note(basic_note) do %>
-  <div data-controller="basic-note" class="studiable-note" <%= "hidden" if on_study_cards? %>>
+  <% if on_study_cards? %>
+    <div data-controller="basic-note" class="studiable-note" hidden>
+  <% else %>
+    <div data-controller="basic-note" class="studiable-note">
+  <% end %>
 
       <div class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center draggable-div-of-note"
             data-basic-note-target="note" draggable="<%= logged_in? && !on_study_cards? %>">
