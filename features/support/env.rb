@@ -12,7 +12,9 @@ SimpleCov.add_filter do |source_file|
   source_file.filename.include?("/features/step_definitions/")
 end
 
-SimpleCov.start
+SimpleCov.start do
+  enable_coverage :branch
+end
 
 World(FactoryBot::Syntax::Methods)
 

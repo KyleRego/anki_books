@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-##
-# Articles represent where the user can write long-form text content.
-# The article is also a container for a group of notes.
+# :nodoc:
 class Article < ApplicationRecord
   include Article::PathHelpers
   include TitleSluggable
@@ -40,7 +38,7 @@ class Article < ApplicationRecord
     note.update!(ordinal_position: notes_count)
     if new_ordinal_position > old_ordinal_position
       shift_notes_down_to_open_position_for_note(old_ordinal_position:, new_ordinal_position:)
-    elsif new_ordinal_position < old_ordinal_position
+    else
       shift_notes_up_to_open_position_for_note(old_ordinal_position:, new_ordinal_position:)
     end
     note.update!(ordinal_position: new_ordinal_position)
