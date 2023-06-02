@@ -3,8 +3,8 @@
 ##
 # Represents a note of the default Basic Anki note type.
 class BasicNote < ApplicationRecord
-  include AnkiRecord::Helpers::TimeHelper
-  include AnkiRecord::NoteGuidHelper
+  include AnkiTimestampable
+  include AnkiGuidable
 
   before_validation :set_anki_id_if_nil, :set_anki_guid_if_nil
 
@@ -18,10 +18,10 @@ class BasicNote < ApplicationRecord
   private
 
   def set_anki_id_if_nil
-    self.anki_id ||= milliseconds_since_epoch
+    self.anki_id ||= anki_milliseconds_timestamp
   end
 
   def set_anki_guid_if_nil
-    self.anki_guid ||= globally_unique_id
+    self.anki_guid ||= anki_guid
   end
 end
