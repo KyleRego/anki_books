@@ -12,10 +12,12 @@ class BooksController < ApplicationController
   end
 
   def create
-    if (@book = current_user.books.create(book_params))
+    @book = current_user.books.create(book_params)
+    if @book.save
       redirect_to user_books_path(current_user)
     else
-      render :new
+      flash.now[:alert] = "A book must have a title."
+      render :new, status: :unprocessable_entity
     end
   end
 

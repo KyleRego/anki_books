@@ -28,7 +28,9 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article.custom_path
     else
-      render :new
+      @book = Book.find(params[:article][:book_id])
+      flash.now[:alert] = "An article must have a title."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -38,7 +40,8 @@ class ArticlesController < ApplicationController
       redirect_to @article.system ? root_path : @article.custom_path
     else
       @book = @article.book
-      render :edit
+      flash.now[:alert] = "The article must have a title."
+      render :edit, status: :unprocessable_entity
     end
   end
 

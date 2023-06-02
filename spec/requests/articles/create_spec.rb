@@ -21,6 +21,12 @@ RSpec.describe "Articles" do
         post(new_article_path(user), params:)
         expect(article.book).to eq book
       end
+
+      it "does not create a new article if the title was blank" do
+        params = { article: { title: "", content: "", book_id: book.id } }
+        expect { post(new_article_path(user), params:) }.not_to change(Article, :count)
+        expect(flash[:alert]).to eq("An article must have a title.")
+      end
     end
 
     context "when not logged in" do

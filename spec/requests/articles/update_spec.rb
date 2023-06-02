@@ -43,6 +43,10 @@ RSpec.describe "Articles" do
         it "does not update the article" do
           expect(article.reload.title).not_to eq("")
         end
+
+        it "shows an alert flash message" do
+          expect(flash[:alert]).to eq("The article must have a title.")
+        end
       end
     end
 

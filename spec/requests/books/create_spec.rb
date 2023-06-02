@@ -10,12 +10,15 @@ RSpec.describe "Books" do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
       it "creates a new book" do
         expect { post books_path, params: { book: { title: "the title" } } }.to change(Book, :count).by 1
         expect(user.books.last.title).to eq "the title"
       end
-      # rubocop:enable RSpec/MultipleExpectations
+
+      it "does not create a new book and shows a flash alert if the title was blank" do
+        expect { post books_path, params: { book: { title: "" } } }.not_to change(Book, :count)
+        expect(flash[:alert]).to eq("A book must have a title.")
+      end
     end
 
     context "when not logged in" do
