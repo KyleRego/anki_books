@@ -3,8 +3,9 @@
 # :nodoc:
 class CreateUserAnkiDeck
   # rubocop:disable Metrics/MethodLength
-  def self.perform(user:, anki_deck_name:, target_directory:)
-    AnkiRecord::AnkiPackage.new(name: anki_deck_name, target_directory:) do |collection|
+  # rubocop:disable Metrics/AbcSize
+  def self.perform(user:)
+    AnkiRecord::AnkiPackage.new(name:, target_directory:) do |collection|
       deck = collection.find_deck_by name: "Default"
       note_type = collection.find_note_type_by name: "Basic"
 
@@ -16,6 +17,26 @@ class CreateUserAnkiDeck
         anki_note.save
       end
     end
+    created_anki_deck_path
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+
+  class << self
+    include AnkiTimestampable
+
+    private
+
+    def created_anki_deck_path
+      "#{target_directory}/#{name}.apkg"
+    end
+
+    def name
+      @name ||= "anki_books_package_#{anki_milliseconds_timestamp}"
+    end
+
+    def target_directory
+      Dir.tmpdir
+    end
+  end
 end

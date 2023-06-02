@@ -21,6 +21,11 @@ RSpec.describe "Users" do
       end
 
       it "returns a success response" do
+        fixture_path = "./spec/fixtures/anki_package.apkg"
+        allow(CreateUserAnkiDeck).to receive(:perform).and_return(fixture_path)
+        assert_enqueued_with(job: DeleteAnkiDeckJob, args: [{ anki_deck_file_path: fixture_path }]) do
+          DeleteAnkiDeckJob.set(wait: 3.minutes).perform_later(anki_deck_file_path: fixture_path)
+        end
         get user_download_anki_deck_path(user)
         expect(response).to be_successful
       end

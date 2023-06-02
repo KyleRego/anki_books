@@ -2,8 +2,6 @@
 
 # :nodoc:
 class UsersController < ApplicationController
-  include AnkiTimestampable
-
   before_action :require_login, :set_articles
 
   def books
@@ -11,10 +9,7 @@ class UsersController < ApplicationController
   end
 
   def download_anki_deck
-    anki_deck_name = "anki_books_package_#{anki_milliseconds_timestamp}"
-    target_directory = Dir.tmpdir
-    CreateUserAnkiDeck.perform(user: current_user, anki_deck_name:, target_directory:)
-    anki_deck_file_path = "#{target_directory}/#{anki_deck_name}.apkg"
+    anki_deck_file_path = CreateUserAnkiDeck.perform(user: current_user)
     send_file(anki_deck_file_path, disposition: "attachment")
     DeleteAnkiDeckJob.set(wait: 3.minutes).perform_later(anki_deck_file_path:)
   end
