@@ -71,14 +71,14 @@ class BasicNotesController < ApplicationController
 
   def render_appropriate_turbo_stream_for_create(new_ordinal_position:)
     if new_ordinal_position.zero?
-      render turbo_stream: turbo_stream.before(turbo_id_for_new_basic_note(sibling: nil),
-                                               template: "basic_notes/show",
-                                               locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.replace(turbo_id_for_new_basic_note(sibling: nil),
+                                                template: "basic_notes/show",
+                                                locals: { basic_note: @basic_note })
     else
       previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
-      render turbo_stream: turbo_stream.before(turbo_id_for_new_basic_note(sibling: previous_sibling),
-                                               template: "basic_notes/show",
-                                               locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.after(turbo_id_for_basic_note(previous_sibling),
+                                              template: "basic_notes/show",
+                                              locals: { basic_note: @basic_note })
     end
   end
 end
