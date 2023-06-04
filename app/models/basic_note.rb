@@ -13,6 +13,7 @@ class BasicNote < ApplicationRecord
   validates :front, presence: true
   validates :back, presence: true
   validates :anki_id, presence: true, numericality: { only_integer: true }, length: { is: 13 }
+  validates :anki_guid, presence: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :article_id }
 
   private
