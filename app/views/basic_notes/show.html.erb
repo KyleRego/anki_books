@@ -1,5 +1,4 @@
-<% basic_note ||= @basic_note %>
-<%= turbo_frame_tag turbo_id_for_basic_note(basic_note) do %>
+<%= turbo_frame_tag turbo_id_for_basic_note(@basic_note) do %>
   <% if on_study_cards? %>
     <div data-controller="basic-note" class="studiable-note" hidden>
   <% else %>
@@ -10,11 +9,11 @@
             data-basic-note-target="note" draggable="<%= logged_in? && !on_study_cards? %>">
 
         <div>
-          <span class="whitespace-pre-wrap"><%= basic_note.front %></span>
+          <span class="whitespace-pre-wrap"><%= @basic_note.front %></span>
         </div>
 
         <div data-basic-note-target="back" class="border-t border-blue-400 mt-2 pt-2" hidden>
-          <span class="whitespace-pre-wrap"><%= basic_note.back %></span>
+          <span class="whitespace-pre-wrap"><%= @basic_note.back %></span>
         </div>
 
       </div>
@@ -24,7 +23,7 @@
           <div class="note-droppable-area" data-controller="note-droppable-area" data-note-droppable-area-target="dropzone">
 
             <div class="flex flex-row justify-between">
-              <%= link_to "Edit", edit_article_basic_note_path(basic_note.article.id, basic_note), class: "font-semibold" %>
+              <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
             </div>
 
           </div>
@@ -35,7 +34,7 @@
 <% end %>
 
 <% if logged_in? && !on_study_cards? %>
-  <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: basic_note), class: "new-note-turbo-frame" do %>
+  <%= turbo_frame_tag turbo_id_for_new_basic_note(sibling: @basic_note), class: "new-note-turbo-frame" do %>
     <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
   <% end %>
 <% end %>

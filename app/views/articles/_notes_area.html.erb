@@ -7,7 +7,8 @@
   <% end %>
 
   <% @basic_notes&.each do |basic_note| %>
-    <%= render template: "basic_notes/show", locals: { basic_note: basic_note } %>
+    <% @basic_note = basic_note %>
+    <%= render template: "basic_notes/show" %>
   <% end %>
 
 </div>
