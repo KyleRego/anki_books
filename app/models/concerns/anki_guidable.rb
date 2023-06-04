@@ -8,7 +8,7 @@ module AnkiGuidable
     include AnkiRecord::NoteGuidHelper
   end
 
-  def anki_guid
+  def anki_globally_unique_id
     globally_unique_id
   end
 end

@@ -22,6 +22,6 @@ class BasicNote < ApplicationRecord
   end
 
   def set_anki_guid_if_nil
-    self.anki_guid ||= anki_guid
+    self.anki_guid ||= anki_globally_unique_id
   end
 end
