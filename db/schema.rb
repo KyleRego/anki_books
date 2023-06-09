@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_151405) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_09_234230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_151405) do
     t.uuid "article_id", null: false
     t.integer "ordinal_position", null: false
     t.string "anki_guid"
+    t.index ["anki_guid"], name: "index_basic_notes_on_anki_guid", unique: true
     t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
   end
 
