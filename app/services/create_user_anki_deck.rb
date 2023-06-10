@@ -2,9 +2,25 @@
 
 # :nodoc:
 class CreateUserAnkiDeck
+  def self.path_to_anki_package_regex
+    %r{\A/tmp/\d{13}/anki_books_package_\d{13}.apkg\z}
+  end
+
+  def self.perform(user:)
+    new(user:).perform
+  end
+
+  include AnkiTimestampable
+
+  attr_reader :user
+
+  def initialize(user:)
+    @user = user
+  end
+
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
-  def self.perform(user:)
+  def perform
     AnkiRecord::AnkiPackage.new(name:, target_directory:) do |collection|
       deck = collection.find_deck_by name: "Default"
       note_type = collection.find_note_type_by name: "Basic"
@@ -22,32 +38,24 @@ class CreateUserAnkiDeck
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
-  def self.path_to_anki_package_regex
-    %r{\A/tmp/\d{13}/anki_books_package_\d{13}.apkg\z}
+  private
+
+  def created_anki_deck_path
+    "#{target_directory}/#{name}.apkg"
   end
 
-  class << self
-    include AnkiTimestampable
+  def name
+    @name ||= "anki_books_package_#{timestamp}"
+  end
 
-    private
+  def target_directory
+    tmp_directory = Dir.tmpdir
+    @target_directory = "#{tmp_directory}/#{timestamp}"
+    FileUtils.mkdir_p(@target_directory)
+    @target_directory
+  end
 
-    def created_anki_deck_path
-      "#{target_directory}/#{name}.apkg"
-    end
-
-    def name
-      @name ||= "anki_books_package_#{timestamp}"
-    end
-
-    def target_directory
-      tmp_directory = Dir.tmpdir
-      @target_directory = "#{tmp_directory}/#{timestamp}"
-      FileUtils.mkdir_p(@target_directory)
-      @target_directory
-    end
-
-    def timestamp
-      @timestamp ||= anki_milliseconds_timestamp
-    end
+  def timestamp
+    @timestamp ||= anki_milliseconds_timestamp
   end
 end

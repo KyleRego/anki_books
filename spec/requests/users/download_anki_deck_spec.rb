@@ -17,12 +17,12 @@ RSpec.describe "Users" do
 
     context "when user is logged in" do
       before do
+        fixture_path = "./spec/fixtures/anki_package.apkg"
+        allow(CreateUserAnkiDeck).to receive(:perform).and_return(fixture_path)
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
       it "returns a success response" do
-        fixture_path = "./spec/fixtures/anki_package.apkg"
-        allow(CreateUserAnkiDeck).to receive(:perform).and_return(fixture_path)
         assert_enqueued_with(job: DeleteAnkiDeckJob, args: [{ anki_deck_file_path: fixture_path }]) do
           DeleteAnkiDeckJob.set(wait: 3.minutes).perform_later(anki_deck_file_path: fixture_path)
         end
