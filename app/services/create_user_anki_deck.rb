@@ -22,6 +22,10 @@ class CreateUserAnkiDeck
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
+  def self.path_to_anki_package_regex
+    %r{\A/tmp/\d{13}/anki_books_package_\d{13}.apkg\z}
+  end
+
   class << self
     include AnkiTimestampable
 
@@ -32,11 +36,18 @@ class CreateUserAnkiDeck
     end
 
     def name
-      @name ||= "anki_books_package_#{anki_milliseconds_timestamp}"
+      @name ||= "anki_books_package_#{timestamp}"
     end
 
     def target_directory
-      Dir.tmpdir
+      tmp_directory = Dir.tmpdir
+      @target_directory = "#{tmp_directory}/#{timestamp}"
+      FileUtils.mkdir_p(@target_directory)
+      @target_directory
+    end
+
+    def timestamp
+      @timestamp ||= anki_milliseconds_timestamp
     end
   end
 end

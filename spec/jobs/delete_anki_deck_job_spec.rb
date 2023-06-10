@@ -11,14 +11,25 @@ RSpec.describe DeleteAnkiDeckJob do
     expect { described_class.perform_now(anki_deck_file_path: "invalid") }.to raise_error(ArgumentError)
   end
 
+  it "throws an error is the path argument does not have the intended structure" do
+    expect { described_class.perform_now(anki_deck_file_path: "/temporary/example.apkg") }.to raise_error(ArgumentError)
+  end
+
   context "when there is an Anki deck file to delete" do
     let(:anki_deck_file_path) { CreateUserAnkiDeck.perform(user:) }
 
-    before { anki_deck_file_path }
+    before do
+      anki_deck_file_path
+      described_class.perform_now(anki_deck_file_path:)
+    end
 
     it "deletes the Anki deck file" do
-      described_class.perform_now(anki_deck_file_path:)
       expect(File).not_to exist(anki_deck_file_path)
+    end
+
+    it "deletes the directory in tmp that the Anki deck file was in" do
+      directory_to_delete = Pathname.new(anki_deck_file_path).dirname
+      expect(File).not_to exist(directory_to_delete)
     end
   end
 end
