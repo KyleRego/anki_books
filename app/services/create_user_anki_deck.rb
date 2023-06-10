@@ -27,8 +27,8 @@ class CreateUserAnkiDeck
 
       user.notes.each do |basic_note|
         anki_note = AnkiRecord::Note.new(note_type:, deck:)
-        anki_note.front = basic_note.front
-        anki_note.back = basic_note.back
+        anki_note.front = basic_note.anki_front
+        anki_note.back = basic_note.anki_back
         anki_note.guid = basic_note.anki_guid
         anki_note.save
       end
