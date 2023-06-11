@@ -11,13 +11,13 @@ RSpec.describe "Books" do
       end
 
       it "returns a success response" do
-        get book.custom_path
+        get book_path(book)
         expect(response).to be_successful
       end
     end
 
     it "redirects to homepage if user is not logged in" do
-      get book.custom_path
+      get book_path(book)
       expect(response).to redirect_to root_path
     end
   end

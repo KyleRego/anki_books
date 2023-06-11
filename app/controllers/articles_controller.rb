@@ -51,7 +51,7 @@ class ArticlesController < ApplicationController
     else
       @book = @article.book
       @article.destroy
-      redirect_to @book.custom_path
+      redirect_to book_path(@book)
     end
   end
 

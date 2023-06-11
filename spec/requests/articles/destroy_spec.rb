@@ -17,7 +17,7 @@ RSpec.describe "Articles" do
 
       it "deletes the article and redirects to show the book" do
         expect { delete article.custom_path }.to change(Article, :count).by(-1)
-        expect(response).to redirect_to book.custom_path
+        expect(response).to redirect_to book_path(book)
       end
 
       it "returns a 422 response if the article is a system article" do

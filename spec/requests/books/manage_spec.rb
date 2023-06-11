@@ -11,7 +11,7 @@ RSpec.describe "Books" do
 
   describe "GET /books/:id/manage" do
     it "redirects to the root page if user is not logged in" do
-      get book_manage_path(book, title: book.title_slug)
+      get manage_book_path(book)
       expect(response).to redirect_to(root_path)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe "Books" do
       end
 
       it "returns a success response" do
-        get book_manage_path(book, title: book.title_slug)
+        get manage_book_path(book)
         expect(response).to be_successful
       end
     end

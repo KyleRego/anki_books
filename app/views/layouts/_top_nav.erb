@@ -10,9 +10,9 @@
     <% end %>
 
     <% if logged_in? %>
-      <% if (@book&.persisted? && !current_page?(@book.custom_path)) %>
+      <% if @book&.persisted? && !current_page?(book_path(@book)) %>
         <%= link_to("#{@book.title}",
-                  @book.custom_path,
+                  book_path(@book),
                   class: "text-blue-500 hover:text-blue-600 font-semibold ml-4")  %>
       <% elsif !current_page?(user_books_path(current_user)) %>
         <%= link_to("My books",

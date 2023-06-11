@@ -17,14 +17,10 @@ Rails.application.routes.draw do
   get "/articles/:id/:title/study_cards", to: "articles#study_cards", as: "article_study_cards"
   get "/articles/:id/:title/manage", to: "articles#manage", as: "manage_article"
 
-  get "/books/:id/:title", to: "books#show", as: "book"
-  get "/books/:id/:title/edit", to: "books#edit", as: "edit_book"
-  patch "/books/:id/:title", to: "books#update"
-  put "/books/:id/:title", to: "books#update"
-  resources :books, only: %i[new create] do
+  resources :books, except: %i[edit update index destroy] do
     resources :articles, only: :new
   end
-  get "/books/:id/:title/manage", to: "books#manage", as: "book_manage"
+  get "/books/:id/manage", to: "books#manage", as: "manage_book"
 
   get "/users/:id/books", to: "users#books", as: "user_books"
   get "/users/:id/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
