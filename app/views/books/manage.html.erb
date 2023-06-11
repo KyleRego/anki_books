@@ -6,7 +6,7 @@
   <% @articles.each do |article| %>
     <% next if article.system %>
     <%= link_to "Manage #{article.title}",
-        article.custom_manage_path,
+        manage_article_path(article),
         class: "text-blue-500 hover:text-blue-600" %>
     <br>
   <% end %>

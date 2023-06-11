@@ -18,23 +18,23 @@ RSpec.describe ArticlesController do
     end
 
     it "routes to #create" do
-      path = "/users/#{user_id}/articles"
-      expect(post: path).to route_to("articles#create", id: user_id)
+      path = "/articles"
+      expect(post: path).to route_to("articles#create")
     end
 
     it "routes to #edit" do
-      path = "/articles/#{article_id}/#{article_title}/edit"
-      expect(get: path).to route_to("articles#edit", id: article_id, title: article_title)
+      path = "/articles/#{article_id}/edit"
+      expect(get: path).to route_to("articles#edit", id: article_id)
     end
 
     it "routes to #update" do
-      path = "/articles/#{article_id}/#{article_title}"
-      expect(patch: path).to route_to("articles#update", id: article_id, title: article_title)
+      path = "/articles/#{article_id}"
+      expect(patch: path).to route_to("articles#update", id: article_id)
     end
 
     it "routes to #show" do
-      path = "/articles/#{article_id}/#{article_title}"
-      expect(get: path).to route_to("articles#show", id: article_id, title: article_title)
+      path = "/articles/#{article_id}"
+      expect(get: path).to route_to("articles#show", id: article_id)
     end
 
     it "routes to #change_note_ordinal_position" do
@@ -43,18 +43,18 @@ RSpec.describe ArticlesController do
     end
 
     it "routes to #study_cards" do
-      path = "/articles/#{article_id}/#{article_title}/study_cards"
-      expect(get: path).to route_to("articles#study_cards", id: article_id, title: article_title)
+      path = "/articles/#{article_id}/study_cards"
+      expect(get: path).to route_to("articles#study_cards", id: article_id)
     end
 
     it "routes to #manage" do
-      path = "/articles/#{article_id}/#{article_title}/manage"
-      expect(get: path).to route_to("articles#manage", id: article_id, title: article_title)
+      path = "/articles/#{article_id}/manage"
+      expect(get: path).to route_to("articles#manage", id: article_id)
     end
 
     it "routes to #destroy" do
-      path = "/articles/#{article_id}/#{article_title}"
-      expect(delete: path).to route_to("articles#destroy", id: article_id, title: article_title)
+      path = "/articles/#{article_id}"
+      expect(delete: path).to route_to("articles#destroy", id: article_id)
     end
   end
 end

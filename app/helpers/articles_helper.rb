@@ -2,12 +2,14 @@
 
 # :nodoc:
 module ArticlesHelper
+  ARTICLE_PATH_REGEX = %r{^/articles/[^/]+$}
+
   def on_study_cards?
     request.path.end_with?("study_cards")
   end
 
   def show_study_cards_link?(article)
-    return false unless request.path.match?(%r{^/articles/[^/]+/[^/]+$}) || request.path == "/"
+    return false unless request.path.match?(ARTICLE_PATH_REGEX) || request.path == "/"
 
     return false if article.notes_count.zero?
 
@@ -17,6 +19,6 @@ module ArticlesHelper
   def back_to_article_path(article)
     return root_path if article.system
 
-    article.custom_path
+    article_path(article)
   end
 end

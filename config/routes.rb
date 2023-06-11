@@ -7,15 +7,11 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
 
-  get "/articles/:id/:title", to: "articles#show", as: "article"
-  get "/articles/:id/:title/edit", to: "articles#edit", as: "edit_article"
-  patch "/articles/:id/:title", to: "articles#update"
-  put "/articles/:id/:title", to: "articles#update"
-  delete "/articles/:id/:title", to: "articles#destroy"
+  resources :articles
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
-                                                     as: "article_change_note_ordinal_position"
-  get "/articles/:id/:title/study_cards", to: "articles#study_cards", as: "article_study_cards"
-  get "/articles/:id/:title/manage", to: "articles#manage", as: "manage_article"
+                                                     as: "change_article_note_ordinal_position"
+  get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
+  get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 
   resources :books, except: %i[edit update index destroy] do
     resources :articles, only: :new
@@ -24,7 +20,6 @@ Rails.application.routes.draw do
 
   get "/users/:id/books", to: "users#books", as: "user_books"
   get "/users/:id/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
-  post "/users/:id/articles", to: "articles#create", as: "new_article"
 
   resources :articles, only: [], param: :id do
     resources :basic_notes, only: %i[new create edit update show]

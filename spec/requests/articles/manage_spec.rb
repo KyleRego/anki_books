@@ -5,11 +5,11 @@ RSpec.describe "Articles" do
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
-  describe "GET /articles/:id/:title/manage" do
+  describe "GET /articles/:id/manage" do
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        get article.custom_manage_path
+        get manage_article_path(article)
       end
 
       it "returns a success response" do
@@ -19,7 +19,7 @@ RSpec.describe "Articles" do
 
     context "when user is not logged in" do
       before do
-        get article.custom_manage_path
+        get manage_article_path(article)
       end
 
       it "redirects to the root page" do

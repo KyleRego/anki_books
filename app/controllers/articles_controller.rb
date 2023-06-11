@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      redirect_to @article.custom_path
+      redirect_to article_path(@article)
     else
       @book = Book.find(params[:article][:book_id])
       flash.now[:alert] = "An article must have a title."
@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       flash[:notice] = "Article updated successfully."
-      redirect_to @article.system ? root_path : @article.custom_path
+      redirect_to @article.system ? root_path : article_path(@article)
     else
       @book = @article.book
       flash.now[:alert] = "The article must have a title."

@@ -2,9 +2,6 @@
 
 # :nodoc:
 class Article < ApplicationRecord
-  include Article::PathHelpers
-  include TitleSluggable
-
   belongs_to :book, optional: true
   has_rich_text :content
   has_many :basic_notes, dependent: :destroy

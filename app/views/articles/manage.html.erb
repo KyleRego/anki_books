@@ -4,7 +4,7 @@
 
 <div class="my-4">
   <%= button_to "Delete #{@article.title}",
-    article_path(@article, @article.title),
+    article_path(@article),
     method: :delete,
     form: { data: { turbo_confirm: "Are you sure you want to delete #{@article.title}?"} } %>
 </div>
