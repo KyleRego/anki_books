@@ -23,12 +23,12 @@ RSpec.describe "Articles" do
 
       it "returns a 422 response if the book does not exist" do
         patch change_article_book_path(article), params: { book_id: "asdf" }
-        expect(response.status).to eq 422
+        expect(response).to have_http_status :unprocessable_entity
       end
 
       it "returns a 422 response if the book does not belong to the user" do
         patch change_article_book_path(article), params: { book_id: book_unrelated_to_user.id }
-        expect(response.status).to eq 422
+        expect(response).to have_http_status :unprocessable_entity
         expect(article.reload.book).to eq first_book
       end
     end

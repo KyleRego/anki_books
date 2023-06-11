@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
     redirect_to_homepage_not_logged_in
   end
 
+  # TODO: Investigate what the best thing to do in these cases
+  # would be in terms of web standards and SEO for the homepage.
   def redirect_to_homepage_not_logged_in
     flash[:alert] = NOT_LOGGED_IN_FLASH_MESSAGE
     redirect_to root_path

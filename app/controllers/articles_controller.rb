@@ -3,10 +3,7 @@
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, except: %i[homepage study_cards]
-  before_action :set_article, except: %i[new create homepage]
-  before_action :check_article_was_found, except: %i[new create homepage]
-  before_action :set_book, except: %i[new create homepage]
-  before_action :check_book_belongs_to_user, except: %i[new create homepage study_cards]
+  before_action :setup_and_check_user_can_access_article, except: %i[new create homepage]
 
   def show
     if @article.system
@@ -17,7 +14,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @book = Book.find(params[:book_id])
+    @book = current_user.books.find(params[:book_id])
     @article = Article.new(title: "My new article")
   end
 
@@ -25,7 +22,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    if !current_user.books.include?(@article.book)
+    if current_user.books.exclude?(@article.book)
       redirect_to_homepage_no_access
     elsif @article.save
       redirect_to article_path(@article)
@@ -58,8 +55,9 @@ class ArticlesController < ApplicationController
   end
 
   def homepage
-    # Plan is to have more than one system article in the future.
-    # For now, just have one and it will serve as the homepage.
+    # TODO: Probably move the system boolean to books, possibly calling
+    # it homepage and having the homepage be a book once the larger book
+    # view is completed.
     @article = Article.find_by(system: true)
     @basic_notes = @article.notes
   end
@@ -97,20 +95,19 @@ class ArticlesController < ApplicationController
 
   private
 
-  def set_article
+  def setup_and_check_user_can_access_article
     @article = Article.find_by(id: params[:id])
-  end
+    if !@article
+      redirect_to_homepage_not_found
+    elsif @article.system
+      @book = @article.book
+      nil
+    else
+      @book = @article.book
+      return if current_user&.books&.include?(@book)
 
-  def check_article_was_found
-    redirect_to_homepage_not_found unless @article
-  end
-
-  def set_book
-    @book = @article.book
-  end
-
-  def check_book_belongs_to_user
-    redirect_to_homepage_no_access unless current_user.books.include?(@book)
+      redirect_to_homepage_no_access
+    end
   end
 
   def article_params

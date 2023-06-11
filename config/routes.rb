@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
 
-  resources :articles
+  resources :articles, except: %i[new]
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
                                                      as: "change_article_note_ordinal_position"
   patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
