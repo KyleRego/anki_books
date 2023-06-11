@@ -9,4 +9,4 @@ Feature: The top nav links on the Manage articles page
 
   Scenario: There should be a link to the book but not a link to My books
     Then I should see "test book 1"
-    And I should not see "My books"
+    And I should see "My books"

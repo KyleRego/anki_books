@@ -8,7 +8,7 @@ module ArticlesHelper
     request.path.end_with?("study_cards")
   end
 
-  def show_study_cards_link?(article)
+  def show_link_to_study_cards_in_top_nav?(article)
     return false unless request.path.match?(ARTICLE_PATH_REGEX) || request.path == "/"
 
     return false if article.notes_count.zero?

@@ -14,6 +14,14 @@ RSpec.describe UsersController do
       expect(get: "/books/new").to route_to("books#new")
     end
 
+    it "routes to #update" do
+      expect(patch: "/books/#{book_id}").to route_to("books#update", id: book_id)
+    end
+
+    it "routes to #edit" do
+      expect(get: "/books/#{book_id}/edit").to route_to("books#edit", id: book_id)
+    end
+
     it "routes to #show" do
       expect(get: "/books/#{book_id}").to route_to("books#show", id: book_id)
     end

@@ -5,18 +5,18 @@
       <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
     <% end %>
 
-    <% if show_study_cards_link?(@article) %>
+    <% if show_link_to_study_cards_in_top_nav?(@article) %>
       <%= link_to("Study cards", study_article_cards_path(@article), class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
     <% end %>
 
     <% if logged_in? %>
-      <% if @book&.persisted? && !current_page?(book_path(@book)) %>
-        <%= link_to("#{@book.title}",
-                  book_path(@book),
+      <% if show_link_to_book_in_top_nav? %>
+        <%= link_to("#{@book.title}", book_path(@book),
                   class: "text-blue-500 hover:text-blue-600 font-semibold ml-4")  %>
-      <% elsif !current_page?(books_path) %>
-        <%= link_to("My books",
-                    books_path,
+      <% end %>
+
+      <% if show_link_to_my_books_in_top_nav? %>
+        <%= link_to("My books", books_path,
                     class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
       <% end %>
 

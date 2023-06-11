@@ -2,7 +2,6 @@
 
 RSpec.describe "Books" do
   let(:user) { create(:user) }
-  let(:book) { create(:book, users: [user]) }
 
   describe "GET /books/new" do
     context "when user is logged in" do

@@ -1,41 +1,36 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "Books" do
-  include BasicNotesHelper
-
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
-  let(:article) { create(:article, book:) }
 
   let(:book_unrelated_to_user) { create(:book) }
 
-  describe "GET /books/:id/manage" do
-    it "redirects to the root page if user is not logged in" do
-      get manage_book_path(book)
-      expect(response).to redirect_to(root_path)
-    end
-
+  describe "GET /books/:id/edit" do
     context "when user is logged in" do
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
       it "returns a success response" do
-        get manage_book_path(book)
+        get(edit_book_path(book))
         expect(response).to be_successful
       end
 
       it "redirects to the homepage if the book is not found" do
-        get "/books/asdf/manage"
+        get "/books/asdf/edit"
         expect(response).to redirect_to(root_path)
       end
 
       it "redirects to the homepage if the book does not belong to the user" do
-        get book_path(book_unrelated_to_user)
+        get edit_book_path(book_unrelated_to_user)
         expect(response).to redirect_to(root_path)
       end
+    end
+
+    it "redirects to homepage if user is not logged in" do
+      get(new_book_path)
+      expect(response).to redirect_to root_path
     end
   end
 end

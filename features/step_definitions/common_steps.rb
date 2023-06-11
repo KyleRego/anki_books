@@ -74,6 +74,10 @@ Then "I should not see an input with value {string}" do |string|
   expect(page).not_to have_selector("input[type='submit'][value='#{string}']")
 end
 
+Then "I should see a {string} link" do |text|
+  expect(page).to have_link(text)
+end
+
 Then "I should not see a {string} link" do |text|
   expect(page).not_to have_link(text)
 end

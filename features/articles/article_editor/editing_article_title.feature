@@ -1,5 +1,5 @@
 @javascript
-Feature: Adding lists when editing an article
+Feature: Editing the article title
 
   Scenario: Updating an article with a title with periods
     Given there is a book titled "test book 0" with an article titled "test article 0"
