@@ -1,34 +1,41 @@
 # frozen_string_literal: true
 
 RSpec.describe "Articles" do
-  let(:user) { create(:user) }
-  let(:book) { create(:book) }
-  let(:article) { create(:article, book:) }
-
   describe "GET /articles/:id/edit" do
     context "when user is logged in" do
+      let(:user) { create(:user) }
+
+      let(:book) { create(:book, users: [user]) }
+      let(:article) { create(:article, book:) }
+
+      let(:book_unrelated_to_user) { create(:book) }
+      let(:article_unrelated_to_user) { create(:article, book: book_unrelated_to_user) }
+
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        get edit_article_path(article)
       end
 
-      it "returns a success response" do
+      it "returns a success response if the article belongs to one of their books" do
+        get edit_article_path(article)
         expect(response).to be_successful
+      end
+
+      it "redirects to the homepage if it does not belong to one of the users' books" do
+        get edit_article_path(article_unrelated_to_user)
+        expect(response).to redirect_to root_path
+      end
+
+      it "redirects to the homepage if the article does not exist" do
+        get "/articles/asdf/edit"
+        expect(response).to redirect_to root_path
       end
     end
 
-    context "when user is not logged in" do
-      before do
-        get edit_article_path(article)
-      end
-
-      it "redirects to the root page" do
-        expect(response).to redirect_to(root_path)
-      end
-
-      it "shows a flash alert message" do
-        expect(flash[:alert]).to eq("You must be logged in to access this page.")
-      end
+    it "redirects to the root page when the user is not logged in" do
+      article = create(:article)
+      get edit_article_path(article)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq(ApplicationController::NOT_LOGGED_IN_FLASH_MESSAGE)
     end
   end
 end

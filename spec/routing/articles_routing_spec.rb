@@ -50,6 +50,11 @@ RSpec.describe ArticlesController do
       expect(get: path).to route_to("articles#manage", id: article_id)
     end
 
+    it "routes to #change_book" do
+      path = "/articles/#{article_id}/change_book"
+      expect(patch: path).to route_to("articles#change_book", id: article_id)
+    end
+
     it "routes to #destroy" do
       path = "/articles/#{article_id}"
       expect(delete: path).to route_to("articles#destroy", id: article_id)

@@ -19,7 +19,6 @@ class CreateUserAnkiDeck
   end
 
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def perform
     AnkiRecord::AnkiPackage.new(name:, target_directory:) do |collection|
       deck = collection.find_deck_by name: "Default"
@@ -36,7 +35,6 @@ class CreateUserAnkiDeck
     created_anki_deck_path
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   private
 

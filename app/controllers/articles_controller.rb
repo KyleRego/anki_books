@@ -2,12 +2,14 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login, only: %i[edit create update change_note_ordinal_position manage destroy]
-  before_action :set_article, only: %i[show edit update change_note_ordinal_position study_cards manage destroy]
+  before_action :require_login, except: %i[homepage study_cards]
+  before_action :set_article, except: %i[new create homepage]
+  before_action :check_article_was_found, except: %i[new create homepage]
+  before_action :set_book, except: %i[new create homepage]
+  before_action :check_book_belongs_to_user, except: %i[new create homepage study_cards]
 
   def show
-    if @article.nil? || @article.system
-      flash[:alert] = "No article was found for that URL path or identifier."
+    if @article.system
       redirect_to root_path, status: :moved_permanently
     else
       @basic_notes = @article.notes
@@ -19,13 +21,13 @@ class ArticlesController < ApplicationController
     @article = Article.new(title: "My new article")
   end
 
-  def edit
-    @book = @article.book
-  end
+  def edit; end
 
   def create
     @article = Article.new(article_params)
-    if @article.save
+    if !current_user.books.include?(@article.book)
+      redirect_to_homepage_no_access
+    elsif @article.save
       redirect_to article_path(@article)
     else
       @book = Book.find(params[:article][:book_id])
@@ -77,13 +79,38 @@ class ArticlesController < ApplicationController
     @basic_notes = @article.notes
   end
 
-  def manage; end
+  def manage
+    @other_books = current_user.books.where.not(id: @article.book.id)
+  end
+
+  def change_book
+    @target_book = current_user.books.find_by(id: params[:book_id])
+    # TODO: Probably also check here the target book is not already the article's book
+    if @target_book
+      @article.update(book: @target_book)
+      flash[:notice] = "Article moved to #{@target_book.title}."
+      redirect_to manage_article_path(@article)
+    else
+      head :unprocessable_entity
+    end
+  end
 
   private
 
   def set_article
     @article = Article.find_by(id: params[:id])
-    @book = @article&.book
+  end
+
+  def check_article_was_found
+    redirect_to_homepage_not_found unless @article
+  end
+
+  def set_book
+    @book = @article.book
+  end
+
+  def check_book_belongs_to_user
+    redirect_to_homepage_no_access unless current_user.books.include?(@book)
   end
 
   def article_params

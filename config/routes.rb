@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :articles
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
                                                      as: "change_article_note_ordinal_position"
+  patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 

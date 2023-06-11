@@ -3,6 +3,7 @@ Feature: Reading an article
 
   Background:
     Given there is a book titled "test book 1" with an article titled "test article 1" that has "3" basic note(s)
+    And I am logged in
     And I am viewing the article
     And I click the "Study cards" link
 
@@ -22,6 +23,7 @@ Feature: Reading an article
     And I should see "Next card"
 
   Scenario: Studying in random order should adjust the spans
+  Then screenshot
     When I click on the span with text "Random order"
     Then I should not see "First card"
     And I should not see "Random order"

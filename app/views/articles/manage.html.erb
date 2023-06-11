@@ -2,7 +2,14 @@
   Manage <%= @article.title %>
 </h1>
 
-<div class="my-4">
+<div class="my-12">
+  <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
+    <%= select_tag("book_id", options_from_collection_for_select(@other_books, :id, :title), title: "Move the article to a different book") %>
+    <%= form.submit "Move article" %>
+  <% end %>
+</div>
+
+<div class="mt-12">
   <%= button_to "Delete #{@article.title}",
     article_path(@article),
     method: :delete,

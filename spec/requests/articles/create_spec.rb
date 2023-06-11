@@ -1,38 +1,49 @@
 # frozen_string_literal: true
 
 RSpec.describe "Articles" do
-  let(:user) { create(:user) }
-  let(:book) { create(:book) }
-  let(:article) { create(:article, book:) }
-
   describe "POST /articles" do
     context "when user is logged in" do
+      let(:user) { create(:user) }
+
       before do
         post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
-      it "creates a new article" do
-        params = { article: { title: "title", content: "", book_id: book.id } }
-        expect { post articles_path, params: }.to change(Article, :count).by 1
+      context "when the target book belongs to the user" do
+        let!(:book) { create(:book, users: [user]) }
+
+        it "creates a new article" do
+          params = { article: { title: "title", content: "", book_id: book.id } }
+          expect { post articles_path, params: }.to change(Article, :count).by 1
+        end
+
+        it "creates a new article belonging to the book" do
+          params = { article: { title: "title", content: "", book_id: book.id } }
+          post(articles_path, params:)
+          expect(Article.order(:created_at).last.book).to eq book
+        end
+
+        it "does not create a new article if the title was blank" do
+          params = { article: { title: "", content: "", book_id: book.id } }
+          expect { post(articles_path, params:) }.not_to change(Article, :count)
+          expect(flash[:alert]).to eq("An article must have a title.")
+        end
       end
 
-      it "creates a new article belonging to the book" do
-        params = { article: { title: "title", content: "", book_id: book.id } }
-        post(articles_path, params:)
-        expect(article.book).to eq book
-      end
+      context "when the target book does not belong to the user" do
+        let(:book_unrelated_to_user) { create(:book) }
 
-      it "does not create a new article if the title was blank" do
-        params = { article: { title: "", content: "", book_id: book.id } }
-        expect { post(articles_path, params:) }.not_to change(Article, :count)
-        expect(flash[:alert]).to eq("An article must have a title.")
+        it "redirects to the homepage and does not create a new article" do
+          params = { article: { title: "title", content: "", book_id: book_unrelated_to_user.id } }
+          expect { post articles_path, params: }.not_to change(Article, :count)
+          expect(response).to redirect_to root_path
+        end
       end
     end
 
-    context "when not logged in" do
-      it "does not create a new article" do
-        expect { post articles_path }.not_to change(Article, :count)
-      end
+    it "redirects to the homepage and does not create a new article when the user is not logged in" do
+      expect { post articles_path }.not_to change(Article, :count)
+      expect(response).to redirect_to root_path
     end
   end
 end

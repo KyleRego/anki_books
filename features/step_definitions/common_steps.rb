@@ -42,6 +42,10 @@ When "I fill in the {string} field with {string}" do |field, value|
   fill_in field, with: value
 end
 
+When "I choose {string} from the {string} select" do |option, name|
+  page.select(option, from: name)
+end
+
 When "I click on the image {string} on the page" do |string|
   find("img[src$='#{string}']").click
 end

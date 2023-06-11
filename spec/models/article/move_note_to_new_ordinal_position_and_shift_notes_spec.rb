@@ -3,7 +3,6 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/MultipleExpectations
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Article, "#move_note_to_new_ordinal_position_and_shift_notes" do
   let(:article) { create(:article) }
   let!(:note_a) { create(:basic_note, article:) }
@@ -46,4 +45,3 @@ RSpec.describe Article, "#move_note_to_new_ordinal_position_and_shift_notes" do
   end
 end
 # rubocop:enable RSpec/MultipleExpectations
-# rubocop:enable RSpec/MultipleMemoizedHelpers

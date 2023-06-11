@@ -3,16 +3,14 @@
 CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
+# TODO: Remove this step definition and use only the one after it
 Given "there is a book titled {string} with an article titled {string}" do |book_title, article_title|
-  @test_book = create(:book, title: book_title)
+  @test_book = create(:book, title: book_title, users: [@test_user])
   @test_article = create(:article, title: article_title, book: @test_book)
 end
 
-book_article_notes_setup = <<-DESC
-  there is a book titled {string} with an article titled {string} that has {string} basic note\\(s)
-DESC
-book_article_notes_setup = book_article_notes_setup.strip
-Given(book_article_notes_setup) do |book_title, article_title, string|
+# TODO: This one has a misleading description
+Given "there is a book titled {string} with an article titled {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
   @test_book = create(:book, title: book_title, users: [@test_user])
   @test_article = create(:article, title: article_title, book: @test_book)
   num_notes = string.to_i
