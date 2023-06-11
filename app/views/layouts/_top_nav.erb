@@ -14,9 +14,9 @@
         <%= link_to("#{@book.title}",
                   book_path(@book),
                   class: "text-blue-500 hover:text-blue-600 font-semibold ml-4")  %>
-      <% elsif !current_page?(user_books_path(current_user)) %>
+      <% elsif !current_page?(books_path) %>
         <%= link_to("My books",
-                    user_books_path(current_user),
+                    books_path,
                     class: "text-blue-500 hover:text-blue-600 font-semibold ml-4") %>
       <% end %>
 

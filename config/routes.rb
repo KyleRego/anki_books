@@ -13,12 +13,11 @@ Rails.application.routes.draw do
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 
-  resources :books, except: %i[edit update index destroy] do
+  resources :books, except: %i[edit update destroy] do
     resources :articles, only: :new
   end
   get "/books/:id/manage", to: "books#manage", as: "manage_book"
 
-  get "/users/:id/books", to: "users#books", as: "user_books"
   get "/users/:id/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
 
   resources :articles, only: [], param: :id do

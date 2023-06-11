@@ -3,10 +3,8 @@
 require "rails_helper"
 
 RSpec.describe ArticlesController do
-  let(:user_id) { "6" }
   let(:book_id) { "3" }
   let(:article_id) { "1e8e5d81-09b4-4757-bbea-f024997d6b35" }
-  let(:article_title) { "slug-title" }
 
   describe "routing" do
     it "routes to #homepage" do

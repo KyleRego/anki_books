@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe UsersController do
   let(:book_id) { "6" }
-  let(:book_title) { "title" }
 
   describe "routing" do
     it "routes to #create" do
@@ -17,6 +16,10 @@ RSpec.describe UsersController do
 
     it "routes to #show" do
       expect(get: "/books/#{book_id}").to route_to("books#show", id: book_id)
+    end
+
+    it "routes to #index" do
+      expect(get: "/books").to route_to("books#index")
     end
 
     it "routes to #manage" do

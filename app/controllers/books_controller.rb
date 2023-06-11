@@ -5,6 +5,10 @@ class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book_and_articles, only: %w[show manage]
 
+  def index
+    @books = current_user.books.order(:title)
+  end
+
   def show; end
 
   def new
@@ -14,7 +18,7 @@ class BooksController < ApplicationController
   def create
     @book = current_user.books.create(book_params)
     if @book.save
-      redirect_to user_books_path(current_user)
+      redirect_to books_path
     else
       flash.now[:alert] = "A book must have a title."
       render :new, status: :unprocessable_entity

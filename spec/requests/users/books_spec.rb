@@ -10,7 +10,7 @@ RSpec.describe "Users" do
 
   describe "GET /users/:id/books" do
     it "redirects to the root page if user is not logged in" do
-      get user_books_path(user)
+      get books_path
       expect(response).to redirect_to(root_path)
     end
 
@@ -20,7 +20,7 @@ RSpec.describe "Users" do
       end
 
       it "returns a success response" do
-        get user_books_path(user)
+        get books_path
         expect(response).to be_successful
       end
     end
