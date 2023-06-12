@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-# TODO: Refactor all specs to use more shared contexts and examples through subjects
+require_relative "../../support/shared_contexts/user_logged_in"
 
 RSpec.describe "Articles" do
   describe "PATCH /articles/:id for a non-system article" do
     context "when the user is logged in" do
       let(:user) { create(:user) }
 
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       context "when the article belongs to one of the user's books" do
         let(:book) { create(:book, users: [user]) }

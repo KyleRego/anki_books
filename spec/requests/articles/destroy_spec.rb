@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 RSpec.describe "Articles" do
   describe "DELETE /articles/:id" do
     context "when user is logged in" do
       let(:user) { create(:user) }
 
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       context "when the article belongs to one of the user's books" do
         let(:book) { create(:book, users: [user]) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require_relative "../../support/shared_contexts/user_logged_in"
 
 RSpec.describe "BasicNotes" do
   include BasicNotesHelper
@@ -22,9 +22,7 @@ RSpec.describe "BasicNotes" do
     end
 
     context "when user is logged in" do
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       it "creates a new Basic note if the user is logged in" do
         expect do

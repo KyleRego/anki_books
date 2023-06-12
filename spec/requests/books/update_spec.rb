@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 RSpec.describe "Books" do
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
@@ -8,9 +10,7 @@ RSpec.describe "Books" do
 
   describe "PATCH /books/:id" do
     context "when user is logged in" do
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       it "updates the book" do
         patch book_path(book), params: { book: { title: "the title" } }

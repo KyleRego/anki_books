@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 RSpec.describe "Articles" do
   describe "GET /articles/:id" do
     let(:user) { create(:user) }
@@ -12,9 +14,7 @@ RSpec.describe "Articles" do
     let(:system_article) { create(:article, book:, system: true) }
 
     context "when user is logged in" do
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       it "shows the article if it belongs to one of the users' books" do
         get article_path(article)

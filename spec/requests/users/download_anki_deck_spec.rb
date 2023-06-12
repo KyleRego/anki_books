@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 require "rails_helper"
 
 RSpec.describe "Users" do
@@ -16,10 +18,10 @@ RSpec.describe "Users" do
     end
 
     context "when user is logged in" do
+      include_context "when the user is logged in"
       before do
         fixture_path = "./spec/fixtures/anki_package.apkg"
         allow(CreateUserAnkiDeck).to receive(:perform).and_return(fixture_path)
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
       end
 
       it "returns a success response" do

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 require "rails_helper"
 
 RSpec.describe "Users" do
@@ -15,9 +17,7 @@ RSpec.describe "Users" do
     end
 
     context "when user is logged in" do
-      before do
-        post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-      end
+      include_context "when the user is logged in"
 
       it "returns a success response" do
         get books_path

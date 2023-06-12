@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 require "rails_helper"
 
 RSpec.describe "Sessions" do
@@ -7,7 +9,7 @@ RSpec.describe "Sessions" do
     context "with user credentials that exist" do
       let(:user) { create(:user) }
 
-      before { post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } } }
+      include_context "when the user is logged in"
 
       it "logs the user in successfully" do
         expect(session[:user_id]).to eq(user.id)

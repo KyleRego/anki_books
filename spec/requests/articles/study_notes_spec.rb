@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../support/shared_contexts/user_logged_in"
+
 RSpec.describe "Articles" do
   let(:article) { create(:article) }
   let(:basic_note) { create(:basic_note, article:) }
@@ -21,9 +23,7 @@ RSpec.describe "Articles" do
         let(:book) { create(:book, users: [user]) }
         let(:article) { create(:article, book:) }
 
-        before do
-          post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        end
+        include_context "when the user is logged in"
 
         it "shows the study cards page even when the user is not logged in" do
           get study_article_cards_path(article)
@@ -36,9 +36,7 @@ RSpec.describe "Articles" do
         let(:book) { create(:book) }
         let(:article) { create(:article, book:) }
 
-        before do
-          post login_path, params: { session: { email: user.email, password: TEST_USER_PASSWORD } }
-        end
+        include_context "when the user is logged in"
 
         it "redirects to the homepage" do
           get study_article_cards_path(article)
