@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Books" do
-  let(:user) { create(:user) }
-  let(:book) { create(:book) }
+RSpec.describe "POST /books", "#create" do
+  subject(:post_books_create) { post books_path, params: { book: { title: } } }
 
-  describe "POST /books" do
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+  let(:title) { "the title" }
 
-      it "creates a new book" do
-        expect { post books_path, params: { book: { title: "the title" } } }.to change(Book, :count).by 1
-        expect(user.books.last.title).to eq "the title"
-      end
+  include_examples "not logged in user gets redirected to homepage"
 
-      it "does not create a new book and shows a flash alert if the title was blank" do
-        expect { post books_path, params: { book: { title: "" } } }.not_to change(Book, :count)
-        expect(flash[:alert]).to eq("A book must have a title.")
-      end
+  context "when user is logged in" do
+    include_context "when the user is logged in"
+
+    it "creates a new book" do
+      expect { post_books_create }.to change(Book, :count).by 1
+      expect(user.books.last.title).to eq title
     end
 
-    context "when not logged in" do
-      it "does not create a new book" do
-        expect { post books_path, params: { book: { title: "the title" } } }.not_to change(Book, :count)
+    context "when the title parameter is blank" do
+      let(:title) { "" }
+
+      it "does not create a new book and shows a flash alert" do
+        expect { post_books_create }.not_to change(Book, :count)
+        expect(flash[:alert]).to eq("A book must have a title.")
       end
     end
   end

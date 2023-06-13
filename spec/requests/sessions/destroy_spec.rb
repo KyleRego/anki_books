@@ -7,8 +7,6 @@ require "rails_helper"
 RSpec.describe "Sessions" do
   describe "GET /logout" do
     context "when user is logged in" do
-      let(:user) { create(:user) }
-
       include_context "when the user is logged in"
 
       it "destroys the session" do

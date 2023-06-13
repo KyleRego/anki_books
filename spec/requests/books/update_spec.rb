@@ -1,37 +1,39 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Books" do
-  let(:user) { create(:user) }
-  let(:book) { create(:book, users: [user]) }
+RSpec.describe "PATCH /books/:id", "#update" do
+  subject(:patch_books_update) { patch book_path(book), params: { book: { title: } } }
 
-  let(:book_unrelated_to_user) { create(:book) }
+  let(:book) { create(:book) }
+  let(:title) { "the title" }
 
-  describe "PATCH /books/:id" do
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+  include_examples "not logged in user gets redirected to homepage"
+
+  context "when user is logged in" do
+    include_context "when the user is logged in"
+
+    it "does not update the book if it does not belong to the user" do
+      patch_books_update
+      expect(book.reload.title).not_to eq "the title"
+    end
+
+    context "when the book belongs to the user" do
+      let(:book) { create(:book, users: [user]) }
 
       it "updates the book" do
-        patch book_path(book), params: { book: { title: "the title" } }
+        patch_books_update
         expect(book.reload.title).to eq "the title"
       end
 
-      it "does not update the book if the title was blank" do
-        patch book_path(book), params: { book: { title: "" } }
-        expect(flash[:alert]).to eq("A book must have a title.")
-      end
+      context "when the title parameter is blank" do
+        let(:title) { "" }
 
-      it "does not update the book if it does not belong to the user" do
-        patch book_path(book_unrelated_to_user), params: { book: { title: "the title" } }
-        expect(book_unrelated_to_user.reload.title).not_to eq "the title"
-      end
-    end
-
-    context "when not logged in" do
-      it "does not update the book" do
-        patch book_path(book), params: { book: { title: "the title" } }
-        expect(book.reload.title).not_to eq "the title"
+        it "does not update the book if the title was blank" do
+          patch_books_update
+          expect(flash[:alert]).to eq("A book must have a title.")
+        end
       end
     end
   end

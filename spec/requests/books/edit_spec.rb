@@ -1,36 +1,35 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Books" do
-  let(:user) { create(:user) }
-  let(:book) { create(:book, users: [user]) }
+RSpec.describe "GET /books/:id/edit", "#edit" do
+  subject(:get_books_edit) { get(edit_book_path(book)) }
 
-  let(:book_unrelated_to_user) { create(:book) }
+  let(:book) { create(:book) }
 
-  describe "GET /books/:id/edit" do
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+  include_examples "not logged in user gets redirected to homepage"
+
+  context "when user is logged in" do
+    include_context "when the user is logged in"
+
+    it "redirects to the homepage if the book does not belong to the user" do
+      get_books_edit
+      expect(response).to redirect_to(root_path)
+    end
+
+    context "when the book belongs to the user" do
+      let(:book) { create(:book, users: [user]) }
 
       it "returns a success response" do
-        get(edit_book_path(book))
+        get_books_edit
         expect(response).to be_successful
-      end
-
-      it "redirects to the homepage if the book is not found" do
-        get "/books/asdf/edit"
-        expect(response).to redirect_to(root_path)
-      end
-
-      it "redirects to the homepage if the book does not belong to the user" do
-        get edit_book_path(book_unrelated_to_user)
-        expect(response).to redirect_to(root_path)
       end
     end
 
-    it "redirects to homepage if user is not logged in" do
-      get(new_book_path)
-      expect(response).to redirect_to root_path
+    it "redirects to the homepage if the book is not found" do
+      get "/books/asdf/edit"
+      expect(response).to redirect_to(root_path)
     end
   end
 end

@@ -1,41 +1,40 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
 require "rails_helper"
 
-RSpec.describe "Books" do
-  include BasicNotesHelper
+RSpec.describe "GET /books/:id/manage", "#manage" do
+  subject(:get_books_manage) { get manage_book_path(book) }
 
-  let(:user) { create(:user) }
-  let(:book) { create(:book, users: [user]) }
+  let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
-  let(:book_unrelated_to_user) { create(:book) }
+  include_examples "not logged in user gets redirected to homepage"
 
-  describe "GET /books/:id/manage" do
-    it "redirects to the root page if user is not logged in" do
-      get manage_book_path(book)
+  include BasicNotesHelper
+
+  context "when user is logged in" do
+    include_context "when the user is logged in"
+
+    it "redirects to the homepage if the book does not belong to the user" do
+      get_books_manage
       expect(response).to redirect_to(root_path)
     end
 
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+    context "when the book belongs to the user" do
+      let(:book) { create(:book, users: [user]) }
 
       it "returns a success response" do
-        get manage_book_path(book)
+        get_books_manage
         expect(response).to be_successful
       end
+    end
 
-      it "redirects to the homepage if the book is not found" do
-        get "/books/asdf/manage"
-        expect(response).to redirect_to(root_path)
-      end
-
-      it "redirects to the homepage if the book does not belong to the user" do
-        get book_path(book_unrelated_to_user)
-        expect(response).to redirect_to(root_path)
-      end
+    it "redirects to the homepage if the book is not found" do
+      get "/books/asdf/manage"
+      expect(response).to redirect_to(root_path)
     end
   end
 end

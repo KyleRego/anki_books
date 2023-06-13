@@ -7,7 +7,7 @@ require "rails_helper"
 RSpec.describe "Sessions" do
   describe "POST /login" do
     context "with user credentials that exist" do
-      let(:user) { create(:user) }
+      # TODO: Do not use the context here
 
       include_context "when the user is logged in"
 

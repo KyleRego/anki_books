@@ -3,8 +3,8 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "GET /books/new", "#new" do
-  subject(:get_books_new) { get(new_book_path) }
+RSpec.describe "GET /books", "#index" do
+  subject(:get_books_index) { get(books_path) }
 
   include_examples "not logged in user gets redirected to homepage"
 
@@ -12,7 +12,7 @@ RSpec.describe "GET /books/new", "#new" do
     include_context "when the user is logged in"
 
     it "returns a success response" do
-      get_books_new
+      get_books_index
       expect(response).to be_successful
     end
   end
