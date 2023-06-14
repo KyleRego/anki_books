@@ -8,3 +8,4 @@ Feature: The top nav links on the page viewing a book
     And I click the "My books" link
     And I click the "My first book" link
     Then I should see "My books"
+    And I should not see a "My first book" link
