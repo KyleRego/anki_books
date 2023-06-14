@@ -1,32 +1,30 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "GET /books/:id/articles/new" do
-    context "when user is logged in" do
-      let(:user) { create(:user) }
-      let(:book) { create(:book, users: [user]) }
-      let(:book_unrelated_to_user) { create(:book) }
+RSpec.describe "GET /books/:id/articles/new", "#new" do
+  subject(:get_articles_new) { get new_book_article_path(book) }
 
-      include_context "when the user is logged in"
+  let(:book) { create(:book) }
 
-      it "returns a success response if the article would belong to one of their books" do
-        get new_book_article_path(book)
-        expect(response).to be_successful
-      end
+  include_examples "user not logged in gets redirected"
 
-      # TODO: This is probably the correct behavior we want for 404 responses
-      it "throws a RecordNotFound exception if the user does not have a book with the given id" do
-        expect { get new_book_article_path(book_unrelated_to_user) }.to raise_exception ActiveRecord::RecordNotFound
-      end
+  context "when user is logged in" do
+    include_context "when the user is logged in"
+
+    # TODO: This is probably the correct behavior we want for 404 responses
+    it "throws a RecordNotFound exception if the user does not have a book with the given id" do
+      expect { get get_articles_new }.to raise_exception ActiveRecord::RecordNotFound
     end
 
-    it "redirects to the root page when the user is not logged in" do
-      book = create(:book)
-      get new_book_article_path(book)
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq(ApplicationController::NOT_LOGGED_IN_FLASH_MESSAGE)
+    context "when the book belongs to the user" do
+      let(:book) { create(:book, users: [user]) }
+
+      it "returns a 200 response" do
+        get_articles_new
+        expect(response).to be_successful
+      end
     end
   end
 end

@@ -1,72 +1,63 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "PATCH /articles/:id for a non-system article" do
-    context "when the user is logged in" do
-      let(:user) { create(:user) }
+RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
+  subject(:patch_articles_update) do
+    params = { article: { title:, content: } }
+    patch article_path(article), params:
+  end
 
-      include_context "when the user is logged in"
+  let(:title) { "new title 1 2 3" }
+  let(:content) { "some content" }
+  let(:book) { create(:book) }
+  let(:article) { create(:article, book:) }
+
+  include_examples "user not logged in gets redirected"
+
+  context "when the user is logged in" do
+    include_context "when the user is logged in"
+
+    it "redirects to the homepage if the article does not belong to one of the user's books" do
+      patch_articles_update
+      expect(response).to redirect_to root_path
+    end
+
+    context "when the article belongs to one of the user's books" do
+      let(:book) { create(:book, users: [user]) }
 
       context "when the article belongs to one of the user's books" do
         let(:book) { create(:book, users: [user]) }
-        let(:article) { create(:article, book:) }
 
-        # TODO: Refactoring
-        context "with valid params" do
-          let(:valid_params) { { article: { title: "New Title" } } }
+        it "updates the article and redirects to the article" do
+          patch_articles_update
+          expect(article.reload.title).to eq(title)
+          expect(flash[:notice]).to eq("Article updated successfully.")
+          expect(response).to redirect_to(article_path(article))
+        end
 
-          before do
-            patch article_path(article), params: valid_params
-          end
+        context "when it is the system article" do
+          let(:article) { create(:article, book:, system: true) }
 
-          it "updates the article" do
-            expect(article.reload.title).to eq("New Title")
-          end
-
-          it "shows a notice flash message" do
+          it "updates the article and redirects to the root path" do
+            patch_articles_update
+            expect(article.reload.title).to eq(title)
             expect(flash[:notice]).to eq("Article updated successfully.")
-          end
-
-          it "redirects to the article" do
-            expect(response).to redirect_to(article_path(article))
+            expect(response).to redirect_to root_path
           end
         end
 
-        context "with invalid params" do
-          let(:invalid_params) { { article: { title: "" } } }
-
-          before do
-            patch article_path(article), params: invalid_params
-          end
+        context "when the parameters are invalid" do
+          let(:title) { "" }
 
           it "does not update the article" do
+            patch_articles_update
             expect(article.reload.title).not_to eq("")
-          end
-
-          it "shows an alert flash message" do
             expect(flash[:alert]).to eq("The article must have a title.")
           end
         end
-
-        # TODO: When the article does not belong to the user
-
-        it "redirects to the root path (homepage) when it is the system article" do
-          book = create(:book, users: [user])
-          system_article = create(:article, book:, system: true)
-          params = { article: { title: "New Title" } }
-          patch article_path(system_article, params:)
-          expect(response).to redirect_to root_path
-        end
       end
-    end
-
-    it "redirects to the homepage when the user is not logged in" do
-      article = create(:article)
-      patch article_path(article), params: { article: { title: "New Title" } }
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq(ApplicationController::NOT_LOGGED_IN_FLASH_MESSAGE)
     end
   end
 end

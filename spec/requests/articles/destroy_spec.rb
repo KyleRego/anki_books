@@ -1,46 +1,50 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "DELETE /articles/:id" do
-    context "when user is logged in" do
-      let(:user) { create(:user) }
+RSpec.describe "DELETE /articles/:id", "#destroy" do
+  subject(:delete_articles_destroy) do
+    delete article_path(article)
+  end
 
-      include_context "when the user is logged in"
+  let(:book) { create(:book) }
+  let!(:article) { create(:article, book:) }
 
-      context "when the article belongs to one of the user's books" do
-        let(:book) { create(:book, users: [user]) }
-        let(:article) { create(:article, book:) }
+  include_examples "user not logged in gets redirected"
 
-        before { 3.times { create(:basic_note, article:) } }
+  it "does not delete the article when the user is not logged in" do
+    expect { delete_articles_destroy }.not_to change(Article, :count)
+  end
 
-        it "deletes the article and redirects to show the book" do
-          expect { delete article_path(article) }.to change(Article, :count).by(-1)
-          expect(response).to redirect_to book_path(book)
-        end
+  context "when user is logged in" do
+    include_context "when the user is logged in"
 
-        it "returns a 422 response if the article is a system article" do
-          article.update(system: true)
-          delete article_path(article)
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-      end
-
-      context "when the article does not belong to one of the user's books" do
-        let(:book) { create(:book) }
-        let!(:article) { create(:article, book:) }
-
-        it "does not delete the article and redirects to the homepage" do
-          expect { delete article_path(article) }.not_to change(Article, :count)
-          expect(response).to redirect_to root_path
-        end
+    context "when the article does not belong to one of the user's books" do
+      it "does not delete the article and redirects to the homepage" do
+        expect { delete_articles_destroy }.not_to change(Article, :count)
+        expect(response).to redirect_to root_path
       end
     end
 
-    it "does not delete the article when the user is not logged in" do
-      article = create(:article)
-      expect { delete article_path(article) }.not_to change(Article, :count)
+    context "when the article belongs to one of the user's books" do
+      let(:book) { create(:book, users: [user]) }
+
+      before { 3.times { create(:basic_note, article:) } }
+
+      it "deletes the article and redirects to show the book" do
+        expect { delete_articles_destroy }.to change(Article, :count).by(-1)
+        expect(response).to redirect_to book_path(book)
+      end
+
+      context "when the article is a system article" do
+        let(:article) { create(:article, book:, system: true) }
+
+        it "returns a 422 response if the article is a system article" do
+          delete_articles_destroy
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
     end
   end
 end

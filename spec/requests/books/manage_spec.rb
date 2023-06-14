@@ -11,7 +11,7 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
-  include_examples "not logged in user gets redirected to homepage"
+  include_examples "user not logged in gets redirected"
 
   include BasicNotesHelper
 

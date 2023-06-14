@@ -1,39 +1,36 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "GET /articles/:id/edit" do
-    context "when user is logged in" do
-      let(:user) { create(:user) }
-      let(:book) { create(:book, users: [user]) }
-      let(:article) { create(:article, book:) }
-      let(:book_unrelated_to_user) { create(:book) }
-      let(:article_unrelated_to_user) { create(:article, book: book_unrelated_to_user) }
+RSpec.describe "GET /articles/:id/edit", "#edit" do
+  subject(:get_articles_edit) { get edit_article_path(article) }
 
-      include_context "when the user is logged in"
+  let(:book) { create(:book) }
+  let(:article) { create(:article, book:) }
 
-      it "returns a success response if the article belongs to one of their books" do
-        get edit_article_path(article)
-        expect(response).to be_successful
-      end
+  include_examples "user not logged in gets redirected"
 
-      it "redirects to the homepage if it does not belong to one of the users' books" do
-        get edit_article_path(article_unrelated_to_user)
-        expect(response).to redirect_to root_path
-      end
+  context "when user is logged in" do
+    include_context "when the user is logged in"
 
-      it "redirects to the homepage if the article does not exist" do
-        get "/articles/asdf/edit"
-        expect(response).to redirect_to root_path
-      end
+    it "redirects to the homepage if the article does not exist" do
+      get "/articles/asdf/edit"
+      expect(response).to redirect_to root_path
     end
 
-    it "redirects to the root page when the user is not logged in" do
-      article = create(:article)
-      get edit_article_path(article)
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq(ApplicationController::NOT_LOGGED_IN_FLASH_MESSAGE)
+    it "redirects to the homepage if it does not belong to one of the users' books" do
+      get_articles_edit
+      expect(response).to redirect_to root_path
+    end
+
+    context "when the article belongs to one of the user's books" do
+      let(:book) { create(:book, users: [user]) }
+
+      it "returns a 200 response" do
+        get_articles_edit
+        expect(response).to be_successful
+      end
     end
   end
 end

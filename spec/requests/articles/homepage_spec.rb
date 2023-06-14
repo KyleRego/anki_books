@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe "Articles" do
-  let(:user) { create(:user) }
-
+RSpec.describe "GET /", "#homepage" do
   before { create(:article, system: true) }
 
-  describe "GET /" do
-    it "shows the homepage" do
-      get root_path
-      expect(response).to be_successful
-    end
+  it "shows the homepage" do
+    get root_path
+    expect(response).to be_successful
   end
 end

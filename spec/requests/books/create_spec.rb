@@ -8,7 +8,7 @@ RSpec.describe "POST /books", "#create" do
 
   let(:title) { "the title" }
 
-  include_examples "not logged in user gets redirected to homepage"
+  include_examples "user not logged in gets redirected"
 
   context "when user is logged in" do
     include_context "when the user is logged in"

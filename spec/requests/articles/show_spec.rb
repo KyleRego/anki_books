@@ -1,46 +1,45 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "GET /articles/:id" do
-    let(:user) { create(:user) }
-    let(:book) { create(:book, users: [user]) }
-    let(:article) { create(:article, book:) }
+RSpec.describe "GET /articles/:id", "#show" do
+  subject(:get_articles_show) { get article_path(article) }
 
-    let(:book_unrelated_to_user) { create(:book) }
-    let(:article_unrelated_to_user) { create(:article, book: book_unrelated_to_user) }
+  let(:book) { create(:book) }
+  let(:article) { create(:article, book:) }
 
-    let(:system_article) { create(:article, book:, system: true) }
+  include_examples "user not logged in gets redirected"
 
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+  context "when user is logged in" do
+    include_context "when the user is logged in"
 
-      it "shows the article if it belongs to one of the users' books" do
-        get article_path(article)
+    it "redirects to the homepage if it does not belong to one of the users' books" do
+      get_articles_show
+      expect(response).to redirect_to root_path
+    end
+
+    it "redirects to the homepage if the article does not exist" do
+      get "/articles/asdf"
+      expect(response).to redirect_to root_path
+    end
+
+    context "when the article belongs to one of the user's books" do
+      let(:book) { create(:book, users: [user]) }
+
+      it "returns a 200 response" do
+        get_articles_show
         expect(response).to be_successful
       end
 
-      it "redirects to the homepage if it does not belong to one of the users' books" do
-        get article_path(article_unrelated_to_user)
-        expect(response).to redirect_to root_path
-      end
+      context "when the article is a system article" do
+        let(:article) { create(:article, book:, system: true) }
 
-      it "redirects to the homepage if the article does not exist" do
-        get "/articles/asdf"
-        expect(response).to redirect_to root_path
+        it "redirects to the root path" do
+          get_articles_show
+          expect(response).to redirect_to root_path
+        end
       end
-
-      it "redirects to homepage if it is a system article" do
-        get article_path(system_article)
-        expect(response).to redirect_to root_path
-      end
-    end
-
-    it "redirects to the homepage when the user is not logged in" do
-      get article_path(article)
-      expect(flash[:alert]).to eq ApplicationController::NOT_LOGGED_IN_FLASH_MESSAGE
-      expect(response).to redirect_to root_path
     end
   end
 end

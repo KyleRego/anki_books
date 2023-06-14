@@ -6,7 +6,7 @@ require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 RSpec.describe "GET /books", "#index" do
   subject(:get_books_index) { get(books_path) }
 
-  include_examples "not logged in user gets redirected to homepage"
+  include_examples "user not logged in gets redirected"
 
   context "when user is logged in" do
     include_context "when the user is logged in"

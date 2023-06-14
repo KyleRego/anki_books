@@ -1,68 +1,79 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
 
-RSpec.describe "Articles" do
-  describe "POST /articles/:article_id/change_note_ordinal_position" do
-    context "when user is logged in" do
-      let(:user) { create(:user) }
+# rubocop:disable RSpec/MultipleMemoizedHelpers
+RSpec.describe "POST /articles/:article_id/change_note_ordinal_position" do
+  subject(:post_articles_change_note_ordinal_position) do
+    post change_article_note_ordinal_position_path(article),
+         params: { note_id: note_a.id, new_ordinal_position: }
+  end
 
-      include_context "when the user is logged in"
+  let(:article) { create(:article, book:) }
+  let(:book) { create(:book) }
+  let!(:note_a) { create(:basic_note, article:) }
+  let!(:note_b) { create(:basic_note, article:) }
+  let!(:note_c) { create(:basic_note, article:) }
+  let(:new_ordinal_position) { 2 }
 
-      context "when the book belongs to the user" do
-        let(:book) { create(:book, users: [user]) }
-        let(:article) { create(:article, book:) }
-        let!(:note_a) { create(:basic_note, article:) }
-        let!(:note_b) { create(:basic_note, article:) }
-        let!(:note_c) { create(:basic_note, article:) }
+  include_examples "user not logged in gets redirected"
 
-        # rubocop:disable RSpec/MultipleExpectations
-        it "changes the ordinal_position of the note and shifts the other notes" do
-          post change_article_note_ordinal_position_path(article),
-               params: { note_id: note_a.id, new_ordinal_position: 2 }
-          expect(note_a.reload.ordinal_position).to eq 2
-          expect(note_b.reload.ordinal_position).to eq 0
-          expect(note_c.reload.ordinal_position).to eq 1
-        end
-        # rubocop:enable RSpec/MultipleExpectations
+  context "when user is logged in" do
+    include_context "when the user is logged in"
 
-        it "returns a 422 response if the new_ordinal_position param is negative" do
-          post change_article_note_ordinal_position_path(article),
-               params: { note_id: note_a.id, new_ordinal_position: -1 }
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+    context "when the article does not belong to one of the user's books" do
+      let(:book_unrelated_to_user) { create(:book) }
+      let(:article_unrelated_to_user) { create(:article, book: book_unrelated_to_user) }
+      let!(:note_a) { create(:basic_note, article: article_unrelated_to_user) }
+      let!(:note_b) { create(:basic_note, article: article_unrelated_to_user) }
 
-        it "returns a 422 response if the new_ordinal_position param is the number of notes the article has" do
-          post change_article_note_ordinal_position_path(article),
-               params: { note_id: note_a.id, new_ordinal_position: article.notes_count }
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-
-        it "returns a 422 response if the new_ordinal_position param is the old ordinal_position of the note" do
-          post change_article_note_ordinal_position_path(article),
-               params: { note_id: note_a.id, new_ordinal_position: note_a.ordinal_position }
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-      end
-
-      context "when the article does not belong to one of the user's books" do
-        let(:book_unrelated_to_user) { create(:book) }
-        let(:article_unrelated_to_user) { create(:article, book: book_unrelated_to_user) }
-        let!(:note_a) { create(:basic_note, article: article_unrelated_to_user) }
-        let!(:note_b) { create(:basic_note, article: article_unrelated_to_user) }
-
-        it "redirects if the article does not belong to one of the user's books" do
-          post change_article_note_ordinal_position_path(article_unrelated_to_user),
-               params: { note_id: note_a.id, new_ordinal_position: 1 }
-          expect(response).to redirect_to root_path
-        end
+      it "redirects if the article does not belong to one of the user's books" do
+        post change_article_note_ordinal_position_path(article_unrelated_to_user),
+             params: { note_id: note_a.id, new_ordinal_position: 1 }
+        expect(response).to redirect_to root_path
       end
     end
 
-    it "redirects to the homepage if the user is not logged in" do
-      article = create(:article)
-      post change_article_note_ordinal_position_path(article), params: { note_id: "asdf", new_ordinal_position: 2 }
-      expect(response).to redirect_to root_path
+    context "when the article belongs to the user's book" do
+      let(:book) { create(:book, users: [user]) }
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it "changes the ordinal_position of the note and shifts the other notes" do
+        post_articles_change_note_ordinal_position
+        expect(note_a.reload.ordinal_position).to eq new_ordinal_position
+        expect(note_b.reload.ordinal_position).to eq 0
+        expect(note_c.reload.ordinal_position).to eq 1
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+
+      context "when the desired new_ordinal_position is negative" do
+        let(:new_ordinal_position) { -1 }
+
+        it "returns a 422 response" do
+          post_articles_change_note_ordinal_position
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
+      context "when the desired new_ordinal_position is the number of notes the article has" do
+        let(:new_ordinal_position) { article.notes_count }
+
+        it "returns a 422 response" do
+          post_articles_change_note_ordinal_position
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
+      context "when the desired new_ordinal_position is the ordinal position that the note has already" do
+        let(:new_ordinal_position) { note_a.ordinal_position }
+
+        it "returns a 422 response if the new_ordinal_position param is the old ordinal_position of the note" do
+          post_articles_change_note_ordinal_position
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

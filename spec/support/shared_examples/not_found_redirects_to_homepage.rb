@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "not logged in user gets redirected to homepage" do
+RSpec.shared_examples "user not logged in gets redirected" do
   # rubocop:disable RSpec/MultipleExpectations
   it "redirects a not logged in user to the homepage" do
     subject
