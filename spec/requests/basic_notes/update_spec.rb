@@ -21,7 +21,7 @@ RSpec.describe "BasicNotes" do
 
       it "updates the Basic note" do
         patch article_basic_note_path(article, basic_note, basic_note: { front: "new front", back: "new back" }),
-              headers: { "Turbo-Frame": turbo_id_for_basic_note(basic_note) }
+              headers: { "Turbo-Frame": basic_note.turbo_id }
         expect(basic_note.reload.front).to eq "new front"
         expect(basic_note.back).to eq "new back"
       end
@@ -29,7 +29,7 @@ RSpec.describe "BasicNotes" do
 
     it "does not update the Basic note if the user is not logged in" do
       patch article_basic_note_path(article, basic_note, basic_note: { front: "new front", back: "new back" }),
-            headers: { "Turbo-Frame": turbo_id_for_basic_note(basic_note) }
+            headers: { "Turbo-Frame": basic_note.turbo_id }
       expect(basic_note.reload.front).not_to eq "new front"
       expect(basic_note.back).not_to eq "new back"
     end

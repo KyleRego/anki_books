@@ -17,7 +17,7 @@ RSpec.describe "BasicNotes" do
     it "does not create a new Basic note if the user is not logged in" do
       expect do
         post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+             headers: { "Turbo-Frame": first_basic_note_turbo_id }
       end.not_to change(BasicNote, :count)
     end
 
@@ -27,13 +27,13 @@ RSpec.describe "BasicNotes" do
       it "creates a new Basic note if the user is logged in" do
         expect do
           post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-               headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+               headers: { "Turbo-Frame": first_basic_note_turbo_id }
         end.to change(BasicNote, :count).by(1)
       end
 
       it "creates a Basic note with ordinal_position 0 if it is the article's first note" do
         post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+             headers: { "Turbo-Frame": first_basic_note_turbo_id }
         expect(article.basic_notes.first.ordinal_position).to eq 0
       end
 
@@ -42,7 +42,7 @@ RSpec.describe "BasicNotes" do
 
         expect do
           post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
-               headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling:) }
+               headers: { "Turbo-Frame": sibling.new_note_sibling_turbo_id }
         end.to change(BasicNote, :count).by(1)
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end
@@ -53,14 +53,14 @@ RSpec.describe "BasicNotes" do
 
         expect do
           post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
-               headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling:) }
+               headers: { "Turbo-Frame": sibling.new_note_sibling_turbo_id }
         end.to change(BasicNote, :count).by(1)
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end
 
       it "returns a 422 response if the ordinal_position param is less than 0" do
         post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: -1),
-             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+             headers: { "Turbo-Frame": first_basic_note_turbo_id }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -68,7 +68,7 @@ RSpec.describe "BasicNotes" do
         post article_basic_notes_path(article,
                                       basic_note: { front: "Front", back: "Back" },
                                       ordinal_position: article.notes_count + 1),
-             headers: { "Turbo-Frame": turbo_id_for_new_basic_note(sibling: nil) }
+             headers: { "Turbo-Frame": first_basic_note_turbo_id }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

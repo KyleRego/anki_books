@@ -5,6 +5,9 @@
 class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable
+
+  include BasicNote::TurboFrameable
+
   include ERB::Util
   include Rails.application.routes.url_helpers
 

@@ -15,7 +15,7 @@ RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   include_examples "request missing the Turbo-Frame header is forbidden"
 
   context "when the Turbo-Frame header is present" do
-    let(:headers) { { "Turbo-Frame": turbo_id_for_basic_note(basic_note) } }
+    let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
 
     include_examples "user not logged in gets redirected"
   end

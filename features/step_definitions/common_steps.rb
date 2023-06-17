@@ -14,6 +14,11 @@ When "I click the {string} link" do |link|
   sleep 0.5
 end
 
+When "I click the last {string} link" do |link|
+  all(:link, link).last.click
+  sleep 0.5
+end
+
 When(/^I click the (\d+)(?:st|nd|rd|th)? link with text "(.*?)"$/) do |position, text|
   index = position.to_i - 1
   links = all("a", text:)

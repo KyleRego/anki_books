@@ -13,7 +13,7 @@ class BasicNotesController < ApplicationController
 
   def new
     turbo_id = request.headers["Turbo-Frame"]
-    sibling_note_id = turbo_id.slice(TURBO_NEW_BASIC_NOTE_ID_PREFIX.length..-1)
+    sibling_note_id = turbo_id.slice(first_basic_note_turbo_id.length..-1)
     @previous_sibling = BasicNote.find_by(id: sibling_note_id)
     @basic_note = @article.basic_notes.new
   end
@@ -36,7 +36,8 @@ class BasicNotesController < ApplicationController
       render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
     else
       @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
-      render turbo_stream: turbo_stream.replace(turbo_id_for_new_basic_note(sibling: @previous_sibling),
+      turbo_id = @previous_sibling ? @previous_sibling.new_note_sibling_turbo_id : first_basic_note_turbo_id
+      render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new", locals: { basic_note: @basic_note })
     end
   end
@@ -71,14 +72,18 @@ class BasicNotesController < ApplicationController
 
   def render_appropriate_turbo_stream_for_create(new_ordinal_position:)
     if new_ordinal_position.zero?
-      render turbo_stream: turbo_stream.replace(turbo_id_for_new_basic_note(sibling: nil),
+      render turbo_stream: turbo_stream.replace(first_basic_note_turbo_id,
                                                 template: "basic_notes/show",
                                                 locals: { basic_note: @basic_note })
     else
       previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
-      render turbo_stream: turbo_stream.after(turbo_id_for_basic_note(previous_sibling),
+      render turbo_stream: turbo_stream.after(previous_sibling.turbo_id,
                                               template: "basic_notes/show",
                                               locals: { basic_note: @basic_note })
     end
+  end
+
+  def first_basic_note_turbo_id
+    BasicNote::TurboFrameable::TURBO_NEW_BASIC_NOTE_ID_PREFIX
   end
 end
