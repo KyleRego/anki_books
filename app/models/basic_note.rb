@@ -27,8 +27,7 @@ class BasicNote < ApplicationRecord
 
   def anki_back
     content = format_for_input_to_anki(field: back)
-    link = "<a href=\"#{article_url(article)}\">Edit</a>"
-    "#{content}<br><br>#{link}"
+    "#{content}<br><br>#{note_link}"
   end
 
   private
@@ -43,5 +42,9 @@ class BasicNote < ApplicationRecord
 
   def format_for_input_to_anki(field:)
     html_escape(field).gsub("\n", "<br>")
+  end
+
+  def note_link
+    "<a href=\"#{article_url(article)}##{turbo_id}\">Edit</a>"
   end
 end
