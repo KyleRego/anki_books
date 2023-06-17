@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
+require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
 
 RSpec.describe "POST /books", "#create" do
   subject(:post_books_create) { post books_path, params: { book: { title: } } }

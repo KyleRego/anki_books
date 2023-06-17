@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
+require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
 
 RSpec.describe "GET /articles/:id/manage", "#manage" do
   subject(:get_articles_manage) { get manage_article_path(article) }

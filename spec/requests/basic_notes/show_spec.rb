@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe "BasicNotes" do
+require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
+
+RSpec.describe "GET /articles/:article_id/basic_notes/:id", "#show" do
+  subject(:get_basic_notes_show) { get article_basic_note_path(article, basic_note) }
+
   let(:article) { create(:article) }
   let(:basic_note) { create(:basic_note, article:) }
 
-  describe "GET /articles/:article_id/basic_notes/:id" do
-    it "sends a 403 Forbidden response if the Turbo-Frame header is missing" do
-      get article_basic_note_path(article, basic_note)
-      expect(response).to have_http_status :forbidden
-    end
-  end
+  include_examples "request missing the Turbo-Frame header is forbidden"
 end

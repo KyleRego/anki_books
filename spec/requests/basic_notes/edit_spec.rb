@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
-RSpec.describe "BasicNotes" do
+require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
+require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+
+RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
+  subject(:get_basic_notes_edit) { get edit_article_basic_note_path(article, basic_note), headers: }
+
   include BasicNotesHelper
 
   let(:article) { create(:article) }
   let(:basic_note) { create(:basic_note, article:) }
+  let(:headers) { {} }
 
-  describe "GET /articles/:article_id/basic_notes/:id/edit" do
-    it "sends a 403 Forbidden response if the Turbo-Frame header is missing" do
-      get edit_article_basic_note_path(article, basic_note)
-      expect(response).to have_http_status :forbidden
-    end
+  include_examples "request missing the Turbo-Frame header is forbidden"
 
-    it "redirects to the root page if user is not logged in" do
-      get edit_article_basic_note_path(article, basic_note),
-          headers: { "Turbo-Frame": turbo_id_for_basic_note(basic_note) }
-      expect(response).to redirect_to(root_path)
-    end
+  context "when the Turbo-Frame header is present" do
+    let(:headers) { { "Turbo-Frame": turbo_id_for_basic_note(basic_note) } }
+
+    include_examples "user not logged in gets redirected"
   end
 end

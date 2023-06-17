@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_found_redirects_to_homepage"
+require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
 
 RSpec.describe "GET /books/:id/edit", "#edit" do
   subject(:get_books_edit) { get(edit_book_path(book)) }
