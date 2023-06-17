@@ -74,3 +74,5 @@ Rails.application.configure do
 
   config.assets.debug = true
 end
+
+Rails.application.routes.default_url_options = { host: "localhost:3000", port: 3000 }
