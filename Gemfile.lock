@@ -355,7 +355,6 @@ PLATFORMS
 DEPENDENCIES
   anki_record (~> 0.3.2)
   bcrypt (~> 3.1)
-  better_html (~> 2.0)
   bootsnap
   capybara
   cucumber

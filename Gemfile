@@ -88,5 +88,3 @@ end
 gem "bcrypt", "~> 3.1"
 
 gem "anki_record", "~> 0.3.2"
-
-gem "better_html", "~> 2.0"
