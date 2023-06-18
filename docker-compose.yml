@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      DATABASE_HOST: database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234asdf!!!!
+      POSTGRES_DB: anki_books_development
+
+  database:
+    image: postgres:14
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234asdf!!!!
+      POSTGRES_DB: anki_books_development
+
+volumes:
+  data:
