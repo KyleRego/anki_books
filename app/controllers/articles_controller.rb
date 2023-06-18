@@ -65,8 +65,7 @@ class ArticlesController < ApplicationController
   def change_note_ordinal_position
     note = @article.basic_notes.find(params[:note_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
-      @article.move_note_to_new_ordinal_position_and_shift_notes(note:, new_ordinal_position:)
+    if OrdinalPositionSaver.perform(parent: @article, child_to_position: note, new_ordinal_position:)
       head :ok
     else
       head :unprocessable_entity
@@ -112,13 +111,5 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :content, :book_id)
-  end
-
-  def valid_change_note_ordinal_position_input?(note:, new_ordinal_position:)
-    return false unless @article.current_ordinal_position_range_includes?(note_ordinal_position: new_ordinal_position)
-
-    return false if note.ordinal_position == new_ordinal_position
-
-    true
   end
 end

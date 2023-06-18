@@ -68,9 +68,9 @@ RSpec.describe "POST /articles/:article_id/change_note_ordinal_position" do
       context "when the desired new_ordinal_position is the ordinal position that the note has already" do
         let(:new_ordinal_position) { note_a.ordinal_position }
 
-        it "returns a 422 response if the new_ordinal_position param is the old ordinal_position of the note" do
+        it "returns a 200 response" do
           post_articles_change_note_ordinal_position
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:success)
         end
       end
     end

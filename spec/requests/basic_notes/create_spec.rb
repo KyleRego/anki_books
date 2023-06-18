@@ -58,18 +58,20 @@ RSpec.describe "BasicNotes" do
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
       end
 
-      it "returns a 422 response if the ordinal_position param is less than 0" do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: -1),
-             headers: { "Turbo-Frame": first_basic_note_turbo_id }
-        expect(response).to have_http_status(:unprocessable_entity)
+      it "does not create a basic note if ordinal_position param is less than 0" do
+        expect do
+          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: -1),
+               headers: { "Turbo-Frame": first_basic_note_turbo_id }
+        end.not_to change(BasicNote, :count)
       end
 
-      it "returns a 422 response if the ordinal_position param is more than the article's number of notes" do
-        post article_basic_notes_path(article,
-                                      basic_note: { front: "Front", back: "Back" },
-                                      ordinal_position: article.notes_count + 1),
-             headers: { "Turbo-Frame": first_basic_note_turbo_id }
-        expect(response).to have_http_status(:unprocessable_entity)
+      it "does not create a basic note if the ordinal_position param is more than the article's number of notes" do
+        expect do
+          post article_basic_notes_path(article,
+                                        basic_note: { front: "Front", back: "Back" },
+                                        ordinal_position: article.notes_count + 1),
+               headers: { "Turbo-Frame": first_basic_note_turbo_id }
+        end.not_to change(BasicNote, :count)
       end
     end
   end

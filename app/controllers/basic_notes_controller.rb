@@ -20,19 +20,13 @@ class BasicNotesController < ApplicationController
 
   def edit; end
 
-  # TODO: A service that manages the ordinal position of a new note and also moves
-  # the note to new ordinal position in articles#change_ordinal_position?
-  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
 
-    if !@article.valid_ordinal_position_for_new_note?(note_ordinal_position: ordinal_position_param)
-      head :unprocessable_entity
-    elsif @basic_note.save
-      @article.move_note_to_new_ordinal_position_and_shift_notes(note: @basic_note,
-                                                                 new_ordinal_position: ordinal_position_param)
+    if @basic_note.valid? && OrdinalPositionSaver.perform(parent: @article, child_to_position: @basic_note,
+                                                          new_ordinal_position: ordinal_position_param)
       render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
     else
       @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
@@ -42,7 +36,6 @@ class BasicNotesController < ApplicationController
     end
   end
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   def update
     if @basic_note.update(basic_note_params)
