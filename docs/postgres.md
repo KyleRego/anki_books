@@ -1,5 +1,52 @@
 # Postgres
 
+PostgreSQL is the object-relational database management system used by Anki Books. It is open-source and has [excellent documentation](https://www.postgresql.org/docs/14/index.html).
+
+## Setup
+
+Use this command to install PostgreSQL on Ubuntu:
+
+```
+sudo apt install postgresql
+```
+
+After installing this, you should create a database user for yourself.
+
+You can connect to the database server `postgres` using the client CLI `psql` as the user `postgres`:
+
+```
+sudo -u postgres psql
+```
+
+Using the `psql` shell:
+
+```
+CREATE USER your_name;
+ALTER USER your_name WITH CREATEDB;
+\du
+\q
+```
+
+Then with the current working directory being the root of the Rails code base, use this command to create the test and development environment databases:
+
+```
+bin/rails db:create
+```
+
+To run the migrations which set up the database schema:
+
+```
+bin/rails db:migrate
+```
+
+Finally, seed the database:
+
+```
+bin/rails db:seed
+```
+
+## Starting the server
+
 This command starts the PostgreSQL database server:
 
 ```
