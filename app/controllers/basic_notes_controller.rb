@@ -25,8 +25,8 @@ class BasicNotesController < ApplicationController
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
 
-    if @basic_note.valid? && OrdinalPositionSaver.perform(parent: @article, child_to_position: @basic_note,
-                                                          new_ordinal_position: ordinal_position_param)
+    if @basic_note.valid? && OrdinalPositionManager::ArticleBasicNotes.perform(parent: @article, child_to_position: @basic_note,
+                                                                               new_ordinal_position: ordinal_position_param)
       render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
     else
       @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
