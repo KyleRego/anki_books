@@ -6,6 +6,7 @@ class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable
 
+  include BasicNote::AnkiContentable
   include BasicNote::TurboFrameable
 
   include ERB::Util
@@ -21,15 +22,6 @@ class BasicNote < ApplicationRecord
   validates :anki_guid, presence: true, uniqueness: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :article_id }
 
-  def anki_front
-    format_for_input_to_anki(field: front)
-  end
-
-  def anki_back
-    content = format_for_input_to_anki(field: back)
-    "#{content}<br><br>#{note_link}"
-  end
-
   private
 
   def set_anki_id_if_nil
@@ -38,13 +30,5 @@ class BasicNote < ApplicationRecord
 
   def set_anki_guid_if_nil
     self.anki_guid ||= anki_globally_unique_id
-  end
-
-  def format_for_input_to_anki(field:)
-    html_escape(field).gsub("\n", "<br>")
-  end
-
-  def note_link
-    "<a href=\"#{article_url(article)}##{turbo_id}\">Edit</a>"
   end
 end
