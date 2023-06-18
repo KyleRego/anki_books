@@ -9,7 +9,7 @@ module BasicNote::AnkiContentable
 
   def anki_back
     content = format_for_input_to_anki(field: back)
-    "#{content}<br>#{note_link}"
+    "#{content}<br><br>#{note_link}"
   end
 
   private
