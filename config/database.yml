@@ -23,7 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: anki_books_development
+  host: <%= ENV.fetch("DATABASE_HOST") %>
+  database: <%= ENV.fetch("POSTGRES_DB") %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
