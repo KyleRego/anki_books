@@ -20,18 +20,22 @@ class ArticlesController < ApplicationController
 
   def edit; end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     @article = Article.new(article_params)
-    if current_user.books.exclude?(@article.book)
+    @book = Book.find(params[:article][:book_id])
+    @article.ordinal_position = @book.articles_count
+
+    if current_user.books.exclude?(@book)
       redirect_to_homepage_no_access
     elsif @article.save
       redirect_to article_path(@article)
     else
-      @book = Book.find(params[:article][:book_id])
       flash.now[:alert] = "An article must have a title."
       render :new, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def update
     if @article.update(article_params)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_234230) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_002617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_234230) do
     t.datetime "updated_at", null: false
     t.boolean "system", default: false, null: false
     t.uuid "book_id", null: false
+    t.integer "ordinal_position"
   end
 
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_234230) do
     t.uuid "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["book_id", "user_id"], name: "index_books_users_on_book_id_and_user_id", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -101,4 +103,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_234230) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "books"
   add_foreign_key "basic_notes", "articles"
+  add_foreign_key "books_users", "books"
+  add_foreign_key "books_users", "users"
 end
