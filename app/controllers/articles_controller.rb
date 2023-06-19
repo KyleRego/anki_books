@@ -84,18 +84,31 @@ class ArticlesController < ApplicationController
     @other_books = current_user.books.where.not(id: @article.book.id)
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def change_book
     @target_book = current_user.books.find_by(id: params[:book_id])
     # TODO: Probably also check here the target book is not already the article's book
     if @target_book
-      @article.ordinal_position = @target_book.articles_count
-      @article.update(book: @target_book)
+      # TODO: This badly needs some work
+      # How to ensure validity of the ordinal positions?
+      ActiveRecord::Base.transaction do
+        @source_book = @article.book
+        source_book_ordinal_position = @article.ordinal_position
+        @article.ordinal_position = @target_book.articles_count
+        @article.update!(book: @target_book)
+        @source_book.ordered_articles.where("ordinal_position > ?", source_book_ordinal_position).each do |article|
+          article.update!(ordinal_position: article.ordinal_position - 1)
+        end
+      end
       flash[:notice] = "Article moved to #{@target_book.title}."
       redirect_to manage_article_path(@article)
     else
       head :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 

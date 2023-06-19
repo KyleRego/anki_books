@@ -15,7 +15,12 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
   include_examples "user not logged in gets redirected"
 
   context "when user is logged in and first book belongs to them" do
-    let(:first_book) { create(:book, users: [user]) }
+    let(:first_book) do
+      book = create(:book, users: [user])
+      create(:article, book:)
+      book
+    end
+    let(:article) { first_book.articles.first }
 
     include_context "when the user is logged in"
 
@@ -32,6 +37,22 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
         patch_articles_change_book
         expect(response).to redirect_to(manage_article_path(article))
         expect(article.reload.book).to eq second_book
+      end
+
+      context "when first book has 5 articles" do
+        let(:first_book) do
+          book = create(:book, users: [user])
+          create_list(:article, 5, book:)
+          book
+        end
+        let(:article) { first_book.articles.find_by(ordinal_position: 0) }
+
+        it "shifts down the ordinal positions of the articles from the first book" do
+          patch_articles_change_book
+          expect(response).to redirect_to(manage_article_path(article))
+          expect(article.reload.book).to eq second_book
+          expect(first_book.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+        end
       end
     end
 
