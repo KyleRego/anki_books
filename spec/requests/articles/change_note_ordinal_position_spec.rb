@@ -4,7 +4,7 @@ require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
-RSpec.describe "POST /articles/:article_id/change_note_ordinal_position" do
+RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_ordinal_position" do
   subject(:post_articles_change_note_ordinal_position) do
     post change_article_note_ordinal_position_path(article),
          params: { note_id: note_a.id, new_ordinal_position: }

@@ -84,11 +84,11 @@ export default class extends Controller {
         this.updateNoteOrdinalPositionInHTML();
       }
       else {
-        console.log("Something went wrong reordering the note (the status code was not 200).");
+        console.log("Something went wrong reordering the note (the server response status code was not 200).");
       }
     })
     .catch(() => {
-      console.log("Something went wrong reordering the note (an error in the promise chain).");
+      console.log("Something went wrong in the promise chain (the note may have been successfully reordered).");
     });
   }
 

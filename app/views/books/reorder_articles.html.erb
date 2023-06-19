@@ -1,0 +1,20 @@
+<h1 id="<%= "book-#{@book.id}" %>" class="text-4xl font-bold">
+  Reorder articles of <%= @book.title %>
+</h1>
+
+<div class="mt-4">
+  <% @articles.each do |article| %>
+    <div class="reorderable-unit">
+      <div data-controller="reorder-articles--article-draggable">
+        <div data-reorder-articles--article-draggable-target="article"
+            draggable=true
+            id="<%= article.id %>">
+          <%= article.title %>
+        </div>
+      </div>
+      <div data-controller="reorder-articles--article-dropzone">
+        <div data-reorder-articles--article-dropzone-target="dropzone" class=" py-4 "></div>
+      </div>
+    </div>
+  <% end %>
+</div>

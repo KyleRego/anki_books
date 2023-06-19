@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OrdinalPositionManager
+module OrdinalPositionSetter
   ##
   # Manages inserting a new basic note at a specific ordinal position or
   # setting its new ordinal position; the other notes are shifted appropriately.

@@ -7,6 +7,7 @@ class Article < ApplicationRecord
   has_many :basic_notes, dependent: :destroy
 
   validates :title, presence: true
+  validates :ordinal_position, presence: true, uniqueness: { scope: :book_id }
 
   def notes
     basic_notes.order(:ordinal_position)

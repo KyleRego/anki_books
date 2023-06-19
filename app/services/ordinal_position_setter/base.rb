@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OrdinalPositionManager
+module OrdinalPositionSetter
   ##
   # General logic of managing changing the ordinal position in a one-to-many
   # association where the objects on the many side have an ordinal position;
@@ -40,10 +40,10 @@ module OrdinalPositionManager
       raise NotImplementedError
     end
 
-    # :nocov:
     def other_ordinal_position_children
       raise NotImplementedError
     end
+    # :nocov:
 
     def valid_new_ordinal_position
       return true if new_ordinal_position.zero?

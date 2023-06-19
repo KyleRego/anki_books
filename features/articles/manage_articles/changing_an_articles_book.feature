@@ -16,4 +16,5 @@ Feature: Moving an article to a different book
     Then I should see "Article moved to test book 2"
     When I click the "My books" link
     And I click the "test book 2" link
+    Then screenshot
     Then I should see "test article 1"

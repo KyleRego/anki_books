@@ -69,7 +69,7 @@ class ArticlesController < ApplicationController
   def change_note_ordinal_position
     note = @article.basic_notes.find(params[:note_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if OrdinalPositionManager::ArticleBasicNotes.perform(parent: @article, child_to_position: note, new_ordinal_position:)
+    if OrdinalPositionSetter::ArticleBasicNotes.perform(parent: @article, child_to_position: note, new_ordinal_position:)
       head :ok
     else
       head :unprocessable_entity
@@ -88,6 +88,7 @@ class ArticlesController < ApplicationController
     @target_book = current_user.books.find_by(id: params[:book_id])
     # TODO: Probably also check here the target book is not already the article's book
     if @target_book
+      @article.ordinal_position = @target_book.articles_count
       @article.update(book: @target_book)
       flash[:notice] = "Article moved to #{@target_book.title}."
       redirect_to manage_article_path(@article)
