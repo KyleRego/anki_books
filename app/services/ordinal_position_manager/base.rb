@@ -35,10 +35,12 @@ module OrdinalPositionManager
 
     private
 
+    # :nocov:
     def ordinal_position_children_count
       raise NotImplementedError
     end
 
+    # :nocov:
     def other_ordinal_position_children
       raise NotImplementedError
     end
