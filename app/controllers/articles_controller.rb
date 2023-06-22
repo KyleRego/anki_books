@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, except: %i[homepage study_cards]
@@ -88,23 +89,24 @@ class ArticlesController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   def change_book
     @target_book = current_user.books.find_by(id: params[:book_id])
-    # TODO: Probably also check here the target book is not already the article's book
-    if @target_book
+
+    if !@target_book
+      head :unprocessable_entity
+    elsif @target_book == @book
+      head :ok
+    else
       # TODO: This badly needs some work
       # How to ensure validity of the ordinal positions?
       ActiveRecord::Base.transaction do
-        @source_book = @article.book
         source_book_ordinal_position = @article.ordinal_position
         @article.ordinal_position = @target_book.articles_count
         @article.update!(book: @target_book)
-        @source_book.ordered_articles.where("ordinal_position > ?", source_book_ordinal_position).each do |article|
+        @book.ordered_articles.where("ordinal_position > ?", source_book_ordinal_position).each do |article|
           article.update!(ordinal_position: article.ordinal_position - 1)
         end
       end
       flash[:notice] = "Article moved to #{@target_book.title}."
       redirect_to manage_article_path(@article)
-    else
-      head :unprocessable_entity
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -131,3 +133,4 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :content, :book_id)
   end
 end
+# rubocop:enable Metrics/ClassLength
