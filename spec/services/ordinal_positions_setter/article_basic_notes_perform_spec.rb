@@ -2,7 +2,7 @@
 
 # rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable RSpec/ExampleLength
-RSpec.describe OrdinalPositionSetter::ArticleBasicNotes, ".perform" do
+RSpec.describe OrdinalPositionsSetter::ArticleBasicNotes, ".perform" do
   subject(:perform_ordinal_position_change) do
     described_class.perform(parent:, child_to_position:, new_ordinal_position:)
   end

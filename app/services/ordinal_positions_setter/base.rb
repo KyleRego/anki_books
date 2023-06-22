@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OrdinalPositionSetter
+module OrdinalPositionsSetter
   ##
   # General logic of managing changing the ordinal position in a one-to-many
   # association where the objects on the many side have an ordinal position;
@@ -20,18 +20,27 @@ module OrdinalPositionSetter
       @old_ordinal_position = child_to_position.ordinal_position
     end
 
+    # rubocop:disable Metrics/MethodLength
     def perform
       raise ArgumentError unless new_ordinal_position.instance_of?(Integer)
 
       raise ArgumentError if child_to_position.invalid?
 
-      return child_to_position.save if new_ordinal_position == old_ordinal_position
-
       return false unless valid_new_ordinal_position
 
-      shift_others_and_move_to_position
-      true
+      ActiveRecord::Base.transaction do
+        if new_ordinal_position == old_ordinal_position
+          child_to_position.save!
+        else
+          shift_others_and_move_to_position
+        end
+
+        raise "Ordinal position error" unless ordinal_positions_valid?
+
+        true
+      end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -41,6 +50,10 @@ module OrdinalPositionSetter
     end
 
     def other_ordinal_position_children
+      raise NotImplementedError
+    end
+
+    def ordinal_positions_valid?
       raise NotImplementedError
     end
     # :nocov:

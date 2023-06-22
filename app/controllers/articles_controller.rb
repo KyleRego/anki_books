@@ -69,7 +69,7 @@ class ArticlesController < ApplicationController
   def change_note_ordinal_position
     note = @article.basic_notes.find(params[:note_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if OrdinalPositionSetter::ArticleBasicNotes.perform(parent: @article, child_to_position: note, new_ordinal_position:)
+    if OrdinalPositionsSetter::ArticleBasicNotes.perform(parent: @article, child_to_position: note, new_ordinal_position:)
       head :ok
     else
       head :unprocessable_entity

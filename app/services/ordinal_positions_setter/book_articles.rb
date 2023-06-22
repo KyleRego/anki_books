@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module OrdinalPositionSetter
+module OrdinalPositionsSetter
   ##
-  # See OrdinalPositionSetter:ArticleBasicNotes
+  # See OrdinalPositionsSetter:ArticleBasicNotes
   class BookArticles < Base
     private
 
@@ -12,6 +12,10 @@ module OrdinalPositionSetter
 
     def other_ordinal_position_children
       parent.articles
+    end
+
+    def ordinal_positions_valid?
+      ::OrdinalPositionsValidator::BookArticles.perform(parent:)
     end
   end
 end

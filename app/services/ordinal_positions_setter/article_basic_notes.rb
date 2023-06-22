@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OrdinalPositionSetter
+module OrdinalPositionsSetter
   ##
   # Manages inserting a new basic note at a specific ordinal position or
   # setting its new ordinal position; the other notes are shifted appropriately.
@@ -14,6 +14,10 @@ module OrdinalPositionSetter
 
     def other_ordinal_position_children
       parent.basic_notes
+    end
+
+    def ordinal_positions_valid?
+      ::OrdinalPositionsValidator::ArticleBasicNotes.perform(parent:)
     end
   end
 end
