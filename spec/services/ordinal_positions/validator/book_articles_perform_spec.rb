@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe OrdinalPositionsValidator::BookArticles, ".perform" do
+RSpec.describe OrdinalPositions::Validator::BookArticles, ".perform" do
   subject(:perform_ordinal_position_validation) do
     described_class.perform(parent:)
   end
