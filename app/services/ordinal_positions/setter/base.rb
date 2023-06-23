@@ -12,15 +12,6 @@ module OrdinalPositions
         new(parent:, child_to_position:, new_ordinal_position:).perform
       end
 
-      attr_reader :parent, :child_to_position, :new_ordinal_position, :old_ordinal_position
-
-      def initialize(parent:, child_to_position:, new_ordinal_position:)
-        @parent = parent
-        @child_to_position = child_to_position
-        @new_ordinal_position = new_ordinal_position
-        @old_ordinal_position = child_to_position.ordinal_position
-      end
-
       # rubocop:disable Metrics/MethodLength
       def perform
         raise ArgumentError unless new_ordinal_position.instance_of?(Integer)
@@ -44,6 +35,15 @@ module OrdinalPositions
       # rubocop:enable Metrics/MethodLength
 
       private
+
+      attr_reader :parent, :child_to_position, :new_ordinal_position, :old_ordinal_position
+
+      def initialize(parent:, child_to_position:, new_ordinal_position:)
+        @parent = parent
+        @child_to_position = child_to_position
+        @new_ordinal_position = new_ordinal_position
+        @old_ordinal_position = child_to_position.ordinal_position
+      end
 
       # :nocov:
       def ordinal_position_children_count

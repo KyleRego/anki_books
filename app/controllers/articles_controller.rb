@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, except: %i[homepage study_cards]
@@ -85,31 +84,25 @@ class ArticlesController < ApplicationController
     @other_books = current_user.books.where.not(id: @article.book.id)
   end
 
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def change_book
     @target_book = current_user.books.find_by(id: params[:book_id])
 
+    # rubocop:disable Lint/DuplicateBranch
     if !@target_book
       head :unprocessable_entity
     elsif @target_book == @book
       head :ok
-    else
-      # TODO: This badly needs some work
-      # How to ensure validity of the ordinal positions?
-      ActiveRecord::Base.transaction do
-        source_book_ordinal_position = @article.ordinal_position
-        @article.ordinal_position = @target_book.articles_count
-        @article.update!(book: @target_book)
-        @book.ordered_articles.where("ordinal_position > ?", source_book_ordinal_position).each do |article|
-          article.update!(ordinal_position: article.ordinal_position - 1)
-        end
-      end
+    elsif OrdinalPositions::Mover::BookArticles.perform(new_parent: @target_book,
+                                                        child_to_position: @article,
+                                                        new_ordinal_position: @target_book.articles_count)
       flash[:notice] = "Article moved to #{@target_book.title}."
       redirect_to manage_article_path(@article)
+    else
+      head :unprocessable_entity
     end
+    # rubocop:enable Lint/DuplicateBranch
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
   private
@@ -133,4 +126,3 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :content, :book_id)
   end
 end
-# rubocop:enable Metrics/ClassLength

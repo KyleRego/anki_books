@@ -10,17 +10,17 @@ module OrdinalPositions
         new(parent:).valid?
       end
 
-      attr_reader :parent
-
-      def initialize(parent:)
-        @parent = parent
-      end
-
       def valid?
         ordinal_positions == expected_ordinal_positions
       end
 
       private
+
+      attr_reader :parent
+
+      def initialize(parent:)
+        @parent = parent
+      end
 
       # :nocov:
       def ordinal_positions
