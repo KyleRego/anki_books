@@ -11,8 +11,11 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 12 }
 
-  # TODO: SQL joins needed for when there is more than one user.
   def notes
-    BasicNote.all
+    BasicNote.joins("inner join articles on basic_notes.article_id = articles.id
+                     inner join books on articles.book_id = books.id
+                     inner join books_users on books_users.book_id = books.id
+                     inner join users on books_users.user_id = users.id
+                     where users.id = '#{id}'")
   end
 end

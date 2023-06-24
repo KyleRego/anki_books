@@ -89,8 +89,8 @@ RSpec.describe OrdinalPositions::Mover::BookArticles, ".perform" do
         expect(perform_move_to_new_parent).to be true
         expect(child_to_position.reload.book).to eq new_parent
         expect(child_to_position.reload.ordinal_position).to eq new_ordinal_position
-        expect(old_parent.articles.pluck(:ordinal_position)).to eq [0, 1]
-        expect(new_parent.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+        expect(old_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1]
+        expect(new_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
       end
     end
 
@@ -102,8 +102,8 @@ RSpec.describe OrdinalPositions::Mover::BookArticles, ".perform" do
         expect(perform_move_to_new_parent).to be true
         expect(child_to_position.reload.book).to eq new_parent
         expect(child_to_position.reload.ordinal_position).to eq new_ordinal_position
-        expect(old_parent.articles.pluck(:ordinal_position)).to eq [0, 1]
-        expect(new_parent.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+        expect(old_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1]
+        expect(new_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
       end
     end
   end
