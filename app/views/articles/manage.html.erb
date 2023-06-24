@@ -12,7 +12,7 @@
 
 <div class="mt-4 pb-4 border-b-2">
   <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
-    <% @article.basic_notes.each do |basic_note| %>
+    <% @article.notes.each do |basic_note| %>
       <div class="mb-4">
         <%= label_tag(basic_note.id) do %>
           <%= check_box_tag("basic_note_ids[]", basic_note.id, nil, id: basic_note.id) %>
