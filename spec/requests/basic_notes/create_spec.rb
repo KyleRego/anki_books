@@ -14,7 +14,7 @@ RSpec.describe "BasicNotes" do
       expect(response).to have_http_status(:forbidden)
     end
 
-    it "does not create a new Basic note if the user is not logged in" do
+    it "does not create a new Basic note if the user is not logged in and needs to be" do
       expect do
         post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
              headers: { "Turbo-Frame": first_basic_note_turbo_id }

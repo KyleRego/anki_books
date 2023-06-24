@@ -3,7 +3,8 @@
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, except: %i[homepage study_cards]
-  before_action :setup_and_check_user_can_access_article, except: %i[new create homepage]
+  before_action :set_article, except: %i[new create homepage]
+  before_action :check_user_can_access_article, except: %i[new create homepage]
 
   def show
     if @article.system
@@ -27,7 +28,7 @@ class ArticlesController < ApplicationController
     @article.ordinal_position = @book.articles_count
 
     if current_user.books.exclude?(@book)
-      redirect_to_homepage_no_access
+      not_found_or_unauthorized
     elsif @article.save
       redirect_to article_path(@article)
     else
@@ -107,10 +108,13 @@ class ArticlesController < ApplicationController
 
   private
 
-  def setup_and_check_user_can_access_article
+  def set_article
     @article = Article.find_by(id: params[:id])
-    if !@article
-      redirect_to_homepage_not_found
+  end
+
+  def check_user_can_access_article
+    if @article.nil?
+      not_found_or_unauthorized
     elsif @article.system
       @book = @article.book
       nil
@@ -118,7 +122,7 @@ class ArticlesController < ApplicationController
       @book = @article.book
       return if current_user&.books&.include?(@book)
 
-      redirect_to_homepage_no_access
+      not_found_or_unauthorized
     end
   end
 

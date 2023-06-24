@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   subject(:get_basic_notes_edit) { get edit_article_basic_note_path(article, basic_note), headers: }
@@ -17,6 +17,6 @@ RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   context "when the Turbo-Frame header is present" do
     let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
 
-    include_examples "user not logged in gets redirected"
+    include_examples "user is not logged in and needs to be"
   end
 end

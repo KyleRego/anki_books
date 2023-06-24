@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_ordinal_position" do
@@ -17,7 +17,7 @@ RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_
   let!(:note_c) { create(:basic_note, article:) }
   let(:new_ordinal_position) { 2 }
 
-  include_examples "user not logged in gets redirected"
+  include_examples "user is not logged in and needs to be"
 
   context "when user is logged in" do
     include_context "when the user is logged in"

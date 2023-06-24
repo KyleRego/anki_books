@@ -27,7 +27,7 @@ RSpec.describe "BasicNotes" do
       end
     end
 
-    it "does not update the Basic note if the user is not logged in" do
+    it "does not update the Basic note if the user is not logged in and needs to be" do
       patch article_basic_note_path(article, basic_note, basic_note: { front: "new front", back: "new back" }),
             headers: { "Turbo-Frame": basic_note.turbo_id }
       expect(basic_note.reload.front).not_to eq "new front"

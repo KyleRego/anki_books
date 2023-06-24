@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 RSpec.describe "DELETE /articles/:id", "#destroy" do
   subject(:delete_articles_destroy) do
@@ -11,9 +11,9 @@ RSpec.describe "DELETE /articles/:id", "#destroy" do
   let(:book) { create(:book) }
   let!(:article) { create(:article, book:) }
 
-  include_examples "user not logged in gets redirected"
+  include_examples "user is not logged in and needs to be"
 
-  it "does not delete the article when the user is not logged in" do
+  it "does not delete the article when the user is not logged in and needs to be" do
     expect { delete_articles_destroy }.not_to change(Article, :count)
   end
 

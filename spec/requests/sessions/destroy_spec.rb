@@ -9,7 +9,7 @@ RSpec.describe "DELETE /logout", "#destroy" do
     delete "/logout"
   end
 
-  it "returns a 422 response if the user is not logged in" do
+  it "returns a 422 response if the user is not logged in and needs to be" do
     delete_sessions_destroy
     expect(response).to have_http_status :unprocessable_entity
   end

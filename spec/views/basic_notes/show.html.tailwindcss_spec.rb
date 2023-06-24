@@ -20,7 +20,7 @@ RSpec.describe "basic_notes/show" do
     end
   end
 
-  context "when user is not logged in" do
+  context "when user is not logged in and needs to be" do
     # rubocop:disable RSpec/MultipleExpectations
     it "renders the basic note but not as a draggable element" do
       render

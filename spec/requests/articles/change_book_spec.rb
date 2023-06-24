@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
   subject(:patch_articles_change_book) do
@@ -12,7 +12,7 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
   let(:article) { create(:article, book: first_book) }
   let(:second_book) { create(:book) }
 
-  include_examples "user not logged in gets redirected"
+  include_examples "user is not logged in and needs to be"
 
   context "when user is logged in and first book belongs to them" do
     let(:first_book) do

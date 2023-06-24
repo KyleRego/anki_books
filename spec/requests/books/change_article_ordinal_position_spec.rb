@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 RSpec.describe "POST /books/:id/change_article_ordinal_position", "#change_article_ordinal_position" do
   subject(:post_books_change_article_ordinal_position) do
@@ -23,7 +23,7 @@ RSpec.describe "POST /books/:id/change_article_ordinal_position", "#change_artic
   let(:article_to_move) { article_starting_at_two }
   let(:new_ordinal_position) { 0 }
 
-  include_examples "user not logged in gets redirected"
+  include_examples "user is not logged in and needs to be"
 
   context "when user is logged in" do
     include_context "when the user is logged in"

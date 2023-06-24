@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_redirected_to_root"
+require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
 require "rails_helper"
 
@@ -11,7 +11,7 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
-  include_examples "user not logged in gets redirected"
+  include_examples "user is not logged in and needs to be"
 
   include BasicNotesHelper
 
