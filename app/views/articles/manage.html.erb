@@ -2,16 +2,35 @@
   Manage <%= @article.title %>
 </h1>
 
-<div class="my-12">
+<div class="mt-4 pb-4 border-b-2">
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
     <%= select_tag("book_id", options_from_collection_for_select(@other_books, :id, :title), title: "Move the article to a different book") %>
-    <%= form.submit "Move article" %>
+    <br>
+    <%= form.submit "Move this article to a different book", class: "font-semibold mt-4" %>
   <% end %>
 </div>
 
-<div class="mt-12">
+<div class="mt-4 pb-4 border-b-2">
+  <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
+    <% @article.basic_notes.each do |basic_note| %>
+      <div class="mb-4">
+        <%= label_tag(basic_note.id) do %>
+          <%= check_box_tag("basic_note_ids[]", basic_note.id, nil, id: basic_note.id) %>
+          <span class="mr-4"><%= basic_note.front %></span>
+          <span><%= basic_note.back %></span>
+        <% end %>
+      </div>
+    <% end %>
+    <%= select_tag("target_article_id", options_from_collection_for_select(@other_articles, :id, :title), title: "Move basic notes to a different article") %>
+    <br>
+    <%= form.submit "Transfer selected basic notes to a different article", class: "font-semibold mt-4" %>
+  <% end %>
+</div>
+
+<div class="mt-4">
   <%= button_to "Delete #{@article.title}",
     article_path(@article),
+    class: "text-red-500 font-semibold",
     method: :delete,
     form: { data: { turbo_confirm: "Are you sure you want to delete #{@article.title}?"} } %>
 </div>

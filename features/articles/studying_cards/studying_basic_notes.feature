@@ -23,7 +23,6 @@ Feature: Reading an article
     And I should see "Next card"
 
   Scenario: Studying in random order should adjust the spans
-  Then screenshot
     When I click on the span with text "Random order"
     Then I should not see "First card"
     And I should not see "Random order"

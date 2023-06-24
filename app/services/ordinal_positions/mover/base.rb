@@ -32,7 +32,7 @@ module OrdinalPositions
         @child_to_position = child_to_position
         @new_ordinal_position = new_ordinal_position
         @old_parent = old_parent
-        @old_ordinal_position = child_to_position.ordinal_position
+        @old_ordinal_position = child_to_position.reload.ordinal_position
       end
     end
   end

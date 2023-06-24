@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login, except: %i[homepage study_cards]
@@ -82,7 +83,8 @@ class ArticlesController < ApplicationController
   end
 
   def manage
-    @other_books = current_user.books.where.not(id: @article.book.id)
+    @other_books = current_user.books.where.not(id: @book.id)
+    @other_articles = @book.articles.where.not(id: @article.id)
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -103,6 +105,25 @@ class ArticlesController < ApplicationController
       head :unprocessable_entity
     end
     # rubocop:enable Lint/DuplicateBranch
+  end
+
+  def transfer_basic_notes
+    target_article = @book.articles.find_by(id: params[:target_article_id])
+
+    if target_article.nil?
+      not_found_or_unauthorized
+    else
+      # The algorithm here should be redesigned to be efficient for transferring many
+      # positioned children at once, and possibly #change_book should also by default
+      # move many articles to a different book instead of one at a time.
+      @article.basic_notes.where(id: params[:basic_note_ids]).each do |basic_note|
+        OrdinalPositions::Mover::ArticleBasicNotes.perform(new_parent: target_article,
+                                                           child_to_position: basic_note,
+                                                           new_ordinal_position: target_article.notes_count)
+      end
+      flash[:notice] = "Selected basic notes moved to #{target_article.title}."
+      redirect_to manage_article_path(@article)
+    end
   end
   # rubocop:enable Metrics/MethodLength
 
@@ -130,3 +151,4 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :content, :book_id)
   end
 end
+# rubocop:enable Metrics/ClassLength

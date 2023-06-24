@@ -2,10 +2,7 @@
 
 module OrdinalPositions
   module Mover
-    ##
-    # General logic of moving an ordinally positioned child
-    # to a new parent to a new ordinal position keeping both
-    # parents ordinal position children consistent
+    # :nodoc:
     class BookArticles < Base
       private
 

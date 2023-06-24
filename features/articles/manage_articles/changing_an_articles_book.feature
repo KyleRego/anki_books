@@ -12,9 +12,8 @@ Feature: Moving an article to a different book
   @javascript
   Scenario: Moving an article from one book to a different book
     When I choose "test book 2" from the "book_id" select
-    And I click the "Move article" button
+    And I click the "Move this article to a different book" button
     Then I should see "Article moved to test book 2"
     When I click the "My books" link
     And I click the "test book 2" link
-    Then screenshot
     Then I should see "test article 1"

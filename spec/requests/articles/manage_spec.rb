@@ -27,6 +27,18 @@ RSpec.describe "GET /articles/:id/manage", "#manage" do
         get_articles_manage
         expect(response).to be_successful
       end
+
+      context "when the user has other books and the article's book has other articles" do
+        before do
+          create_list(:book, 4, users: [user])
+          create_list(:article, 5, book:)
+        end
+
+        it "returns a success response" do
+          get_articles_manage
+          expect(response).to be_successful
+        end
+      end
     end
   end
 end

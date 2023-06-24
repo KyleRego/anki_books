@@ -9,6 +9,12 @@ Given "there is a book titled {string} with an article titled {string}" do |book
   @test_article = create(:article, title: article_title, book: @test_book)
 end
 
+Given "the book {string} has an article {string} that has {int} basic note\\(s)" do |book_title, article_title, num|
+  book = Book.find_by(title: book_title)
+  article = create(:article, title: article_title, book:)
+  create_list(:basic_note, num, article:)
+end
+
 # TODO: This one has a misleading description
 Given "there is a book titled {string} with an article titled {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
   @test_book = create(:book, title: book_title, users: [@test_user])
