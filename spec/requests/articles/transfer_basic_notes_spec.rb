@@ -33,7 +33,19 @@ RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_note
 
       let(:basic_note_ids) { article.basic_notes.first(5).map(&:id) }
 
-      context "when the target article belongs to the user" do
+      context "when the target article belongs to one of the user's other books" do
+        let(:target_article) do
+          book = create(:book, users: [user])
+          create(:article, book:)
+        end
+
+        it "returns the not found redirect" do
+          patch_articles_transfer_basic_notes
+          expect(response).to redirect_to root_path
+        end
+      end
+
+      context "when the target article belongs to the same book" do
         let(:target_article) { create(:article, book:) }
 
         it "redirects to the manage article page and moves the basic notes to target article" do

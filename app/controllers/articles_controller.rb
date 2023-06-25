@@ -113,14 +113,11 @@ class ArticlesController < ApplicationController
     if target_article.nil?
       not_found_or_unauthorized
     else
-      # The algorithm here should be redesigned to be efficient for transferring many
-      # positioned children at once, and possibly #change_book should also by default
-      # move many articles to a different book instead of one at a time.
-      @article.basic_notes.where(id: params[:basic_note_ids]).each do |basic_note|
-        OrdinalPositions::Mover::ArticleBasicNotes.perform(new_parent: target_article,
-                                                           child_to_position: basic_note,
-                                                           new_ordinal_position: target_article.notes_count)
-      end
+      children_to_position = @article.basic_notes.where(id: params[:basic_note_ids])
+
+      OrdinalPositions::GroupMover::ArticleBasicNotes.perform(new_parent: target_article,
+                                                              old_parent: @article,
+                                                              children_to_position:)
       flash[:notice] = "Selected basic notes moved to #{target_article.title}."
       redirect_to manage_article_path(@article)
     end
