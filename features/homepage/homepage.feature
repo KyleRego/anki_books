@@ -21,3 +21,7 @@ Feature: The website homepage
     When I visit the root path
     Then I should see "My books"
     And I should not see a link to the homepage article's book
+
+  Scenario: The Manage link should not be present if not logged in
+    When I visit the root path
+    Then I should not see "Manage"

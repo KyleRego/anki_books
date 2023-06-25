@@ -4,7 +4,7 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[show manage reorder_articles]
+  before_action :set_articles, only: %w[show reorder_articles]
 
   def index
     @books = current_user.books
@@ -38,8 +38,6 @@ class BooksController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
-  def manage; end
 
   def reorder_articles; end
 

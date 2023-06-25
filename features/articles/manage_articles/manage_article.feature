@@ -5,7 +5,7 @@ Feature: Deleting an article
     And I am logged in
     And I am viewing the article
     And I click the "test book 1" link
-    And I click the "Manage articles" link
+    And I click the "test article 1" link
     And I click the "Manage test article 1" link
 
   @javascript
