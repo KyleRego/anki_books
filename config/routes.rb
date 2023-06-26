@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :books, except: %i[destroy] do
     resources :articles, only: :new
   end
-  get "/books/:id/reorder_articles", to: "books#reorder_articles", as: "reorder_book_articles"
+  get "/books/:id/manage", to: "books#manage", as: "manage_book"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
 

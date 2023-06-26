@@ -4,7 +4,7 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[show reorder_articles]
+  before_action :set_articles, only: %w[show manage]
 
   def index
     @books = current_user.books
@@ -39,7 +39,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def reorder_articles; end
+  def manage; end
 
   def change_article_ordinal_position
     @book = current_user.books.find(params[:id])

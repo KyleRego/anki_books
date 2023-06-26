@@ -35,9 +35,9 @@ RSpec.describe UsersController do
       expect(post: path).to route_to("books#change_article_ordinal_position", id: book_id)
     end
 
-    it "routes to #reorder_articles" do
-      path = "/books/#{book_id}/reorder_articles"
-      expect(get: path).to route_to("books#reorder_articles", id: book_id)
+    it "routes to #manage" do
+      path = "/books/#{book_id}/manage"
+      expect(get: path).to route_to("books#manage", id: book_id)
     end
   end
 end

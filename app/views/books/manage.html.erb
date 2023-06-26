@@ -1,0 +1,30 @@
+<h1 class="text-4xl font-bold">
+  Manage <%= @book.title %>
+</h1>
+
+<div class="mt-4 pb-4 border-b-2">
+  <%= link_to "Edit book", edit_book_path(@book), class: "font-semibold" %>
+</div>
+
+<div class="mt-4">
+  <h2 id="<%= "book-#{@book.id}" %>" class="text-xl font-semibold mb-4">
+    Reorder articles of <%= @book.title %>
+  </h1>
+
+  <div class="max-h-60 max-w-min overflow-y-scroll">
+    <% @articles.each do |article| %>
+      <div class="reorderable-unit min-w-max">
+        <div data-controller="reorder-articles--article-draggable">
+          <div data-reorder-articles--article-draggable-target="article"
+              draggable=true
+              id="<%= article.id %>" class="cursor-pointer">
+            <%= article.title %>
+          </div>
+        </div>
+        <div data-controller="reorder-articles--article-dropzone" class="bg-green-200">
+          <div data-reorder-articles--article-dropzone-target="dropzone" class="py-2"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

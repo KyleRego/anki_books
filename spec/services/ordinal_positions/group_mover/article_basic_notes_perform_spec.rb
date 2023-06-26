@@ -17,8 +17,8 @@ RSpec.describe OrdinalPositions::GroupMover::ArticleBasicNotes, ".perform" do
     lowest_child = children_to_position.order(:ordinal_position).first
     highest_child = children_to_position.order(:ordinal_position).last
     expect(perform_move_group_to_new_parent).to be true
-    expect(old_parent.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
-    expect(new_parent.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+    expect(old_parent.basic_notes.order(:ordinal_position).pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+    expect(new_parent.basic_notes.order(:ordinal_position).pluck(:ordinal_position)).to eq [0, 1, 2, 3]
 
     expect(new_parent.basic_notes.reload.find_by(ordinal_position: 0)).to eq lowest_child
     expect(new_parent.basic_notes.reload.find_by(ordinal_position: 3)).to eq highest_child
@@ -32,7 +32,7 @@ RSpec.describe OrdinalPositions::GroupMover::ArticleBasicNotes, ".perform" do
       highest_child = children_to_position.order(:ordinal_position).last
       expect(perform_move_group_to_new_parent).to be true
       expect(old_parent.basic_notes.pluck(:ordinal_position)).to eq []
-      expect(new_parent.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4, 5, 6, 7]
+      expect(new_parent.basic_notes.order(:ordinal_position).pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4, 5, 6, 7]
 
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 0)).to eq lowest_child
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 7)).to eq highest_child
@@ -46,8 +46,8 @@ RSpec.describe OrdinalPositions::GroupMover::ArticleBasicNotes, ".perform" do
       lowest_child = children_to_position.order(:ordinal_position).first
       highest_child = children_to_position.order(:ordinal_position).last
       expect(perform_move_group_to_new_parent).to be true
-      expect(old_parent.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
-      expect(new_parent.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      expect(old_parent.basic_notes.order(:ordinal_position).pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+      expect(new_parent.basic_notes.order(:ordinal_position).pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 5)).to eq lowest_child
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 8)).to eq highest_child

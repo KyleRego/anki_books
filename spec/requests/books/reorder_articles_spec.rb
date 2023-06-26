@@ -5,8 +5,8 @@ require_relative "../../support/shared_examples/not_logged_in_user_is_unauthoriz
 
 require "rails_helper"
 
-RSpec.describe "GET /books/:id/reorder_articles", "#reorder_articles" do
-  subject(:get_books_reorder_articles) { get reorder_book_articles_path(book) }
+RSpec.describe "GET /books/:id/manage", "#manage" do
+  subject(:get_books_manage) { get manage_book_path(book) }
 
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
@@ -19,7 +19,7 @@ RSpec.describe "GET /books/:id/reorder_articles", "#reorder_articles" do
     include_context "when the user is logged in"
 
     it "redirects to the homepage if the book does not belong to the user" do
-      get_books_reorder_articles
+      get_books_manage
       expect(response).to redirect_to(root_path)
     end
 
@@ -27,13 +27,13 @@ RSpec.describe "GET /books/:id/reorder_articles", "#reorder_articles" do
       let(:book) { create(:book, users: [user]) }
 
       it "returns a success response" do
-        get_books_reorder_articles
+        get_books_manage
         expect(response).to be_successful
       end
     end
 
     it "redirects to the homepage if the book is not found" do
-      get "/books/asdf/reorder_articles"
+      get "/books/asdf/manage"
       expect(response).to redirect_to(root_path)
     end
   end
