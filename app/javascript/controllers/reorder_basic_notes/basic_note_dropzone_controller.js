@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["dropzone"];
 
   initialize() {
-    this.turboBasicNoteIdPrefixSelector = "[id^='turbo-basic-note-']";
+    this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
     this.boundHandleDragOver = this.handleDragOver.bind(this);
     this.boundHandleDrop = this.handleDrop.bind(this);
@@ -27,12 +27,12 @@ export default class extends Controller {
 
   handleDrop(event) {
     event.preventDefault();
-    this.articleNotes = document.querySelectorAll(this.turboBasicNoteIdPrefixSelector);
+    this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const noteTurboId = event.dataTransfer.getData("text/plain");
     const articleId = document.querySelector("[id^=\"article-\"]").id.split("-").slice(1).join("-");
     const noteId = noteTurboId.split("-").slice(3).join("-");
     this.draggedNote = document.getElementById(noteTurboId);
-    this.noteOfDropzone = this.dropzoneTarget.closest(this.turboBasicNoteIdPrefixSelector);
+    this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
     const ordinalPositionsResult = this.draggedNoteAndDropzoneOrdinalPositions();
     this.oldOrdinalPosition = ordinalPositionsResult[0];
     this.newOrdinalPosition = ordinalPositionsResult[1];

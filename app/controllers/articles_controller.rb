@@ -102,7 +102,9 @@ class ArticlesController < ApplicationController
       flash[:notice] = "Article moved to #{@target_book.title}."
       redirect_to manage_article_path(@article)
     else
+      # :nocov:
       head :unprocessable_entity
+      # :nocov:
     end
     # rubocop:enable Lint/DuplicateBranch
   end

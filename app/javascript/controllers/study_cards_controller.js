@@ -47,7 +47,7 @@ export default class extends Controller {
   }
 
   nextOrdinalPosition() {
-    if (this.ordinalPositionOfCurrentCard === this.numberOfCards - 1) {
+    if (this.ordinalPositionOfCurrentCard === (this.numberOfCards - 1)) {
       return 0;
     } else {
       return this.ordinalPositionOfCurrentCard + 1;
