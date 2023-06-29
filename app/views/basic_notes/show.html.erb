@@ -4,10 +4,9 @@
   <% end %>
     <div data-controller="reorder-basic-notes--basic-note-draggable">
       <div data-reorder-basic-notes--basic-note-draggable-target="note" draggable="<%= logged_in? && !on_study_cards? %>" class="draggable-div-of-note">
-        <div class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center">
-
         <div data-controller="basic-note-flippable">
-          <div data-basic-note-flippable-target="flippableNote">
+          <div data-basic-note-flippable-target="flippableNote"
+               class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center">
             <div>
               <span class="whitespace-pre-wrap"><%= @basic_note.front %></span>
             </div>
@@ -16,8 +15,6 @@
               <span class="whitespace-pre-wrap"><%= @basic_note.back %></span>
             </div>
           </div>
-        </div>
-
         </div>
       </div>
     </div>
