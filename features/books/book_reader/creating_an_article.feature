@@ -2,7 +2,7 @@ Feature: Creating an article
 
   @javascript
   Scenario: Adding an article to a book
-    Given I am logged in
+    Given I am logged in as the test user
     And I have a book with the title "My first book"
     When I visit the root path
     And I click the "My books" link

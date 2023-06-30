@@ -17,7 +17,7 @@ Feature: The website homepage
     Then I should be on the root path
 
   Scenario: Visiting the homepage when logged in
-    Given I am logged in
+    Given I am logged in as the test user
     When I visit the root path
     Then I should see "My books"
     And I should not see a link to the homepage article's book

@@ -2,7 +2,7 @@ Feature: creating a book
 
 @javascript
 Scenario: Creating a new book from the My books page
-    Given I am logged in
+    Given I am logged in as the test user
     When I visit the root path
     And I click the "My books" link
     And I click the "New book" link

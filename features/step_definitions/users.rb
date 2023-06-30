@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Given "I am logged in" do
+Given "I am logged in as the test user" do
   visit login_path
   fill_in "Email", with: @test_user.email
   fill_in "Password", with: @test_user_password

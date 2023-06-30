@@ -1,9 +1,9 @@
 Feature: Moving basic notes to a different article
 
   Background:
-    Given there is a book titled "test book 1" with an article titled "test article 1" that has "7" basic note(s)
+    Given the test user has the test book "test book 1" with the test article "test article 1" that has "7" basic note(s)
     And the book "test book 1" has an article "test article 2" that has 2 basic note(s)
-    And I am logged in
+    And I am logged in as the test user
     And I click the "My books" link
     And I click the "test book 1" link
     And I click the "test article 1" link

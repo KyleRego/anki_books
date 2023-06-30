@@ -3,7 +3,7 @@ Feature: Reordering the articles of a book
 
   Background:
     Given I have a book with the title "Reordering test book" and 5 numbered articles
-    And I am logged in
+    And I am logged in as the test user
     When I visit the root path
     And I click the "My books" link
     And I click the "Reordering test book" link

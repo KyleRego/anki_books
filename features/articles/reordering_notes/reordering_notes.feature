@@ -2,9 +2,9 @@
 Feature: Reordering basic notes
 
   Background:
-    Given there is a book titled "test book 1" with an article titled "test article 1" that has "5" basic note(s)
-    And I am logged in
-    And I am viewing the article
+    Given the test user has the test book "test book 1" with the test article "test article 1" that has "5" basic note(s)
+    And I am logged in as the test user
+    And I am viewing the test article
 
   Scenario: Reordering one basic note with drag and drop
     When I drag the note at position "0" to the dropzone at position "3"

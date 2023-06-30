@@ -2,9 +2,9 @@
 Feature: Adding lists when editing an article
 
   Background:
-    Given there is a book titled "test book 0" with an article titled "test article 0"
-    And I am logged in
-    And I am editing the article
+    Given the test user has the test book "test book 0" with the test article "test article 0"
+    And I am logged in as the test user
+    And I am editing the test article
 
   Scenario: Adding an unordered list 
     When I click the "Bullets" button

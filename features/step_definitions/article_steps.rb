@@ -4,7 +4,7 @@ CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
 # TODO: Remove this step definition and use only the one after it
-Given "there is a book titled {string} with an article titled {string}" do |book_title, article_title|
+Given "the test user has the test book {string} with the test article {string}" do |book_title, article_title|
   @test_book = create(:book, title: book_title, users: [@test_user])
   @test_article = create(:article, title: article_title, book: @test_book)
 end
@@ -15,8 +15,8 @@ Given "the book {string} has an article {string} that has {int} basic note\\(s)"
   create_list(:basic_note, num, article:)
 end
 
-# TODO: This one has a misleading description
-Given "there is a book titled {string} with an article titled {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
+# rubocop:disable Layout/LineLength
+Given "the test user has the test book {string} with the test article {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
   @test_book = create(:book, title: book_title, users: [@test_user])
   @test_article = create(:article, title: article_title, book: @test_book)
   num_notes = string.to_i
@@ -29,13 +29,14 @@ Given "there is a book titled {string} with an article titled {string} that has 
     end
   end
 end
+# rubocop:enable Layout/LineLength
 
-When "I am viewing the article" do
+When "I am viewing the test article" do
   visit article_path(@test_article)
   sleep 1 if @test_article&.basic_notes&.any?
 end
 
-When "I am editing the article" do
+When "I am editing the test article" do
   visit edit_article_path(@test_article)
 end
 
