@@ -9,14 +9,9 @@ export default class extends Controller {
 
   connect() {
     this.flippableNoteTarget.addEventListener("click", this.boundChangeNoteState);
-    this.flippableNoteTarget.addEventListener("dragstart", this.boundHandleDragStart);
   }
 
   changeNoteState = () => {
     this.flippableNoteBackTarget.hidden = !this.flippableNoteBackTarget.hidden;
-  }
-
-  handleDragStart(event) {
-    event.dataTransfer.setData("text/plain", this.flippableNoteTarget.parentNode.parentNode.id);
   }
 }
