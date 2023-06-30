@@ -3,7 +3,6 @@
 CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
-# TODO: Remove this step definition and use only the one after it
 Given "the test user has the test book {string} with the test article {string}" do |book_title, article_title|
   @test_book = create(:book, title: book_title, users: [@test_user])
   @test_article = create(:article, title: article_title, book: @test_book)
@@ -15,6 +14,7 @@ Given "the book {string} has an article {string} that has {int} basic note\\(s)"
   create_list(:basic_note, num, article:)
 end
 
+# TODO: Make this step definition only add basic notes to an existing article
 # rubocop:disable Layout/LineLength
 Given "the test user has the test book {string} with the test article {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
   @test_book = create(:book, title: book_title, users: [@test_user])
