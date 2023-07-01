@@ -4,22 +4,21 @@
     <%= yield :page_specific_links %>
 
     <% if logged_in? %>
+
       <% if show_link_to_book_in_top_nav? %>
-        <%= link_to("#{@book.title}", book_path(@book),
-                  class: "text-blue-500 hover:text-blue-600 font-semibold mr-4")  %>
+        <%= link_to("#{@book.title}", book_path(@book), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4")  %>
       <% end %>
 
       <% if show_link_to_my_books_in_top_nav? %>
-        <%= link_to("My books", books_path,
-                    class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
+        <%= link_to("My books", books_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
       <% end %>
-    <% end %>
 
-    <% if logged_in? %>
       <%= link_to("Random article", user_random_article_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
+
       <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
+
     <% elsif current_page?(login_path) %>
-      <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+      <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
     <% else %>
       <%= link_to "Login", login_path, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
     <% end %>
