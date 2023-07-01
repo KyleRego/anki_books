@@ -7,7 +7,7 @@ Feature: Moving an article to a different book
     And I click the "My books" link
     And I click the "test book 1" link
     And I click the "test article 1" link
-    And I click the "Manage test article 1" link
+    And I click the "Manage article" link
 
   @javascript
   Scenario: Moving an article from one book to a different book

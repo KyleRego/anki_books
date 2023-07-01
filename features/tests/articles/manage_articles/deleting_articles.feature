@@ -6,7 +6,7 @@ Feature: Deleting an article
     And I am viewing the test article
     And I click the "test book 1" link
     And I click the "test article 1" link
-    And I click the "test article 1" link
+    And I click the "Manage article" link
 
   @javascript
   Scenario: Confirmation before deleting an article and confirming deletes the article

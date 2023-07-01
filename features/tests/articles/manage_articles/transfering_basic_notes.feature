@@ -7,7 +7,7 @@ Feature: Moving basic notes to a different article
     And I click the "My books" link
     And I click the "test book 1" link
     And I click the "test article 1" link
-    And I click the "Manage test article 1" link
+    And I click the "Manage article" link
   
   Scenario: Transferring basic notes to the other article
     When I check the checkbox for the basic note with front "Front of note 0"

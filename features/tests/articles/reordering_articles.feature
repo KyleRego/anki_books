@@ -7,7 +7,7 @@ Feature: Reordering the articles of a book
     When I visit the root path
     And I click the "My books" link
     And I click the "Reordering test book" link
-    And I click the "Manage Reordering test book" link
+    And I click the "Manage book" link
 
   Scenario: Dragging an article up
     When I drag the article with title "Article 0" to below the article with title "Article 2"

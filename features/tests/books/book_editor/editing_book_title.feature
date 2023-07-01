@@ -6,7 +6,7 @@ Feature: Editing a book's title
     When I visit the root path
     And I click the "My books" link
     And I click the "My first book" link
-    And I click the "Manage My first book" link
+    And I click the "Manage book" link
     And I click the "Edit book" link
 
   Scenario: Visiting the edit book page
