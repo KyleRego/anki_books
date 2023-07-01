@@ -9,4 +9,9 @@ class UsersController < ApplicationController
     send_file(anki_deck_file_path, disposition: "attachment")
     DeleteAnkiDeckJob.set(wait: 3.minutes).perform_later(anki_deck_file_path:)
   end
+
+  def random_article
+    article = current_user.random_article
+    redirect_to article_path(article)
+  end
 end

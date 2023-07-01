@@ -3,8 +3,8 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
 
-RSpec.describe "GET /users/:id/download_anki_deck", "#download_anki_deck" do
-  subject(:get_users_download_anki_deck) { get user_download_anki_deck_path(user) }
+RSpec.describe "GET /download_anki_deck", "#download_anki_deck" do
+  subject(:get_users_download_anki_deck) { get user_download_anki_deck_path }
 
   include BasicNotesHelper
 

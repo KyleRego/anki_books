@@ -18,4 +18,11 @@ class User < ApplicationRecord
                      inner join users on books_users.user_id = users.id
                      where users.id = '#{id}'")
   end
+
+  def random_article
+    Article.joins("inner join books on articles.book_id = books.id
+                   inner join books_users on books_users.book_id = books.id
+                   inner join users on books_users.user_id = users.id
+                   where users.id = '#{id}'").sample
+  end
 end

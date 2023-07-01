@@ -4,6 +4,8 @@
     <%= yield :page_specific_links %>
 
     <% if logged_in? %>
+      <%= link_to("Random article", user_random_article_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
+
       <% if show_link_to_book_in_top_nav? %>
         <%= link_to("#{@book.title}", book_path(@book),
                   class: "text-blue-500 hover:text-blue-600 font-semibold mr-4")  %>
