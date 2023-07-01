@@ -15,17 +15,14 @@
       <% end %>
     <% end %>
 
-    <%= link_to("Random article", user_random_article_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
-
-    <% if !current_page?(root_path) %>
-      <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
-    <% end %>
-
     <% if logged_in? %>
+      <%= link_to("Random article", user_random_article_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
       <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
-    <% elsif !current_page?(login_path) %>
+    <% elsif current_page?(login_path) %>
+      <%= link_to "Home", root_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+    <% else %>
       <%= link_to "Login", login_path, class: "text-blue-500 hover:text-blue-600 font-semibold" %>
     <% end %>
-  
+
   </div>
 </nav>

@@ -25,3 +25,7 @@ Feature: The website homepage
   Scenario: The Manage link should not be present if not logged in
     When I visit the root path
     Then I should not see "Manage"
+
+  Scenario: The Random article link should not be present if not logged in
+    When I visit the root path
+    Then I should not see "Random article"
