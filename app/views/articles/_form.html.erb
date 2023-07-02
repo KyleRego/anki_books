@@ -3,7 +3,7 @@
 <% end %>
 
 <%= form_with(model: @article, url:) do |form| %>
-  <div class="field mb-4">
+  <div class="field mb-2">
     <%= form.label :title %>
     <%= form.text_field :title, class: "w-full" %>
   </div>
@@ -13,7 +13,8 @@
     <%= form.rich_text_area :content %>
   </div>
 
-  <%= form.hidden_field :book_id, value: @book.id %>
-
-  <%= form.submit %>
+  <div class="my-2">
+    <%= form.hidden_field :book_id, value: @book.id %>
+    <%= form.submit class: "cursor-pointer font-semibold" %>
+  </div>
 <% end %>

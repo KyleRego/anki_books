@@ -84,7 +84,7 @@ class ArticlesController < ApplicationController
 
   def manage
     @other_books = current_user.books.where.not(id: @book.id)
-    @other_articles = @book.articles.where.not(id: @article.id)
+    @other_articles = @book.ordered_articles.where.not(id: @article.id)
   end
 
   # rubocop:disable Metrics/MethodLength

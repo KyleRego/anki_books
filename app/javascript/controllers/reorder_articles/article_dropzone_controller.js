@@ -5,18 +5,26 @@ export default class extends Controller {
 
   initialize() {
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
+    this.boundHandleDragLeave = this.handleDragLeave.bind(this);
     this.boundHandleDragOver = this.handleDragOver.bind(this);
     this.boundHandleDrop = this.handleDrop.bind(this);
   }
 
   connect() {
     this.dropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
+    this.dropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
     this.dropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
     this.dropzoneTarget.addEventListener("drop", this.boundHandleDrop);
   }
 
   handleDragEnter(event) {
     event.preventDefault();
+    event.target.classList.add("bg-blue-200");
+  }
+
+  handleDragLeave(event) {
+    event.preventDefault();
+    event.target.classList.remove("bg-blue-200");
   }
 
   handleDragOver(event) {
@@ -26,6 +34,7 @@ export default class extends Controller {
 
   handleDrop(event) {
     event.preventDefault();
+    event.target.classList.remove("bg-blue-200");
     const articleId = event.dataTransfer.getData("text/plain");
     const allDraggableArticles = document.querySelectorAll("[data-reorder-articles--article-draggable-target=\"article\"]")
     // querySelector does not yet support CSS selector for id that starts with a digit

@@ -1,17 +1,17 @@
 <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-  <div class="border border-blue-400 bg-blue-50 text-blue-900
+  <div class="border border-blue-400 bg-blue-50
               font-semibold text-center
               pb-2 pt-8 px-4 my-4">
     <%= render "errors" %>
 
     <div>
       <%= form.label :front, class: "hidden" %>
-      <%= form.text_area :front, class: "w-full h-16" %>
+      <%= form.text_area :front, class: "w-full h-32" %>
     </div>
 
     <div class="mt-4">
       <%= form.label :back, class: "hidden" %>
-      <%= form.text_area :back, class: "w-full h-16" %>
+      <%= form.text_area :back, class: "w-full h-32" %>
     </div>
 
     <div class="inline">

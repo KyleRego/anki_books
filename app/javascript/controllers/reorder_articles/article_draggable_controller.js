@@ -8,12 +8,10 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("connected")
     this.articleTarget.addEventListener("dragstart", this.boundHandleDragStart);
   }
 
   handleDragStart(event) {
-    console.log("drag event started")
     event.dataTransfer.setData("text/plain", this.articleTarget.id);
   }
 }
