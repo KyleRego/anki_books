@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 bundle exec rspec
-bundle exec cucumber
+bundle exec cucumber --tags @retry --retry 3
+bundle exec cucumber --tags 'not @retry'
