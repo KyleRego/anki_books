@@ -12,8 +12,10 @@ class BasicNotesController < ApplicationController
   def show; end
 
   def new
-    turbo_id = request.headers["Turbo-Frame"]
-    sibling_note_id = turbo_id.slice(first_basic_note_turbo_id.length..-1)
+    # Turbo frame header has the id of the turbo frame element
+    # and the last 36 characters are the UUID of the basic note
+    # which is the previous sibling
+    sibling_note_id = request.headers["Turbo-Frame"].last(36)
     @previous_sibling = BasicNote.find_by(id: sibling_note_id)
     @basic_note = @article.basic_notes.new
   end

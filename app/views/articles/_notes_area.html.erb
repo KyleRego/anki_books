@@ -2,7 +2,9 @@
 
   <% if logged_in? %>
     <%= turbo_frame_tag first_basic_note_turbo_id, class: "new-note-turbo-frame" do %>
-      <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+      <div>
+        <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+      </div>
     <% end %>
   <% end %>
 
