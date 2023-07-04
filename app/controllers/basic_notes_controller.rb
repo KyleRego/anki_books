@@ -32,7 +32,7 @@ class BasicNotesController < ApplicationController
       render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
     else
       @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
-      turbo_id = @previous_sibling ? @previous_sibling.new_note_sibling_turbo_id : first_basic_note_turbo_id
+      turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new", locals: { basic_note: @basic_note })
     end
@@ -67,7 +67,7 @@ class BasicNotesController < ApplicationController
 
   def render_appropriate_turbo_stream_for_create(new_ordinal_position:)
     if new_ordinal_position.zero?
-      render turbo_stream: turbo_stream.replace(first_basic_note_turbo_id,
+      render turbo_stream: turbo_stream.replace(first_new_basic_note_turbo_id,
                                                 template: "basic_notes/show",
                                                 locals: { basic_note: @basic_note })
     else
@@ -78,7 +78,7 @@ class BasicNotesController < ApplicationController
     end
   end
 
-  def first_basic_note_turbo_id
-    BasicNote::TurboFrameable::TURBO_NEW_BASIC_NOTE_ID_PREFIX
-  end
+  # def first_new_basic_note_turbo_id
+  #   BasicNote::TurboFrameable::TURBO_FIRST_NEW_BASIC_NOTE_ID
+  # end
 end

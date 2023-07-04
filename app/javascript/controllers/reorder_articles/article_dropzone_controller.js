@@ -37,12 +37,11 @@ export default class extends Controller {
     event.target.classList.remove("bg-blue-200");
     const articleId = event.dataTransfer.getData("text/plain");
     const allDraggableArticles = document.querySelectorAll("[data-reorder-articles--article-draggable-target=\"article\"]")
-    // querySelector does not yet support CSS selector for id that starts with a digit
+    // getElementById is used here because querySelector does not yet support CSS selector for id that starts with a digit
     this.draggedArticleTarget = document.getElementById(`${articleId}`);
     this.oldOrdinalPosition = this.getOrdinalPosition(this.draggedArticleTarget, allDraggableArticles);
 
     const allArticleDropzones = document.querySelectorAll("[data-reorder-articles--article-dropzone-target=\"dropzone\"]")
-    // this.dropzoneTarget = event.target;
     this.newOrdinalPosition = this.getOrdinalPosition(this.dropzoneTarget, allArticleDropzones);
 
     if (this.newOrdinalPosition < this.oldOrdinalPosition) {

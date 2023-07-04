@@ -4,8 +4,8 @@ export default class extends Controller {
   static targets = [ "newBasicNoteFormContainer" ];
 
   initialize() {
-    this.turboBasicNoteIdPrefixSelector = "[id^='turbo-basic-note-']";
-    this.turboNewBasicNoteIdPrefixSelector = "[id^='turbo-new-basic-note-']"
+    this.existingBasicNoteTurboFrameSelector = ".existing-basic-note-turbo-frame";
+    this.newNoteTurboFrameSelector = ".new-note-turbo-frame"
     this.formSubmit = this.handleFormSubmit.bind(this);
   }
 
@@ -49,12 +49,12 @@ export default class extends Controller {
   }
 
   getOrdinalPosition() {
-    const parentTurboNewNote = this.newBasicNoteFormContainerTarget.closest(this.turboNewBasicNoteIdPrefixSelector);
-    if (parentTurboNewNote === null) {
+    const newNoteParentTurboContainer = this.newBasicNoteFormContainerTarget.closest(this.newNoteTurboFrameSelector);
+    if (newNoteParentTurboContainer === null) {
       return 0;
     }
-    const siblingNote = parentTurboNewNote.closest(this.turboBasicNoteIdPrefixSelector);
-    const allNotes = document.querySelectorAll(this.turboBasicNoteIdPrefixSelector);
+    const siblingNote = newNoteParentTurboContainer.closest(this.existingBasicNoteTurboFrameSelector);
+    const allNotes = document.querySelectorAll(this.existingBasicNoteTurboFrameSelector);
     let position = null;
     for (let i = 0; i < allNotes.length; i++) {
       if (siblingNote === allNotes[i]) {

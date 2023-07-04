@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = [ "editorContainer" ];
 
   connect() {
+    // TODO: Use a CSS class selector instead of this one or a Stimulus target attribute
     this.toolbarTarget = this.editorContainerTarget.querySelector("[id^='trix-toolbar-']");
     this.setupHeaderButtonsGroup();
     this.addHeaderButtonsGroupToButtonsRow();

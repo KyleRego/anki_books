@@ -2,7 +2,7 @@
 
 # :nodoc:
 module BasicNotesHelper
-  def first_basic_note_turbo_id
-    BasicNote::TurboFrameable::TURBO_NEW_BASIC_NOTE_ID_PREFIX
+  def first_new_basic_note_turbo_id
+    BasicNote::TurboFrameable::TURBO_FIRST_NEW_BASIC_NOTE_ID
   end
 end

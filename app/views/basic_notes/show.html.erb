@@ -1,4 +1,4 @@
-<%= turbo_frame_tag @basic_note.turbo_id, class: "reorderable-basic-note-unit min-w-max" do %>
+<%= turbo_frame_tag @basic_note.turbo_id, class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
   <% if on_study_cards? %>
     <div class="studiable-note" hidden>
   <% end %>
@@ -29,7 +29,7 @@
                   <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
                 </div>
 
-                <%= turbo_frame_tag @basic_note.new_note_sibling_turbo_id, class: "new-note-turbo-frame" do %>
+                <%= turbo_frame_tag @basic_note.new_sibling_note_turbo_id, class: "new-note-turbo-frame" do %>
                   <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
                 <% end %>
 
