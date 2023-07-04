@@ -10,6 +10,6 @@ Feature: Deleting an article
 
   @javascript
   Scenario: Viewing the Manage article page
-    Then I should see "Manage test article 1"
+    Then I should see "Manage article: test article 1"
     And I should see "Delete test article 1"
     And I should not see "Study cards"

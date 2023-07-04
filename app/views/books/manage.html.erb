@@ -1,5 +1,5 @@
 <h1 class="text-4xl font-bold">
-  Manage <%= @book.title %>
+  Manage book: <%= @book.title %>
 </h1>
 
 <div class="mt-4 pb-4 border-b-2">
@@ -11,13 +11,11 @@
     Reorder articles:
   </h1>
 
-  <div class="w-96 p-4 border-2 shadow-lg">
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
     <% @articles.each do |article| %>
-      <div class="reorderable-unit min-w-max">
+      <div class="reorderable-unit">
         <div data-controller="reorder-articles--article-draggable">
-          <div data-reorder-articles--article-draggable-target="article"
-              draggable=true
-              id="<%= article.id %>" class="cursor-pointer">
+          <div data-reorder-articles--article-draggable-target="article" draggable=true id="<%= article.id %>" class="cursor-pointer">
             <%= article.title %>
           </div>
         </div>
