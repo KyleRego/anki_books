@@ -30,3 +30,13 @@ Feature: User authentication
     When I click the "Login" link
     When I click the "Home" link
     Then I should see the homepage
+
+  Scenario: Logging in after getting redirected to the login page
+    Given the test user has the test book "test book 0" with the test article "test article 0"
+    When I visit the My Books page
+    Then I should see "Anki Books"
+    And I fill in the "Email" field with "test@example.com"
+    And I fill in the "Password" field with "123abc777www"
+    And I click the "Log in" button
+    Then I should see "Logged in successfully."
+    And I should see "My books"

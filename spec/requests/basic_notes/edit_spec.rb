@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
-require_relative "../../support/shared_examples/not_logged_in_user_is_unauthorized"
+require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
 RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   subject(:get_basic_notes_edit) { get edit_article_basic_note_path(article, basic_note), headers: }

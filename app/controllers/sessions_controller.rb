@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session_params[:email])
     if user&.authenticate(session_params[:password])
       session[:user_id] = user.id
-      redirect_to root_path, flash: { notice: "Logged in successfully." }
+      redirect_after_login
     else
       redirect_to login_path, flash: { alert: "Invalid email or password." }
     end
@@ -34,5 +34,15 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:email, :password)
+  end
+
+  def redirect_after_login
+    redirect_path = session[:redirect_path]
+    if redirect_path
+      session[:redirect_path] = nil
+      redirect_to redirect_path, flash: { notice: "Logged in successfully." }
+    else
+      redirect_to root_path, flash: { notice: "Logged in successfully." }
+    end
   end
 end

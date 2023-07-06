@@ -16,11 +16,8 @@ class ApplicationController < ActionController::Base
   def require_login
     return if logged_in?
 
-    unauthenticated
-  end
-
-  def unauthenticated
-    head :unauthorized
+    session[:redirect_path] = request.path
+    redirect_to login_path
   end
 
   def not_found_or_unauthorized

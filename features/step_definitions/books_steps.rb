@@ -13,3 +13,7 @@ Given "I have a book with the title {string} and {int} numbered articles" do |st
   end
   @test_user.books << book
 end
+
+When "I visit the My Books page" do
+  visit books_path
+end
