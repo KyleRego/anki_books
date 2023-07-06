@@ -22,7 +22,7 @@ module OrdinalPositions
       end
 
       def shift_old_parent_children
-        old_parent.notes.each_with_index do |basic_note, index|
+        old_parent.ordered_notes.each_with_index do |basic_note, index|
           # TODO: See about doing this with one SQL statement
           basic_note.update(ordinal_position: index)
         end

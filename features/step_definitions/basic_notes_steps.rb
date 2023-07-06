@@ -23,7 +23,7 @@ Then "I should see {string} in a basic note" do |text|
 end
 
 Then "the article's basic note with front {string} should be at ordinal position {string}" do |front, position|
-  expect(@test_article.notes.find_by(front:).ordinal_position).to eq position.to_i
+  expect(@test_article.basic_notes.find_by(front:).ordinal_position).to eq position.to_i
 end
 
 Then(/I should see the (\d+)(?:st|nd|rd|th)? basic note of the article has front "(.*?)"$/) do |position, text|

@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to root_path, status: :moved_permanently
     else
-      @basic_notes = @article.notes
+      @basic_notes = @article.ordered_notes
     end
   end
 
@@ -65,7 +65,7 @@ class ArticlesController < ApplicationController
     # it homepage and having the homepage be a book once the larger book
     # view is completed.
     @article = Article.find_by(system: true)
-    @basic_notes = @article.notes
+    @basic_notes = @article.ordered_notes
   end
 
   def change_note_ordinal_position
@@ -79,7 +79,7 @@ class ArticlesController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @article.notes
+    @basic_notes = @article.ordered_notes
   end
 
   def manage

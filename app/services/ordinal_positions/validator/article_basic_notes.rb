@@ -7,7 +7,7 @@ module OrdinalPositions
       private
 
       def ordinal_positions
-        parent.notes.pluck(:ordinal_position)
+        parent.ordered_notes.pluck(:ordinal_position)
       end
 
       def expected_ordinal_positions
