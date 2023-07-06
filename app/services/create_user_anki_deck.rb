@@ -19,9 +19,12 @@ class CreateUserAnkiDeck
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def perform
     AnkiRecord::AnkiPackage.new(name:, target_directory:) do |collection|
-      deck = collection.find_deck_by name: "Default"
+      deck = AnkiRecord::Deck.new(collection:, name: "Anki Books")
+      deck.save
+
       note_type = collection.find_note_type_by name: "Basic"
 
       user.notes.each do |basic_note|
@@ -34,6 +37,7 @@ class CreateUserAnkiDeck
     end
     created_anki_deck_path
   end
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
   private
