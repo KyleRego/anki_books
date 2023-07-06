@@ -20,10 +20,13 @@
 
 @media (min-width: 640px) {
   .sm\:scrollable-notes {
-    max-height: 90vh;
+    max-height: calc(100vh - 2.5rem);
     overflow-x: auto;
     overflow-y: scroll;
+  }
+
+  .sm\:sticky-notes {
     position: sticky;
-    top: 32px;
+    top: 0.5rem;
   }
 }

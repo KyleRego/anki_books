@@ -1,16 +1,23 @@
-<div id="article-notes" class="sm:scrollable-notes">
+<div id="article-notes" class="sm:sticky-notes">
 
   <% if logged_in? %>
-    <%= turbo_frame_tag first_new_basic_note_turbo_id, class: "new-note-turbo-frame" do %>
-      <div>
-        <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
-      </div>
+    <div>
+      <%= link_to("Edit article", edit_article_path(@article), class: "font-semibold mr-4") %>
+    </div>
+  <% end %>
+
+  <div class="sm:scrollable-notes">
+    <% if logged_in? %>
+      <%= turbo_frame_tag first_new_basic_note_turbo_id, class: "new-note-turbo-frame" do %>
+        <div>
+          <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <% @basic_notes&.each do |basic_note| %>
-    <% @basic_note = basic_note %>
-    <%= render template: "basic_notes/show" %>
-  <% end %>
-
+    <% @basic_notes&.each do |basic_note| %>
+      <% @basic_note = basic_note %>
+      <%= render template: "basic_notes/show" %>
+    <% end %>
+  </div>
 </div>
