@@ -1,7 +1,6 @@
 @javascript
 Feature: Creating a basic note
 
-
   Scenario: Creating a note for the article
     Given the test user has the test book "test book 0" with the test article "test article 0"
     And I am logged in as the test user
@@ -12,6 +11,7 @@ Feature: Creating a basic note
     And I click the "Create Basic note" button
     Then I should see "Front of my note" in a basic note
     And I should see "Edit" in a basic note
+    And I should see 2 links with the text "New note"
 
   Scenario: Error messages when trying to create an invalid note
     Given the test user has the test book "test book 0" with the test article "test article 0"

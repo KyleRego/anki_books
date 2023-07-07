@@ -22,22 +22,19 @@ class BasicNotesController < ApplicationController
 
   def edit; end
 
-  # rubocop:disable Metrics/AbcSize
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
+    @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    if @basic_note.valid? && OrdinalPositions::Setter::ArticleBasicNotes.perform(parent: @article, child_to_position: @basic_note,
-                                                                                 new_ordinal_position: ordinal_position_param)
-      render_appropriate_turbo_stream_for_create(new_ordinal_position: ordinal_position_param)
-    else
-      @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
+    unless @basic_note.valid? && OrdinalPositions::Setter::ArticleBasicNotes.perform(parent: @article,
+                                                                                     child_to_position: @basic_note,
+                                                                                     new_ordinal_position: ordinal_position_param)
       turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new", locals: { basic_note: @basic_note })
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def update
     if @basic_note.update(basic_note_params)
@@ -63,18 +60,5 @@ class BasicNotesController < ApplicationController
 
   def ordinal_position_param
     @ordinal_position_param ||= params[:ordinal_position].to_i
-  end
-
-  def render_appropriate_turbo_stream_for_create(new_ordinal_position:)
-    if new_ordinal_position.zero?
-      render turbo_stream: turbo_stream.replace(first_new_basic_note_turbo_id,
-                                                template: "basic_notes/show",
-                                                locals: { basic_note: @basic_note })
-    else
-      previous_sibling = @article.basic_notes.find_by(ordinal_position: new_ordinal_position - 1)
-      render turbo_stream: turbo_stream.after(previous_sibling.turbo_id,
-                                              template: "basic_notes/show",
-                                              locals: { basic_note: @basic_note })
-    end
   end
 end

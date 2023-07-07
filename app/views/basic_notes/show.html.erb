@@ -28,7 +28,7 @@
                 <div class="flex flex-row justify-between">
                   <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
                 </div>
-
+                <!-- TODO: This is repeated and could be made a partial -->
                 <%= turbo_frame_tag @basic_note.new_sibling_note_turbo_id, class: "new-note-turbo-frame" do %>
                   <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
                 <% end %>

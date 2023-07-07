@@ -1,77 +1,91 @@
 # frozen_string_literal: true
 
 require_relative "../../support/shared_contexts/user_logged_in"
+require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
+require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
-RSpec.describe "BasicNotes" do
+RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
+  subject(:post_basic_notes_create) do
+    post article_basic_notes_path(article,
+                                  format: :turbo_stream,
+                                  basic_note: { front:, back: },
+                                  ordinal_position:),
+         headers: { "Turbo-Frame": turbo_id }
+  end
+
   include BasicNotesHelper
 
-  let(:user) { create(:user) }
   let(:article) { create(:article) }
+  let(:front) { "Front " }
+  let(:back) { "Back" }
+  let(:ordinal_position) { 0 }
+  let(:turbo_id) { nil }
 
-  describe "POST /articles/:article_id/basic_notes" do
-    it "sends a 403 Forbidden response if the Turbo-Frame header is missing" do
-      post article_basic_notes_path(article)
-      expect(response).to have_http_status(:forbidden)
-    end
+  context "when Turbo-Frame header is present but user is not logged in" do
+    let(:turbo_id) { first_new_basic_note_turbo_id }
 
-    it "does not create a new Basic note if the user is not logged in and needs to be" do
-      expect do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-             headers: { "Turbo-Frame": first_new_basic_note_turbo_id }
-      end.not_to change(BasicNote, :count)
-    end
+    include_examples "user is not logged in and needs to be"
+  end
 
-    context "when user is logged in" do
-      include_context "when the user is logged in"
+  context "when user is logged in" do
+    include_context "when the user is logged in"
 
-      it "creates a new Basic note if the user is logged in" do
-        expect do
-          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-               headers: { "Turbo-Frame": first_new_basic_note_turbo_id }
-        end.to change(BasicNote, :count).by(1)
-      end
+    include_examples "request missing the Turbo-Frame header is forbidden"
 
-      it "creates a Basic note with ordinal_position 0 if it is the article's first note" do
-        post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 0),
-             headers: { "Turbo-Frame": first_new_basic_note_turbo_id }
+    context "when Turbo-Frame header is present" do
+      let(:turbo_id) { first_new_basic_note_turbo_id }
+
+      it "creates a basic note with ordinal position 0" do
+        expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+        expect(article.basic_notes.count).to eq 1
         expect(article.basic_notes.first.ordinal_position).to eq 0
       end
 
-      it "creates a Basic note with ordinal_position 1 if it is the article's second note" do
-        sibling = create(:basic_note, article:)
+      context "when the ordinal position param is negative" do
+        let(:ordinal_position) { -1 }
+        let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
 
-        expect do
-          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
-               headers: { "Turbo-Frame": sibling.new_sibling_note_turbo_id }
-        end.to change(BasicNote, :count).by(1)
-        expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+        before { create(:basic_note, article:) }
+
+        it "does not create a basic note" do
+          expect { post_basic_notes_create }.not_to change(BasicNote, :count)
+        end
       end
 
-      it "creates a Basic note between two notes that the article already has" do
-        sibling = create(:basic_note, article:)
-        create(:basic_note, article:)
+      context "when the ordinal position param is greater than how many basic notes the article has" do
+        let(:ordinal_position) { 2 }
+        let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
 
-        expect do
-          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: 1),
-               headers: { "Turbo-Frame": sibling.new_sibling_note_turbo_id }
-        end.to change(BasicNote, :count).by(1)
-        expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+        before { create(:basic_note, article:) }
+
+        it "does not create a basic note" do
+          expect { post_basic_notes_create }.not_to change(BasicNote, :count)
+        end
       end
 
-      it "does not create a basic note if ordinal_position param is less than 0" do
-        expect do
-          post article_basic_notes_path(article, basic_note: { front: "Front", back: "Back" }, ordinal_position: -1),
-               headers: { "Turbo-Frame": first_new_basic_note_turbo_id }
-        end.not_to change(BasicNote, :count)
+      context "when the ordinal position param is 1" do
+        let(:ordinal_position) { 1 }
+        let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
+
+        before { create(:basic_note, article:) }
+
+        it "creates a basic note with ordinal position 1" do
+          expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+          expect(article.basic_notes.count).to eq 2
+          expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+        end
       end
 
-      it "does not create a basic note if the ordinal_position param is more than the article's number of notes" do
-        expect do
-          post article_basic_notes_path(article,
-                                        basic_note: { front: "Front", back: "Back" },
-                                        ordinal_position: article.notes_count + 1),
-               headers: { "Turbo-Frame": first_new_basic_note_turbo_id }
-        end.not_to change(BasicNote, :count)
+      context "when the article has 2 basic notes and the ordinal position param is 1" do
+        let(:ordinal_position) { 1 }
+        let(:turbo_id) { article.basic_notes.find_by(ordinal_position: 1).new_sibling_note_turbo_id }
+
+        before { create_list(:basic_note, 2, article:) }
+
+        it "creates a basic note at ordinal position 1 and shifts the middle note" do
+          expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+          expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+        end
       end
     end
   end

@@ -15,6 +15,7 @@ Given "the book {string} has an article {string} that has {int} basic note\\(s)"
 end
 
 # TODO: Make this step definition only add basic notes to an existing article
+# TODO: The number of basic notes can be an int rather than string
 # rubocop:disable Layout/LineLength
 Given "the test user has the test book {string} with the test article {string} that has {string} basic note\\(s)" do |book_title, article_title, string|
   @test_book = create(:book, title: book_title, users: [@test_user])
@@ -100,10 +101,6 @@ end
 
 Then "I should see a code block with syntax highlighting" do
   expect(page).to have_selector("pre.hljs[class*=language-]")
-end
-
-Then "I should see the homepage" do
-  expect(page).to have_content("This is the system article to serve as the homepage.")
 end
 
 Then "I should see the Headers button is not active" do

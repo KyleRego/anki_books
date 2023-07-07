@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: Split this into more organized shared step definitions
+
 When "I visit the root path" do
   visit "/"
 end
@@ -7,40 +9,6 @@ end
 When "I refresh the page" do
   visit current_path
   sleep 1 if @test_article&.basic_notes&.any?
-end
-
-When "I click the {string} link" do |link|
-  click_link link
-  sleep 0.5
-end
-
-When "I click the last {string} link" do |link|
-  all(:link, link).last.click
-  sleep 0.5
-end
-
-When(/^I click the (\d+)(?:st|nd|rd|th)? link with text "(.*?)"$/) do |position, text|
-  index = position.to_i - 1
-  links = all("a", text:)
-  link = links[index]
-  link.click
-end
-
-When "I click the {string} button" do |button|
-  click_button button
-  sleep 0.5
-end
-
-When "I click the {string} button and accept the confirmation" do |string|
-  accept_confirm do
-    click_button(string)
-  end
-end
-
-When "I click the {string} button and dismiss the confirmation" do |string|
-  dismiss_confirm do
-    click_button(string)
-  end
 end
 
 When "I fill in the {string} field with {string}" do |field, value|
@@ -83,14 +51,6 @@ Then "I should not see an input with value {string}" do |string|
   expect(page).not_to have_selector("input[type='submit'][value='#{string}']")
 end
 
-Then "I should see a {string} link" do |text|
-  expect(page).to have_link(text)
-end
-
-Then "I should not see a {string} link" do |text|
-  expect(page).not_to have_link(text)
-end
-
 Then "I should see a {string} placeholder" do |placeholder|
   expect(page).to have_selector("input[placeholder='#{placeholder}']")
 end
@@ -128,10 +88,6 @@ Then "I should not see {string}" do |text|
   expect(page).not_to have_content(text)
 end
 
-Then "the {string} button should be disabled" do |button|
-  expect(page).to have_button(button, disabled: true)
-end
-
 Then "I should see an unordered list with the list item {string}" do |list_item|
   expect(page).to have_css("ul li", text: list_item)
 end
@@ -140,13 +96,10 @@ Then "I should see an ordered list with the list item {string}" do |list_item|
   expect(page).to have_css("ol li", text: list_item)
 end
 
-# rubocop:disable Layout/LineLength
 Then "I should see a nested list element with text {string} under the list element with text {string}" do |nested_text, parent_text|
   parent_element = find("li", text: parent_text)
   expect(parent_element).to have_css("li", text: nested_text)
 end
-# rubocop:enable Layout/LineLength
-
 Then "I should not see the image {string} on the page" do |string|
   expect(page).to_not have_css("img[src$='#{string}']")
 end
