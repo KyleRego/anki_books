@@ -68,7 +68,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
-    anki_record (0.3.2)
+    anki_record (0.4)
       rubyzip (>= 2.3)
       sqlite3 (~> 1.3)
     ast (2.4.2)
@@ -353,7 +353,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  anki_record (~> 0.3.2)
+  anki_record (~> 0.4)
   bcrypt (~> 3.1)
   bootsnap
   capybara

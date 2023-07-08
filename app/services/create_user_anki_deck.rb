@@ -21,11 +21,11 @@ class CreateUserAnkiDeck
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def perform
-    AnkiRecord::AnkiPackage.new(name:, target_directory:) do |collection|
-      deck = AnkiRecord::Deck.new(collection:, name: "Anki Books")
+    AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
+      deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
       deck.save
 
-      note_type = collection.find_note_type_by name: "Basic"
+      note_type = anki21_database.find_note_type_by name: "Basic"
 
       user.notes.each do |basic_note|
         anki_note = AnkiRecord::Note.new(note_type:, deck:)
