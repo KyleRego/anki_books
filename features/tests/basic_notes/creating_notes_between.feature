@@ -17,6 +17,17 @@ Feature: Creating basic notes at different ordinal positions
     And I should see the 3rd basic note of the article has front "Front of note 1"
     And I should see 5 links with the text "New note"
 
+  Scenario: Adding two notes next to each other
+    When I click the 2nd link with text "New note"
+    And I fill in the "Front" field with "test insert note"
+    And I fill in the "Back" field with "test insert note back"
+    And I click the "Create Basic note" button
+    And I click the 3rd link with text "New note"
+    And I fill in the "Front" field with "test insert note"
+    And I fill in the "Back" field with "test insert note back"
+    And I click the "Create Basic note" button
+    Then I should see 6 links with the text "New note"
+
   Scenario: Adding a note between the second and third
     When I click the 3nd link with text "New note"
     And I fill in the "Front" field with "test insert note"
