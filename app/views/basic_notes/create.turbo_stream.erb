@@ -1,10 +1,7 @@
 <% if @previous_sibling %>
 
   <%= turbo_stream.replace @previous_sibling.new_sibling_note_turbo_id do %>
-    <%# TODO: This is repeated and could be made a partial %>
-    <%= turbo_frame_tag @previous_sibling.new_sibling_note_turbo_id, class: "new-note-turbo-frame" do %>
-      <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
-    <% end %>
+    <%= render partial: "sibling_new_basic_note_link", locals: { previous_sibling: @previous_sibling } %>
   <% end %>
 
   <%= turbo_stream.after @previous_sibling.turbo_id do %>
@@ -14,13 +11,7 @@
 <% else %>
 
   <%= turbo_stream.replace first_new_basic_note_turbo_id do %>
-    <%# TODO: This is repeated and could be made a partial %>
-    <%= turbo_frame_tag first_new_basic_note_turbo_id, class: "new-note-turbo-frame" do %>
-      <div>
-        <%= link_to "New note", new_article_basic_note_path(@article), class: "font-semibold" %>
-      </div>
-    <% end %>
-
+    <%= render "first_new_basic_note_link" %>
     <%= render template: "basic_notes/show" %>
   <% end %>
 
