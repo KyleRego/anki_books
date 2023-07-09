@@ -46,5 +46,20 @@ RSpec.describe "DELETE /articles/:id", "#destroy" do
         end
       end
     end
+
+    context "when the article is the fifth in a book with 10 articles" do
+      let!(:book) do
+        book = create(:book, users: [user])
+        create_list(:article, 10, book:)
+        book
+      end
+
+      let(:article) { book.articles.find_by(ordinal_position: 4) }
+
+      it "deletes the article and shifts the higher ordinal position articles down" do
+        expect { delete_articles_destroy }.to change(Article, :count).by(-1)
+        expect(book.articles.reload.pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      end
+    end
   end
 end
