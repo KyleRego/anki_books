@@ -52,6 +52,10 @@ class BooksController < ApplicationController
     end
   end
 
+  def study_cards
+    @basic_notes = @book.ordered_notes
+  end
+
   private
 
   def book_params

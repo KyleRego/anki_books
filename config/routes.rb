@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :articles, only: :new
   end
   get "/books/:id/manage", to: "books#manage", as: "manage_book"
+  get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
 

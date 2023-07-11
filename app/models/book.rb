@@ -14,4 +14,10 @@ class Book < ApplicationRecord
     articles.count
   end
   # rubocop:enable Rails/Delegate
+
+  def ordered_notes
+    BasicNote.joins(article: :book)
+             .where(articles: { book_id: id })
+             .order("articles.ordinal_position, basic_notes.ordinal_position")
+  end
 end

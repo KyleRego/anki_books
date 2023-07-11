@@ -1,6 +1,7 @@
 <% content_for :page_specific_links do %>
   <% if logged_in? %>
     <%= link_to "Manage book", manage_book_path(@book), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+    <%= link_to "Study cards", study_book_cards_path(@book), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
   <% end %>
 <% end %>
 

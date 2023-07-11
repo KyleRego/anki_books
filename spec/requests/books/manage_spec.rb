@@ -13,8 +13,6 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
 
   include_examples "user is not logged in and needs to be"
 
-  include BasicNotesHelper
-
   context "when user is logged in" do
     include_context "when the user is logged in"
 

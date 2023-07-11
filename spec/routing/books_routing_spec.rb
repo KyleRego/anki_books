@@ -39,5 +39,10 @@ RSpec.describe UsersController do
       path = "/books/#{book_id}/manage"
       expect(get: path).to route_to("books#manage", id: book_id)
     end
+
+    it "routes to #study_cards" do
+      path = "/books/#{book_id}/study_cards"
+      expect(get: path).to route_to("books#study_cards", id: book_id)
+    end
   end
 end
