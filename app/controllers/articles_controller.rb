@@ -50,25 +50,14 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def destroy
     if @article.system
       head :unprocessable_entity
     else
-      @book = @article.book
-      # TODO: Extract to a service
-      ActiveRecord::Base.transaction do
-        ordinal_position = @article.ordinal_position
-        @article.destroy
-        @book.ordered_articles.where("ordinal_position > ?", ordinal_position).each do |article_to_shift|
-          article_to_shift.update!(ordinal_position: article_to_shift.ordinal_position - 1)
-        end
-        OrdinalPositions::Validator::BookArticles.perform(parent: @book)
-      end
+      OrdinalPositions::Deleter::BookArticles.perform(child_to_delete: @article)
       redirect_to book_path(@book)
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def homepage
     # TODO: Probably move the system boolean to books, possibly calling
