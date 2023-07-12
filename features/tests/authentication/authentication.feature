@@ -32,7 +32,8 @@ Feature: User authentication
     Then I should see the homepage
 
   Scenario: Logging in after getting redirected to the login page
-    Given the test user has the test book "test book 0" with the test article "test article 0"
+    Given the test user has a book called "test book 0"
+    And the book "test book 0" has an article called "test article 0"
     When I visit the My Books page
     Then I should see "Anki Books"
     And I fill in the "Email" field with "test@example.com"

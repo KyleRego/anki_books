@@ -1,7 +1,9 @@
 Feature: Displaying the back of the basic note
 
   Background:
-    Given the test user has the test book "test book 1" with the test article "test article 1" that has "10" basic note(s)
+    Given the test user has a book called "test book 1"
+    And the book "test book 1" has an article called "test article 1"
+    And the article "test article 1" has 10 basic notes
     And I am logged in as the test user
     And I visit the root path
     And I click the "My books" link

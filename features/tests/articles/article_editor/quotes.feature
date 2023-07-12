@@ -2,9 +2,10 @@
 Feature: Adding quotes when editing an article
 
   Background:
-    Given the test user has the test book "test book 0" with the test article "test article 0"
+    Given the test user has a book called "test book 0"
+    And the book "test book 0" has an article called "test article 0"
     And I am logged in as the test user
-    And I am editing the test article
+    And I am editing the article "test article 0"
 
   Scenario: Adding a quote to the article using the Quote button
     When I click the "Quote" button

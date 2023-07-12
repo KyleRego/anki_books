@@ -1,7 +1,7 @@
 Feature: Going to a random article
-  @javascript
-  Scenario: Clicking the random article link on the homepage
-    Given I have a book with the title "Reordering test book" and 5 numbered articles
+  Scenario: Clicking the random article link on the homepage goes to a random article
+    Given the test user has a book called "Reordering test book"
+    And the book "Reordering test book" has 5 numbered articles
     And I am logged in as the test user
     When I visit the root path
     And I click the "Random article" link

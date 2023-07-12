@@ -1,9 +1,8 @@
 Feature: Editing a book's title
 
   Background:
-    Given I am logged in as the test user
-    And I have a book with the title "My first book"
-    When I visit the root path
+    Given the test user has a book called "My first book"
+    And I am logged in as the test user
     And I click the "My books" link
     And I click the "My first book" link
     And I click the "Manage book" link
