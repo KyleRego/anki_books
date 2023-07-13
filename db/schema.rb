@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_125023) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_13_230713) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_125023) do
   end
 
   create_table "articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "system", default: false, null: false
@@ -71,20 +71,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_125023) do
     t.datetime "updated_at", null: false
     t.uuid "article_id", null: false
     t.integer "ordinal_position", null: false
-    t.string "anki_guid"
+    t.string "anki_guid", null: false
     t.index ["anki_guid"], name: "index_basic_notes_on_anki_guid", unique: true
     t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
   end
 
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "book_id"
+    t.uuid "user_id", null: false
+    t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id", "user_id"], name: "index_books_users_on_book_id_and_user_id", unique: true
