@@ -2,7 +2,7 @@
 
 ## Ruby dependencies
 
-The `Gemfile` specifies what gems are required by the application. With the Bundler package manager, `bundle install` will download and install the gems and their gem dependencies.
+The `Gemfile` specifies what Ruby gems are required by the application. With the Bundler package manager, `bundle install` will download and install the gems and their gem dependencies.
 
 ## System dependencies
 
@@ -12,15 +12,19 @@ The application uses libvips which is needed by Active Storage for images:
 sudo apt-get install libvips libvips-tools
 ```
 
+Also see postgres.md and testing.md.
+
 ## The database
 
-The application uses a PostgreSQL database. The `config/database.yml` file has the configuration settings. Executing `rails db:create` should create the databases specified in that file. Pending migrations are run with `rails db:migrate`.
+The rails db:setup task creates the database, loads the schema from the current db/schema.rb (this is not the same as running all the migrations), and initializes it with the seed data from db/seeds.rb; the rails db:reset task will drop the database and set it up again.
 
-The homepage of the website is an article with system: true. This can be added with `rails db:seed` or using the Rails console.
+The application uses a PostgreSQL database. The `config/database.yml` file has the configuration settings.
+
+The homepage of the website is an article with system: true. This can be added with the `rails db:seed` task or the Rails console.
 
 ## The bin/dev script
 
-The `bin/dev` script starts the development environment. First it runs the `rails assets:precompile` which compiles the front-end assets. Then it installs the foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` (a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind).
+The `bin/dev` script starts the development environment. First it runs the `rails assets:precompile` which compiles the front-end assets. Then it installs the Foreman gem if it was not already installed and then uses the `foreman` command to start the processes specified in `Procfile.dev` (a process for the Rails server and a process to watch for changes in CSS files and recompile them using Tailwind).
 
 If you are using RVM to manage Ruby versions, it's possible this script will throw this error:
 
