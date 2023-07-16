@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_16_150931) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_175830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -83,8 +83,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_150931) do
   end
 
   create_table "book_groups_books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "book_id"
-    t.uuid "book_group_id"
+    t.uuid "book_id", null: false
+    t.uuid "book_group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_group_id", "book_id"], name: "index_book_groups_books_on_book_group_id_and_book_id", unique: true

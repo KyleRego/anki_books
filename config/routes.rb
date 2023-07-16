@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
+  patch "/books/:id/change_book_groups", to: "books#change_book_groups", as: "change_book_groups"
 
   get "/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
   get "/random_article", to: "users#random_article", as: "user_random_article"

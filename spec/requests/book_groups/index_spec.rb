@@ -3,7 +3,7 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
-RSpec.describe "GET /book_groups" do
+RSpec.describe "GET /book_groups", "#index" do
   subject(:get_book_groups_index) { get book_groups_path }
 
   include_examples "user is not logged in and needs to be"

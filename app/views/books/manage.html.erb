@@ -6,7 +6,7 @@
   <%= link_to "Edit book", edit_book_path(@book), class: "cursor-pointer font-semibold" %>
 </div>
 
-<div class="mt-4">
+<div class="mt-4 pb-8 border-b-2">
   <h2 id="<%= "book-#{@book.id}" %>" class="text-xl font-semibold mb-4">
     Reorder articles:
   </h1>
@@ -23,6 +23,26 @@
           <div data-reorder-articles--article-dropzone-target="dropzone" class="py-2"></div>
         </div>
       </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-xl font-semibold mb-4">
+    Book groups:
+  </h1>
+
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
+    <%= form_with(model: @book, url: change_book_groups_path(@book)) do |form| %>
+      <% @book_groups_options.each do |book_group_option| %>
+        <div class="mb-2">
+          <%= label_tag(book_group_option[:title]) do %>
+            <%= check_box_tag("book_groups_ids[]", book_group_option[:id], book_group_option[:selected], id: book_group_option[:id]) %>
+            <span><%= book_group_option[:title] %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit "Update book groups", class: "cursor-pointer font-semibold" %>
     <% end %>
   </div>
 </div>

@@ -3,7 +3,7 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
-RSpec.describe "POST /book_groups" do
+RSpec.describe "POST /book_groups", "#create" do
   subject(:post_book_groups_create) { post book_groups_path, params: { book_group: { title: } } }
 
   let(:title) { "the title" }

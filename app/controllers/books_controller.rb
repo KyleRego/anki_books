@@ -4,7 +4,7 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[show manage]
+  before_action :set_articles, only: %w[show manage change_book_groups]
 
   def index
     @books = current_user.books
@@ -40,7 +40,15 @@ class BooksController < ApplicationController
     end
   end
 
-  def manage; end
+  def manage
+    current_book_groups = @book.book_groups
+    @book_groups_options = current_user.book_groups.map do |book_group|
+      id = book_group.id
+      title = book_group.title
+      selected = current_book_groups.include?(book_group)
+      { id:, title:, selected: }
+    end
+  end
 
   def change_article_ordinal_position
     @book = current_user.books.find(params[:id])
@@ -52,6 +60,16 @@ class BooksController < ApplicationController
       head :unprocessable_entity
     end
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def change_book_groups
+    target_book_groups = current_user.book_groups.where(id: params[:book_groups_ids])
+    target_book_groups.each { |book_group| book_group.books << @book unless book_group.books.include?(@book) }
+    stale_book_groups_books = current_user.book_groups.where.not(id: params[:book_groups_ids])
+    stale_book_groups_books.each { |book_group| book_group.books.delete(@book) }
+    redirect_to manage_book_path(@book)
+  end
+  # rubocop:enable Metrics/AbcSize
 
   def study_cards
     @basic_notes = @book.ordered_notes

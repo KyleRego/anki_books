@@ -3,7 +3,7 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
-RSpec.describe "PATCH /book_groups/:id" do
+RSpec.describe "PATCH /book_groups/:id", "#update" do
   subject(:patch_book_groups_update) { patch book_group_path(book_group), params: { book_group: { title: } } }
 
   let(:book_group) { create(:book_group, users: [create(:user)]) }
