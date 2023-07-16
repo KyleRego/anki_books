@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-# Represents a note of the default Basic Anki note type.
+# A basic note is a front and back flashcard
 class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable

@@ -23,6 +23,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to books_path
     else
+      # TODO: Use errors.full_messages method
       flash.now[:alert] = "A book must have a title."
       render :new, status: :unprocessable_entity
     end

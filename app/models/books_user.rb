@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-##
-# Join record model that connects books with users.
+# :nodoc:
 class BooksUser < ApplicationRecord
   belongs_to :user
   belongs_to :book

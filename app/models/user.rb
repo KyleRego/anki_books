@@ -4,6 +4,10 @@
 # User model representing a registered user in the system.
 class User < ApplicationRecord
   has_secure_password
+
+  has_many :book_groups_users, dependent: :destroy
+  has_many :book_groups, through: :book_groups_users
+
   has_many :books_users, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_users
 

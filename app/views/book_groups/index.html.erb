@@ -1,0 +1,13 @@
+<h1 class="text-4xl font-bold mb-4">
+  My book groups
+</h1>
+
+<% @book_groups.each do |book_group| %>
+  <div>
+    <%= link_to book_group.title, book_group_path(book_group), class: "text-blue-500 hover:text-blue-600" %>
+  </div>
+<% end %>
+
+<div class="my-4">
+  <%= link_to "New book group", new_book_group_path %>
+</div>

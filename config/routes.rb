@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 
+  resources :book_groups, except: %i[destroy]
   resources :books, except: %i[destroy] do
     resources :articles, only: :new
   end

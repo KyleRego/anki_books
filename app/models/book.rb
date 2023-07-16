@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
-# :nodoc:
+##
+# A book is a container for a group of articles
 class Book < ApplicationRecord
-  has_many :articles, dependent: :destroy
-  has_many :ordered_articles, -> { order(:ordinal_position) }, class_name: "Article", inverse_of: :book, dependent: :destroy
   has_many :books_users, dependent: :destroy
   has_many :users, through: :books_users
+
+  has_many :book_groups_books, dependent: :destroy
+  has_many :book_groups, through: :book_groups_books
+
+  has_many :articles, dependent: :destroy
+  has_many :ordered_articles, -> { order(:ordinal_position) }, class_name: "Article", inverse_of: :book, dependent: :destroy
 
   validates :title, presence: true
 
