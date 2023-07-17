@@ -10,9 +10,7 @@ class BookGroupsController < ApplicationController
     @book_groups = current_user.book_groups
   end
 
-  def show
-    @book_group = current_user.book_groups.find(params[:id])
-  end
+  def show; end
 
   def new
     @book_group = BookGroup.new
@@ -23,7 +21,7 @@ class BookGroupsController < ApplicationController
   def create
     @book_group = current_user.book_groups.create(book_group_params)
     if @book_group.save
-      redirect_to book_groups_path
+      redirect_to book_groups_path, flash: { notice: "#{@book_group.title} created successfully" }
     else
       flash.now[:alert] = @book_group.errors.full_messages.first
       render :new, status: :unprocessable_entity
@@ -32,9 +30,9 @@ class BookGroupsController < ApplicationController
 
   def update
     if @book_group.update(book_group_params)
-      redirect_to book_groups_path
+      redirect_to book_groups_path, flash: { notice: "#{@book_group.title} updated successfully" }
     else
-      flash.now[:alert] = @book_group.errors.full_messages
+      flash.now[:alert] = @book_group.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
   end
@@ -49,8 +47,7 @@ class BookGroupsController < ApplicationController
     @book_group = current_user.book_groups.find_by(id: params[:id])
     return if @book_group
 
-    flash[:alert] = "Book group was not found."
-    redirect_to root_path
+    redirect_to root_path, flash: { alert: "Book group not found" }
   end
 
   def set_books

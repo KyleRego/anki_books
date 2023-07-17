@@ -1,4 +1,5 @@
 Feature: Going to a random article
+
   Scenario: Clicking the random article link on the homepage goes to a random article
     Given the test user has a book called "Reordering test book"
     And the book "Reordering test book" has 5 numbered articles

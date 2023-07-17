@@ -20,7 +20,7 @@ Feature: Editing a book's title
   Scenario: Trying to update the book title to be an empty string
     When I fill in the "Title" field with ""
     And I click the "Update Book" button
-    Then I should see "A book must have a title."
+    Then I should see "Title can't be blank"
 
   Scenario: The link to the book should be present if the update fails
     When I fill in the "Title" field with ""

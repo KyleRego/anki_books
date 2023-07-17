@@ -32,7 +32,7 @@ RSpec.describe "PATCH /books/:id", "#update" do
 
         it "does not update the book if the title was blank" do
           patch_books_update
-          expect(flash[:alert]).to eq("A book must have a title.")
+          expect(flash[:alert]).not_to be_nil
         end
       end
     end

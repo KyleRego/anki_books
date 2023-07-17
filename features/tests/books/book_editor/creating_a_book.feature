@@ -1,4 +1,4 @@
-Feature: creating a book
+Feature: Creating a book
 
 @javascript
 Scenario: Creating a new book from the My books page

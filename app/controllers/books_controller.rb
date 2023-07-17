@@ -21,21 +21,20 @@ class BooksController < ApplicationController
   def create
     @book = current_user.books.create(book_params)
     if @book.save
-      redirect_to books_path
+      redirect_to books_path, flash: { notice: "#{@book.title} created successfully" }
     else
-      # TODO: Use errors.full_messages method
-      flash.now[:alert] = "A book must have a title."
+      flash.now[:alert] = @book.errors.full_messages.first
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @book.update(book_params)
-      redirect_to books_path
+      redirect_to books_path, flash: { notice: "#{@book.title} updated successfully" }
     else
       # Reload the book so that the top nav link to the book (the title) has text.
       @book.reload
-      flash.now[:alert] = "A book must have a title."
+      flash.now[:alert] = @book.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
   end
@@ -67,7 +66,7 @@ class BooksController < ApplicationController
     target_book_groups.each { |book_group| book_group.books << @book unless book_group.books.include?(@book) }
     stale_book_groups_books = current_user.book_groups.where.not(id: params[:book_groups_ids])
     stale_book_groups_books.each { |book_group| book_group.books.delete(@book) }
-    redirect_to manage_book_path(@book)
+    redirect_to manage_book_path(@book), flash: { notice: "Book groups updated" }
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -85,8 +84,7 @@ class BooksController < ApplicationController
     @book = current_user.books.find_by(id: params[:id])
     return if @book
 
-    flash[:alert] = "Book was not found."
-    redirect_to root_path
+    redirect_to root_path, flash: { alert: "Book not found" }
   end
 
   def set_articles

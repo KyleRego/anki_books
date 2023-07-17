@@ -1,4 +1,4 @@
-Feature: Deleting an article
+Feature: Visiting the manage page of an article
 
   Background:
     Given the test user has a book called "test book 1"

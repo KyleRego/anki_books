@@ -98,8 +98,7 @@ class ArticlesController < ApplicationController
     elsif OrdinalPositions::Mover::BookArticles.perform(new_parent: @target_book,
                                                         child_to_position: @article,
                                                         new_ordinal_position: @target_book.articles_count)
-      flash[:notice] = "Article moved to #{@target_book.title}."
-      redirect_to manage_article_path(@article)
+      redirect_to book_path(@book), flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     else
       # :nocov:
       head :unprocessable_entity
@@ -119,8 +118,7 @@ class ArticlesController < ApplicationController
       OrdinalPositions::GroupMover::ArticleBasicNotes.perform(new_parent: target_article,
                                                               old_parent: @article,
                                                               children_to_position:)
-      flash[:notice] = "Selected basic notes moved to #{target_article.title}."
-      redirect_to manage_article_path(@article)
+      redirect_to manage_article_path(@article), flash: { notice: "Selected basic notes moved to #{target_article.title}." }
     end
   end
   # rubocop:enable Metrics/MethodLength

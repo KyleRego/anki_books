@@ -1,5 +1,5 @@
 @javascript
-Feature: Creating a basic note
+Feature: Updating a basic note
 
   Background:
     Given the test user has a book called "test book 1"
