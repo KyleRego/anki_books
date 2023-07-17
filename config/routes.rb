@@ -31,4 +31,11 @@ Rails.application.routes.draw do
   resources :articles, only: [], param: :id do
     resources :basic_notes, only: %i[new create edit update show]
   end
+
+  # TODO: This is tech debt as I wanted to get this automated quickly
+  get "/download_books_data", to: "users#download_books_data", as: "download_books_data"
+  get "/download_book_groups_books_data", to: "users#download_book_groups_books_data", as: "download_book_groups_books_data"
+  get "/download_book_groups_data", to: "users#download_book_groups_data", as: "download_book_groups_data"
+  get "/download_articles_data", to: "users#download_articles_data", as: "download_articles_data"
+  get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
 end
