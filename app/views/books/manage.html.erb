@@ -29,20 +29,20 @@
 
 <div class="mt-4">
   <h2 class="text-xl font-semibold mb-4">
-    Book groups:
+    domains:
   </h1>
 
   <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-    <%= form_with(model: @book, url: change_book_groups_path(@book)) do |form| %>
-      <% @book_groups_options.each do |book_group_option| %>
+    <%= form_with(model: @book, url: change_domains_path(@book)) do |form| %>
+      <% @domains_options.each do |domain_option| %>
         <div class="mb-2">
-          <%= label_tag(book_group_option[:title]) do %>
-            <%= check_box_tag("book_groups_ids[]", book_group_option[:id], book_group_option[:selected], id: book_group_option[:id]) %>
-            <span><%= book_group_option[:title] %></span>
+          <%= label_tag(domain_option[:title]) do %>
+            <%= check_box_tag("domains_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
+            <span><%= domain_option[:title] %></span>
           <% end %>
         </div>
       <% end %>
-      <%= form.submit "Update book groups", class: "cursor-pointer font-semibold" %>
+      <%= form.submit "Update domains", class: "cursor-pointer font-semibold" %>
     <% end %>
   </div>
 </div>

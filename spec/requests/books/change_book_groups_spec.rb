@@ -3,11 +3,11 @@
 require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
-RSpec.describe "PATCH /books/:id/change_book_groups", "#change_book_groups" do
-  subject(:post_books_change_book_groups) { patch(change_book_groups_path(book), params:) }
+RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
+  subject(:post_books_change_domains) { patch(change_domains_path(book), params:) }
 
-  let(:params) { { book_groups_ids: } }
-  let(:book_groups_ids) { [] }
+  let(:params) { { domains_ids: } }
+  let(:domains_ids) { [] }
   let(:book) { create(:book) }
 
   include_examples "user is not logged in and needs to be"
@@ -16,7 +16,7 @@ RSpec.describe "PATCH /books/:id/change_book_groups", "#change_book_groups" do
     include_context "when the user is logged in"
 
     it "redirects to the homepage if the book does not belong to the user" do
-      post_books_change_book_groups
+      post_books_change_domains
       expect(response).to redirect_to(root_path)
     end
 
@@ -24,43 +24,43 @@ RSpec.describe "PATCH /books/:id/change_book_groups", "#change_book_groups" do
       let(:book) { create(:book, users: [user]) }
 
       it "redirects back to the manage book page" do
-        post_books_change_book_groups
+        post_books_change_domains
         expect(response).to redirect_to(manage_book_path(book))
       end
 
-      context "when book_groups_ids param is given and are ids of the user's book groups" do
-        let(:book_groups_ids) { user.book_groups.first(3).pluck(:id) }
+      context "when domains_ids param is given and are ids of the user's domains" do
+        let(:domains_ids) { user.domains.first(3).pluck(:id) }
 
-        before { create_list(:book_group, 5, users: [user]) }
+        before { create_list(:domain, 5, user:) }
 
-        it "changes the book's book groups to be the selected ones" do
-          post_books_change_book_groups
-          expect(book.book_groups.count).to eq 3
+        it "changes the book's domains to be the selected ones" do
+          post_books_change_domains
+          expect(book.domains.count).to eq 3
         end
       end
 
-      context "when book_group_ids param includes ids of book groups not belonging to the user" do
-        let(:book_groups_ids) { BookGroup.all.pluck(:id) }
+      context "when domain_ids param includes ids of domains not belonging to the user" do
+        let(:domains_ids) { Domain.all.pluck(:id) }
 
         before do
-          create_list(:book_group, 4, users: [user])
-          create_list(:book_group, 4)
+          create_list(:domain, 4, user:)
+          create_list(:domain, 4, user: create(:user))
         end
 
-        it "changes the book's book groups to only the user's book groups" do
-          post_books_change_book_groups
-          expect(book.book_groups.count).to eq 4
+        it "changes the book's domains to only the user's domains" do
+          post_books_change_domains
+          expect(book.domains.count).to eq 4
         end
       end
 
-      context "when book already had book groups that were not selected" do
-        let(:book_groups_ids) { BookGroup.take(2).pluck(:id) }
+      context "when book already had domains that were not selected" do
+        let(:domains_ids) { Domain.take(2).pluck(:id) }
 
-        before { create_list(:book_group, 4, users: [user], books: [book]) }
+        before { create_list(:domain, 4, user:, books: [book]) }
 
-        it "changes the book's book groups to be only the selected one" do
-          post_books_change_book_groups
-          expect(book.book_groups.count).to eq 2
+        it "changes the book's domains to be only the selected one" do
+          post_books_change_domains
+          expect(book.domains.count).to eq 2
         end
       end
     end

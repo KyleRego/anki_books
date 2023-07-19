@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_16_175830) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_19_224554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -76,30 +76,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_175830) do
     t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
   end
 
-  create_table "book_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "book_groups_books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "book_id", null: false
-    t.uuid "book_group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_group_id", "book_id"], name: "index_book_groups_books_on_book_group_id_and_book_id", unique: true
-  end
-
-  create_table "book_groups_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
-    t.uuid "book_group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_group_id", "user_id"], name: "index_book_groups_users_on_book_group_id_and_user_id", unique: true
-  end
-
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "book_id"
+    t.uuid "domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -110,6 +95,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_175830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id", "user_id"], name: "index_books_users_on_book_id_and_user_id", unique: true
+  end
+
+  create_table "domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -126,10 +118,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_175830) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "books"
   add_foreign_key "basic_notes", "articles"
-  add_foreign_key "book_groups_books", "book_groups"
-  add_foreign_key "book_groups_books", "books"
-  add_foreign_key "book_groups_users", "book_groups"
-  add_foreign_key "book_groups_users", "users"
+  add_foreign_key "books_domains", "books"
+  add_foreign_key "books_domains", "domains"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
+  add_foreign_key "domains", "users"
 end

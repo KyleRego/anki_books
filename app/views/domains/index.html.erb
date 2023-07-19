@@ -1,0 +1,13 @@
+<h1 class="text-4xl font-bold mb-4">
+  My domains
+</h1>
+
+<% @domains.each do |domain| %>
+  <div>
+    <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
+  </div>
+<% end %>
+
+<div class="my-4">
+  <%= link_to "New domain", new_domain_path %>
+</div>

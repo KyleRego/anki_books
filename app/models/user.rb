@@ -5,8 +5,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :book_groups_users, dependent: :destroy
-  has_many :book_groups, through: :book_groups_users
+  has_many :domains, dependent: :destroy
 
   has_many :books_users, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_users

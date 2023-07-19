@@ -27,34 +27,34 @@ class UsersController < ApplicationController
     send_data data, filename: "books.csv"
   end
 
-  def download_book_groups_books_data
-    attributes = %w[book_group_id book_id]
+  def download_domains_books_data
+    attributes = %w[domain_id book_id]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
 
       current_user.books.each do |book|
-        book.book_groups_books.each do |book_groups_book|
-          csv << attributes.map { |attr| book_groups_book.send(attr) }
+        book.domains_books.each do |domains_book|
+          csv << attributes.map { |attr| domains_book.send(attr) }
         end
       end
     end
 
-    send_data data, filename: "book_groups_books.csv"
+    send_data data, filename: "domains_books.csv"
   end
 
-  def download_book_groups_data
+  def download_domains_data
     attributes = %w[id title]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      current_user.book_groups.each do |book_group|
-        csv << attributes.map { |attr| book_group.send(attr) }
+      current_user.domains.each do |domain|
+        csv << attributes.map { |attr| domain.send(attr) }
       end
     end
 
-    send_data data, filename: "book_groups.csv"
+    send_data data, filename: "domains.csv"
   end
 
   def download_articles_data

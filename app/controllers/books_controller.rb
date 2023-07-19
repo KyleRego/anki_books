@@ -4,7 +4,7 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[show manage change_book_groups]
+  before_action :set_articles, only: %w[show manage change_domains]
 
   def index
     @books = current_user.books
@@ -40,11 +40,11 @@ class BooksController < ApplicationController
   end
 
   def manage
-    current_book_groups = @book.book_groups
-    @book_groups_options = current_user.book_groups.map do |book_group|
-      id = book_group.id
-      title = book_group.title
-      selected = current_book_groups.include?(book_group)
+    current_domains = @book.domains
+    @domains_options = current_user.domains.map do |domain|
+      id = domain.id
+      title = domain.title
+      selected = current_domains.include?(domain)
       { id:, title:, selected: }
     end
   end
@@ -61,12 +61,12 @@ class BooksController < ApplicationController
   end
 
   # rubocop:disable Metrics/AbcSize
-  def change_book_groups
-    target_book_groups = current_user.book_groups.where(id: params[:book_groups_ids])
-    target_book_groups.each { |book_group| book_group.books << @book unless book_group.books.include?(@book) }
-    stale_book_groups_books = current_user.book_groups.where.not(id: params[:book_groups_ids])
-    stale_book_groups_books.each { |book_group| book_group.books.delete(@book) }
-    redirect_to manage_book_path(@book), flash: { notice: "Book groups updated" }
+  def change_domains
+    target_domains = current_user.domains.where(id: params[:domains_ids])
+    target_domains.each { |domain| domain.books << @book unless domain.books.include?(@book) }
+    stale_domains_books = current_user.domains.where.not(id: params[:domains_ids])
+    stale_domains_books.each { |domain| domain.books.delete(@book) }
+    redirect_to manage_book_path(@book), flash: { notice: "domains updated" }
   end
   # rubocop:enable Metrics/AbcSize
 
