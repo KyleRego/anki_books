@@ -8,7 +8,7 @@ Feature: Adding books to domains
     And I click the "Test book" link
     And I click the "Manage book" link
     And I check the checkbox labeled "Test domain"
-    And I click the "Update domains" button
+    And I click the "Update Domains" button
     And I click the "My domains" link
     And I click the "Test domain" link
     Then I should see "Test book"
@@ -22,7 +22,7 @@ Feature: Adding books to domains
     And I click the "Test book" link
     And I click the "Manage book" link
     And I uncheck the checkbox labeled "domain"
-    And I click the "Update domains" button
+    And I click the "Update Domains" button
     And I click the "My domains" link
     And I click the "domain" link
     Then I should not see "Test book 1"

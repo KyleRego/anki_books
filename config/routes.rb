@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   # TODO: This is tech debt as I wanted to get this automated quickly
   get "/download_books_data", to: "users#download_books_data", as: "download_books_data"
-  get "/download_domains_books_data", to: "users#download_domains_books_data", as: "download_domains_books_data"
+  get "/download_books_domains_data", to: "users#download_books_domains_data", as: "download_books_domains_data"
   get "/download_domains_data", to: "users#download_domains_data", as: "download_domains_data"
   get "/download_articles_data", to: "users#download_articles_data", as: "download_articles_data"
   get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
