@@ -11,7 +11,7 @@ module OrdinalPositions
       end
 
       def other_ordinal_position_children
-        parent.articles
+        parent.ordered_articles
       end
 
       def shift_other_ordinal_children
