@@ -60,15 +60,10 @@ class BooksController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def change_domains
-    target_domains = current_user.domains.where(id: params[:domains_ids])
-    target_domains.each { |domain| domain.books << @book unless domain.books.include?(@book) }
-    stale_book_domains = current_user.domains.where.not(id: params[:domains_ids])
-    stale_book_domains.each { |domain| domain.books.delete(@book) }
-    redirect_to manage_book_path(@book), flash: { notice: "domains updated" }
+    @book.domains = current_user.domains.where(id: params[:domains_ids])
+    redirect_to manage_book_path(@book), flash: { notice: "Domains updated" }
   end
-  # rubocop:enable Metrics/AbcSize
 
   def study_cards
     @basic_notes = @book.ordered_notes

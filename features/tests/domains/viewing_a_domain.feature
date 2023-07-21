@@ -16,6 +16,6 @@ Feature: Viewing domains
     And I should see "domain 2"
     And I should see "domain 3"
     And I click the "domain 1" link
-    Then I should see "Book 1 of group 1"
-    And I should see "Book 2 of group 1"
-    And I should not see "Book 1 of group 2"
+    Then the checkbox labeled "Book 1 of group 1" should be checked
+    And the checkbox labeled "Book 2 of group 1" should be checked
+    And the checkbox labeled "Book 1 of group 2" should not be checked

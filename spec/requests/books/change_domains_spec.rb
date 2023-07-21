@@ -4,7 +4,7 @@ require_relative "../../support/shared_contexts/user_logged_in"
 require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
 
 RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
-  subject(:post_books_change_domains) { patch(change_domains_path(book), params:) }
+  subject(:patch_books_change_domains) { patch(change_book_domains_path(book), params:) }
 
   let(:params) { { domains_ids: } }
   let(:domains_ids) { [] }
@@ -16,7 +16,7 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
     include_context "when the user is logged in"
 
     it "redirects to the homepage if the book does not belong to the user" do
-      post_books_change_domains
+      patch_books_change_domains
       expect(response).to redirect_to(root_path)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
       let(:book) { create(:book, users: [user]) }
 
       it "redirects back to the manage book page" do
-        post_books_change_domains
+        patch_books_change_domains
         expect(response).to redirect_to(manage_book_path(book))
       end
 
@@ -34,7 +34,7 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
         before { create_list(:domain, 5, user:) }
 
         it "changes the book's domains to be the selected ones" do
-          post_books_change_domains
+          patch_books_change_domains
           expect(book.domains.count).to eq 3
         end
       end
@@ -48,7 +48,7 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
         end
 
         it "changes the book's domains to only the user's domains" do
-          post_books_change_domains
+          patch_books_change_domains
           expect(book.domains.count).to eq 4
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
         before { create_list(:domain, 4, user:, books: [book]) }
 
         it "changes the book's domains to be only the selected one" do
-          post_books_change_domains
+          patch_books_change_domains
           expect(book.domains.count).to eq 2
         end
       end

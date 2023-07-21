@@ -3,14 +3,22 @@
 # :nodoc:
 class DomainsController < ApplicationController
   before_action :require_login
-  before_action :set_domain, only: %i[edit update show]
+  before_action :set_domain, only: %i[show edit update change_books]
   before_action :set_books, only: %i[show]
 
   def index
-    @domains = current_user.domains
+    @domains = current_user.domains.order(:title)
   end
 
-  def show; end
+  def show
+    current_books = @domain.books.order(:title)
+    @books_options = current_user.books.map do |book|
+      id = book.id
+      title = book.title
+      selected = current_books.include?(book)
+      { id:, title:, selected: }
+    end
+  end
 
   def new
     @domain = Domain.new
@@ -35,6 +43,11 @@ class DomainsController < ApplicationController
       flash.now[:alert] = @domain.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def change_books
+    @domain.books = current_user.books.where(id: params[:book_ids])
+    redirect_to domain_path(@domain), flash: { notice: "Books updated" }
   end
 
   private

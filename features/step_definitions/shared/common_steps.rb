@@ -35,14 +35,6 @@ When "I use the ctrl + {string} keyboard shortcut" do |string|
   page.send_keys([:control, string])
 end
 
-When "I check the checkbox labeled {string}" do |string|
-  check(string)
-end
-
-When "I uncheck the checkbox labeled {string}" do |string|
-  uncheck(string)
-end
-
 Then "I should be on the root path" do
   expect(page).to have_current_path "/"
 end

@@ -10,6 +10,26 @@
   <% end %>
 </div>
 
-<div class="mt-4 pb-4">
+<div class="mt-4 pb-4 border-b-2">
   <%= link_to "Edit domain", edit_domain_path(@domain), class: "cursor-pointer font-semibold" %>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-xl font-semibold mb-4">
+    Books:
+  </h2>
+
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
+    <%= form_with(model: @domain, url: change_domain_books_path(@domain)) do |form| %>
+      <% @books_options.each do |book_option| %>
+        <div class="mb-2">
+          <%= label_tag(book_option[:title]) do %>
+            <%= check_box_tag("book_ids[]", book_option[:id], book_option[:selected], id: book_option[:id]) %>
+            <span><%= book_option[:title] %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit "Update Books", class: "cursor-pointer font-semibold" %>
+    <% end %>
+  </div>
 </div>
