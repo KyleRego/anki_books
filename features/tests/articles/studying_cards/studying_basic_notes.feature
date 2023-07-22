@@ -60,3 +60,7 @@ Feature: Reading an article
     Then I should see "Front of note 0"
     When I click on the span with text "Previous"
     Then I should see "Front of note 2"
+
+  Scenario: Using the link back to the article should load the article correctly
+    When I click the "Back to article" link
+    Then I should see "Front of note 0"

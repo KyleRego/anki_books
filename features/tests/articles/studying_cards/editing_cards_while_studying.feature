@@ -19,6 +19,7 @@ Feature: Editing/updating basic notes from the study cards page
     And I click the "Update Basic note" button
     Then I should see "Front Value"
     And I should see "Next card"
+    And I should not see "New"
 
   Scenario: Editing a basic note after studying in normal order
     When I click on the span with text "First card"

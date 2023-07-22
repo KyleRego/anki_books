@@ -28,7 +28,7 @@
               <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
             </div>
 
-            <% unless on_study_cards? %>
+            <% unless on_study_cards? || redirected_from_study_cards? %>
               <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
             <% end %>
 
