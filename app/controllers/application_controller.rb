@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def require_login
     return if logged_in?
 
-    session[:redirect_path] = request.path
+    session[:redirect_path] = request.fullpath
     redirect_to login_path
   end
 
