@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 
-  resources :domains, except: %i[destroy]
+  resources :domains
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
 
   resources :books, except: %i[destroy] do

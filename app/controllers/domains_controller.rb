@@ -3,7 +3,7 @@
 # :nodoc:
 class DomainsController < ApplicationController
   before_action :require_login
-  before_action :set_domain, only: %i[show edit update change_books]
+  before_action :set_domain, only: %i[show edit update change_books destroy]
   before_action :set_books, only: %i[show]
 
   def index
@@ -43,6 +43,11 @@ class DomainsController < ApplicationController
       flash.now[:alert] = @domain.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @domain.destroy!
+    redirect_to books_path, flash: { success: "Domain successfully deleted" }
   end
 
   def change_books

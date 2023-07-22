@@ -15,9 +15,7 @@
 </div>
 
 <div class="mt-4">
-  <h2 class="text-xl font-semibold mb-4">
-    Books:
-  </h2>
+  <h2 class="text-xl font-semibold mb-4">Books:</h2>
 
   <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
     <%= form_with(model: @domain, url: change_domain_books_path(@domain)) do |form| %>
@@ -32,4 +30,12 @@
       <%= form.submit "Update Books", class: "cursor-pointer font-semibold" %>
     <% end %>
   </div>
+</div>
+
+<div class="mt-4">
+  <%= button_to "Delete #{@domain.title}",
+    domain_path(@domain),
+    class: "text-red-500 hover:text-red-600 font-semibold",
+    method: :delete,
+    form: { data: { turbo_confirm: "Are you sure you want to delete #{@domain.title}?"} } %>
 </div>

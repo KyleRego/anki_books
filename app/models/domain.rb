@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 ##
-# A domain is a container for a group of related books
+# A domain represents an area of study or general label that books can
+# be grouped into
 class Domain < ApplicationRecord
   belongs_to :user, optional: false
   has_many :books_domains, dependent: :destroy

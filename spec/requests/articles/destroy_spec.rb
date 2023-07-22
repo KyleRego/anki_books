@@ -15,6 +15,7 @@ RSpec.describe "DELETE /articles/:id", "#destroy" do
 
   it "does not delete the article when the user is not logged in and needs to be" do
     expect { delete_articles_destroy }.not_to change(Article, :count)
+    expect(response).to redirect_to login_path
   end
 
   context "when user is logged in" do

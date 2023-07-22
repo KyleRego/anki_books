@@ -44,3 +44,21 @@ user.books << book_for_testing_reordering
     BasicNote.create!(article: article_for_testing_reordering, front:, back:, ordinal_position: j)
   end
 end
+
+book_with_a_lot_of_articles = Book.create!(title: "Book with a lot of articles")
+
+5.times do |i|
+  article_for_book_with_lots = Article.create!(title: "Test reordering article #{i}", book: book_with_a_lot_of_articles,
+                                               ordinal_position: i)
+  10.times do |j|
+    front = "Front of article #{i} note #{j}"
+    back = "Back of article #{i} note #{j}"
+    BasicNote.create!(article: article_for_book_with_lots, front:, back:, ordinal_position: j)
+  end
+end
+
+programming_domain = Domain.create!(title: "Programming", user:)
+programming_domain.books << book_for_system_article
+
+other_domain = Domain.create!(title: "other", user:)
+other_domain.books = [book_for_testing_reordering, book_with_a_lot_of_articles]
