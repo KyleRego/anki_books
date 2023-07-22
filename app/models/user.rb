@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
-##
-# User model representing a registered user in the system.
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :uuid             not null, primary key
+#  email           :string
+#  username        :string
+#  password_digest :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 class User < ApplicationRecord
   has_secure_password
 

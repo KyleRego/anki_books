@@ -1,7 +1,23 @@
 # frozen_string_literal: true
 
-##
-# A basic note is a front and back flashcard
+# == Schema Information
+#
+# Table name: basic_notes
+#
+#  id               :uuid             not null, primary key
+#  front            :text
+#  back             :text
+#  anki_id          :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  article_id       :uuid             not null
+#  ordinal_position :integer          not null
+#  anki_guid        :string           not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => articles.id)
+#
 class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable

@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: basic_notes
+#
+#  id               :uuid             not null, primary key
+#  front            :text
+#  back             :text
+#  anki_id          :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  article_id       :uuid             not null
+#  ordinal_position :integer          not null
+#  anki_guid        :string           not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => articles.id)
+#
 TEST_BASIC_NOTE_FRONT = "What sound does a cat make?"
 TEST_BASIC_NOTE_BACK = "The cat says meow."
 

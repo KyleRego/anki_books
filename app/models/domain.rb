@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
-##
-# A domain represents an area of study or general label that books can
-# be grouped into
+# == Schema Information
+#
+# Table name: domains
+#
+#  id         :uuid             not null, primary key
+#  title      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :uuid             not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class Domain < ApplicationRecord
   belongs_to :user, optional: false
   has_many :books_domains, dependent: :destroy

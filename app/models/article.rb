@@ -1,7 +1,21 @@
 # frozen_string_literal: true
 
-##
-# An article belongs to a book, it is a container for a single long text and a group of basic notes
+# == Schema Information
+#
+# Table name: articles
+#
+#  id               :uuid             not null, primary key
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  system           :boolean          default(FALSE), not null
+#  book_id          :uuid             not null
+#  ordinal_position :integer          not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (book_id => books.id)
+#
 class Article < ApplicationRecord
   belongs_to :book
 

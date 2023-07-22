@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
-##
-# A book is a container for a group of articles
+# == Schema Information
+#
+# Table name: books
+#
+#  id         :uuid             not null, primary key
+#  title      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Book < ApplicationRecord
   has_many :books_users, dependent: :destroy
   has_many :users, through: :books_users
