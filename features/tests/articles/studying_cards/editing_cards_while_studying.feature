@@ -1,14 +1,16 @@
 @javascript
-Feature: Updating a basic note
+Feature: Editing/updating basic notes from the study cards page
 
   Background:
     Given the test user has a book called "test book 1"
     And the book "test book 1" has an article called "test article 1"
-    And the article "test article 1" has 1 basic notes
+    And the article "test article 1" has 3 basic notes
     And I am logged in as the test user
     And I am viewing the article "test article 1"
+    And I click the "Study cards" link
 
-  Scenario: Editing the note and updating it
+  Scenario: Editing a basic note after studying in random order
+    When I click on the span with text "Random order"
     When I click "Edit" on the basic note
     And I fill in the basic note edit form with the following data:
       | Field  | Value       |
@@ -16,14 +18,15 @@ Feature: Updating a basic note
       | Back   | Basic Value |
     And I click the "Update Basic note" button
     Then I should see "Front Value"
+    And I should see "Next card"
 
-  Scenario: Error messages when trying to update the note to be invalid
+  Scenario: Editing a basic note after studying in normal order
+    When I click on the span with text "First card"
     When I click "Edit" on the basic note
     And I fill in the basic note edit form with the following data:
-    | Field   | Value |
-    | Front   |       |
-    | Back    |       |
+      | Field  | Value       |
+      | Front  | Front Value |
+      | Back   | Basic Value |
     And I click the "Update Basic note" button
-    Then I should see "2 validation errors"
-    And I should see "Front can't be blank"
-    And I should see "Back can't be blank"
+    Then I should see "Front Value"
+    And I should see "Next card"

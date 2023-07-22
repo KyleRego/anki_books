@@ -6,7 +6,8 @@ module BasicNotesHelper
     BasicNote::TurboFrameable::TURBO_FIRST_NEW_BASIC_NOTE_ID
   end
 
+  # TODO: Can this use memoization?
   def on_study_cards?
-    request.path.end_with?("study_cards")
+    request.path.end_with?("study_cards") || request.referer&.end_with?("study_cards")
   end
 end

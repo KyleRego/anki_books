@@ -1,41 +1,40 @@
-<%= turbo_frame_tag @basic_note.turbo_id, class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
-  <% if on_study_cards? %>
-    <div class="studiable-note" hidden>
-  <% end %>
+<% if on_study_cards? %><div class="studiable-note" hidden><% end %>
+  <%= turbo_frame_tag @basic_note.turbo_id, class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
     <div data-controller="reorder-basic-notes--basic-note-draggable">
-      <div data-reorder-basic-notes--basic-note-draggable-target="note" draggable="<%= logged_in? && !on_study_cards? %>" class="draggable-div-of-note">
+      <div data-reorder-basic-notes--basic-note-draggable-target="note"
+           draggable="<%= logged_in? && !on_study_cards? %>"
+           class="draggable-div-of-note">
         <div data-controller="basic-note-flippable">
           <div data-basic-note-flippable-target="flippableNote"
                class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center">
-            <div>
-              <span class="whitespace-pre-wrap"><%= @basic_note.front %></span>
-            </div>
+
+            <div><span class="whitespace-pre-wrap"><%= @basic_note.front %></span></div>
 
             <div data-basic-note-flippable-target="flippableNoteBack" class="border-t border-blue-400 mt-2 pt-2" hidden>
               <span class="whitespace-pre-wrap"><%= @basic_note.back %></span>
             </div>
+
           </div>
         </div>
       </div>
     </div>
 
-    <% unless on_study_cards? %>
-      <div class="min-h-8">
-        <% if logged_in? %>
-          <div data-controller="reorder-basic-notes--basic-note-dropzone">
-            <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
+    <% unless on_study_cards? %><div class="min-h-8"><% end %>
+      <% if logged_in? %>
+        <div data-controller="reorder-basic-notes--basic-note-dropzone">
+          <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
 
-                <div class="flex flex-row justify-between">
-                  <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
-                </div>
-
-                <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
+            <div class="flex flex-row justify-between">
+              <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
             </div>
+
+            <% unless on_study_cards? %>
+              <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
+            <% end %>
+
           </div>
-        <% end %>
-      </div>
-    <% end %>
-  <% if on_study_cards? %>
-    </div>
+        </div>
+      <% end %>
+    <% unless on_study_cards? %></div><% end %>
   <% end %>
-<% end %>
+<% if on_study_cards? %></div><% end %>
