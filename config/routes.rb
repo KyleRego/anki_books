@@ -34,7 +34,9 @@ Rails.application.routes.draw do
     resources :basic_notes, only: %i[new create edit update show]
   end
 
+  get "/downloads", to: "users#downloads", as: "downloads"
   # TODO: This is tech debt as I wanted to get this automated quickly
+  # It should be one download with a zip file of what these endpoints give individually.
   get "/download_books_data", to: "users#download_books_data", as: "download_books_data"
   get "/download_books_domains_data", to: "users#download_books_domains_data", as: "download_books_domains_data"
   get "/download_domains_data", to: "users#download_domains_data", as: "download_domains_data"

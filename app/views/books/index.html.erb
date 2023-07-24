@@ -1,38 +1,7 @@
-<h1 class="text-4xl font-bold mb-4">
-  My books
-</h1>
+<h1 class="text-4xl font-bold mb-4">My books</h1>
 
-<div>
-  <% @books.each do |book| %>
-    <%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %>
-    <br>
-  <% end %>
-</div>
+<% @books.each do |book| %>
+  <div><%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %></div>
+<% end %>
 
-<div class="my-4">
-  <%= link_to "New book", new_book_path %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download Anki deck (all books)", user_download_anki_deck_path, data: { turbo: "false" } %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download books data", download_books_data_path, data: { turbo: "false" } %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download books domains data", download_books_domains_data_path, data: { turbo: "false" } %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download domains data", download_domains_data_path, data: { turbo: "false" } %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download articles data", download_articles_data_path, data: { turbo: "false" } %>
-</div>
-
-<div class="my-4">
-  <%= link_to "Download basic notes data", download_basic_notes_data_path, data: { turbo: "false" } %>
-</div>
+<div class="my-4"><%= link_to "New book", new_book_path %></div>

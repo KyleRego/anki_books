@@ -11,7 +11,11 @@ RSpec.describe UsersController do
     end
 
     it "routes to #random_article" do
-      expect(get: "random_article").to route_to("users#random_article")
+      expect(get: "/random_article").to route_to("users#random_article")
+    end
+
+    it "routes to #downloads" do
+      expect(get: "/downloads").to route_to("users#downloads")
     end
   end
 end
