@@ -5,7 +5,7 @@ Feature: Deleting an article domains
     And the test user has a book called "Book of the test domain that is not deleted"
     And the book "Book of the test domain that is not deleted" belongs to the "Test domain" domain
     And I am logged in as the test user
-    And I click the "My domains" link
+    And I click the "Domains" link
     And I click the "Test domain" link
 
   @javascript

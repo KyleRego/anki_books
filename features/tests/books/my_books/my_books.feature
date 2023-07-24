@@ -1,23 +1,23 @@
-Feature: The My books page
+Feature: The Books page
 
-  Scenario: The My books link should not show if I am not logged in
+  Scenario: The Books link should not show if I am not logged in
     When I visit the root path
-    Then I should not see "My books"
+    Then I should not see "Books"
 
-  Scenario: The My books link should show if I am logged in as the test user
+  Scenario: The Books link should show if I am logged in as the test user
     Given I am logged in as the test user
     When I visit the root path
-    Then I should see "My books"
+    Then I should see "Books"
 
-  Scenario: The My books link should not show if I am on the My books page
+  Scenario: The Books link should not show if I am on the Books page
     Given I am logged in as the test user
     When I visit the root path
-    And I click the "My books" link
-    Then I should see "My books"
-    And I should not see a "My books" link
+    And I click the "Books" link
+    Then I should see "Books"
+    And I should not see a "Books" link
 
-  Scenario: The My books page should show the Logout link
+  Scenario: The Books page should show the Logout link
     Given I am logged in as the test user
     When I visit the root path
-    And I click the "My books" link
+    And I click the "Books" link
     Then I should see "Logout"

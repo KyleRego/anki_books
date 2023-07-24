@@ -11,7 +11,7 @@ Feature: Viewing domains
     And the book "Book 1 of group 2" belongs to the "domain 2" domain
     And the test user has a domain called "domain 3"
     And I am logged in as the test user
-    And I click the "My domains" link
+    And I click the "Domains" link
     Then I should see "domain 1"
     And I should see "domain 2"
     And I should see "domain 3"

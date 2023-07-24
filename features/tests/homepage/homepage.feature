@@ -19,7 +19,7 @@ Feature: The website homepage
   Scenario: Visiting the homepage when logged in
     Given I am logged in as the test user
     When I visit the root path
-    Then I should see "My books"
+    Then I should see "Books"
     And I should not see a link to the homepage article's book
 
   Scenario: The Manage link should not be present if not logged in

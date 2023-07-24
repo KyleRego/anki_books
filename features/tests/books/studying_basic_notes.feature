@@ -8,7 +8,7 @@ Feature: Studying the basic notes of a book
     And the article "test article 2" has 10 basic notes
     And I am logged in as the test user
     And I visit the root path
-    And I click the "My books" link
+    And I click the "Books" link
     And I click the "test book 1" link
 
   Scenario: Visiting the book study cards page and then using the link back to the book

@@ -34,10 +34,10 @@ Feature: User authentication
   Scenario: Logging in after getting redirected to the login page
     Given the test user has a book called "test book 0"
     And the book "test book 0" has an article called "test article 0"
-    When I visit the My Books page
+    When I visit the Books page
     Then I should see "Anki Books"
     And I fill in the "Email" field with "test@example.com"
     And I fill in the "Password" field with "123abc777www"
     And I click the "Log in" button
     Then I should see "Logged in successfully."
-    And I should see "My books"
+    And I should see "Books"

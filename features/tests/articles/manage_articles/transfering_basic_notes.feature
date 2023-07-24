@@ -7,7 +7,7 @@ Feature: Moving basic notes to a different article
     And the book "test book 1" has an article called "test article 2"
     And the article "test article 2" has 2 basic notes
     And I am logged in as the test user
-    And I click the "My books" link
+    And I click the "Books" link
     And I click the "test book 1" link
     And I click the "test article 1" link
     And I click the "Manage article" link

@@ -3,7 +3,7 @@ Feature: Editing a book's title
   Background:
     Given the test user has a book called "My first book"
     And I am logged in as the test user
-    And I click the "My books" link
+    And I click the "Books" link
     And I click the "My first book" link
     And I click the "Manage book" link
     And I click the "Edit book" link

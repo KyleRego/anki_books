@@ -12,6 +12,6 @@ Given "the book {string} has {int} numbered articles" do |book_title, int|
   end
 end
 
-When "I visit the My Books page" do
+When "I visit the Books page" do
   visit books_path
 end

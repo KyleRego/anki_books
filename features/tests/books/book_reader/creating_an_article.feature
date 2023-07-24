@@ -4,7 +4,7 @@ Feature: Creating an article
   Scenario: Adding an article to a book
     Given the test user has a book called "My first book"
     And I am logged in as the test user
-    And I click the "My books" link
+    And I click the "Books" link
     And I click the "My first book" link
     And I click the "New article" link
     And I fill in the article editor with "content of a new article"
