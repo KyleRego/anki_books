@@ -19,12 +19,21 @@ export default class extends Controller {
 
   handleDragEnter(event) {
     event.preventDefault();
-    event.target.classList.add("bg-blue-200");
+    this.addColorToDropzone();
+  }
+
+  // TODO: Look into how to not duplicate this with reordering basic notes controller
+  addColorToDropzone() {
+    this.dropzoneTarget.classList.add("bg-blue-200");
+  }
+
+  removeColorFromDropzone() {
+    this.dropzoneTarget.classList.remove("bg-blue-200");
   }
 
   handleDragLeave(event) {
     event.preventDefault();
-    event.target.classList.remove("bg-blue-200");
+    this.removeColorFromDropzone();
   }
 
   handleDragOver(event) {
@@ -34,7 +43,7 @@ export default class extends Controller {
 
   handleDrop(event) {
     event.preventDefault();
-    event.target.classList.remove("bg-blue-200");
+    this.removeColorFromDropzone();
     const articleId = event.dataTransfer.getData("text/plain");
     const allDraggableArticles = document.querySelectorAll("[data-reorder-articles--article-draggable-target=\"article\"]")
     // getElementById is used here because querySelector does not yet support CSS selector for id that starts with a digit

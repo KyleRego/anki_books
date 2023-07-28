@@ -6,18 +6,39 @@ export default class extends Controller {
   initialize() {
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
+    this.boundHandleDragLeave = this.handleDragLeave.bind(this);
     this.boundHandleDragOver = this.handleDragOver.bind(this);
     this.boundHandleDrop = this.handleDrop.bind(this);
   }
 
   connect() {
     this.dropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
+    this.dropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
     this.dropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
     this.dropzoneTarget.addEventListener("drop", this.boundHandleDrop);
+    this.nestedDragEnterLevels = 0;
   }
 
   handleDragEnter(event) {
     event.preventDefault();
+    this.nestedDragEnterLevels += 1;
+    this.addColorToDropzone();
+  }
+
+  addColorToDropzone() {
+    this.dropzoneTarget.classList.add("bg-blue-200");
+  }
+
+  removeColorFromDropzone() {
+    this.dropzoneTarget.classList.remove("bg-blue-200");
+  }
+
+  handleDragLeave(event) {
+    event.preventDefault();
+    this.nestedDragEnterLevels -= 1;
+    if (this.nestedDragEnterLevels === 0) {
+      this.removeColorFromDropzone();
+    }
   }
 
   handleDragOver(event) {
@@ -27,6 +48,8 @@ export default class extends Controller {
 
   handleDrop(event) {
     event.preventDefault();
+    this.nestedDragEnterLevels = 0;
+    this.removeColorFromDropzone();
     this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const noteTurboId = event.dataTransfer.getData("text/plain");
     const articleId = document.querySelector("[id^=\"article-\"]").id.split("-").slice(1).join("-");
