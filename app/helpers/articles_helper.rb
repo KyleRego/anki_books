@@ -9,4 +9,10 @@ module ArticlesHelper
 
     article_path(article)
   end
+
+  def viewing_an_article?(article)
+    return false if article.nil?
+
+    current_page?(article_path(article)) || current_page?(root_path)
+  end
 end

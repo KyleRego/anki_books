@@ -1,4 +1,4 @@
-<% if on_study_cards? %><div class="w-96 mx-auto"><% end %>
+<% if redirected_from_study_cards? %><div class="w-96 mx-auto"><% end %>
   <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
     <div class="border border-blue-400 bg-blue-50 font-semibold text-center mx-auto px-4 pb-2 pt-8 my-4">
 
@@ -20,4 +20,4 @@
 
     </div>
   <% end %>
-<% if on_study_cards? %></div><% end %>
+<% if redirected_from_study_cards? %></div><% end %>
