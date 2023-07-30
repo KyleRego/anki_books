@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+      - exclude_tmp:/usr/src/app/tmp
     environment:
       DATABASE_HOST: database
       POSTGRES_USER: postgres
@@ -24,4 +25,5 @@ services:
       POSTGRES_DB: anki_books_development
 
 volumes:
+  exclude_tmp:
   data:
