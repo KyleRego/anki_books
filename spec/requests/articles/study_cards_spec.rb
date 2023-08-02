@@ -9,7 +9,7 @@ RSpec.describe "GET /articles/:id/study_cards", "#study_cards" do
   let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
 
-  it "redirects to the homepage with the no access message" do
+  it "redirects to the homepage with the not found message" do
     get_articles_study_cards
     expect(response).to redirect_to(root_path)
     expect(flash[:alert]).to eq(ApplicationController::NOT_FOUND_FLASH_MESSAGE)

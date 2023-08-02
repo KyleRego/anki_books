@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   def require_turbo_request
-    head :forbidden if request.headers["Turbo-Frame"].blank?
+    head :bad_request if request.headers["Turbo-Frame"].blank?
   end
 
   def require_login
@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found_or_unauthorized
-    flash[:alert] = NOT_FOUND_FLASH_MESSAGE
-    redirect_to root_path
+    redirect_to root_path, flash: { alert: NOT_FOUND_FLASH_MESSAGE }
   end
 end

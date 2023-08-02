@@ -12,7 +12,7 @@ RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   let(:basic_note) { create(:basic_note, article:) }
   let(:headers) { {} }
 
-  include_examples "request missing the Turbo-Frame header is forbidden"
+  include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
   context "when the Turbo-Frame header is present" do
     let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }

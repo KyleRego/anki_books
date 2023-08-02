@@ -7,5 +7,5 @@ RSpec.describe "GET /articles/:article_id/basic_notes/new", "#new" do
 
   let(:article) { create(:article) }
 
-  include_examples "request missing the Turbo-Frame header is forbidden"
+  include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 end
