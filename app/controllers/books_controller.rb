@@ -53,7 +53,7 @@ class BooksController < ApplicationController
     @book = current_user.books.find(params[:id])
     article = @book.articles.find(params[:article_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if OrdinalPositions::Setter::BookArticles.perform(parent: @book, child_to_position: article, new_ordinal_position:)
+    if OrdinalPositions::SetChildPosition.perform(parent: @book, child_to_position: article, new_ordinal_position:)
       head :ok
     else
       head :unprocessable_entity

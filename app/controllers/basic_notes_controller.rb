@@ -27,9 +27,9 @@ class BasicNotesController < ApplicationController
     @basic_note.ordinal_position = @article.notes_count
     @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    unless @basic_note.valid? && OrdinalPositions::Setter::ArticleBasicNotes.perform(parent: @article,
-                                                                                     child_to_position: @basic_note,
-                                                                                     new_ordinal_position: ordinal_position_param)
+    unless @basic_note.valid? && OrdinalPositions::SetChildPosition.perform(parent: @article,
+                                                                            child_to_position: @basic_note,
+                                                                            new_ordinal_position: ordinal_position_param)
       turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new", locals: { basic_note: @basic_note })
@@ -40,7 +40,7 @@ class BasicNotesController < ApplicationController
     if @basic_note.update(basic_note_params)
       redirect_to article_basic_note_path(@article, @basic_note)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
