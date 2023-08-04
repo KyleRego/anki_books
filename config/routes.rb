@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root "articles#homepage"
+  root "homepage#show"
+  get "/study_cards", to: "homepage#study_cards", as: "homepage_study_cards"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"

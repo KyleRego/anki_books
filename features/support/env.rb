@@ -14,6 +14,12 @@ end
 
 SimpleCov.start do
   enable_coverage :branch
+
+  # TODO: This code is repeated in spec/spec_helper.rb
+  add_group "Models", %r{app/models/.*}
+  add_group "Controllers", %r{app/controllers/.*}
+  add_group "Jobs", %r{app/jobs/.*}
+  add_group "Services", %r{app/services/.*}
 end
 
 World(FactoryBot::Syntax::Methods)

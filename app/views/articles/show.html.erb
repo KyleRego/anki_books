@@ -3,7 +3,7 @@
     <%= link_to "Manage article", manage_article_path(@article), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
   <% end %>
   <% if @article.basic_notes.any? %>
-    <%= link_to("Study cards", study_article_cards_path(@article), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
+    <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
   <% end %>
 <% end %>
 

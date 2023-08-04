@@ -3,9 +3,9 @@
 # rubocop:disable Metrics/ClassLength
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login, except: %i[homepage study_cards]
-  before_action :set_article, except: %i[new create homepage]
-  before_action :check_user_can_access_article, except: %i[new create homepage]
+  before_action :require_login
+  before_action :set_article, except: %i[new create]
+  before_action :check_user_can_access_article, except: %i[new create]
 
   def show
     if @article.system
@@ -59,14 +59,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def homepage
-    # TODO: Probably move the system boolean to books, possibly calling
-    # it homepage and having the homepage be a book once the larger book
-    # view is completed.
-    @article = Article.find_by(system: true)
-    @basic_notes = @article.ordered_notes
-  end
-
   def change_note_ordinal_position
     note = @article.basic_notes.find(params[:note_id])
     new_ordinal_position = params[:new_ordinal_position].to_i
@@ -78,7 +70,11 @@ class ArticlesController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @article.ordered_notes
+    if @article.system
+      redirect_to homepage_study_cards_path, status: :moved_permanently
+    else
+      @basic_notes = @article.ordered_notes
+    end
   end
 
   def manage

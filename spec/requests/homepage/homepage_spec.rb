@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "GET /", "#homepage" do
+RSpec.describe "GET /", "#show" do
   before { create(:article, system: true) }
 
   it "shows the homepage" do

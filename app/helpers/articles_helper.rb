@@ -10,6 +10,12 @@ module ArticlesHelper
     article_path(article)
   end
 
+  def study_article_cards_path_helper(article:)
+    return homepage_study_cards_path if article.system
+
+    study_article_cards_path(article)
+  end
+
   def viewing_an_article?(article)
     return false if article.nil?
 

@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "basic_notes/show" do
-  let(:article) { create(:article) }
+  let(:user) { create(:user) }
+  let(:book) { create(:book, users: [user]) }
+  let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
 
   before do
@@ -12,7 +14,10 @@ RSpec.describe "basic_notes/show" do
   end
 
   context "when user is logged in" do
-    before { allow(view).to receive(:logged_in?).and_return(true) }
+    before do
+      allow(view).to receive(:logged_in?).and_return(true)
+      allow(view).to receive(:current_user).and_return(user)
+    end
 
     it "renders the basic note as draggable" do
       render

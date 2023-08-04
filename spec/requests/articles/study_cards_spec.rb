@@ -9,18 +9,17 @@ RSpec.describe "GET /articles/:id/study_cards", "#study_cards" do
   let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
 
-  it "redirects to the homepage with the not found message" do
+  it "redirects to the login page" do
     get_articles_study_cards
-    expect(response).to redirect_to(root_path)
-    expect(flash[:alert]).to eq(ApplicationController::NOT_FOUND_FLASH_MESSAGE)
+    expect(response).to redirect_to(login_path)
   end
 
   context "when the article is a system article" do
     let(:article) { create(:article, book:, system: true) }
 
-    it "shows the study cards page even when the user is not logged in and needs to be" do
+    it "redirects to the login page" do
       get_articles_study_cards
-      expect(response).to be_successful
+      expect(response).to redirect_to(login_path)
     end
   end
 

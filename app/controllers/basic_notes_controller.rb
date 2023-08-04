@@ -5,9 +5,10 @@ class BasicNotesController < ApplicationController
   include BasicNotesHelper
 
   before_action :require_turbo_request
-  before_action :require_login, only: %i[create edit update]
-  before_action :set_article, only: %i[new create show edit update]
+  before_action :require_login, only: %i[create edit update new]
+  before_action :set_article, only: %i[create edit update new show]
   before_action :set_basic_note, only: %i[show edit update]
+  before_action :require_user_owns_note, only: %i[edit update]
 
   def show; end
 
@@ -60,5 +61,9 @@ class BasicNotesController < ApplicationController
 
   def ordinal_position_param
     @ordinal_position_param ||= params[:ordinal_position].to_i
+  end
+
+  def require_user_owns_note
+    current_user.owns_note?(note: @basic_note)
   end
 end

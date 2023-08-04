@@ -31,6 +31,11 @@ class User < ApplicationRecord
                      where users.id = '#{id}'")
   end
 
+  def owns_note?(note:)
+    article = note.article
+    books.include?(article.book)
+  end
+
   def random_article
     Article.joins("inner join books on articles.book_id = books.id
                    inner join books_users on books_users.book_id = books.id

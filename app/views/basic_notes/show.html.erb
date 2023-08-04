@@ -24,9 +24,11 @@
         <div data-controller="reorder-basic-notes--basic-note-dropzone">
           <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
 
-            <div class="flex flex-row justify-between">
-              <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
-            </div>
+            <% if current_user.owns_note?(note: @basic_note) %>
+              <div class="flex flex-row justify-between">
+                <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
+              </div>
+            <% end %>
 
             <% unless on_study_cards? || (redirected_from_study_cards? && !viewing_an_article?(@article)) %>
               <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>

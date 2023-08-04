@@ -10,7 +10,9 @@ module BasicNotesHelper
   # TODO: Think about the design here
   def on_study_cards?
     if @article
-      current_page?(study_article_cards_path(@article))
+      return true if current_page?(study_article_cards_path(@article))
+
+      current_page?(homepage_study_cards_path)
     elsif @book
       current_page?(study_book_cards_path(@book))
     end
