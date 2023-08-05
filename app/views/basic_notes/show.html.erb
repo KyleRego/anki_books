@@ -1,9 +1,12 @@
-<% if on_study_cards? %><div class="studiable-note" hidden><% end %>
-  <%= turbo_frame_tag @basic_note.turbo_id, class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
-    <div data-controller="reorder-basic-notes--basic-note-draggable">
-      <div data-reorder-basic-notes--basic-note-draggable-target="note"
-           draggable="<%= logged_in? && !on_study_cards? %>"
-           class="draggable-div-of-note">
+  <%= turbo_frame_tag @basic_note.turbo_id,
+                      class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
+
+    <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+      <div data-controller="reorder-basic-notes--basic-note-draggable">
+        <div class="draggable-div-of-note" draggable="true"
+             data-reorder-basic-notes--basic-note-draggable-target="note">
+    <% end %>
+
         <div data-controller="basic-note-flippable">
           <div data-basic-note-flippable-target="flippableNote"
                class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center">
@@ -16,27 +19,24 @@
 
           </div>
         </div>
-      </div>
-    </div>
 
-    <% unless on_study_cards? %><div class="min-h-8"><% end %>
-      <% if logged_in? %>
+    <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+      </div></div>
+    <% end %>
+
+    <div class="min-h-8">
+      <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
         <div data-controller="reorder-basic-notes--basic-note-dropzone">
           <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
 
-            <% if current_user.can_access_note?(note: @basic_note) %>
-              <div class="flex flex-row justify-between">
-                <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
-              </div>
-            <% end %>
+            <div class="flex flex-row justify-between">
+              <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
+            </div>
 
-            <% unless on_study_cards? || (redirected_from_study_cards? && !viewing_an_article?(@article)) %>
-              <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
-            <% end %>
-
+            <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
           </div>
         </div>
       <% end %>
-    <% unless on_study_cards? %></div><% end %>
+    </div>
+
   <% end %>
-<% if on_study_cards? %></div><% end %>

@@ -1,4 +1,4 @@
-<% if redirected_from_study_cards? %><div class="w-96 mx-auto"><% end %>
+<div class="w-96 mx-auto">
   <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
     <div class="border border-blue-400 bg-blue-50 font-semibold text-center mx-auto px-4 pb-2 pt-8 my-4">
 
@@ -14,10 +14,13 @@
         <%= form.text_area :back, class: "w-full h-24" %>
       </div>
 
+      <% on_study_cards_value = @on_study_cards ? "true" : "false" %>
+      <%= hidden_field :options, :on_study_cards, value: on_study_cards_value %>
+
       <div class="inline">
         <%= form.submit class: "cursor-pointer font-semibold" %>
       </div>
 
     </div>
   <% end %>
-<% if redirected_from_study_cards? %></div><% end %>
+</div>

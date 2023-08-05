@@ -1,0 +1,38 @@
+<div class="max-w-full flex justify-center mx-auto text-center">
+
+  <div data-controller="study-cards">
+
+    <div class="mt-16">
+      <% if @article %>
+        <%= link_to "Back to article", back_to_article_path(@article),
+                    class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
+      <% elsif @book %>
+        <%= link_to "Back to book", book_path(@book),
+              class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
+      <% end %>
+    </div>
+
+    <% if logged_in? %><div class="mt-6 mb-2"><% else %><div class="my-6"><% end %>
+      <% @basic_notes&.each do |basic_note| %>
+        <% @basic_note = basic_note %>
+        <div class="studiable-note" hidden>
+          <%= render partial: "study_cards/basic_note" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="m-auto w-max flex flex-row">
+      <span data-study-cards-target="studyPreviousCard"
+              class="mr-4 cursor-pointer text-blue-500 hover:text-blue-600 font-semibold"
+              hidden>Previous card</span>
+      <span data-study-cards-target="startStudyWithFirstCard"
+            class="mr-4 cursor-pointer text-blue-500 hover:text-blue-600 font-semibold">First card</span>
+      <span data-study-cards-target="startRandomOrderStudy"
+            class="cursor-pointer text-blue-500 hover:text-blue-600 font-semibold">Random order</span>
+      <span data-study-cards-target="studyNextCard"
+              class="cursor-pointer text-blue-500 hover:text-blue-600 font-semibold"
+              hidden>Next card</span>
+    </div>
+  </div>
+
+</div>

@@ -27,7 +27,9 @@ class BasicNotesController < ApplicationController
     @basic_note = @article.basic_notes.new
   end
 
-  def edit; end
+  def edit
+    @on_study_cards = true if request.referer&.end_with?("study_cards")
+  end
 
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
@@ -39,13 +41,20 @@ class BasicNotesController < ApplicationController
                                                                             new_ordinal_position: ordinal_position_param)
       turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
       render turbo_stream: turbo_stream.replace(turbo_id,
-                                                template: "basic_notes/new", locals: { basic_note: @basic_note })
+                                                template: "basic_notes/new",
+                                                locals: { basic_note: @basic_note })
     end
   end
 
   def update
     if @basic_note.update(basic_note_params)
-      redirect_to article_basic_note_path(@article, @basic_note)
+      if params[:options][:on_study_cards] == "true"
+        render turbo_stream: turbo_stream.replace(@basic_note.turbo_id,
+                                                  partial: "study_cards/basic_note",
+                                                  locals: { basic_note: @basic_note })
+      else
+        redirect_to article_basic_note_path(@article, @basic_note)
+      end
     else
       render :edit, status: :unprocessable_entity
     end

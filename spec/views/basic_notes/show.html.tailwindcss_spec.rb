@@ -27,11 +27,11 @@ RSpec.describe "basic_notes/show" do
 
   context "when user is not logged in and needs to be" do
     # rubocop:disable RSpec/MultipleExpectations
-    it "renders the basic note but not as a draggable element" do
+    it "renders the basic note without the draggable element" do
       render
       expect(rendered).to match(TEST_BASIC_NOTE_FRONT)
       expect(rendered).to match(TEST_BASIC_NOTE_BACK)
-      expect(rendered).to have_css(".draggable-div-of-note[draggable='false']")
+      expect(rendered).not_to have_css(".draggable-div-of-note")
     end
     # rubocop:enable RSpec/MultipleExpectations
   end

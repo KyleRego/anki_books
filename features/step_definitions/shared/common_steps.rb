@@ -43,6 +43,10 @@ Then "I should see {string}" do |text|
   expect(page).to have_content(text)
 end
 
+Then "I should see {string} {int} times" do |text, count|
+  expect(page).to have_content(text, count:)
+end
+
 Then "I should see an input with value {string}" do |string|
   expect(page).to have_selector("input[type='submit'][value='#{string}']")
 end
