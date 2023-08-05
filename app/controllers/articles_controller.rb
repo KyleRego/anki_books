@@ -133,7 +133,7 @@ class ArticlesController < ApplicationController
       nil
     else
       @book = @article.book
-      return if current_user&.books&.include?(@book)
+      return if current_user.can_access_book?(book: @book)
 
       not_found_or_unauthorized
     end

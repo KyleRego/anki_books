@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe User, "#owns_note?" do
-  subject { user.owns_note?(note:) }
+RSpec.describe User, "#can_access_note?" do
+  subject { user.can_access_note?(note:) }
 
   let(:user) { create(:user) }
   let(:note) do

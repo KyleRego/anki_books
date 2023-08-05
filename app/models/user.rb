@@ -23,6 +23,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 12 }
 
+  ##
+  # Returns all of the user's basic notes
   def notes
     BasicNote.joins("inner join articles on basic_notes.article_id = articles.id
                      inner join books on articles.book_id = books.id
@@ -31,11 +33,23 @@ class User < ApplicationRecord
                      where users.id = '#{id}'")
   end
 
-  def owns_note?(note:)
-    article = note.article
-    books.include?(article.book)
+  # :nodoc:
+  def can_access_book?(book:)
+    books.include?(book)
   end
 
+  # :nodoc:
+  def can_access_article?(article:)
+    can_access_book?(book: article.book)
+  end
+
+  # :nodoc:
+  def can_access_note?(note:)
+    can_access_article?(article: note.article)
+  end
+
+  ##
+  # Returns a randomly selected article that belongs to the user
   def random_article
     Article.joins("inner join books on articles.book_id = books.id
                    inner join books_users on books_users.book_id = books.id

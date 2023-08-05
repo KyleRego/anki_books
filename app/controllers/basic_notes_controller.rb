@@ -4,20 +4,26 @@
 class BasicNotesController < ApplicationController
   include BasicNotesHelper
 
-  before_action :require_turbo_request
   before_action :require_login, only: %i[create edit update new]
+  before_action :require_turbo_request
   before_action :set_article, only: %i[create edit update new show]
+  before_action :require_user_can_access_article, only: %i[create edit update new]
   before_action :set_basic_note, only: %i[show edit update]
-  before_action :require_user_owns_note, only: %i[edit update]
+  before_action :require_user_can_access_note, only: %i[edit update]
 
   def show; end
 
   def new
-    # Turbo frame header has the id of the turbo frame element
-    # and the last 36 characters are the UUID of the basic note
-    # which is the previous sibling
+    # Turbo-Frame header has the id of the turbo frame element
+    # and the last 36 characters of this are the id of the basic note
+    # which is the previous sibling. If it's the very first new basic note
+    # turbo frame element, it is not the id of a previous sibling.
     sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = BasicNote.find_by(id: sibling_note_id)
+    @previous_sibling = if sibling_note_id == first_new_basic_note_turbo_id
+                          nil
+                        else
+                          BasicNote.find(sibling_note_id)
+                        end
     @basic_note = @article.basic_notes.new
   end
 
@@ -63,7 +69,11 @@ class BasicNotesController < ApplicationController
     @ordinal_position_param ||= params[:ordinal_position].to_i
   end
 
-  def require_user_owns_note
-    current_user.owns_note?(note: @basic_note)
+  def require_user_can_access_article
+    current_user.can_access_article?(article: @article)
+  end
+
+  def require_user_can_access_note
+    current_user.can_access_note?(note: @basic_note)
   end
 end

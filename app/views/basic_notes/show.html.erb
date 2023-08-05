@@ -24,7 +24,7 @@
         <div data-controller="reorder-basic-notes--basic-note-dropzone">
           <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
 
-            <% if current_user.owns_note?(note: @basic_note) %>
+            <% if current_user.can_access_note?(note: @basic_note) %>
               <div class="flex flex-row justify-between">
                 <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
               </div>
