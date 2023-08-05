@@ -1,23 +1,8 @@
 <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
 
-  <div data-controller="basic-note-flippable">
-    <div data-basic-note-flippable-target="flippableNote"
-          class="w-full cursor-pointer py-3 px-2 border border-blue-400 bg-blue-50 font-semibold text-center">
-
-      <div>
-        <span class="whitespace-pre-wrap"><%= @basic_note.front %></span>
-      </div>
-
-      <div data-basic-note-flippable-target="flippableNoteBack" class="border-t border-blue-400 mt-2 pt-2" hidden>
-        <span class="whitespace-pre-wrap"><%= @basic_note.back %></span>
-      </div>
-
-    </div>
-  </div>
+  <%= render partial: "basic_notes/flippable_basic_note" %>
 
   <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
-    <div class="flex flex-row justify-between">
-      <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "font-semibold" %>
-    </div>
+    <%= render partial: "basic_notes/edit_basic_note_link" %>
   <% end %>
 <% end %>

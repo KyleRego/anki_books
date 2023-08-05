@@ -1,4 +1,4 @@
-<div class="max-w-full flex justify-center mx-auto text-center">
+<div class="mx-auto text-center">
 
   <div data-controller="study-cards">
 
@@ -12,7 +12,8 @@
       <% end %>
     </div>
 
-    <% if logged_in? %><div class="mt-6 mb-2"><% else %><div class="my-6"><% end %>
+    <% css_class_for_div_wrapping_studiable_notes = "w-96 mx-auto #{logged_in? ? "mt-6 mb-2" : "my-6"}" %>
+    <div class="<%= css_class_for_div_wrapping_studiable_notes %>">
       <% @basic_notes&.each do |basic_note| %>
         <% @basic_note = basic_note %>
         <div class="studiable-note" hidden>
