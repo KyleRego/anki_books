@@ -10,15 +10,28 @@ class DomainsController < ApplicationController
     @domains = current_user.domains.order(:title)
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def show
-    current_books = @domain.books.order(:title)
+    domain_current_books = @domain.books.order(:title)
     @books_options = current_user.books.map do |book|
       id = book.id
       title = book.title
-      selected = current_books.include?(book)
+      selected = domain_current_books.include?(book)
       { id:, title:, selected: }
     end
+    domains_options = current_user.domains
+    current_parent_domains = @domain.parent_domains
+    current_child_domains = @domain.child_domains
+    @parent_domains_options = domains_options.map do |domain|
+      { id: domain.id, title: domain.title, selected: current_parent_domains.include?(domain) }
+    end
+    @child_domains_options = domains_options.map do |domain|
+      { id: domain.id, title: domain.title, selected: current_child_domains.include?(domain) }
+    end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def new
     @domain = Domain.new

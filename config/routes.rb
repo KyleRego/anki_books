@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   resources :domains
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
+  patch "/domains/:id/change_parent_domains", to: "domains#change_parent_domains", as: "change_parent_domains"
+  patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"
 
   resources :books, except: %i[destroy] do
     resources :articles, only: :new

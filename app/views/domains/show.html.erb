@@ -3,15 +3,15 @@
 </h1>
 
 <div class="mt-4">
+  <%= link_to "Edit domain", edit_domain_path(@domain), class: "cursor-pointer font-semibold" %>
+</div>
+
+<div class="mt-4 pb-4 border-b-2">
   <% @books.each do |book| %>
     <div>
       <%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %>
     </div>
   <% end %>
-</div>
-
-<div class="mt-4 pb-4 border-b-2">
-  <%= link_to "Edit domain", edit_domain_path(@domain), class: "cursor-pointer font-semibold" %>
 </div>
 
 <div class="mt-4">
@@ -28,6 +28,42 @@
         </div>
       <% end %>
       <%= form.submit "Update Books", class: "cursor-pointer font-semibold" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-6">
+  <h2 class="text-xl font-semibold mb-4">Parent domains:</h2>
+
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
+    <%= form_with(model: @domain, url: change_parent_domains_path(@domain)) do |form| %>
+      <% @parent_domains_options.each do |domain_option| %>
+        <div class="mb-2">
+          <%= label_tag(domain_option[:title]) do %>
+            <%= check_box_tag("child_domain_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
+            <span><%= domain_option[:title] %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit "Update Parent Domains", class: "cursor-pointer font-semibold" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-6">
+  <h2 class="text-xl font-semibold mb-4">Child domains:</h2>
+
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
+    <%= form_with(model: @domain, url: change_child_domains_path(@domain)) do |form| %>
+      <% @child_domains_options.each do |domain_option| %>
+        <div class="mb-2">
+          <%= label_tag(domain_option[:title]) do %>
+            <%= check_box_tag("child_domain_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
+            <span><%= domain_option[:title] %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit "Update Child Domains", class: "cursor-pointer font-semibold" %>
     <% end %>
   </div>
 </div>
