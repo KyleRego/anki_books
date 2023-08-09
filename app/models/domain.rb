@@ -19,9 +19,9 @@ class Domain < ApplicationRecord
   has_many :books_domains, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_domains
 
-  has_many :parent_domains_domains, class_name: "DomainsDomain", foreign_key: :parent_domain_id, inverse_of: :child_domain,
+  has_many :parent_domains_domains, class_name: "DomainsDomain", foreign_key: :child_domain_id, inverse_of: :child_domain,
                                     dependent: :destroy
-  has_many :child_domains_domains, class_name: "DomainsDomain", foreign_key: :child_domain_id, inverse_of: :parent_domain,
+  has_many :child_domains_domains, class_name: "DomainsDomain", foreign_key: :parent_domain_id, inverse_of: :parent_domain,
                                    dependent: :destroy
 
   has_many :parent_domains, through: :parent_domains_domains, class_name: "Domain"
