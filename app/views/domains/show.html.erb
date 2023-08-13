@@ -6,29 +6,35 @@
   <%= @domain.title %>
 </h1>
 
-<div class="mt-4 pb-4 border-b-2">
-  <h2 class="pb-2 text-xl font-semibold">Books:</h2>
-  <% @books.each do |book| %>
-    <div>
-      <%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %>
-    </div>
-  <% end %>
-</div>
+<% if @books.any? %>
+  <div class="mt-4 pb-4 border-b-2">
+    <h2 class="pb-2 text-xl font-semibold">Books:</h2>
+    <% @books.each do |book| %>
+      <div>
+        <%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
-<div class="mt-4 pb-4 border-b-2">
-  <h2 class="pb-2 text-xl font-semibold">Parent domains:</h2>
-  <% @parent_domains.each do |domain| %>
-    <div>
-      <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
-    </div>
-  <% end %>
-</div>
+<% if @parent_domains.any? %>
+  <div class="mt-4 pb-4 border-b-2">
+    <h2 class="pb-2 text-xl font-semibold">Parent domains:</h2>
+    <% @parent_domains.each do |domain| %>
+      <div>
+        <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
-<div class="mt-4 pb-4 border-b-2">
-  <h2 class="pb-2 text-xl font-semibold">Child domains:</h2>
-  <% @child_domains.each do |domain| %>
-    <div>
-      <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
-    </div>
-  <% end %>
-</div>
+<% if @child_domains.any? %>
+  <div class="mt-4 pb-4 border-b-2">
+    <h2 class="pb-2 text-xl font-semibold">Child domains:</h2>
+    <% @child_domains.each do |domain| %>
+      <div>
+        <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
