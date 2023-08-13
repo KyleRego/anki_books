@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable RSpec/ExampleLength
 RSpec.describe OrdinalPositions::SetChildPosition, ".perform" do
   subject(:perform_ordinal_position_change) do

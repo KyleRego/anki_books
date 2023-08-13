@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe BasicNote, "#anki_back" do
   let(:article) { create(:article) }
   let(:basic_note) { create(:basic_note, article:) }

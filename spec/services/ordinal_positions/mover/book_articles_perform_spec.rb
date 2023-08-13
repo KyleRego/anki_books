@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe OrdinalPositions::Mover::BookArticles, ".perform" do
   subject(:perform_move_to_new_parent) do
     described_class.perform(new_parent:, child_to_position:, new_ordinal_position:)

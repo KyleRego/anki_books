@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # rubocop:disable RSpec/ExampleLength
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe OrdinalPositions::GroupMover::ArticleBasicNotes, ".perform" do
   subject(:perform_move_group_to_new_parent) do
     described_class.perform(new_parent:, old_parent:, children_to_position:)

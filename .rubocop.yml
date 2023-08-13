@@ -33,8 +33,7 @@ Style/RedundantFetchBlock:
     - config/puma.rb
 
 RSpec/MultipleExpectations:
-  Exclude:
-    - spec/requests/**/*.rb
+  Enabled: false
 
 RSpec/ExampleLength:
   Exclude:

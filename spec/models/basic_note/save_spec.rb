@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe BasicNote, "#save" do
   let(:article) { create(:article) }
 

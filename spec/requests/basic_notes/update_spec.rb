@@ -20,7 +20,6 @@ RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
 
   include BasicNotesHelper
 
-  # rubocop:disable RSpec/MultipleExpectations
   context "when user is logged in" do
     include_context "when the user is logged in"
 

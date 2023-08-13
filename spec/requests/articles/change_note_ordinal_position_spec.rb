@@ -37,7 +37,6 @@ RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_
     context "when the article belongs to the user's book" do
       let(:book) { create(:book, users: [user]) }
 
-      # rubocop:disable RSpec/MultipleExpectations
       it "changes the ordinal_position of the note and shifts the other notes" do
         post_articles_change_note_ordinal_position
         expect(note_a.reload.ordinal_position).to eq new_ordinal_position
