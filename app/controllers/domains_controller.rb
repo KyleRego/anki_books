@@ -3,7 +3,7 @@
 # :nodoc:
 class DomainsController < ApplicationController
   before_action :require_login
-  before_action :set_domain, only: %i[show edit update manage change_books change_parent_domains change_child_domains destroy]
+  before_action :set_domain, only: %i[show edit update manage study_cards change_books change_parent_domains change_child_domains destroy]
   before_action :set_books, only: %i[show]
 
   def index
@@ -16,7 +16,6 @@ class DomainsController < ApplicationController
   end
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def manage
     domain_current_books = @domain.books.order(:title)
     @books_options = current_user.books.map do |book|
@@ -35,9 +34,8 @@ class DomainsController < ApplicationController
       { id: domain.id, title: domain.title, selected: @child_domains.include?(domain) }
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:enable Metrics/AbcSize
   def new
     @domain = Domain.new
   end
@@ -66,6 +64,10 @@ class DomainsController < ApplicationController
   def destroy
     @domain.destroy!
     redirect_to books_path, flash: { success: "Domain successfully deleted" }
+  end
+
+  def study_cards
+    @basic_notes = @domain.ordered_notes
   end
 
   def change_books

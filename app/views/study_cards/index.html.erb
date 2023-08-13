@@ -9,6 +9,9 @@
       <% elsif @book %>
         <%= link_to "Back to book", book_path(@book),
               class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
+      <% elsif @domain %>
+        <%= link_to "Back to domain", domain_path(@domain),
+              class: "cursor-pointer text-blue-500 hover:text-blue-600 font-semibold" %>
       <% end %>
     </div>
 

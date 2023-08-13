@@ -28,4 +28,22 @@ class Domain < ApplicationRecord
   has_many :child_domains, through: :child_domains_domains, class_name: "Domain"
 
   validates :title, presence: true
+
+  ##
+  # Returns all basic notes under the domain in order
+  def ordered_notes
+    query = <<~SQL.squish
+      SELECT bn.*
+      FROM basic_notes AS bn
+      JOIN articles AS a ON bn.article_id = a.id
+      JOIN books AS b ON a.book_id = b.id
+      WHERE a.book_id IN
+        (SELECT bd.book_id
+        FROM books_domains AS bd
+        WHERE bd.domain_id = :domain_id)
+      ORDER BY a.title, b.title, a.ordinal_position, bn.ordinal_position
+    SQL
+
+    BasicNote.find_by_sql([query, { domain_id: id }])
+  end
 end

@@ -38,6 +38,10 @@ RSpec.describe DomainsController do
       expect(get: "/domains/#{domain_id}/manage").to route_to("domains#manage", id: domain_id)
     end
 
+    it "routes to #study_cards" do
+      expect(get: "/domains/#{domain_id}/study_cards").to route_to("domains#study_cards", id: domain_id)
+    end
+
     it "routes to #change_books" do
       expect(patch: "/domains/#{domain_id}/change_books").to route_to("domains#change_books", id: domain_id)
     end

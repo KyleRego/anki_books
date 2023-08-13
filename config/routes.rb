@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "/study_cards", to: "homepage#study_cards", as: "homepage_study_cards"
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
+  get "/domains/:id/study_cards", to: "domains#study_cards", as: "study_domain_cards"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"

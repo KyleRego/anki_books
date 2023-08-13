@@ -1,5 +1,6 @@
 <% content_for :page_specific_links do %>
   <%= link_to "Manage domain", manage_domain_path(@domain), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+  <%= link_to "Study cards", study_domain_cards_path(@domain), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
 <% end %>
 
 <h1 class="text-4xl font-bold">

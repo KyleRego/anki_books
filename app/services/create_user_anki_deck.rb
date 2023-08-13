@@ -18,7 +18,6 @@ class CreateUserAnkiDeck
     @user = user
   end
 
-  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def perform
     AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
@@ -38,7 +37,6 @@ class CreateUserAnkiDeck
     created_anki_deck_path
   end
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   private
 

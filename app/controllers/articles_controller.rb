@@ -82,7 +82,6 @@ class ArticlesController < ApplicationController
     @other_articles = @book.ordered_articles.where.not(id: @article.id)
   end
 
-  # rubocop:disable Metrics/MethodLength
   def change_book
     @target_book = current_user.books.find_by(id: params[:book_id])
 
@@ -117,7 +116,6 @@ class ArticlesController < ApplicationController
       redirect_to manage_article_path(@article), flash: { notice: "Selected basic notes moved to #{target_article.title}." }
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 

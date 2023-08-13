@@ -12,7 +12,6 @@ module OrdinalPositions
         new(parent:, child_to_position:, new_ordinal_position:).perform
       end
 
-      # rubocop:disable Metrics/MethodLength
       def perform
         raise ArgumentError unless new_ordinal_position.instance_of?(Integer)
 
@@ -32,7 +31,6 @@ module OrdinalPositions
           true
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

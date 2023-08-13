@@ -20,6 +20,9 @@ AllCops:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Metrics/MethodLength:
+  Max: 20
+
 Metrics/BlockLength:
   Exclude:
     - config/routes.rb
