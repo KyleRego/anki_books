@@ -12,13 +12,14 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy", as: "logout"
 
   resources :articles, except: %i[new]
+  get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
                                                      as: "change_article_note_ordinal_position"
   patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
   patch "/articles/:id/transfer_basic_notes", to: "articles#transfer_basic_notes", as: "article_transfer_basic_notes"
-  get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
 
   resources :domains
+  get "/domains/:id/manage", to: "domains#manage", as: "manage_domain"
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
   patch "/domains/:id/change_parent_domains", to: "domains#change_parent_domains", as: "change_parent_domains"
   patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"

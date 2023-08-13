@@ -16,6 +16,17 @@ Feature: Viewing domains
     And I should see "domain 2"
     And I should see "domain 3"
     And I click the "domain 1" link
+    And I click the "Manage domain" link
     Then the checkbox labeled "Book 1 of group 1" should be checked
     And the checkbox labeled "Book 2 of group 1" should be checked
     And the checkbox labeled "Book 1 of group 2" should not be checked
+
+  Scenario: Going back to viewing a domain from the Manage domain page
+    Given the test user has a domain called "domain 1"
+    And I am logged in as the test user
+    And I click the "Domains" link
+    And I click the "domain 1" link
+    And I click the "Manage domain" link
+    Then I should see "Manage domain: domain 1"
+    When I click the "domain 1" link
+    Then I should see "domain 1"

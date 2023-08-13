@@ -17,6 +17,11 @@ RSpec.describe "PATCH /domains/:id/change_books", "#change_books" do
     let(:domain) { create(:domain, user:) }
     let(:book_ids) { create_list(:book, 5, users: [user]).pluck(:id).first(2) }
 
+    it "redirects to the manage domain page" do
+      patch_domains_change_books
+      expect(response).to redirect_to(manage_domain_path(domain))
+    end
+
     it "changes the books associated with the domain according to the params" do
       patch_domains_change_books
       expect(domain.books.pluck(:id).sort).to eq book_ids.sort

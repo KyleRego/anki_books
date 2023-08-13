@@ -8,6 +8,7 @@ Feature: Updating a domain's child domains
     And I am logged in as the test user
     And I click the "Domains" link
     And I click the "Test domain 1" link
+    And I click the "Manage domain" link
     And I check the child domain checkbox labeled "Test domain 2"
     And I check the child domain checkbox labeled "Test domain 3"
     And I click the "Update Child Domains" button
@@ -16,4 +17,5 @@ Feature: Updating a domain's child domains
     And the child domain checkbox labeled "Test domain 4" should not be checked
     And I click the "Domains" link
     And I click the "Test domain 2" link
+    And I click the "Manage domain" link
     Then the parent domain checkbox labeled "Test domain 1" should be checked

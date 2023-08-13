@@ -3,16 +3,21 @@
 # :nodoc:
 class DomainsController < ApplicationController
   before_action :require_login
-  before_action :set_domain, only: %i[show edit update change_books change_parent_domains change_child_domains destroy]
+  before_action :set_domain, only: %i[show edit update manage change_books change_parent_domains change_child_domains destroy]
   before_action :set_books, only: %i[show]
 
   def index
     @domains = current_user.domains.order(:title)
   end
 
+  def show
+    @parent_domains = @domain.parent_domains
+    @child_domains = @domain.child_domains
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def show
+  def manage
     domain_current_books = @domain.books.order(:title)
     @books_options = current_user.books.map do |book|
       id = book.id
@@ -65,19 +70,19 @@ class DomainsController < ApplicationController
 
   def change_books
     @domain.books = current_user.books.where(id: params[:book_ids])
-    redirect_to domain_path(@domain), flash: { notice: "Books updated" }
+    redirect_to manage_domain_path(@domain), flash: { notice: "Books updated" }
   end
 
   def change_parent_domains
     parent_domain_ids = params[:parent_domain_ids]
     @domain.parent_domains = current_user.domains.where(id: parent_domain_ids)
-    redirect_to domain_path(@domain), flash: { notice: "Parent domains updated" }
+    redirect_to manage_domain_path(@domain), flash: { notice: "Parent domains updated" }
   end
 
   def change_child_domains
     child_domain_ids = params[:child_domain_ids]
     @domain.child_domains = current_user.domains.where(id: child_domain_ids)
-    redirect_to domain_path(@domain), flash: { notice: "Child domains updated" }
+    redirect_to manage_domain_path(@domain), flash: { notice: "Child domains updated" }
   end
 
   private

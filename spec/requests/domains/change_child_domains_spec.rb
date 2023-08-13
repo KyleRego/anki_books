@@ -18,9 +18,9 @@ RSpec.describe "PATCH /domains/:id/change_child_domains", "#change_child_domains
 
     let(:domain) { create(:domain, user:) }
 
-    it "redirects to the domain" do
+    it "redirects to the domain manage page" do
       patch_domains_change_child_domains
-      expect(response).to redirect_to(domain_path(domain))
+      expect(response).to redirect_to(manage_domain_path(domain))
     end
 
     context "when child_domain_ids param is given" do

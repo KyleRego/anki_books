@@ -9,6 +9,7 @@ Feature: Updating a domain's books
     And I am logged in as the test user
     And I click the "Domains" link
     And I click the "Test domain" link
+    And I click the "Manage domain" link
     And I check the checkbox labeled "Test book 1"
     And I check the checkbox labeled "Test book 4"
     And I click the "Update Books" button

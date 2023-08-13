@@ -7,6 +7,7 @@ Feature: Deleting an article domains
     And I am logged in as the test user
     And I click the "Domains" link
     And I click the "Test domain" link
+    And I click the "Manage domain" link
 
   @javascript
   Scenario: Accepting deleting the domain

@@ -11,6 +11,7 @@ Feature: Adding books to domains
     And I click the "Update Domains" button
     And I click the "Domains" link
     And I click the "Test domain" link
+    And I click the "Manage domain" link
     Then the checkbox labeled "Test book" should be checked
 
   Scenario: Removing a book from a domain
@@ -25,4 +26,5 @@ Feature: Adding books to domains
     And I click the "Update Domains" button
     And I click the "Domains" link
     And I click the "domain" link
+    And I click the "Manage domain" link
     Then the checkbox labeled "Test book 1" should not be checked
