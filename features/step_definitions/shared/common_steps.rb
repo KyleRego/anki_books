@@ -31,6 +31,10 @@ When "I type {string} on the focused element" do |keys|
   page.driver.browser.switch_to.active_element.send_keys(keys)
 end
 
+When "I press the key {string}" do |key|
+  find("body").send_keys([key])
+end
+
 When "I use the ctrl + {string} keyboard shortcut" do |string|
   page.send_keys([:control, string])
 end

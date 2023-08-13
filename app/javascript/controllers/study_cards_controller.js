@@ -3,6 +3,10 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [ "startStudyWithFirstCard", "startRandomOrderStudy", "studyPreviousCard", "studyNextCard" ];
 
+  initialize() {
+    this.boundHandleStudyCardsKeydown = this.handleStudyCardsKeydown.bind(this);
+  }
+
   connect() {
     this.cardsToStudy = this.cardsToStudy();
     this.numberOfCards = this.cardsToStudy.length;
@@ -15,6 +19,14 @@ export default class extends Controller {
 
   cardsToStudy() {
     return Array.from(document.querySelectorAll(".studiable-note"));
+  }
+
+  currentCard() {
+    return this.cardsToStudy[this.ordinalPositionOfCurrentCard];
+  }
+
+  currentFlippableBack() {
+    return this.currentCard().querySelector('[data-basic-note-flippable-target="flippableNoteBack"]');
   }
 
   startStudyWithFirstCard() {
@@ -32,18 +44,37 @@ export default class extends Controller {
     this.startRandomOrderStudyTarget.hidden = true;
     this.studyPreviousCardTarget.hidden = false;
     this.studyNextCardTarget.hidden = false;
+    document.addEventListener("keydown", this.boundHandleStudyCardsKeydown);
+  }
+
+  handleStudyCardsKeydown(event) {
+    if (event.target.tagName !== "textarea") {
+      if (event.key === " ") {
+        if (this.currentFlippableBack().hidden) {
+          this.currentFlippableBack().hidden = false;
+        } else {
+          this.studyNextCard();
+        }
+      } else if (event.key === "1") {
+        if (!this.currentFlippableBack().hidden) {
+          this.currentFlippableBack().hidden = true;
+        } else {
+          this.studyPreviousCard();
+        }
+      }
+    }
   }
 
   studyNextCard() {
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = true;
+    this.currentCard().hidden = true;
     this.ordinalPositionOfCurrentCard = this.nextOrdinalPosition();
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
+    this.currentCard().hidden = false;
   }
 
   studyPreviousCard() {
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = true;
+    this.currentCard().hidden = true;
     this.ordinalPositionOfCurrentCard = this.previousOrdinalPosition();
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
+    this.currentCard().hidden = false;
   }
 
   nextOrdinalPosition() {
@@ -64,6 +95,6 @@ export default class extends Controller {
 
   randomizeCards() {
     this.cardsToStudy.sort(() => Math.random() - 0.5);
-    this.cardsToStudy[this.ordinalPositionOfCurrentCard].hidden = false;
+    this.currentCard().hidden = false;
   }
 }
