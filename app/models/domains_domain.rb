@@ -18,4 +18,13 @@
 class DomainsDomain < ApplicationRecord
   belongs_to :parent_domain, class_name: "Domain"
   belongs_to :child_domain, class_name: "Domain"
+
+  validate :domain_cannot_reference_self
+
+  # TODO: Add a db constraint
+  def domain_cannot_reference_self
+    return unless parent_domain_id == child_domain_id
+
+    errors.add(:parent_domain, "can't have itself as a child domain")
+  end
 end

@@ -64,4 +64,40 @@ RSpec.describe Domain, "#ordered_notes" do
       expect(ordered_notes[16].article.id).to eq second_book_second_article.id
     end
   end
+
+  context "when the domain has a child book that is also a child book of a child domain" do
+    let(:book) { create(:book, users: [user]) }
+    let(:child_domain) { create(:domain, user:) }
+    let(:article) { create(:article, book:) }
+
+    before do
+      create_list(:basic_note, 10, article:)
+      domain.books << book
+      domain.child_domains << child_domain
+      child_domain.books << book
+    end
+
+    it "returns the 10 basic notes with no duplicates" do
+      expect(ordered_notes.count).to eq 10
+    end
+  end
+
+  context "when the domain has a very nested child domain with basic notes" do
+    before do
+      child_domain = create(:domain, user:)
+      domain.child_domains << child_domain
+      second_nested_domain = create(:domain, user:)
+      child_domain.child_domains << second_nested_domain
+      third_nested_domain = create(:domain, user:)
+      second_nested_domain.child_domains << third_nested_domain
+      book = create(:book, users: [user])
+      second_nested_domain.books << book
+      article = create(:article, book:)
+      create_list(:basic_note, 11, article:)
+    end
+
+    it "returns the nested domain's book basic notes" do
+      expect(ordered_notes.count).to eq 11
+    end
+  end
 end

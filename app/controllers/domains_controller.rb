@@ -24,7 +24,7 @@ class DomainsController < ApplicationController
       selected = domain_current_books.include?(book)
       { id:, title:, selected: }
     end
-    domains_options = current_user.domains
+    domains_options = current_user.domains.where.not(id: @domain.id)
     @parent_domains = @domain.parent_domains
     @child_domains = @domain.child_domains
     @parent_domains_options = domains_options.map do |domain|

@@ -29,6 +29,7 @@ class Domain < ApplicationRecord
 
   validates :title, presence: true
 
+  # rubocop:disable Metrics/MethodLength
   ##
   # Returns all basic notes under the domain in order
   def ordered_notes
@@ -38,12 +39,33 @@ class Domain < ApplicationRecord
       JOIN articles AS a ON bn.article_id = a.id
       JOIN books AS b ON a.book_id = b.id
       WHERE a.book_id IN
-        (SELECT bd.book_id
+      (
+        WITH RECURSIVE related_domains AS (
+          SELECT child_domain_id
+          FROM domains_domains
+          WHERE parent_domain_id = :domain_id
+
+          UNION ALL
+
+          SELECT dd.child_domain_id
+          FROM domains_domains AS dd
+          JOIN related_domains AS rd ON dd.parent_domain_id = rd.child_domain_id
+        )
+        SELECT b.id
+        FROM books AS b
+        JOIN books_domains AS bd ON b.id = bd.book_id
+        JOIN related_domains AS rd ON bd.domain_id = rd.child_domain_id
+
+        UNION DISTINCT
+
+        SELECT bd.book_id
         FROM books_domains AS bd
-        WHERE bd.domain_id = :domain_id)
+        WHERE bd.domain_id = :domain_id
+      )
       ORDER BY a.title, b.title, a.ordinal_position, bn.ordinal_position
     SQL
 
     BasicNote.find_by_sql([query, { domain_id: id }])
   end
+  # rubocop:enable Metrics/MethodLength
 end
