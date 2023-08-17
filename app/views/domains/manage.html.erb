@@ -29,27 +29,6 @@
   </div>
 </div>
 
-<div class="change-parent-domains-area">
-  <div class="mt-4 pb-4 border-b-2">
-    <h2 class="text-xl font-semibold mb-4">
-      Parent domains:
-    </h2>
-    <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-      <%= form_with(model: @domain, url: change_parent_domains_path(@domain)) do |form| %>
-        <% @parent_domains_options.each do |domain_option| %>
-          <div class="mb-2">
-            <%= label_tag(domain_option[:title]) do %>
-              <%= check_box_tag("parent_domain_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
-              <span><%= domain_option[:title] %></span>
-            <% end %>
-          </div>
-        <% end %>
-        <%= form.submit "Update Parent Domains", class: "cursor-pointer font-semibold" %>
-      <% end %>
-    </div>
-  </div>
-</div>
-
 <div class="change-child-domains-area">
   <div class="mt-4 pb-4 border-b-2">
     <h2 class="text-xl font-semibold mb-4">

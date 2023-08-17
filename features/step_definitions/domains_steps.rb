@@ -13,26 +13,6 @@ Given "the book {string} belongs to the {string} domain" do |book_title, domain_
   domain.books << book
 end
 
-When "I check the parent domain checkbox labeled {string}" do |string|
-  within(PARENT_DOMAINS_FORM_SELECTOR) { check(string) }
-end
-
-When "I uncheck the parent domain checkbox labeled {string}" do |string|
-  within(PARENT_DOMAINS_FORM_SELECTOR) { uncheck(string) }
-end
-
-Then "the parent domain checkbox labeled {string} should be checked" do |string|
-  within(PARENT_DOMAINS_FORM_SELECTOR) do
-    expect(page).to have_field(string, checked: true)
-  end
-end
-
-Then "the parent domain checkbox labeled {string} should not be checked" do |string|
-  within(PARENT_DOMAINS_FORM_SELECTOR) do
-    expect(page).to have_field(string, checked: false)
-  end
-end
-
 When "I check the child domain checkbox labeled {string}" do |string|
   within(CHILD_DOMAINS_FORM_SELECTOR) { check(string) }
 end

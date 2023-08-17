@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_000554) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_013559) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -102,13 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000554) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
-  end
-
-  create_table "domains_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "parent_domain_id", null: false
-    t.uuid "child_domain_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.uuid "parent_domain_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -129,7 +123,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000554) do
   add_foreign_key "books_domains", "domains"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
+  add_foreign_key "domains", "domains", column: "parent_domain_id"
   add_foreign_key "domains", "users"
-  add_foreign_key "domains_domains", "domains", column: "child_domain_id"
-  add_foreign_key "domains_domains", "domains", column: "parent_domain_id"
 end

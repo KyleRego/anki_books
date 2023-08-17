@@ -18,17 +18,6 @@
   </div>
 <% end %>
 
-<% if @parent_domains.any? %>
-  <div class="mt-4 pb-4 border-b-2">
-    <h2 class="pb-2 text-xl font-semibold">Parent domains:</h2>
-    <% @parent_domains.each do |domain| %>
-      <div>
-        <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
 <% if @child_domains.any? %>
   <div class="mt-4 pb-4 border-b-2">
     <h2 class="pb-2 text-xl font-semibold">Child domains:</h2>

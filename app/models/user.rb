@@ -33,19 +33,6 @@ class User < ApplicationRecord
                      where users.id = '#{id}'")
   end
 
-  ##
-  # Returns all domains domain active records (uniquely) for the user
-  def domains_domains
-    query = <<~SQL.squish
-      SELECT DISTINCT *
-      FROM domains_domains
-      WHERE parent_domain_id IN (SELECT id FROM domains WHERE user_id = :user_id)
-         OR child_domain_id IN (SELECT id FROM domains WHERE user_id = :user_id)
-    SQL
-
-    DomainsDomain.find_by_sql([query, { user_id: id }])
-  end
-
   # :nodoc:
   def can_access_book?(book:)
     books.include?(book)

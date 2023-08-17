@@ -28,11 +28,10 @@ RSpec.describe "GET /domains/:id/manage", "#manage" do
         expect(response).to be_successful
       end
 
-      context "when the domain has books, parent domains, child domains" do
+      context "when the domain has books and child domains" do
         before do
           create_list(:book, 4, users: [user]).each { |book| domain.books << book }
-          create_list(:domain, 4, user:).each { |parent_domain| domain.parent_domains << parent_domain }
-          create_list(:domain, 3, user:).each { |child_domain| domain.child_domains << child_domain }
+          create_list(:domain, 3, user:).each { |child_domain| domain.domains << child_domain }
         end
 
         it "returns a success response" do

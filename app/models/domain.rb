@@ -19,53 +19,30 @@ class Domain < ApplicationRecord
   has_many :books_domains, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_domains
 
-  has_many :parent_domains_domains, class_name: "DomainsDomain", foreign_key: :child_domain_id, inverse_of: :child_domain,
-                                    dependent: :destroy
-  has_many :child_domains_domains, class_name: "DomainsDomain", foreign_key: :parent_domain_id, inverse_of: :parent_domain,
-                                   dependent: :destroy
-
-  has_many :parent_domains, through: :parent_domains_domains, class_name: "Domain"
-  has_many :child_domains, through: :child_domains_domains, class_name: "Domain"
+  has_one :parent_domain, class_name: "Domain", dependent: nil
+  has_many :domains, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
 
   validates :title, presence: true
 
-  # rubocop:disable Metrics/MethodLength
   ##
   # Returns all basic notes under the domain in order
   def ordered_notes
     query = <<~SQL.squish
-      SELECT bn.*
-      FROM basic_notes AS bn
-      JOIN articles AS a ON bn.article_id = a.id
-      JOIN books AS b ON a.book_id = b.id
-      WHERE a.book_id IN
-      (
-        WITH RECURSIVE related_domains AS (
-          SELECT child_domain_id
-          FROM domains_domains
-          WHERE parent_domain_id = :domain_id
-
-          UNION ALL
-
-          SELECT dd.child_domain_id
-          FROM domains_domains AS dd
-          JOIN related_domains AS rd ON dd.parent_domain_id = rd.child_domain_id
-        )
-        SELECT b.id
-        FROM books AS b
-        JOIN books_domains AS bd ON b.id = bd.book_id
-        JOIN related_domains AS rd ON bd.domain_id = rd.child_domain_id
-
-        UNION DISTINCT
-
-        SELECT bd.book_id
-        FROM books_domains AS bd
-        WHERE bd.domain_id = :domain_id
+      WITH RECURSIVE domain_hierarchy AS (
+        SELECT id, title, parent_domain_id FROM domains WHERE id = ?
+        UNION
+        SELECT d.id, d.title, d.parent_domain_id FROM domains d
+        JOIN domain_hierarchy dh ON d.parent_domain_id = dh.id
       )
-      ORDER BY a.title, b.title, a.ordinal_position, bn.ordinal_position
+      SELECT DISTINCT bn.*, dh.title, b.title, a.ordinal_position AS article_position
+      FROM basic_notes bn
+      JOIN articles a ON bn.article_id = a.id
+      JOIN books b ON a.book_id = b.id
+      JOIN books_domains bd ON b.id = bd.book_id
+      JOIN domain_hierarchy dh ON bd.domain_id = dh.id
+      ORDER BY dh.title, b.title, article_position, bn.ordinal_position
     SQL
 
-    BasicNote.find_by_sql([query, { domain_id: id }])
+    BasicNote.find_by_sql([query, id])
   end
-  # rubocop:enable Metrics/MethodLength
 end

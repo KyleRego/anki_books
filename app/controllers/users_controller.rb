@@ -57,20 +57,6 @@ class UsersController < ApplicationController
     send_data data, filename: "domains.csv"
   end
 
-  def download_domains_domains_data
-    attributes = %w[parent_domain_id child_domain_id]
-
-    data = CSV.generate(headers: true) do |csv|
-      csv << attributes
-
-      current_user.domains_domains.each do |domains_domain|
-        csv << attributes.map { |attr| domains_domain.send(attr) }
-      end
-    end
-
-    send_data data, filename: "domains_domains.csv"
-  end
-
   def download_articles_data
     attributes = %w[id title book_id]
 

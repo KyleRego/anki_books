@@ -46,10 +46,6 @@ RSpec.describe DomainsController do
       expect(patch: "/domains/#{domain_id}/change_books").to route_to("domains#change_books", id: domain_id)
     end
 
-    it "routes to #change_parent_domains" do
-      expect(patch: "/domains/#{domain_id}/change_parent_domains").to route_to("domains#change_parent_domains", id: domain_id)
-    end
-
     it "routes to #change_child_domains" do
       expect(patch: "/domains/#{domain_id}/change_child_domains").to route_to("domains#change_child_domains", id: domain_id)
     end

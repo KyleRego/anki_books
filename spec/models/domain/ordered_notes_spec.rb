@@ -65,7 +65,7 @@ RSpec.describe Domain, "#ordered_notes" do
     end
   end
 
-  context "when the domain has a child book that is also a child book of a child domain" do
+  context "when the domain has a book that is also a child of a child domain" do
     let(:book) { create(:book, users: [user]) }
     let(:child_domain) { create(:domain, user:) }
     let(:article) { create(:article, book:) }
@@ -73,7 +73,7 @@ RSpec.describe Domain, "#ordered_notes" do
     before do
       create_list(:basic_note, 10, article:)
       domain.books << book
-      domain.child_domains << child_domain
+      domain.domains << child_domain
       child_domain.books << book
     end
 
@@ -85,11 +85,11 @@ RSpec.describe Domain, "#ordered_notes" do
   context "when the domain has a very nested child domain with basic notes" do
     before do
       child_domain = create(:domain, user:)
-      domain.child_domains << child_domain
+      domain.domains << child_domain
       second_nested_domain = create(:domain, user:)
-      child_domain.child_domains << second_nested_domain
+      child_domain.domains << second_nested_domain
       third_nested_domain = create(:domain, user:)
-      second_nested_domain.child_domains << third_nested_domain
+      second_nested_domain.domains << third_nested_domain
       book = create(:book, users: [user])
       second_nested_domain.books << book
       article = create(:article, book:)
@@ -98,6 +98,32 @@ RSpec.describe Domain, "#ordered_notes" do
 
     it "returns the nested domain's book basic notes" do
       expect(ordered_notes.count).to eq 11
+    end
+  end
+
+  context "when domain has 3 child domains each with one note" do
+    let(:first_book) { create(:book, users: [user]) }
+    let(:second_book) { create(:book, users: [user]) }
+    let(:third_book) { create(:book, users: [user]) }
+
+    before do
+      first_child_domain = create(:domain, user:, title: "A")
+      second_child_domain = create(:domain, user:, title: "B")
+      third_child_domain = create(:domain, user:, title: "C")
+      domain.domains = [first_child_domain, second_child_domain, third_child_domain]
+      first_child_domain.books << first_book
+      second_child_domain.books << second_book
+      third_child_domain.books << third_book
+      create(:basic_note, article: create(:article, book: first_book))
+      create(:basic_note, article: create(:article, book: second_book))
+      create(:basic_note, article: create(:article, book: third_book))
+    end
+
+    it "returns the basic notes in order of the child domain titles" do
+      expect(ordered_notes.count).to eq 3
+      expect(ordered_notes.first.article.book).to eq first_book
+      expect(ordered_notes.second.article.book).to eq second_book
+      expect(ordered_notes.third.article.book).to eq third_book
     end
   end
 end

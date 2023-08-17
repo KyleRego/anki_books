@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   resources :domains
   get "/domains/:id/manage", to: "domains#manage", as: "manage_domain"
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
-  patch "/domains/:id/change_parent_domains", to: "domains#change_parent_domains", as: "change_parent_domains"
   patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"
 
   resources :books, except: %i[destroy] do
@@ -47,7 +46,6 @@ Rails.application.routes.draw do
   get "/download_books_data", to: "users#download_books_data", as: "download_books_data"
   get "/download_books_domains_data", to: "users#download_books_domains_data", as: "download_books_domains_data"
   get "/download_domains_data", to: "users#download_domains_data", as: "download_domains_data"
-  get "/download_domains_domains_data", to: "users#download_domains_domains_data", as: "download_domains_domains_data"
   get "/download_articles_data", to: "users#download_articles_data", as: "download_articles_data"
   get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
   # :nocov:

@@ -30,7 +30,7 @@ RSpec.describe "PATCH /domains/:id/change_child_domains", "#change_child_domains
 
       it "updates the child domains of the domain" do
         patch_domains_change_child_domains
-        expect(domain.child_domains.reload.pluck(:id).sort).to eq user.domains.where(id: child_domain_ids).reload.pluck(:id).sort
+        expect(domain.domains.reload.pluck(:id).sort).to eq user.domains.where(id: child_domain_ids).reload.pluck(:id).sort
       end
     end
   end

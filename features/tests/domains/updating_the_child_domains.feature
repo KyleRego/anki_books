@@ -18,4 +18,3 @@ Feature: Updating a domain's child domains
     And I click the "Domains" link
     And I click the "Test domain 2" link
     And I click the "Manage domain" link
-    Then the parent domain checkbox labeled "Test domain 1" should be checked

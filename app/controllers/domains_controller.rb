@@ -3,7 +3,7 @@
 # :nodoc:
 class DomainsController < ApplicationController
   before_action :require_login
-  before_action :set_domain, only: %i[show edit update manage study_cards change_books change_parent_domains change_child_domains destroy]
+  before_action :set_domain, only: %i[show edit update manage study_cards change_books change_child_domains destroy]
   before_action :set_books, only: %i[show]
 
   def index
@@ -11,8 +11,7 @@ class DomainsController < ApplicationController
   end
 
   def show
-    @parent_domains = @domain.parent_domains
-    @child_domains = @domain.child_domains
+    @child_domains = @domain.domains
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -25,11 +24,7 @@ class DomainsController < ApplicationController
       { id:, title:, selected: }
     end
     domains_options = current_user.domains.where.not(id: @domain.id)
-    @parent_domains = @domain.parent_domains
-    @child_domains = @domain.child_domains
-    @parent_domains_options = domains_options.map do |domain|
-      { id: domain.id, title: domain.title, selected: @parent_domains.include?(domain) }
-    end
+    @child_domains = @domain.domains
     @child_domains_options = domains_options.map do |domain|
       { id: domain.id, title: domain.title, selected: @child_domains.include?(domain) }
     end
@@ -75,15 +70,9 @@ class DomainsController < ApplicationController
     redirect_to manage_domain_path(@domain), flash: { notice: "Books updated" }
   end
 
-  def change_parent_domains
-    parent_domain_ids = params[:parent_domain_ids]
-    @domain.parent_domains = current_user.domains.where(id: parent_domain_ids)
-    redirect_to manage_domain_path(@domain), flash: { notice: "Parent domains updated" }
-  end
-
   def change_child_domains
     child_domain_ids = params[:child_domain_ids]
-    @domain.child_domains = current_user.domains.where(id: child_domain_ids)
+    @domain.domains = current_user.domains.where(id: child_domain_ids)
     redirect_to manage_domain_path(@domain), flash: { notice: "Child domains updated" }
   end
 
