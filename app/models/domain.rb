@@ -27,7 +27,8 @@ class Domain < ApplicationRecord
   validates :title, presence: true
 
   ##
-  # Returns all basic notes under the domain in order
+  # Returns all basic notes of the domain's books and child domains
+  # (including nested) in a consistent order
   def ordered_notes
     query = <<~SQL.squish
       WITH RECURSIVE domain_hierarchy AS (

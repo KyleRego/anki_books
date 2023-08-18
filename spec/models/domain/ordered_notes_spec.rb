@@ -126,4 +126,31 @@ RSpec.describe Domain, "#ordered_notes" do
       expect(ordered_notes.third.article.book).to eq third_book
     end
   end
+
+  context "when the domain has a lot of basic notes connected to it in various ways" do
+    before do
+      first_book = create(:book, users: [user])
+      second_book = create(:book, users: [user])
+      third_book = create(:book, users: [user])
+
+      first_child_domain = create(:domain, user:, title: "A")
+      second_child_domain = create(:domain, user:, title: "B")
+      third_child_domain = create(:domain, user:, title: "C")
+
+      domain.books << first_book
+      domain.domains << first_child_domain
+      first_child_domain.domains << second_child_domain
+      second_child_domain.books << second_book
+      second_child_domain.domains << third_child_domain
+      second_child_domain.books << third_book
+
+      create_list(:basic_note, 3, article: create(:article, book: first_book))
+      create_list(:basic_note, 4, article: create(:article, book: second_book))
+      create_list(:basic_note, 5, article: create(:article, book: third_book))
+    end
+
+    it "returns the right basic notes" do
+      expect(ordered_notes.count).to eq 12
+    end
+  end
 end
