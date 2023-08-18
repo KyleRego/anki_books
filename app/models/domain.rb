@@ -21,7 +21,7 @@ class Domain < ApplicationRecord
   has_many :books_domains, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_domains
 
-  has_one :parent_domain, class_name: "Domain", dependent: nil
+  belongs_to :parent_domain, optional: true, class_name: "Domain", inverse_of: :domains
   has_many :domains, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
 
   validates :title, presence: true

@@ -7,6 +7,14 @@
   <%= @domain.title %>
 </h1>
 
+<% if @parent_domain %>
+<div class="mt-4 pb-4 border-b-2">
+  <h2 class="text-lg font-bold">
+  Parent domain: <%= link_to @parent_domain.title, domain_path(@parent_domain), class: "text-blue-500 hover:text-blue-600" %>
+  </h2>
+</div>
+<% end %>
+
 <% if @books.any? %>
   <div class="mt-4 pb-4 border-b-2">
     <h2 class="pb-2 text-xl font-semibold">Books:</h2>

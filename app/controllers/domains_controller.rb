@@ -12,6 +12,7 @@ class DomainsController < ApplicationController
 
   def show
     @child_domains = @domain.domains
+    @parent_domain = @domain.parent_domain
   end
 
   # rubocop:disable Metrics/AbcSize
