@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   patch "/articles/:id/transfer_basic_notes", to: "articles#transfer_basic_notes", as: "article_transfer_basic_notes"
 
   resources :domains
+  get "/root_domains", to: "domains#root_domains", as: "root_domains"
   get "/domains/:id/manage", to: "domains#manage", as: "manage_domain"
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
   patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"

@@ -13,8 +13,12 @@
         <%= link_to("Books", books_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
       <% end %>
 
-      <% if show_link_to_my_domains_in_top_nav? %>
+      <% if show_link_to_domains_in_top_nav? %>
         <%= link_to("Domains", domains_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
+      <% end %>
+
+      <% if show_link_to_root_domains_in_top_nav? %>
+        <%= link_to("Root domains", root_domains_path, class: "text-blue-500 hover:text-blue-600 font-semibold mr-4") %>
       <% end %>
 
       <% if show_link_to_downloads_in_top_nav? %>

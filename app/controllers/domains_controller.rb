@@ -10,6 +10,10 @@ class DomainsController < ApplicationController
     @domains = current_user.domains.order(:title)
   end
 
+  def root_domains
+    @domains = current_user.domains.where(parent_domain_id: nil).order(:title)
+  end
+
   def show
     @child_domains = @domain.domains
     @parent_domain = @domain.parent_domain

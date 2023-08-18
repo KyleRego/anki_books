@@ -30,6 +30,10 @@ RSpec.describe DomainsController do
       expect(get: "/domains").to route_to("domains#index")
     end
 
+    it "routes to #root_domains" do
+      expect(get: "/root_domains").to route_to("domains#root_domains")
+    end
+
     it "routes to #destroy" do
       expect(delete: "/domains/#{domain_id}").to route_to("domains#destroy", id: domain_id)
     end
