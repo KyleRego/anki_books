@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def download_domains_data
-    attributes = %w[id title]
+    attributes = %w[id title parent_domain_id]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
