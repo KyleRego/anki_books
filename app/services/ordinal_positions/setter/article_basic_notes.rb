@@ -2,12 +2,13 @@
 
 module OrdinalPositions
   module Setter
-    ##
-    # Manages inserting a new basic note at a specific ordinal position or
-    # setting its new ordinal position; the other notes are shifted appropriately.
-    # The methods here hook into the general logic like a template method.
+    # :nodoc:
     class ArticleBasicNotes < Base
       private
+
+      def child_belongs_to_parent?
+        child_to_position.new_record? || parent.basic_notes.include?(child_to_position)
+      end
 
       def ordinal_position_children_count
         @ordinal_position_children_count ||= child_to_position.new_record? ? parent.notes_count + 1 : parent.notes_count

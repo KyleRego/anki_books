@@ -37,3 +37,4 @@
 
 # Ignore SimpleCov test suite coverage reports
 coverage
+coverage-*

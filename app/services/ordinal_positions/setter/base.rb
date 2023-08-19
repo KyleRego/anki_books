@@ -2,17 +2,18 @@
 
 module OrdinalPositions
   module Setter
-    ##
-    # General logic of managing changing the ordinal position in a one-to-many
-    # association where the objects on the many side have an ordinal position;
-    # it is like a template method pattern where the child classes implement
-    # some of the functionality specific to that association.
+    # :nodoc:
     class Base
       def self.perform(parent:, child_to_position:, new_ordinal_position:)
         new(parent:, child_to_position:, new_ordinal_position:).perform
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       def perform
+        raise ArgumentError unless child_belongs_to_parent?
+
         raise ArgumentError unless new_ordinal_position.instance_of?(Integer)
 
         raise ArgumentError if child_to_position.invalid?
@@ -26,10 +27,18 @@ module OrdinalPositions
             shift_others_and_move_to_position
           end
 
-          raise "Ordinal position error" unless ordinal_positions_valid?
+          # For performance in production, skip this check. But allow it to find bugs
+          # in development and testing.
+          # :nocov:
+          raise "Ordinal position error" if !Rails.env.production? && !ordinal_positions_valid?
+
+          # :nocov:
 
           true
         end
+        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/CyclomaticComplexity
+        # rubocop:enable Metrics/PerceivedComplexity
       end
 
       private

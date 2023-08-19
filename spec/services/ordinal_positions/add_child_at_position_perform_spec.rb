@@ -1,9 +1,19 @@
 # frozen_string_literal: true
 
 # rubocop:disable RSpec/ExampleLength
-RSpec.describe OrdinalPositions::SetChildPosition, ".perform" do
+RSpec.describe OrdinalPositions::AddChildAtPosition, ".perform" do
   subject(:perform_ordinal_position_change) do
     described_class.perform(parent:, child_to_position:, new_ordinal_position:)
+  end
+
+  context "when parent and child is not a valid class combination" do
+    let(:parent) { create(:article) }
+    let(:child_to_position) { create(:article) }
+    let(:new_ordinal_position) { 0 }
+
+    it "raises an error" do
+      expect { perform_ordinal_position_change }.to raise_error(RuntimeError)
+    end
   end
 
   context "when parent is article and child is basic note" do
@@ -447,6 +457,33 @@ RSpec.describe OrdinalPositions::SetChildPosition, ".perform" do
 
       it "throws an ArgumentError" do
         expect { perform_ordinal_position_change }.to raise_exception ArgumentError
+      end
+    end
+
+    context "when parent is a book with 1 article and child is an unpersisted article" do
+      let(:parent) { create(:book) }
+      let!(:first_article) { create(:article, book: parent) }
+      let(:child_to_position) { build(:article, book: parent) }
+
+      context "when new ordinal position is 0" do
+        let(:new_ordinal_position) { 0 }
+
+        it "returns true and saves the basic note with position 0 and the other to position 1" do
+          expect(perform_ordinal_position_change).to be true
+          expect(child_to_position.persisted?).to be true
+          expect(child_to_position.reload.ordinal_position).to eq 0
+          expect(first_article.reload.ordinal_position).to eq 1
+        end
+      end
+    end
+
+    context "when the article is persisted and does not belong to the parent book" do
+      let(:parent) { create(:book) }
+      let(:child_to_position) { create(:article, book: create(:book)) }
+      let(:new_ordinal_position) { 0 }
+
+      it "throws an error" do
+        expect { perform_ordinal_position_change }.to raise_error(ArgumentError)
       end
     end
 
