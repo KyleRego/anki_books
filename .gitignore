@@ -38,3 +38,5 @@
 # Ignore SimpleCov test suite coverage reports
 coverage
 coverage-*
+
+anki_books_source_code_deck.apkg
