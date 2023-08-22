@@ -6,21 +6,7 @@ require "cucumber/rails"
 require "capybara/cucumber"
 require "selenium-webdriver"
 require "webdrivers"
-require "simplecov"
-
-SimpleCov.add_filter do |source_file|
-  source_file.filename.include?("/features/step_definitions/")
-end
-
-SimpleCov.start do
-  enable_coverage :branch
-
-  # TODO: This code is repeated in spec/spec_helper.rb
-  add_group "Models", %r{app/models/.*}
-  add_group "Controllers", %r{app/controllers/.*}
-  add_group "Jobs", %r{app/jobs/.*}
-  add_group "Services", %r{app/services/.*}
-end
+require_relative "../../spec/simplecov_setup"
 
 World(FactoryBot::Syntax::Methods)
 
