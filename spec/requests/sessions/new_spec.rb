@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "GET /login", "#new" do
   subject(:get_sessions_new) { get "/login" }
 

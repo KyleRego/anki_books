@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-
 RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
   subject(:patch_articles_change_book) do
     patch change_article_book_path(article), params: { book_id: second_book.id }

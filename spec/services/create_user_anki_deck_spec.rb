@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../support/shared_contexts/user_with_articles_books_and_notes"
-
 RSpec.describe CreateUserAnkiDeck do
   describe ".perform" do
     subject(:create_user_anki_deck) { described_class.perform(user:) }

@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-
 RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_ordinal_position" do
   subject(:post_articles_change_note_ordinal_position) do
     post change_article_note_ordinal_position_path(article),

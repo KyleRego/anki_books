@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "basic_notes/edit" do
   let(:article) { create(:article) }
   let(:basic_note) { create(:basic_note, article:) }

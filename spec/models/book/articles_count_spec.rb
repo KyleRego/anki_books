@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe Book, "#articles_count" do
   it "returns 0 when the book has no articles" do
     book = create(:book)

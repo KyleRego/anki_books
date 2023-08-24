@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe HomepageController do
   it "routes to #homepage" do
     expect(get: "/").to route_to("homepage#show")

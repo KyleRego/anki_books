@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-
 RSpec.describe "GET /articles/:article_id/basic_notes/new", "#new" do
   subject(:get_basic_notes_new) { get new_article_basic_note_path(article), headers: }
 

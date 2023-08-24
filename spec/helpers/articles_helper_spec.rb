@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "ArticlesHelper" do
   describe "#back_to_article_path" do
     let(:article) { create(:article) }

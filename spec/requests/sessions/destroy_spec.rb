@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-
-require "rails_helper"
-
 RSpec.describe "DELETE /logout", "#destroy" do
   subject(:delete_sessions_destroy) do
     delete "/logout"

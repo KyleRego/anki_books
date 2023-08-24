@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe Book, "#valid?" do
   it "is valid with a title" do
     book = build(:book, title: "Example Title")

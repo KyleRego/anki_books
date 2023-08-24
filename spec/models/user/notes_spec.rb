@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_with_articles_books_and_notes"
-
 RSpec.describe User, "#notes" do
   include_context "when the user has two books, three articles, 5 basic notes per article"
 

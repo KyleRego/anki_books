@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe Article, "#notes_count" do
   it "returns the number of notes the article has" do
     article = create(:article)

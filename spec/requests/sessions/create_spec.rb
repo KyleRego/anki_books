@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "POST /login", "#create" do
   subject(:post_sessions_create) do
     post login_path, params: { session: { email:, password: } }

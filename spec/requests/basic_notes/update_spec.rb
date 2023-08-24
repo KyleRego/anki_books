@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-require_relative "../../support/shared_examples/missing_turboframe_header_forbidden"
-
 RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
   subject(:patch_basic_notes_update) do
     patch article_basic_note_path(article, basic_note), params:, headers:
@@ -18,7 +14,7 @@ RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
   let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
   let(:on_study_cards) { false }
 
-  include BasicNotesHelper
+  include_examples "user is not logged in and needs to be"
 
   context "when user is logged in" do
     include_context "when the user is logged in"

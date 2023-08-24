@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe "domains/show" do
   let(:user) { create(:user) }
   let(:domain) { create(:domain, user:) }

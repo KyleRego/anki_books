@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe ArticlesController do
   let(:book_id) { "3" }
   let(:article_id) { "1e8e5d81-09b4-4757-bbea-f024997d6b35" }

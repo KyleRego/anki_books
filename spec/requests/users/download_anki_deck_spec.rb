@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-
 RSpec.describe "GET /download_anki_deck", "#download_anki_deck" do
   subject(:get_users_download_anki_deck) { get user_download_anki_deck_path }
 

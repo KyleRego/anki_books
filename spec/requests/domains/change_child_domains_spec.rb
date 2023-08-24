@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../support/shared_contexts/user_logged_in"
-require_relative "../../support/shared_examples/not_logged_in_user_gets_redirected_to_login"
-
 RSpec.describe "PATCH /domains/:id/change_child_domains", "#change_child_domains" do
   subject(:patch_domains_change_child_domains) do
     patch change_child_domains_path(domain), params: { child_domain_ids: }
