@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe OrdinalPositions::Mover::BookArticles, ".perform" do
+RSpec.describe OrdinalPositions::MoveChildToNewParent, ".perform" do
   subject(:perform_move_to_new_parent) do
     described_class.perform(new_parent:, child_to_position:, new_ordinal_position:)
   end

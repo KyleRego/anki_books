@@ -94,9 +94,9 @@ class ArticlesController < ApplicationController
       head :unprocessable_entity
     elsif @target_book == @book
       head :ok
-    elsif OrdinalPositions::Mover::BookArticles.perform(new_parent: @target_book,
-                                                        child_to_position: @article,
-                                                        new_ordinal_position: @target_book.articles_count)
+    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @target_book,
+                                                         child_to_position: @article,
+                                                         new_ordinal_position: @target_book.articles_count)
       redirect_to book_path(@book), flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     else
       # :nocov:

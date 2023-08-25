@@ -6,10 +6,7 @@
 
 module OrdinalPositions
   module Mover
-    ##
-    # General logic of moving an ordinally positioned child
-    # to a new parent to a new ordinal position keeping both
-    # parents ordinal position children consistent
+    # :nodoc:
     class Base
       def self.perform(new_parent:, child_to_position:, new_ordinal_position:)
         new(new_parent:, child_to_position:, new_ordinal_position:).perform
