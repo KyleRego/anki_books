@@ -1,30 +1,34 @@
-  <%= turbo_frame_tag @basic_note.turbo_id,
-                      class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
 
-    <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
-      <div data-controller="reorder-basic-notes--basic-note-draggable">
-        <div class="draggable-div-of-note" draggable="true"
-             data-reorder-basic-notes--basic-note-draggable-target="note">
-    <% end %>
+<%= turbo_frame_tag @basic_note.turbo_id,
+                    class: "reorderable-basic-note-unit existing-basic-note-turbo-frame min-w-max" do %>
 
-      <%= render partial: "basic_notes/flippable_basic_note" %>
-
-    <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
-      </div></div>
-    <% end %>
-
-    <% css_class_for_height_between_notes = logged_in? ? "min-h-8" : "min-h-6" %>
-    <div class="<%= css_class_for_height_between_notes %>">
-      <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
-        <div data-controller="reorder-basic-notes--basic-note-dropzone">
-          <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
-
-            <%= render partial: "basic_notes/edit_basic_note_link" %>
-
-            <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
+  <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+    <div data-controller="reorder-basic-notes--basic-note-draggable">
+      <div class="draggable-div-of-note" draggable="true"
+            data-reorder-basic-notes--basic-note-draggable-target="note">
   <% end %>
+
+    <%= render partial: "basic_notes/flippable_basic_note" %>
+
+  <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+    </div></div>
+  <% end %>
+
+  <% css_class_for_height_between_notes = logged_in? ? "min-h-8" : "min-h-6" %>
+  <div class="<%= css_class_for_height_between_notes %>">
+    <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+      <div data-controller="reorder-basic-notes--basic-note-dropzone">
+        <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
+
+          <%= render partial: "basic_notes/edit_basic_note_link" %>
+
+          <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

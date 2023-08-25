@@ -1,14 +1,18 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
 <div class="max-w-sm mx-auto mt-28">
   <h1 class="text-2xl font-semibold mb-4 text-center text-blue-600">Anki Books</h1>
   <%= form_with(url: login_path, local: true, class: '') do |form| %>
     <div class="mb-4">
-      <%= form.label :email, class: 'block font-semibold mb-2' %>
-      <%= form.email_field :email, class: 'w-full rounded-md px-3 py-2', name: 'session[email]' %>
+      <%= form.label :email, class: "block font-semibold mb-2" %>
+      <%= form.email_field :email, class: "w-full rounded-md px-3 py-2", name: "session[email]" %>
     </div>
     <div class="mb-4">
-      <%= form.label :password, class: 'block font-semibold mb-2' %>
-      <%= form.password_field :password, class: 'w-full rounded-md px-3 py-2', name: 'session[password]' %>
+      <%= form.label :password, class: "block font-semibold mb-2" %>
+      <%= form.password_field :password, class: "w-full rounded-md px-3 py-2", name: "session[password]" %>
     </div>
-    <%= form.submit 'Log in', class: 'w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md' %>
+    <%= form.submit "Log in", class: "w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md" %>
   <% end %>
 </div>

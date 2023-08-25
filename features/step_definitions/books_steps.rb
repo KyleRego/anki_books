@@ -1,3 +1,7 @@
+# Anki Books, a note-taking app to organize knowledge,
+# is licensed under the GNU Affero General Public License, version 3
+# Copyright (C) 2023 Kyle Rego
+
 # frozen_string_literal: true
 
 Given "the test user has a book called {string}" do |book_title|
