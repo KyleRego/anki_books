@@ -8,8 +8,17 @@
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login
-  before_action :set_article, except: %i[new create]
-  before_action :check_user_can_access_article, except: %i[new create]
+  before_action :set_article, except: %i[index new create]
+  before_action :check_user_can_access_article, except: %i[index new create]
+
+  def index
+    @book = Book.find_by(id: params[:book_id])
+    if @book && current_user.can_access_book?(book: @book)
+      @articles = @book.articles
+    else
+      not_found_or_unauthorized
+    end
+  end
 
   def show
     if @article.system
@@ -59,7 +68,7 @@ class ArticlesController < ApplicationController
       head :unprocessable_entity
     else
       OrdinalPositions::Deleter::BookArticles.perform(child_to_delete: @article)
-      redirect_to book_path(@book)
+      redirect_to book_articles_path(@book)
     end
   end
 
@@ -97,7 +106,7 @@ class ArticlesController < ApplicationController
     elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @target_book,
                                                          child_to_position: @article,
                                                          new_ordinal_position: @target_book.articles_count)
-      redirect_to book_path(@book), flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
+      redirect_to book_articles_path(@book), flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     else
       # :nocov:
       head :unprocessable_entity

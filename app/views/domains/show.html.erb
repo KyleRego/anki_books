@@ -24,7 +24,7 @@
     <h2 class="pb-2 text-xl font-semibold">Books:</h2>
     <% @books.each do |book| %>
       <div>
-        <%= link_to book.title, book_path(book), class: "text-blue-500 hover:text-blue-600" %>
+        <%= link_to book.title, book_articles_path(book), class: "text-blue-500 hover:text-blue-600" %>
       </div>
     <% end %>
   </div>

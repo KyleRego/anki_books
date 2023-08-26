@@ -13,6 +13,10 @@ RSpec.describe ArticlesController do
       expect(get: "/books/#{book_id}/articles/new").to route_to("articles#new", book_id:)
     end
 
+    it "routes to #index" do
+      expect(get: "/books/#{book_id}/articles").to route_to("articles#index", book_id:)
+    end
+
     it "routes to #create" do
       path = "/articles"
       expect(post: path).to route_to("articles#create")

@@ -46,7 +46,7 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
 
         it "changes the article's book if the book is found and belongs to the user" do
           patch_articles_change_book
-          expect(response).to redirect_to(book_path(first_book))
+          expect(response).to redirect_to(book_articles_path(first_book))
           expect(article.reload.book).to eq second_book
         end
 
@@ -60,7 +60,7 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
 
           it "shifts down the ordinal positions of the articles from the first book" do
             patch_articles_change_book
-            expect(response).to redirect_to(book_path(first_book))
+            expect(response).to redirect_to(book_articles_path(first_book))
             expect(article.reload.book).to eq second_book
             expect(first_book.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
           end

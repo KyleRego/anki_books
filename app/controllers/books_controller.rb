@@ -8,13 +8,11 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[show manage change_domains]
+  before_action :set_articles, only: %w[manage change_domains]
 
   def index
     @books = current_user.books
   end
-
-  def show; end
 
   def new
     @book = Book.new

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
 
-  resources :articles, except: %i[new]
+  resources :articles, except: %i[new index]
   get "/articles/:id/manage", to: "articles#manage", as: "manage_article"
   post "/articles/:id/change_note_ordinal_position", to: "articles#change_note_ordinal_position",
                                                      as: "change_article_note_ordinal_position"
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"
 
   resources :books, except: %i[destroy] do
-    resources :articles, only: :new
+    resources :articles, only: %i[new index]
   end
   get "/books/:id/manage", to: "books#manage", as: "manage_book"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",

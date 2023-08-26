@@ -10,7 +10,7 @@
     <% if logged_in? %>
 
       <% if show_link_to_book_in_top_nav?(book: @book) %>
-        <%= link_to("#{@book.title}", book_path(@book), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4")  %>
+        <%= link_to("#{@book.title}", book_articles_path(@book), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4")  %>
       <% end %>
 
       <% if show_link_to_my_books_in_top_nav? %>
