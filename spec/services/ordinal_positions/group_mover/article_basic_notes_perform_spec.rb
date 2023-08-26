@@ -78,4 +78,3 @@ RSpec.describe OrdinalPositions::GroupMover::ArticleBasicNotes, ".perform" do
   end
 end
 # rubocop:enable RSpec/ExampleLength
-# rubocop:enable RSpec/MultipleExpectations

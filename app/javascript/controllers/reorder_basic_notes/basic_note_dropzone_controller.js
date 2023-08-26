@@ -56,10 +56,10 @@ export default class extends Controller {
     this.removeColorFromDropzone();
     this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const noteTurboId = event.dataTransfer.getData("text/plain");
-    const articleId = document.querySelector("[id^=\"article-\"]").id.split("-").slice(1).join("-");
-    const noteId = noteTurboId.split("-").slice(3).join("-");
     this.draggedNote = document.getElementById(noteTurboId);
+    const noteId = noteTurboId.split("-").slice(3).join("-");
     this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
+    const articleId = this.noteOfDropzone.closest("[id^=\"article-notes-\"]").id.split("notes-").slice(1).join("-");
     const ordinalPositionsResult = this.draggedNoteAndDropzoneOrdinalPositions();
     this.oldOrdinalPosition = ordinalPositionsResult[0];
     this.newOrdinalPosition = ordinalPositionsResult[1];

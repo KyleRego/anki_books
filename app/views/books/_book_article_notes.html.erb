@@ -1,0 +1,20 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<div class="sm:sticky-notes h-full">
+  <div class="sm:scrollable-notes h-full flex flex-col justify-between">
+    <% if logged_in? %>
+      <div>
+        <%= link_to(@article.title, article_path(@article), class: "font-semibold text-blue-500 hover:text-blue-600") %>
+      </div>
+    <% end %>
+    <% @basic_notes&.each do |basic_note| %>
+      <div>
+        <% @basic_note = basic_note %>
+        <%= render partial: "basic_notes/flippable_basic_note" %>
+        <div class="min-h-6"></div>
+      </div>
+    <% end %>
+  </div>
+</div>

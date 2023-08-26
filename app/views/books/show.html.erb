@@ -1,0 +1,5 @@
+<% @book.articles.each do |article| %>
+  <% @article = article %>
+  <% @basic_notes = article.basic_notes %>
+  <%= render partial: "book_article_content" %>
+<% end %>

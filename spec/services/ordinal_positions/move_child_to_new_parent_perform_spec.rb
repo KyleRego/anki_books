@@ -195,4 +195,3 @@ RSpec.describe OrdinalPositions::MoveChildToNewParent, ".perform" do
     end
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

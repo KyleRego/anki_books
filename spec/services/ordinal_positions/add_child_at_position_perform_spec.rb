@@ -554,6 +554,5 @@ RSpec.describe OrdinalPositions::AddChildAtPosition, ".perform" do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleExpectations
   # rubocop:enable RSpec/ExampleLength
 end

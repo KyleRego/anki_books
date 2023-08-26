@@ -11,20 +11,4 @@
   <% end %>
 <% end %>
 
-<div class="flex flex-col sm:flex-row">
-
-  <% if logged_in? || @basic_notes.any? %>
-    <div id="article-<%= @article.id %>" class="sm:w-8/12">
-  <% else %>
-    <div id="article-<%= @article.id %>">
-  <% end %>
-    <%= @article.content %>
-  </div>
-
-  <% if logged_in? || @basic_notes.any? %>
-    <div id="notes-area" class="mt-4 sm:w-4/12 sm:ml-4 sm:mt-4">
-      <%= render "articles/notes_area" %>
-    </div>
-  <% end %>
-
-</div>
+<%= render "articles/article_content" %>

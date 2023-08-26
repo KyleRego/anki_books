@@ -29,4 +29,3 @@ RSpec.describe BasicNote, "#anki_back" do
     expect(basic_note.anki_back).to end_with("/articles/#{article_id}##{turbo_id}\">Edit</a>")
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

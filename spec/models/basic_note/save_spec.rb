@@ -22,4 +22,3 @@ RSpec.describe BasicNote, "#save" do
     expect(basic_note.anki_guid).to eq anki_guid
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

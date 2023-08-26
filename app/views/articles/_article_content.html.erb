@@ -1,0 +1,17 @@
+<div class="flex flex-col sm:flex-row">
+
+  <% if logged_in? || @basic_notes.any? %>
+    <div class="sm:w-8/12">
+  <% else %>
+    <div>
+  <% end %>
+    <%= @article.content %>
+  </div>
+
+  <% if logged_in? || @basic_notes.any? %>
+    <div id="notes-area" class="mt-4 sm:w-4/12 sm:ml-4 sm:mt-4">
+      <%= render "articles/article_notes" %>
+    </div>
+  <% end %>
+
+</div>

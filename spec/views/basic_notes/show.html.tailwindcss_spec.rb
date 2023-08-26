@@ -34,6 +34,5 @@ RSpec.describe "basic_notes/show" do
       expect(rendered).to match(TEST_BASIC_NOTE_BACK)
       expect(rendered).not_to have_css(".draggable-div-of-note")
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 end

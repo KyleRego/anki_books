@@ -2,7 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div id="article-notes" class="sm:sticky-notes">
+<%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
+<div id="article-notes-<%= @article.id %>" class="sm:sticky-notes">
 
   <% if logged_in? %>
     <div>

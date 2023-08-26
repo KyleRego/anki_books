@@ -24,6 +24,7 @@ Feature: Reordering basic notes
     And I drag the note at position "4" to the dropzone at position "0"
     And I drag the note at position "4" to the dropzone at position "1"
     And I drag the note at position "3" to the dropzone at position "4"
+    And I refresh the page
     Then the front of the note at position "0" should be "Front of note 4"
     And the front of the note at position "1" should be "Front of note 3"
     And the front of the note at position "2" should be "Front of note 2"

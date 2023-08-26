@@ -14,6 +14,10 @@ class BooksController < ApplicationController
     @books = current_user.books
   end
 
+  def show
+    @book = Book.includes(articles: :basic_notes).find(params[:id])
+  end
+
   def new
     @book = Book.new
   end

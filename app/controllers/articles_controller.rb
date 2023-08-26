@@ -73,9 +73,17 @@ class ArticlesController < ApplicationController
   end
 
   def change_note_ordinal_position
-    note = @article.basic_notes.find(params[:note_id])
+    note = BasicNote.find(params[:note_id])
+    return unless @current_user.can_access_note?(note:)
+
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if OrdinalPositions::AddChildAtPosition.perform(parent: @article, child_to_position: note, new_ordinal_position:)
+    if @article.id == note.article_id
+      if OrdinalPositions::AddChildAtPosition.perform(parent: @article, child_to_position: note, new_ordinal_position:)
+        head :ok
+      else
+        head :unprocessable_entity
+      end
+    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @article, child_to_position: note, new_ordinal_position:)
       head :ok
     else
       head :unprocessable_entity

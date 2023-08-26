@@ -45,6 +45,4 @@ RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
       include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
     end
   end
-
-  # rubocop:enable RSpec/MultipleExpectations
 end
