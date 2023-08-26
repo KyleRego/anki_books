@@ -155,5 +155,44 @@ RSpec.describe OrdinalPositions::MoveChildToNewParent, ".perform" do
       end
     end
   end
+
+  context "when moving from an article with three basic notes to an article with three basic notes" do
+    let!(:new_parent) do
+      article = create(:article)
+      create_list(:basic_note, 3, article:)
+      article
+    end
+    let!(:old_parent) do
+      article = create(:article)
+      create_list(:basic_note, 3, article:)
+      article
+    end
+
+    context "when moving the first basic note from the first article to be the first of the target article" do
+      let(:child_to_position) { old_parent.basic_notes.find_by(ordinal_position: 0) }
+      let(:new_ordinal_position) { 0 }
+
+      it "moves the basic note and shifts other basic notes correctly" do
+        expect(perform_move_to_new_parent).to be true
+        expect(child_to_position.reload.article).to eq new_parent
+        expect(child_to_position.reload.ordinal_position).to eq new_ordinal_position
+        expect(old_parent.basic_notes.pluck(:ordinal_position).sort).to eq [0, 1]
+        expect(new_parent.basic_notes.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
+      end
+    end
+
+    context "when moving the second basic note from the first article to be the third of the target article" do
+      let(:child_to_position) { old_parent.basic_notes.find_by(ordinal_position: 1) }
+      let(:new_ordinal_position) { 2 }
+
+      it "moves the basic note and shifts other basic notes correctly" do
+        expect(perform_move_to_new_parent).to be true
+        expect(child_to_position.reload.article).to eq new_parent
+        expect(child_to_position.reload.ordinal_position).to eq new_ordinal_position
+        expect(old_parent.basic_notes.pluck(:ordinal_position).sort).to eq [0, 1]
+        expect(new_parent.basic_notes.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/MultipleExpectations
