@@ -15,7 +15,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.includes(articles: :basic_notes).find(params[:id])
+    @book = Book.includes(articles: :basic_notes)
+                .order("articles.ordinal_position")
+                .order("basic_notes.ordinal_position").find(params[:id])
   end
 
   def new

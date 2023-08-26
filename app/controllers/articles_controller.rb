@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
   def index
     @book = Book.find_by(id: params[:book_id])
     if @book && current_user.can_access_book?(book: @book)
-      @articles = @book.articles
+      @articles = @book.ordered_articles
     else
       not_found_or_unauthorized
     end
