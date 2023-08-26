@@ -9,6 +9,16 @@ RSpec.describe OrdinalPositions::MoveChildToNewParent, ".perform" do
     described_class.perform(new_parent:, child_to_position:, new_ordinal_position:)
   end
 
+  context "when parent and child is not a valid class combination" do
+    let(:new_parent) { create(:article) }
+    let(:child_to_position) { create(:article) }
+    let(:new_ordinal_position) { 0 }
+
+    it "raises an error" do
+      expect { perform_move_to_new_parent }.to raise_error(RuntimeError)
+    end
+  end
+
   context "when moving from a book with one article to a book with no articles" do
     let(:new_parent) { create(:book) }
     let(:child_to_position) { create(:article) }
@@ -107,6 +117,41 @@ RSpec.describe OrdinalPositions::MoveChildToNewParent, ".perform" do
         expect(child_to_position.reload.ordinal_position).to eq new_ordinal_position
         expect(old_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1]
         expect(new_parent.articles.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
+      end
+    end
+  end
+
+  context "when moving from an article to an article with no basic notes" do
+    let(:new_parent) { create(:article) }
+    let(:child_to_position) { create(:basic_note, article: create(:article)) }
+
+    context "when the new position is 0" do
+      let(:new_ordinal_position) { 0 }
+
+      it "moves the article and returns true" do
+        expect(perform_move_to_new_parent).to be true
+        expect(child_to_position.article).to eq new_parent
+        expect(child_to_position.ordinal_position).to eq new_ordinal_position
+      end
+    end
+
+    context "when the new position is -1" do
+      let(:new_ordinal_position) { -1 }
+
+      it "throws an error and does not move the article" do
+        expect { perform_move_to_new_parent }.to raise_error "Ordinal position error"
+        expect(child_to_position.reload.article).not_to eq new_parent
+        expect(child_to_position.reload.ordinal_position).to eq 0
+      end
+    end
+
+    context "when the new position is 1" do
+      let(:new_ordinal_position) { 1 }
+
+      it "does not move the article and returns false" do
+        expect { perform_move_to_new_parent }.to raise_error "Ordinal position error"
+        expect(child_to_position.reload.article).not_to eq new_parent
+        expect(child_to_position.reload.ordinal_position).to eq 0
       end
     end
   end

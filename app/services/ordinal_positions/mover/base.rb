@@ -18,7 +18,12 @@ module OrdinalPositions
 
           shift_old_parent_children
 
-          raise "Ordinal position error" unless ordinal_positions_valid?
+          # For performance in production, skip this check. But allow it to find bugs
+          # in development and testing.
+          # :nocov:
+          raise "Ordinal position error" if !Rails.env.production? && !ordinal_positions_valid?
+
+          # :nocov:
         end
 
         true
