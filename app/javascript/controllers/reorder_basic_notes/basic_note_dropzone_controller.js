@@ -5,7 +5,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["dropzone"];
+  static targets = ["editDropzone", "newDropzone"];
 
   initialize() {
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
@@ -16,10 +16,14 @@ export default class extends Controller {
   }
 
   connect() {
-    this.dropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
-    this.dropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
-    this.dropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
-    this.dropzoneTarget.addEventListener("drop", this.boundHandleDrop);
+    this.editDropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
+    this.editDropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
+    this.editDropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
+    this.editDropzoneTarget.addEventListener("drop", this.boundHandleDrop);
+    this.newDropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
+    this.newDropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
+    this.newDropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
+    this.newDropzoneTarget.addEventListener("drop", this.boundHandleDrop);
     this.nestedDragEnterLevels = 0;
   }
 
@@ -30,11 +34,13 @@ export default class extends Controller {
   }
 
   addColorToDropzone() {
-    this.dropzoneTarget.classList.add("bg-blue-200");
+    this.editDropzoneTarget.classList.add("bg-blue-200");
+    this.newDropzoneTarget.classList.add("bg-blue-200");
   }
 
   removeColorFromDropzone() {
-    this.dropzoneTarget.classList.remove("bg-blue-200");
+    this.editDropzoneTarget.classList.remove("bg-blue-200");
+    this.newDropzoneTarget.classList.remove("bg-blue-200");
   }
 
   handleDragLeave(event) {
@@ -56,9 +62,9 @@ export default class extends Controller {
     this.removeColorFromDropzone();
     this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const noteTurboId = event.dataTransfer.getData("text/plain");
-    this.draggedNote = document.getElementById(noteTurboId);
+    this.draggedNote = document.getElementById(noteTurboId).closest(this.reorderableBasicNoteCSSSelector);
     const noteId = noteTurboId.split("-").slice(3).join("-");
-    this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
+    this.noteOfDropzone = this.editDropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
     const articleId = this.noteOfDropzone.closest("[id^=\"article-notes-\"]").id.split("notes-").slice(1).join("-");
     const ordinalPositionsResult = this.draggedNoteAndDropzoneOrdinalPositions();
     this.oldOrdinalPosition = ordinalPositionsResult[0];

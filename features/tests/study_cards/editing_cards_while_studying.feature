@@ -15,8 +15,8 @@ Feature: Editing/updating basic notes from the study cards page
 
   Scenario: Editing a basic note after studying in random order
     When I click on the span with text "Random order"
-    When I click "Edit" on the basic note
-    And I fill in the basic note edit form with the following data:
+    When I click the "Edit" link
+    And I fill in the study cards basic note edit form with the following data:
       | Field  | Value       |
       | Front  | Front Value |
       | Back   | Basic Value |
@@ -27,8 +27,8 @@ Feature: Editing/updating basic notes from the study cards page
 
   Scenario: Editing a basic note after studying in normal order
     When I click on the span with text "First card"
-    When I click "Edit" on the basic note
-    And I fill in the basic note edit form with the following data:
+    When I click the "Edit" link
+    And I fill in the study cards basic note edit form with the following data:
       | Field  | Value       |
       | Front  | Front Value |
       | Back   | Basic Value |

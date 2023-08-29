@@ -11,7 +11,8 @@
     </div>
   <% end %>
 
-  <div class="sm:scrollable-notes">
+  <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
+  <div class="sm:scrollable-notes reorderable-basic-note-units-container">
     <% if logged_in? %>
       <%= render "basic_notes/first_new_basic_note_link" %>
     <% end %>

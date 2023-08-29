@@ -8,6 +8,7 @@ export default class extends Controller {
   static targets = [ "newBasicNoteFormContainer" ];
 
   initialize() {
+    this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.existingBasicNoteTurboFrameSelector = ".existing-basic-note-turbo-frame";
     this.newNoteTurboFrameSelector = ".new-note-turbo-frame"
     this.formSubmit = this.handleFormSubmit.bind(this);
@@ -53,15 +54,14 @@ export default class extends Controller {
   }
 
   getOrdinalPosition() {
-    const newNoteParentTurboContainer = this.newBasicNoteFormContainerTarget.closest(this.newNoteTurboFrameSelector);
-    if (newNoteParentTurboContainer === null) {
+    const reorderableBasicNoteUnitParentContainer = this.newBasicNoteFormContainerTarget.closest(this.reorderableBasicNoteCSSSelector);
+    if (reorderableBasicNoteUnitParentContainer === null) {
       return 0;
     }
-    const siblingNote = newNoteParentTurboContainer.closest(this.existingBasicNoteTurboFrameSelector);
-    const allNotes = document.querySelectorAll(this.existingBasicNoteTurboFrameSelector);
+    const allReorderableBasicNoteUnits = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     let position = null;
-    for (let i = 0; i < allNotes.length; i++) {
-      if (siblingNote === allNotes[i]) {
+    for (let i = 0; i < allReorderableBasicNoteUnits.length; i++) {
+      if (reorderableBasicNoteUnitParentContainer === allReorderableBasicNoteUnits[i]) {
         position = i + 1;
         break;
       }

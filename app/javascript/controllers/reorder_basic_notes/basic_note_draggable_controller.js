@@ -16,6 +16,6 @@ export default class extends Controller {
   }
 
   handleDragStart(event) {
-    event.dataTransfer.setData("text/plain", this.noteTarget.parentNode.parentNode.id);
+    event.dataTransfer.setData("text/plain", this.noteTarget.closest(".existing-basic-note-turbo-frame").id);
   }
 }
