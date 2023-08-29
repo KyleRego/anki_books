@@ -33,3 +33,14 @@ Feature: Updating a basic note
     Then I should see "2 validation errors"
     And I should see "Front can't be blank"
     And I should see "Back can't be blank"
+
+  Scenario: Starting creating a note and then starting updating the previous note sibling above
+    When I click the 2nd link with text "New note"
+    And I fill in the basic note edit form with the following data:
+    | Field   | Value |
+    | Front   | front of a new note |
+    | Back    | back of a new note  |
+    And I click "Edit" on the basic note
+    And I click the "Update Basic note" button
+    And I click the "Create Basic note" button
+    Then I should see "front of a new note"

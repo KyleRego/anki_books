@@ -4,8 +4,9 @@
 
 <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
   <div class="reorderable-basic-note-unit" data-controller="new-inserted-reorderable-unit">
-    <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
-      <div data-controller="reorder-basic-notes--basic-note-dropzone">
+    <div data-controller="reorder-basic-notes--basic-note-dropzone">
+      <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
+
         <div data-controller="reorder-basic-notes--basic-note-draggable">
           <div class="draggable-div-of-note" draggable="true"
                 data-reorder-basic-notes--basic-note-draggable-target="note">
@@ -16,13 +17,13 @@
         <div data-reorder-basic-notes--basic-note-dropzone-target="editDropzone" class="note-droppable-area">
           <%= render partial: "basic_notes/edit_basic_note_link" %>
         </div>
-          
-        <div data-reorder-basic-notes--basic-note-dropzone-target="newDropzone" class="note-droppable-area">
-          <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
-        </div>
 
+      <% end %>
+
+      <div data-reorder-basic-notes--basic-note-dropzone-target="newDropzone" class="note-droppable-area">
+        <%= render partial: "basic_notes/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
       </div>
-    <% end %>
+    </div>
   </div>
 <% else %>
   <%= render partial: "basic_notes/flippable_basic_note" %>
