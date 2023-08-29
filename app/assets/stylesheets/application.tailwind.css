@@ -22,10 +22,6 @@ Copyright (C) 2023 Kyle Rego */
   min-height: 1.5rem;
 }
 
-.min-h-8 {
-  min-height: 2rem;
-}
-
 @media (min-width: 640px) {
   .sm\:scrollable-notes {
     max-height: calc(100vh - 2.5rem);
