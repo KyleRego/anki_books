@@ -3,7 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to @domain.title, domain_path(@domain), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+  <%= link_to @domain.title, domain_path(@domain), class: " action-link mr-4" %>
 <% end %>
 
 <h1 class="text-4xl font-bold">
@@ -11,11 +11,11 @@
 </h1>
 
 <div class="mt-4 pb-4 border-b-2">
-  <%= link_to "Edit domain", edit_domain_path(@domain), class: "cursor-pointer font-semibold" %>
+  <%= link_to "Edit domain", edit_domain_path(@domain), class: "action-link" %>
 </div>
 
 <div class="mt-4 pb-4 border-b-2">
-  <h2 class="text-xl font-semibold mb-4">
+  <h2 class="text-xl action-link mb-4">
     Books:
   </h2>
   <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
@@ -28,14 +28,14 @@
           <% end %>
         </div>
       <% end %>
-      <%= form.submit "Update Books", class: "cursor-pointer font-semibold" %>
+      <%= form.submit "Update Books", class: "action-link" %>
     <% end %>
   </div>
 </div>
 
 <div class="change-child-domains-area">
   <div class="mt-4 pb-4 border-b-2">
-    <h2 class="text-xl font-semibold mb-4">
+    <h2 class="text-xl action-link mb-4">
       Child domains:
     </h2>
     <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
@@ -48,7 +48,7 @@
             <% end %>
           </div>
         <% end %>
-        <%= form.submit "Update Child Domains", class: "cursor-pointer font-semibold" %>
+        <%= form.submit "Update Child Domains", class: "action-link" %>
       <% end %>
     </div>
   </div>
@@ -57,7 +57,7 @@
 <div class="mt-4">
   <%= button_to "Delete #{@domain.title}",
     domain_path(@domain),
-    class: "text-red-500 hover:text-red-600 font-semibold",
+    class: "text-red-500 hover:text-red-600 action-link",
     method: :delete,
     form: { data: { turbo_confirm: "Are you sure you want to delete #{@domain.title}?"} } %>
 </div>

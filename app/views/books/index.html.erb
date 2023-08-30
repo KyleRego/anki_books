@@ -5,7 +5,7 @@
 <h1 class="text-4xl font-bold mb-4">Books</h1>
 
 <% @books.each do |book| %>
-  <div><%= link_to book.title, book_articles_path(book), class: "text-blue-500 hover:text-blue-600" %></div>
+  <div><%= link_to book.title, book_articles_path(book) %></div>
 <% end %>
 
-<div class="my-4"><%= link_to "New book", new_book_path %></div>
+<div class="my-4"><%= link_to "New book", new_book_path, class: "action-link" %></div>

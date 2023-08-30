@@ -8,7 +8,7 @@
 
 <% @domains.each do |domain| %>
   <div>
-    <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
+    <%= link_to domain.title, domain_path(domain) %>
   </div>
 <% end %>
 

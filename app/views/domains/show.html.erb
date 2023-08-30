@@ -3,8 +3,8 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to "Manage domain", manage_domain_path(@domain), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
-  <%= link_to "Study cards", study_domain_cards_path(@domain), class: "text-blue-500 hover:text-blue-600 font-semibold mr-4" %>
+  <%= link_to "Manage domain", manage_domain_path(@domain), class: "font-semibold mr-4" %>
+  <%= link_to "Study cards", study_domain_cards_path(@domain), class: "font-semibold mr-4" %>
 <% end %>
 
 <h1 class="text-4xl font-bold">
@@ -14,7 +14,7 @@
 <% if @parent_domain %>
 <div class="mt-4 pb-4 border-b-2">
   <h2 class="text-lg font-bold">
-  Parent domain: <%= link_to @parent_domain.title, domain_path(@parent_domain), class: "text-blue-500 hover:text-blue-600" %>
+  Parent domain: <%= link_to @parent_domain.title, domain_path(@parent_domain), class: "" %>
   </h2>
 </div>
 <% end %>
@@ -24,7 +24,7 @@
     <h2 class="pb-2 text-xl font-semibold">Books:</h2>
     <% @books.each do |book| %>
       <div>
-        <%= link_to book.title, book_articles_path(book), class: "text-blue-500 hover:text-blue-600" %>
+        <%= link_to book.title, book_articles_path(book) %>
       </div>
     <% end %>
   </div>
@@ -35,7 +35,7 @@
     <h2 class="pb-2 text-xl font-semibold">Child domains:</h2>
     <% @child_domains.each do |domain| %>
       <div>
-        <%= link_to domain.title, domain_path(domain), class: "text-blue-500 hover:text-blue-600" %>
+        <%= link_to domain.title, domain_path(domain) %>
       </div>
     <% end %>
   </div>

@@ -4,7 +4,7 @@
 
 <div class="mx-auto">
   <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-    <div class="border border-blue-400 bg-blue-50 font-semibold text-center mx-auto px-4 pb-2 pt-8 my-4">
+    <div class="border border-blue-400 bg-blue-50 text-center mx-auto px-4 pb-2 pt-8 my-4">
 
       <%= render "errors" %>
 
@@ -22,7 +22,7 @@
       <%= hidden_field :options, :on_study_cards, value: on_study_cards_value %>
 
       <div class="inline">
-        <%= form.submit class: "cursor-pointer font-semibold" %>
+        <%= form.submit class: "action-link" %>
       </div>
 
     </div>

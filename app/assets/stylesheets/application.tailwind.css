@@ -9,12 +9,20 @@ Copyright (C) 2023 Kyle Rego */
 @import "actiontext.css";
 
 @layer components {
-  .trix-content a {
+  a {
     @apply text-blue-500;
   }
 
-  .trix-content a:hover {
+  a:hover {
     @apply text-blue-600; 
+  }
+
+  .action-link {
+    @apply text-black font-medium cursor-pointer;
+  }
+
+  .action-link:hover {
+    @apply text-black font-semibold;
   }
 }
 

@@ -10,7 +10,7 @@
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
     <%= select_tag("book_id", options_from_collection_for_select(@other_books, :id, :title), title: "Move the article to a different book") %>
     <br>
-    <%= form.submit "Move this article to a different book", class: "cursor-pointer font-semibold mt-4" %>
+    <%= form.submit "Move this article to a different book", class: "action-link mt-4" %>
   <% end %>
 </div>
 
@@ -27,14 +27,14 @@
     <% end %>
     <%= select_tag("target_article_id", options_from_collection_for_select(@other_articles, :id, :title), title: "Move basic notes to a different article") %>
     <br>
-    <%= form.submit "Transfer selected basic notes to a different article", class: "cursor-pointer font-semibold mt-4" %>
+    <%= form.submit "Transfer selected basic notes to a different article", class: "action-link mt-4" %>
   <% end %>
 </div>
 
 <div class="mt-4">
   <%= button_to "Delete #{@article.title}",
     article_path(@article),
-    class: "text-red-500 hover:text-red-600 font-semibold",
+    class: "text-red-500 hover:text-red-600 action-link",
     method: :delete,
     form: { data: { turbo_confirm: "Are you sure you want to delete #{@article.title}?"} } %>
 </div>
