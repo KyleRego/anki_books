@@ -2,8 +2,6 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h1 class="text-4xl font-bold mb-2">
-  Editing <%= @book.title %>
-</h1>
+<h2>Edit book: <%= @book.title %></h2>
 
 <%= render "form", url: book_path(@book) %>

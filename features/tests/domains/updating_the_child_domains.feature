@@ -21,6 +21,6 @@ Feature: Updating a domain's child domains
     And the child domain checkbox labeled "Test domain 4" should not be checked
     And I click the "Domains" link
     And I click the "Test domain 2" link
-    Then I should see "Parent domain: Test domain 1"
+    Then I should see "Parent domain (Test domain 1)"
     And I click the "Test domain 1" link
     Then I should see "Test domain 1"

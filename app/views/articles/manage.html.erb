@@ -2,9 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h1 class="text-4xl font-bold">
-  Manage article: <%= @article.title %>
-</h1>
+<h2>Manage article: <%= @article.title %></h2>
 
 <div class="mt-4 pb-4 border-b-2">
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>

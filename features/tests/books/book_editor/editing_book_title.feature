@@ -13,7 +13,7 @@ Feature: Editing a book's title
     And I click the "Edit book" link
 
   Scenario: Visiting the edit book page
-    Then I should see "Editing My first book"
+    Then I should see "Edit book: My first book"
 
   Scenario: Updating the book title
     When I fill in the "Title" field with "new title"

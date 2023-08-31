@@ -3,21 +3,19 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to @domain.title, domain_path(@domain), class: " action-link mr-4" %>
+  <%= link_to @domain.title, domain_path(@domain), class: "font-semibold mr-4" %>
 <% end %>
 
-<h1 class="text-4xl font-bold">
-  Manage domain: <%= @domain.title %>
-</h1>
+<h2>Manage domain: <%= @domain.title %></h2>
 
 <div class="mt-4 pb-4 border-b-2">
   <%= link_to "Edit domain", edit_domain_path(@domain), class: "action-link" %>
 </div>
 
 <div class="mt-4 pb-4 border-b-2">
-  <h2 class="text-xl action-link mb-4">
+  <h3 class="mb-4">
     Books:
-  </h2>
+  </h3>
   <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
     <%= form_with(model: @domain, url: change_domain_books_path(@domain)) do |form| %>
       <% @books_options.each do |book_option| %>
@@ -35,9 +33,9 @@
 
 <div class="change-child-domains-area">
   <div class="mt-4 pb-4 border-b-2">
-    <h2 class="text-xl action-link mb-4">
+    <h3 class="mb-4">
       Child domains:
-    </h2>
+    </h3>
     <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
       <%= form_with(model: @domain, url: change_child_domains_path(@domain)) do |form| %>
         <% @child_domains_options.each do |domain_option| %>

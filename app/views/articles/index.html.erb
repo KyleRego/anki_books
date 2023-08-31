@@ -7,9 +7,7 @@
   <%= link_to "Study cards", study_book_cards_path(@book), class: "font-semibold mr-4" %>
 <% end %>
 
-<h1 class="text-4xl font-bold">
-  <%= @book.title %>
-</h1>
+<h2><%= @book.title %></h2>
 
 <div class="my-4">
   <%= link_to "Show book", book_path(@book), class: "" %>

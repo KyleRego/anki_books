@@ -38,39 +38,41 @@ Copyright (C) 2023 Kyle Rego */
   font-size: 16px;
 }
 
+/* TODO: Figure out a way to not need these header rulesets
+They are needed right now to overwrite the default Trix stylesheet styles */
 .trix-content h1 {
   font-size: 36px !important;
-  font-weight: bold;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
 .trix-content h2 {
   font-size: 32px !important;
-  font-weight: bold;
+  font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 .trix-content h3 {
   font-size: 28px !important;
-  font-weight: bold;
+  font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 .trix-content h4 {
   font-size: 24px !important;
-  font-weight: bold;
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 
 .trix-content h5 {
   font-size: 20px !important;
-  font-weight: bold;
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 
 .trix-content h6 {
   font-size: 16px !important;
-  font-weight: bold;
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 

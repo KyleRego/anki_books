@@ -7,12 +7,12 @@
 <% end %>
 
 <%= form_with(model: @article, url:) do |form| %>
-  <div class="field mb-2">
+  <div class="my-2">
     <%= form.label :title %>
     <%= form.text_field :title, class: "w-full" %>
   </div>
 
-  <div class="field" data-controller="article-editor" data-article-editor-target="editorContainer">
+  <div data-controller="article-editor" data-article-editor-target="editorContainer">
     <%= form.label :content %>
     <%= form.rich_text_area :content %>
   </div>
