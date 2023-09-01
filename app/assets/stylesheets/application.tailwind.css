@@ -63,14 +63,7 @@ Copyright (C) 2023 Kyle Rego */
 }
 
 @media (min-width: 640px) {
-  .sm\:scrollable-notes {
-    max-height: calc(100vh - 2.5rem);
-    overflow-x: auto;
-    overflow-y: scroll;
-  }
-
-  .sm\:sticky-notes {
-    position: sticky;
-    top: 0.5rem;
+  .sm\:max-height-calc-from-screen {
+    max-height: calc(100vh - 4rem);
   }
 }

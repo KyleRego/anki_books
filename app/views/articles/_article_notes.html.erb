@@ -3,23 +3,21 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
-<div id="article-notes-<%= @article.id %>" class="sm:sticky-notes">
+<%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
+<div id="article-notes-<%= @article.id %>"
+     class="sm:max-height-calc-from-screen sm:sticky sm:top-12 sm:w-4/12 sm:ml-4
+            sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full reorderable-basic-note-units-container">
 
   <% if logged_in? %>
-    <div>
-      <%= link_to("Edit article", edit_article_path(@article), class: "action-link mr-4") %>
-    </div>
+    <div><%= link_to("Edit article", edit_article_path(@article), class: "action-link mr-4") %></div>
   <% end %>
 
-  <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
-  <div class="sm:scrollable-notes reorderable-basic-note-units-container">
-    <% if logged_in? %>
-      <%= render "basic_notes/first_new_basic_note_link" %>
-    <% end %>
+  <% if logged_in? %>
+    <%= render "basic_notes/first_new_basic_note_link" %>
+  <% end %>
 
-    <% @basic_notes&.each do |basic_note| %>
-      <% @basic_note = basic_note %>
-      <%= render template: "basic_notes/show" %>
-    <% end %>
-  </div>
+  <% @basic_notes&.each do |basic_note| %>
+    <% @basic_note = basic_note %>
+    <%= render template: "basic_notes/show" %>
+  <% end %>
 </div>

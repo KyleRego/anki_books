@@ -1,14 +1,8 @@
 <div class="flex flex-col sm:flex-row pb-4 mb-4 border-b-2">
   <% if @basic_notes.any? %>
-    <div class="sm:w-8/12">
-      <%= @article.content %>
-    </div>
-    <div class="mt-4 sm:w-4/12 sm:ml-4 sm:mt-4">
-      <%= render "book_article_notes" %>
-    </div>
+    <div class="sm:w-8/12"><%= @article.content %></div>
+    <%= render "book_article_notes" %>
   <% else %>
-    <div>
-      <%= @article.content %>
-    </div>
+    <div><%= @article.content %></div>
   <% end %>
 </div>

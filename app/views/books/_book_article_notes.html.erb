@@ -2,20 +2,19 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="sm:sticky-notes">
-  <% if logged_in? %>
-    <div>
-      <%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %>
-    </div>
-  <% end %>
+<div class="sm:max-height-calc-from-screen sm:sticky sm:top-12 sm:w-4/12 sm:ml-4
+            sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full">
 
-  <div class="sm:scrollable-notes h-full flex-1 flex flex-col justify-between">
-    <% @basic_notes&.each do |basic_note| %>
+    <% if logged_in? %>
       <div>
-        <% @basic_note = basic_note %>
-        <%= render partial: "basic_notes/flippable_basic_note" %>
-        <div class="min-h-6"></div>
+        <%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %>
       </div>
     <% end %>
-  </div>
+
+    <% @basic_notes&.each do |basic_note| %>
+      <% @basic_note = basic_note %>
+      <%= render partial: "basic_notes/flippable_basic_note" %>
+      <div class="min-h-6"></div>
+    <% end %>
+
 </div>
