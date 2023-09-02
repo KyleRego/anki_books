@@ -5,5 +5,5 @@
 # frozen_string_literal: true
 
 # :nodoc:
-module BooksHelper
+module ConceptsHelper
 end

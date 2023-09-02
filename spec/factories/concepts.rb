@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :concept do
-    name { "MyString" }
-    concept { nil }
+    name { "Concept name" }
+    parent_concept { nil }
   end
 end

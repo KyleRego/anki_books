@@ -16,7 +16,7 @@ RSpec.describe "POST /books", "#create" do
 
     it "creates a new book" do
       expect { post_books_create }.to change(Book, :count).by 1
-      expect(user.books.last.title).to eq title
+      expect(user.books.reload.last.title).to eq title
     end
 
     context "when the title parameter is blank" do

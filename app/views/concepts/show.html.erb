@@ -1,0 +1,18 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<% content_for :page_specific_links do %>
+  <%= link_to "Manage concept", manage_concept_path(@concept), class: "font-semibold mr-4" %>
+<% end %>
+
+<h2><%= @concept.name %></h2>
+
+<% if @articles.any? %>
+  <div class="mt-4 pb-4 border-b-2">
+    <h4 class="pb-2">Articles:</h4>
+    <% @articles.each do |article| %>
+      <div><%= link_to article.title, article_path(article) %></div>
+    <% end %>
+  </div>
+<% end %>

@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
   patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"
 
+  resources :concepts, except: %i[destroy]
+  get "/concepts/:id/manage", to: "concepts#manage", as: "manage_concept"
+
   resources :books, except: %i[destroy] do
     resources :articles, only: %i[new index]
   end

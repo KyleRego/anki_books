@@ -87,7 +87,7 @@ class BooksController < ApplicationController
     @book = current_user.books.find_by(id: params[:id])
     return if @book
 
-    redirect_to root_path, flash: { alert: "Book not found" }
+    not_found_or_unauthorized
   end
 
   def set_articles
