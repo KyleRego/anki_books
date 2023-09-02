@@ -9,7 +9,6 @@
 class ArticlesController < ApplicationController
   before_action :require_login
   before_action :set_article, except: %i[index new create]
-  before_action :check_user_can_access_article, except: %i[index new create]
 
   def index
     @book = Book.find_by(id: params[:book_id])
@@ -145,9 +144,6 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.find_by(id: params[:id])
-  end
-
-  def check_user_can_access_article
     if @article.nil?
       not_found_or_unauthorized
     elsif @article.system

@@ -11,7 +11,11 @@
 class HomepageController < ApplicationController
   before_action :setup_homepage
 
-  def show; end
+  def show
+    return unless current_user&.can_access_article?(article: @article)
+
+    @book = @article.book
+  end
 
   def study_cards; end
 

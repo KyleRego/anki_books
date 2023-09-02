@@ -22,6 +22,7 @@ Feature: Moving basic notes to a different article
     And I check the checkbox for the basic note with front "Front of note 5"
     And I click the "Transfer selected basic notes to a different article" button
     Then I should see "Selected basic notes moved to test article 2."
+    And I click the "Books" link
     And I click the "test book 1" link
     And I click the "test article 2" link
     Then I should see "Front of note 0"

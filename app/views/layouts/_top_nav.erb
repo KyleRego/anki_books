@@ -8,16 +8,11 @@
     <%= yield :page_specific_links %>
 
     <% if logged_in? %>
-
-      <% if show_link_to_book_in_top_nav?(book: @book) %>
-        <%= link_to("#{@book.title}", book_articles_path(@book), class: "font-semibold mr-4")  %>
-      <% end %>
-
       <% if show_link_to_concepts_in_top_nav? %>
         <%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %>
       <% end %>
 
-      <% if show_link_to_my_books_in_top_nav? %>
+      <% if show_link_to_books_in_top_nav? %>
         <%= link_to("Books", books_path, class: "font-semibold mr-4") %>
       <% end %>
 

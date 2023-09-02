@@ -1,3 +1,11 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<% content_for :page_specific_links do %>
+  <%= link_to @book.title, book_path(@book), class: "font-semibold mr-4" %>
+<% end %>
+
 <% @book.articles.each do |article| %>
   <% @article = article %>
   <% @basic_notes = article.basic_notes %>
