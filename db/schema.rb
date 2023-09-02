@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_013559) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_02_163402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -63,6 +63,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_013559) do
     t.index ["ordinal_position", "book_id"], name: "index_articles_on_ordinal_position_and_book_id", unique: true
   end
 
+  create_table "articles_concepts", force: :cascade do |t|
+    t.uuid "article_id", null: false
+    t.uuid "concept_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["concept_id", "article_id"], name: "index_articles_concepts_on_concept_id_and_article_id", unique: true
+  end
+
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "front"
     t.text "back"
@@ -97,6 +105,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_013559) do
     t.index ["book_id", "user_id"], name: "index_books_users_on_book_id_and_user_id", unique: true
   end
 
+  create_table "concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "parent_concept_id"
+    t.uuid "user_id", null: false
+  end
+
   create_table "domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -123,6 +139,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_013559) do
   add_foreign_key "books_domains", "domains"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
+  add_foreign_key "concepts", "concepts", column: "parent_concept_id"
+  add_foreign_key "concepts", "users"
   add_foreign_key "domains", "domains", column: "parent_domain_id"
   add_foreign_key "domains", "users"
 end

@@ -18,6 +18,7 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :concepts, dependent: :destroy
   has_many :domains, dependent: :destroy
 
   has_many :books_users, dependent: :destroy
