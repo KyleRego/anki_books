@@ -68,7 +68,7 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
       end
     end
 
-    it "returns a 404 response if the second book does not exist" do
+    it "returns a 422 response if the second book does not exist" do
       patch change_article_book_path(article), params: { book_id: "asdf" }
       expect(response).to have_http_status :unprocessable_entity
     end

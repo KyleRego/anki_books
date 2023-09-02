@@ -74,7 +74,10 @@ class ArticlesController < ApplicationController
 
   def change_note_ordinal_position
     note = BasicNote.find(params[:note_id])
-    return unless @current_user.can_access_note?(note:)
+    unless @current_user.can_access_note?(note:)
+      head :unprocessable_entity
+      return
+    end
 
     new_ordinal_position = params[:new_ordinal_position].to_i
     if @article.id == note.article_id

@@ -83,7 +83,18 @@ RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_
       let(:note_to_move) { create(:basic_note, article: original_article) }
       let(:target_article) { create(:article, book:) }
 
-      context "when it is the only note both articles" do
+      context "when the note does not belong to the user" do
+        let(:note_to_move) do
+          create(:basic_note, article: create(:article, book: create(:book)))
+        end
+
+        it "returns a 422 response" do
+          post_articles_change_note_ordinal_position
+          expect(response).to have_http_status :unprocessable_entity
+        end
+      end
+
+      context "when it is the only note in both articles" do
         let(:new_ordinal_position) { 0 }
 
         it "moves the note to the target article" do
