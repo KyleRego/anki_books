@@ -17,4 +17,6 @@ class Concept < ApplicationRecord
   has_many :articles, through: :articles_concepts
 
   validates :name, presence: true
+
+  before_save { self.name = name.strip }
 end
