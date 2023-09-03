@@ -4,8 +4,8 @@
 
 # frozen_string_literal: true
 
-# :nodoc:
-class ArticlesConcept < ApplicationRecord
-  belongs_to :article
-  belongs_to :concept
+class DropArticlesConcepts < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :articles_concepts
+  end
 end

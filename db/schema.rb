@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_02_163402) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_03_120844) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -61,14 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_163402) do
     t.uuid "book_id", null: false
     t.integer "ordinal_position", null: false
     t.index ["ordinal_position", "book_id"], name: "index_articles_on_ordinal_position_and_book_id", unique: true
-  end
-
-  create_table "articles_concepts", force: :cascade do |t|
-    t.uuid "article_id", null: false
-    t.uuid "concept_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["concept_id", "article_id"], name: "index_articles_concepts_on_concept_id_and_article_id", unique: true
   end
 
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -7,12 +7,3 @@
 <% end %>
 
 <h2><%= @concept.name %></h2>
-
-<% if @articles.any? %>
-  <div class="mt-4 pb-4 border-b-2">
-    <h4 class="pb-2">Articles:</h4>
-    <% @articles.each do |article| %>
-      <div><%= link_to article.title, article_path(article) %></div>
-    <% end %>
-  </div>
-<% end %>

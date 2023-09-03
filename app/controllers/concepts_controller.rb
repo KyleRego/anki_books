@@ -13,9 +13,7 @@ class ConceptsController < ApplicationController
     @concepts = current_user.concepts.order(:name)
   end
 
-  def show
-    @articles = @concept.articles
-  end
+  def show; end
 
   def manage; end
 
