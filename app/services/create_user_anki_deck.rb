@@ -55,6 +55,7 @@ class CreateUserAnkiDeck
   def target_directory
     tmp_directory = Dir.tmpdir
     @target_directory = "#{tmp_directory}/#{timestamp}"
+    Rails.logger.info "@target_directory for new Anki package is #{@target_directory}"
     FileUtils.mkdir_p(@target_directory)
     @target_directory
   end
