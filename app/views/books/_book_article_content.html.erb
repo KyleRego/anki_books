@@ -2,11 +2,9 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="flex flex-col sm:flex-row pb-4 mb-4 border-b-2">
-  <% if @basic_notes.any? %>
-    <div class="sm:w-8/12"><%= @article.content %></div>
-    <%= render "book_article_notes" %>
-  <% else %>
-    <div><%= @article.content %></div>
-  <% end %>
-</div>
+<% if @basic_notes.any? %>
+  <div class="sm:w-8/12"><%= @article.content %></div>
+  <%= render "book_article_notes" %>
+<% else %>
+  <div><%= @article.content %></div>
+<% end %>

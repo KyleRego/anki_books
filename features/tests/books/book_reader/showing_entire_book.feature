@@ -14,6 +14,6 @@ Feature: Creating an article
     And I am logged in as the test user
     And I click the "Books" link
     And I click the "My first book" link
-    And I click the "Show book" link
     And I click the "My first book" link
-    Then I should see "My first book"
+    Then I should see "Books"
+    And I should see "My first book"

@@ -6,8 +6,15 @@
   <%= link_to @book.title, book_path(@book), class: "font-semibold mr-4" %>
 <% end %>
 
-<% @book.articles.each do |article| %>
-  <% @article = article %>
-  <% @basic_notes = article.basic_notes %>
-  <%= render partial: "book_article_content" %>
+<% article_count = @book.articles.count %>
+<% @book.articles.each_with_index do |article, index| %>
+  <% if index != article_count - 1 %>
+  <div class="flex flex-col sm:flex-row mb-4 pb-4 border-b-2">
+  <% else %>
+  <div class="flex flex-col sm:flex-row mb-4">
+  <% end %>
+    <% @article = article %>
+    <% @basic_notes = article.basic_notes %>
+    <%= render partial: "book_article_content" %>
+  </div>
 <% end %>

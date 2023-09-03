@@ -7,13 +7,9 @@
   <%= link_to "Study cards", study_book_cards_path(@book), class: "font-semibold mr-4" %>
 <% end %>
 
-<h2><%= @book.title %></h2>
+<h2><%= link_to @book.title, book_path(@book), class: "text-black" %></h2>
 
 <div class="my-4">
-  <%= link_to "Show book", book_path(@book), class: "" %>
-</div>
-
-<div class="mt-4">
   <% @articles.each do |article| %>
     <%= link_to article.title, article_path(article), class: "" %>
     <br>
@@ -21,5 +17,5 @@
 </div>
 
 <div class="mt-4">
-  <%= link_to "New article", new_book_article_path(@book) %>
+  <%= link_to "New article", new_book_article_path(@book), class: "action-link" %>
 </div>
