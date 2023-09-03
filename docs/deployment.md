@@ -22,7 +22,7 @@ Note that `apache2.conf` and `ankibooks.io.conf` have absolute file path referen
 - Install the Apache web server on the machine and test that you can see the Apache test page by visiting the IP address.
   - At this time you might replace that `index.html` with something else since it may give away your server's operating system and Apache version.
 - Buy a domain name and get a digital certificate.
-  - If your IP address is dynamic, get an A+ Dynamic DNS record and use `ddclient` to update the DNS record's IP address as it changes.
+  - If your IP address is dynamic, get an A+ Dynamic DNS record. There are ways to update the DNS record if your IP address changes (this can happen when your gateway router restarts, for example).
 - Set up a port forwarding rule for port 443 (HTTPS) and possibly 80 as well (HTTP), and open these ports on the firewall with `ufw`.
 - Configure Apache.
   - Test that you can see the Apache test page by visiting your domain name over HTTPS.
@@ -38,4 +38,4 @@ The server will also need libvips installed:
 sudo apt-get install libvips libvips-tools
 ```
 
-You can use other Linux distributions/operating systems, web servers, and application servers, or do this on the cloud instead of a local machine (the above is just generally what I did). Other relational databases could be used, but Postgres is recommended because the migrations assume that the `pgcrypto` extension is being used and I'm not sure what changes may need to made to account for that. It may also be good to get the application running locally before doing any of the above.
+You can use other Linux distributions/operating systems, web servers, and application servers, or do this on the cloud instead of a local machine (the above is just generally what I did). Other relational databases could be used, but PostgreSQL is recommended because the migrations assume that the `pgcrypto` extension is being used and I'm not sure what changes may need to made to account for that. It may also be good to get the application running locally before doing any of the above.

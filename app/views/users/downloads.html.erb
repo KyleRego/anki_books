@@ -5,8 +5,16 @@
 <h2 class="mb-4">Downloads</h2>
 
 <div class="my-4">
-  <%= link_to "Download Anki deck (all books)", user_download_anki_deck_path, data: { turbo: "false" }, class: "action-link" %>
+  <%= link_to "Create and download Anki deck", user_download_anki_deck_path, data: { turbo: "false" }, class: "action-link" %>
 </div>
+
+<% if current_user.anki_package.attached? %>
+<div class="my-4">
+  <%= link_to "Download Anki deck created by job",
+      rails_blob_path(current_user.anki_package, disposition: "attachment"),
+      data: { turbo: "false" }, class: "action-link" %>
+</div>
+<% end %>
 
 <div class="my-4">
   <%= link_to "Download books data", download_books_data_path, data: { turbo: "false" }, class: "action-link" %>

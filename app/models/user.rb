@@ -24,9 +24,11 @@ class User < ApplicationRecord
   has_many :books_users, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_users
 
+  has_one_attached :anki_package
+
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true, length: { minimum: 12 }
+  validates :password, presence: true, length: { minimum: 12 }, on: :create
 
   ##
   # Returns all of the user's basic notes
@@ -60,5 +62,10 @@ class User < ApplicationRecord
                    inner join books_users on books_users.book_id = books.id
                    inner join users on books_users.user_id = users.id
                    where users.id = '#{id}'").sample
+  end
+
+  def update_anki_package(package_path:, name_for_attachment:)
+    anki_package.purge
+    anki_package.attach(io: File.open(package_path), filename: name_for_attachment)
   end
 end
