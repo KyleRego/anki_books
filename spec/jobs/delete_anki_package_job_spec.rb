@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe DeleteAnkiDeckJob do
+RSpec.describe DeleteAnkiPackageJob do
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
@@ -18,7 +18,7 @@ RSpec.describe DeleteAnkiDeckJob do
   end
 
   context "when there is an Anki deck file to delete" do
-    let(:anki_deck_file_path) { CreateUserAnkiDeck.perform(user:) }
+    let(:anki_deck_file_path) { CreateUserAnkiPackage.perform(user:) }
 
     before do
       anki_deck_file_path

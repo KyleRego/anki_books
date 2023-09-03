@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-class CreateUserAnkiDeck
+class CreateUserAnkiPackage
   def self.path_to_anki_package_regex
     %r{\A/tmp/\d{13}/anki_books_package_\d{13}.apkg\z}
   end

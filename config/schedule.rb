@@ -22,5 +22,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 2.hours do
-  runner "UpdateUserAnkiDeckJob.perform_now"
+  runner "UpdateUserAnkiPackagesJob.perform_now"
 end

@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe CreateUserAnkiDeck do
+RSpec.describe CreateUserAnkiPackage do
   describe ".perform" do
     subject(:create_user_anki_deck) { described_class.perform(user:) }
 
