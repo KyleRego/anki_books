@@ -11,8 +11,10 @@ class ArticlesController < ApplicationController
   before_action :set_article, except: %i[index new create]
 
   def index
-    @book = Book.find_by(id: params[:book_id])
+    @book = Book.includes(:domains).includes(:articles)
+                .find_by(id: params[:book_id])
     if @book && current_user.can_access_book?(book: @book)
+      @domains = @book.domains
       @articles = @book.ordered_articles
     else
       not_found_or_unauthorized

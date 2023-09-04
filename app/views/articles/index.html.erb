@@ -9,10 +9,19 @@
 
 <h2><%= link_to @book.title, book_path(@book), class: "text-black" %></h2>
 
+<% if @domains.any? %>
+  <div class="my-4 pb-4 border-b-2">
+    <h4 class="pb-2">Domains:</h4>
+    <% @domains.each do |domain| %>
+      <div><%= link_to domain.title, domain_path(domain) %></div>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="my-4">
+  <h4 class="pb-2">Articles:</h4>
   <% @articles.each do |article| %>
-    <%= link_to article.title, article_path(article), class: "" %>
-    <br>
+    <div><%= link_to article.title, article_path(article) %></div>
   <% end %>
 </div>
 
