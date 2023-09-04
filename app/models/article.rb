@@ -36,4 +36,12 @@ class Article < ApplicationRecord
   def notes_count
     basic_notes.count
   end
+
+  def cloze_sentences(concept_name:)
+    article_content = content.to_plain_text
+    concept_sentence_regex = /(?:\A|\.|\?|!)([^.]*\b#{concept_name}\b[^.]*)(?=\.)/
+    article_content.scan(concept_sentence_regex).flatten.map do |sentence|
+      "#{sentence.strip}."
+    end
+  end
 end
