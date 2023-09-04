@@ -4,6 +4,23 @@
 
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: concepts
+#
+#  id                :uuid             not null, primary key
+#  name              :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  parent_concept_id :uuid
+#  user_id           :uuid             not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (parent_concept_id => concepts.id)
+#  fk_rails_...  (user_id => users.id)
+#
+
 ##
 # A concept is used to generate cloze deletion cards from the long-text
 # its associated article.
@@ -12,6 +29,8 @@ class Concept < ApplicationRecord
 
   belongs_to :parent_concept, optional: true, class_name: "Concept", inverse_of: :concepts
   has_many :concepts, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
+
+  has_many :cloze_notes, dependent: :destroy
 
   validates :name, presence: true
 

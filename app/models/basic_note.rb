@@ -22,6 +22,9 @@
 #
 #  fk_rails_...  (article_id => articles.id)
 #
+
+##
+# Represents a Basic Anki note (front and back flashcard)
 class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable
