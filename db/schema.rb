@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_03_163614) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_04_210335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -100,11 +100,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_163614) do
   create_table "cloze_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "sentence", null: false
     t.uuid "article_id", null: false
-    t.uuid "concept_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_cloze_notes_on_article_id"
-    t.index ["concept_id"], name: "index_cloze_notes_on_concept_id"
   end
 
   create_table "concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -142,7 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_163614) do
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
   add_foreign_key "cloze_notes", "articles"
-  add_foreign_key "cloze_notes", "concepts"
   add_foreign_key "concepts", "concepts", column: "parent_concept_id"
   add_foreign_key "concepts", "users"
   add_foreign_key "domains", "domains", column: "parent_domain_id"

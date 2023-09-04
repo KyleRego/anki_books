@@ -25,5 +25,4 @@
 # Represents an Anki Cloze Deletion note
 class ClozeNote < ApplicationRecord
   belongs_to :article
-  belongs_to :concept
 end

@@ -30,8 +30,6 @@ class Concept < ApplicationRecord
   belongs_to :parent_concept, optional: true, class_name: "Concept", inverse_of: :concepts
   has_many :concepts, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
 
-  has_many :cloze_notes, dependent: :destroy
-
   validates :name, presence: true
 
   before_save { self.name = name.strip }
