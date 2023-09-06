@@ -3,13 +3,8 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <div class="sm:max-height-calc-from-screen sm:sticky sm:top-12 sm:w-4/12 sm:ml-4
-            sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full">
-
-    <% if logged_in? %>
-      <div>
-        <%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %>
-      </div>
-    <% end %>
+            sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full
+            border-b-4">
 
     <% @basic_notes&.each do |basic_note| %>
       <% @basic_note = basic_note %>
