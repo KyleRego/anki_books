@@ -20,5 +20,6 @@ FactoryBot.define do
   factory :concept do
     name { "Concept name" }
     parent_concept { nil }
+    user { nil }
   end
 end

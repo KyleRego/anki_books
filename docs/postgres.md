@@ -61,14 +61,6 @@ It is probably best to add an alias for this command. With Ubuntu, adding the fo
 
 The current design is to use only UUIDs for primary keys.
 
-## pgcrypto
-
-The following line in the `CreateArticles` migration enables the `ppgcrypto` PostgreSQL extension:
-
-```
-enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
-```
-
 ## Backups
 
 Use the `pg_dump` command to create a backup of the database:

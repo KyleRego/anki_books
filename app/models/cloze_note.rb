@@ -25,4 +25,7 @@
 # Represents an Anki Cloze Deletion note
 class ClozeNote < ApplicationRecord
   belongs_to :article
+
+  has_many :cloze_notes_concepts, dependent: :destroy
+  has_many :concepts, through: :cloze_notes_concepts
 end

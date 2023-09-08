@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_210335) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_08_014721) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -105,6 +106,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_210335) do
     t.index ["article_id"], name: "index_cloze_notes_on_article_id"
   end
 
+  create_table "cloze_notes_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cloze_note_id", null: false
+    t.uuid "concept_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cloze_note_id", "concept_id"], name: "index_cloze_notes_concepts_on_cloze_note_id_and_concept_id", unique: true
+  end
+
   create_table "concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -140,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_210335) do
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
   add_foreign_key "cloze_notes", "articles"
+  add_foreign_key "cloze_notes_concepts", "cloze_notes"
+  add_foreign_key "cloze_notes_concepts", "concepts"
   add_foreign_key "concepts", "concepts", column: "parent_concept_id"
   add_foreign_key "concepts", "users"
   add_foreign_key "domains", "domains", column: "parent_domain_id"

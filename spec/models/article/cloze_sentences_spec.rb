@@ -76,4 +76,20 @@ RSpec.describe Article, "#cloze_sentences" do
       expect(cloze_sentences).to eq(["Here is TCP in a sentence with TCP in it twice."])
     end
   end
+
+  context "when article content has the last word of the last sentence as the match" do
+    let(:content) { "First sentence, here. Second sentence ends up TCP." }
+
+    it "returns the matching sentence" do
+      expect(cloze_sentences).to eq(["Second sentence ends up TCP."])
+    end
+  end
+
+  context "when article content has a sentence which is just the concept" do
+    let(:content) { "TCP." }
+
+    it "returns that as a match" do
+      expect(cloze_sentences).to eq(["TCP."])
+    end
+  end
 end
