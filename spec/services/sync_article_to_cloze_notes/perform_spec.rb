@@ -157,8 +157,8 @@ RSpec.describe SyncArticleToClozeNotes, "#perform" do
 
       it "creates a cloze note for that sentence" do
         expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(1)
-        result = "Two types of neuroplasticity are often discussed: structural neuroplasticity and functional neuroplasticity."
-        expect(article.cloze_notes.first.sentence).to eq result
+        expected_result = "Two types of neuroplasticity are often discussed: structural neuroplasticity and functional neuroplasticity."
+        expect(article.cloze_notes.first.sentence).to eq expected_result
       end
     end
 
@@ -169,6 +169,115 @@ RSpec.describe SyncArticleToClozeNotes, "#perform" do
 
       it "creates a cloze note that keeps the quotation mark" do
         expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(2)
+      end
+    end
+
+    context "when there are many concepts" do
+      let!(:concept_one) { create(:concept, user:, name: "nervous system") }
+      let!(:concept_two) { create(:concept, user:, name: "neuron") }
+      let!(:concept_three) { create(:concept, user:, name: "brain") }
+
+      let(:expected_cloze_sentences_after_sync) do
+        # rubocop:disable Layout/LineLength
+        ["However, researchers often describe neuroplasticity as \"the ability to make adaptive changes related to the structure and function of the nervous system.\"",
+         "New neurons are constantly produced and integrated into the central nervous system throughout the life span based on this type of neuroplasticity.",
+         "The core of this phenomenon is based upon synapses and how connections between them change based on neuron functioning.",
+         "Neuroplasticity, also known as neural plasticity, or brain plasticity, is the ability of neural networks in the brain to change through growth and reorganization.",
+         "There are a number of other factors that are thought to play a role in the biological processes underlying the changing of neural networks in the brain.",
+         "Structural plasticity is often understood as the brain's ability to change its neuronal connections.",
+         "Functional plasticity refers to brain's ability to alter and adapt the functional properties of neurons."].sort
+        # rubocop:enable Layout/LineLength
+      end
+
+      it "creates the cloze notes from the article sentences" do
+        expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(7)
+        expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+      end
+
+      context "when there are outdated cloze notes that need to be updated" do
+        before do
+          create(:cloze_note, article:, concepts: [concept_one], sentence: "The nervous system controls the muscles.")
+          create(:cloze_note, article:, concepts: [concept_two], sentence: "A neuron is a type of cell.")
+          create(:cloze_note, article:, concepts: [concept_three], sentence: "The brain can adapt to how it's being used.")
+        end
+
+        it "syncs the cloze notes with the article sentences" do
+          expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(4)
+          expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+        end
+      end
+
+      context "when there is an outdated cloze note for a concept is not present anymore" do
+        before do
+          concept = create(:concept, user:, name: "Organic Chemistry")
+          create(:cloze_note, article:, concepts: [concept], sentence: "Sophomore chemistry students might study Organic Chemistry.")
+        end
+
+        it "deletes the outdated cloze note and syncs the cloze notes with the article sentences" do
+          expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(6)
+          expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+        end
+      end
+    end
+
+    context "when there is a sentence that matches two concepts" do
+      let!(:concept_one) { create(:concept, user:, name: "cytokines") }
+      let!(:concept_two) { create(:concept, user:, name: "phosphorylation") }
+      let(:article_sentence) do
+        # rubocop:disable Layout/LineLength
+        "Some of these factors include synapse regulation via phosphorylation, the role of inflammation and inflammatory cytokines, proteins such as Bcl-2 proteins and neutrophorins, and energy production via mitochondria."
+        # rubocop:enable Layout/LineLength
+      end
+
+      it "creates the cloze note from the article sentence" do
+        expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(1)
+        cloze_note = article.cloze_notes.first
+        expect(cloze_note.sentence).to eq article_sentence
+        expect(cloze_note.concepts.sort_by(&:name)).to eq [concept_one, concept_two]
+      end
+
+      context "when there is an outdated cloze note with those two concepts" do
+        before do
+          create(:cloze_note, article:,
+                              concepts: [concept_one, concept_two],
+                              sentence: "cytokines and phosphorylation.")
+        end
+
+        it "updates the existing cloze note to match the newer article sentence" do
+          expect { sync_article_to_cloze_notes }.not_to change(ClozeNote, :count)
+          cloze_note = article.cloze_notes.first
+          expect(cloze_note.sentence).to eq article_sentence
+          expect(cloze_note.concepts.sort_by(&:name)).to eq [concept_one, concept_two]
+        end
+      end
+
+      context "when the sentence is the same, but there is a new concept that matches the existing cloze note" do
+        before do
+          create(:cloze_note, article:, concepts: [concept_one], sentence: article_sentence)
+        end
+
+        it "updates the existing cloze note to have the new concept" do
+          expect { sync_article_to_cloze_notes }.not_to change(ClozeNote, :count)
+          cloze_note = article.cloze_notes.first
+          expect(cloze_note.sentence).to eq article_sentence
+          expect(cloze_note.concepts.sort_by(&:name)).to eq [concept_one, concept_two]
+        end
+      end
+
+      context "when the sentence is the same, but a concept has been removed from the new version of the sentence" do
+        before do
+          third_concept = create(:concept, user:, name: "blimpy")
+          create(:cloze_note, article:,
+                              concepts: [concept_one, concept_two, third_concept],
+                              sentence: article_sentence.gsub("phosphorylation", "blimpy phosphorylation"))
+        end
+
+        it "updates the existing cloze note to only have the two current concepts" do
+          expect { sync_article_to_cloze_notes }.not_to change(ClozeNote, :count)
+          cloze_note = article.cloze_notes.first
+          expect(cloze_note.sentence).to eq article_sentence
+          expect(cloze_note.concepts.sort_by(&:name)).to eq [concept_one, concept_two]
+        end
       end
     end
   end

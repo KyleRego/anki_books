@@ -112,4 +112,13 @@ RSpec.describe Article, "#cloze_sentences" do
       expect(cloze_sentences).to eq ["Neuroplasticity is also known as neural plasticity."]
     end
   end
+
+  context "when article content has matching sentence with a single quote" do
+    let(:content) { "The brain's in the head." }
+    let(:concept_name) { "brain" }
+
+    it "returns the sentence as a match" do
+      expect(cloze_sentences).to eq ["The brain's in the head."]
+    end
+  end
 end

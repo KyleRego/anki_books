@@ -88,13 +88,12 @@ class SyncArticleToClozeNotes
     end
 
     sentence_concepts_matches.each do |sentence_concepts_match|
-      sentence = sentence_concepts_match.sentence
+      sentence = sentence_concepts_match.sentence.gsub("'", "\\'")
 
       levenshtein_ordered_cloze_notes = article
                                         .cloze_notes
                                         .select("*, levenshtein(sentence, '#{sentence}'::text) AS distance")
                                         .order("distance ASC")
-
       levenshtein_ordered_cloze_notes.each do |cloze_note_with_distance|
         cloze_note_sentence_matches << ClozeNoteSentenceMatch.new(article_sentence: sentence,
                                                                   cloze_note: cloze_note_with_distance,
@@ -106,9 +105,6 @@ class SyncArticleToClozeNotes
     uniq_cloze_note_sentence_matches = sorted_cloze_note_sentence_matches.group_by do |cloze_note_sentence_match|
       cloze_note_sentence_match.cloze_note.sentence
     end.values.map(&:first).group_by(&:article_sentence).values.map(&:first)
-    # sentence_concepts_matches.each { |f| p f }
-    # uniq_cloze_note_sentence_matches.each { |f| p f }
-    # puts
 
     uniq_cloze_note_sentence_matches.each do |cloze_note_sentence_match|
       article_sentence = cloze_note_sentence_match.article_sentence
@@ -121,7 +117,10 @@ class SyncArticleToClozeNotes
     end
 
     sentence_concepts_matches.select { |sc_match| sc_match.cloze_note_synced == false }.each do |sentence_concept_match|
-      cloze_note = article.cloze_notes.create!(sentence: sentence_concept_match.sentence)
+      article_sentence = sentence_concept_match.sentence
+      next if article.cloze_notes.find_by(sentence: article_sentence)
+
+      cloze_note = article.cloze_notes.create!(sentence: article_sentence)
       cloze_note.concepts = sentence_concept_match.concepts
       synced_cloze_note_ids << cloze_note.id
     end
