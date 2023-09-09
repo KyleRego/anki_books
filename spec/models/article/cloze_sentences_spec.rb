@@ -101,4 +101,15 @@ RSpec.describe Article, "#cloze_sentences" do
       expect(cloze_sentences).to eq ["Neuroplasticity is related to the \"nervous system.\""]
     end
   end
+
+  context "when article content has escaped newline characters" do
+    let(:content) do
+      "\n  Neuroplasticity\n\n\nNeuroplasticity is also known as neural plasticity."
+    end
+    let(:concept_name) { "Neuroplasticity" }
+
+    it "returns the sentence as a match" do
+      expect(cloze_sentences).to eq ["Neuroplasticity is also known as neural plasticity."]
+    end
+  end
 end

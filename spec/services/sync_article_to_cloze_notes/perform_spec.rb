@@ -156,8 +156,9 @@ RSpec.describe SyncArticleToClozeNotes, "#perform" do
       end
 
       it "creates a cloze note for that sentence" do
-        pending "need to handle newlines better"
         expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(1)
+        result = "Two types of neuroplasticity are often discussed: structural neuroplasticity and functional neuroplasticity."
+        expect(article.cloze_notes.first.sentence).to eq result
       end
     end
 

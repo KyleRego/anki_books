@@ -48,10 +48,10 @@ class Article < ApplicationRecord
 
   private
 
-  CLOZE_SENTENCE_START = /(?<=\A|\. )/
+  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
   CLOZE_SENTENCE_END = /\."?/
 
   def cloze_sentence_regex(concept_name:)
-    /#{CLOZE_SENTENCE_START}[^.]*\b#{concept_name}\b[^.]*#{CLOZE_SENTENCE_END}/
+    /#{CLOZE_SENTENCE_START}[^.\n]*\b#{concept_name}\b[^.\n]*#{CLOZE_SENTENCE_END}/
   end
 end
