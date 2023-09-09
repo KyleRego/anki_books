@@ -1,0 +1,12 @@
+<div class="trix-content">
+  <h1>Neuroplasticity</h1><div>
+<br>Neuroplasticity, also known as neural plasticity, or brain plasticity, is the ability of neural networks in the brain to change through growth and reorganization.<br><br>
+</div><h2>Neurobiology</h2><div>
+<br>There are different ideas and theories on what biological process allow for neuroplasticity to occur. The core of this phenomenon is based upon synapses and how connections between them change based on neuron functioning. It is widely agreed upon that neuroplasticity takes on many forms, as it is a result of a variety of pathways. These pathways, mainly signaling cascades, allow for gene expression alterations that lead to neuronal changes, and thus neuroplasticity.<br><br>There are a number of other factors that are thought to play a role in the biological processes underlying the changing of neural networks in the brain. Some of these factors include synapse regulation via phosphorylation, the role of inflammation and inflammatory cytokines, proteins such as Bcl-2 proteins and neutrophorins, and energy production via mitochondria.<br><br>
+</div><h2>Types</h2><div>
+<br>Christopher Shaw and Jill McEachern (eds) in "Toward a theory of Neuroplasticity", state that there is no all-inclusive theory that overarches different frameworks and systems in the study of neuroplasticity. However, researchers often describe neuroplasticity as "the ability to make adaptive changes related to the structure and function of the nervous system."<br><br>Two types of neuroplasticity are often discussed: structural neuroplasticity and functional neuroplasticity.<br><br>
+</div><h4>Structural neuroplasticity</h4><div>
+<br>Structural plasticity is often understood as the brain's ability to change its neuronal connections. New neurons are constantly produced and integrated into the central nervous system throughout the life span based on this type of neuroplasticity.<br><br>
+</div><h4>Functional neuroplasticity</h4><div>
+<br>Functional plasticity refers to brain's ability to alter and adapt the functional properties of neurons. Functional plasticity can occur in four known ways namely homologous area adaptation, map expansion, cross- model reassignment, and compensatory masquerade.<br><br>Source: Wikipedia</div>
+</div>

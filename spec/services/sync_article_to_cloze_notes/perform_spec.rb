@@ -143,4 +143,32 @@ RSpec.describe SyncArticleToClozeNotes, "#perform" do
       expect(article.cloze_notes.pluck(:sentence).sort).to eq ["Internet.", "Link layer.", "TCP.", "UDP."]
     end
   end
+
+  context "when article content is article_content.txt" do
+    let(:content) do
+      art_cont_path = Rails.root.join("spec/services/sync_article_to_cloze_notes/article_content.txt")
+      File.read(art_cont_path)
+    end
+
+    context "when one concept that matches one sentence" do
+      before do
+        create(:concept, user:, name: "structural neuroplasticity")
+      end
+
+      it "creates a cloze note for that sentence" do
+        pending "need to handle newlines better"
+        expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(1)
+      end
+    end
+
+    context "when one concept matches a sentence that ends with a quotation around the term" do
+      before do
+        create(:concept, user:, name: "nervous system")
+      end
+
+      it "creates a cloze note that keeps the quotation mark" do
+        expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(2)
+      end
+    end
+  end
 end

@@ -37,11 +37,21 @@ class Article < ApplicationRecord
     basic_notes.count
   end
 
+  ##
+  # Returns an array of strings which are the matching sentences
+  # of the article for the string +concept_name+
   def cloze_sentences(concept_name:)
     article_content = content.to_plain_text
-    concept_sentence_regex = /(?:\A|\.|\?|!)([^.]*\b#{concept_name}\b[^.]*)(?=\.)/
-    article_content.scan(concept_sentence_regex).flatten.map do |sentence|
-      "#{sentence.strip}."
-    end
+    regex_for_concept = cloze_sentence_regex(concept_name:)
+    article_content.scan(regex_for_concept).flatten
+  end
+
+  private
+
+  CLOZE_SENTENCE_START = /(?<=\A|\. )/
+  CLOZE_SENTENCE_END = /\."?/
+
+  def cloze_sentence_regex(concept_name:)
+    /#{CLOZE_SENTENCE_START}[^.]*\b#{concept_name}\b[^.]*#{CLOZE_SENTENCE_END}/
   end
 end

@@ -92,4 +92,13 @@ RSpec.describe Article, "#cloze_sentences" do
       expect(cloze_sentences).to eq(["TCP."])
     end
   end
+
+  context "when article content has a sentence matching a concept that ends in a double quotation" do
+    let(:content) { "Neuroplasticity is related to the \"nervous system.\"" }
+    let(:concept_name) { "nervous system" }
+
+    it "returns that as a match including the quotation marks" do
+      expect(cloze_sentences).to eq ["Neuroplasticity is related to the \"nervous system.\""]
+    end
+  end
 end
