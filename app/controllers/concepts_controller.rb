@@ -13,7 +13,9 @@ class ConceptsController < ApplicationController
     @concepts = current_user.concepts.order(:name)
   end
 
-  def show; end
+  def show
+    @books = @concept.ordered_books
+  end
 
   def manage; end
 

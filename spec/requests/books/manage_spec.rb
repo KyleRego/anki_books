@@ -15,7 +15,7 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
   context "when user is logged in" do
     include_context "when the user is logged in"
 
-    it "redirects to the homepage if the book does not belong to the user" do
+    it "redirects to the homepage when book does not belong to the user" do
       get_books_manage
       expect(response).to redirect_to(root_path)
     end
@@ -27,11 +27,24 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
         get_books_manage
         expect(response).to be_successful
       end
-    end
 
-    it "redirects to the homepage if the book is not found" do
-      get "/books/asdf/manage"
-      expect(response).to redirect_to(root_path)
+      context "when user has many domains" do
+        before { create_list(:domain, 5, user:) }
+
+        it "returns a success response" do
+          get_books_manage
+          expect(response).to be_successful
+        end
+      end
+
+      context "when book is not found (it was deleted)" do
+        before { book.destroy }
+
+        it "redirects to the homepage" do
+          get_books_manage
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

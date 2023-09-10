@@ -9,7 +9,7 @@ Then "screenshot" do
   @i ||= 0
   @i += 1
   page.save_screenshot("screenshot#{@i}.png", full: true)
-  puts "Page screenshot saved to screenshot.png"
+  puts "Page screenshot saved to screenshot#{@i}.png"
 end
 
 Then "show JavaScript console" do

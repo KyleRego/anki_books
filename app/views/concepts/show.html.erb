@@ -7,3 +7,10 @@
 <% end %>
 
 <h2><%= @concept.name %></h2>
+
+<div class="my-4">
+  <h4 class="pb-2">Books:</h4>
+  <% @books.each do |book| %>
+    <div><%= link_to book.title, book_path(book) %></div>
+  <% end %>
+</div>

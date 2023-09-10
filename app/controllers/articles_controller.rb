@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
     @book = Book.includes(:domains).includes(:articles)
                 .find_by(id: params[:book_id])
     if @book && current_user.can_access_book?(book: @book)
-      @domains = @book.domains
+      @domains = @book.ordered_domains
       @articles = @book.ordered_articles
     else
       not_found_or_unauthorized

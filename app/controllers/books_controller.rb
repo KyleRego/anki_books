@@ -48,13 +48,10 @@ class BooksController < ApplicationController
   end
 
   def manage
-    current_domains = @book.domains
-    @domains_options = current_user.domains.map do |domain|
-      id = domain.id
-      title = domain.title
-      selected = current_domains.include?(domain)
-      { id:, title:, selected: }
-    end
+    @book_current_domains = @book.domains
+    @user_domains = current_user.ordered_domains
+    @book_current_concepts = @book.concepts
+    @user_concepts = current_user.ordered_concepts
   end
 
   def change_article_ordinal_position
@@ -70,7 +67,12 @@ class BooksController < ApplicationController
 
   def change_domains
     @book.domains = current_user.domains.where(id: params[:domains_ids])
-    redirect_to manage_book_path(@book), flash: { notice: "Domains updated" }
+    redirect_to manage_book_path(@book), flash: { notice: "Domains successfully updated" }
+  end
+
+  def change_concepts
+    @book.concepts = current_user.concepts.where(id: params[:concepts_ids])
+    redirect_to manage_book_path(@book), flash: { notice: "Concepts successfully updated" }
   end
 
   def study_cards

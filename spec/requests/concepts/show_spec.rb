@@ -26,11 +26,27 @@ RSpec.describe "GET /concepts/:id", "#show" do
         get_concepts_show
         expect(response).to be_successful
       end
-    end
 
-    it "redirects to the homepage if the concept is not found" do
-      get "/concepts/asdf"
-      expect(response).to redirect_to(root_path)
+      context "when the concept is associated with some of the user's books" do
+        before do
+          books = create_list(:book, 4, users: [user])
+          concept.books = books
+        end
+
+        it "returns a success response" do
+          get_concepts_show
+          expect(response).to be_successful
+        end
+      end
+
+      context "when concept is not found (it was deleted)" do
+        before { concept.destroy }
+
+        it "redirects to the homepage" do
+          get_concepts_show
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

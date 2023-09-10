@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
   patch "/books/:id/change_domains", to: "books#change_domains", as: "change_book_domains"
+  patch "/books/:id/change_concepts", to: "books#change_concepts", as: "change_book_concepts"
 
   get "/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
   get "/random_article", to: "users#random_article", as: "user_random_article"

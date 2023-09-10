@@ -39,4 +39,8 @@ class Concept < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :user }
 
   before_save { self.name = name.strip }
+
+  def ordered_books
+    books.order(:title)
+  end
 end

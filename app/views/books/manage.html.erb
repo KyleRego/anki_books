@@ -12,6 +12,7 @@
   <%= link_to "Edit book", edit_book_path(@book), class: "action-link" %>
 </div>
 
+<% if @articles.count > 1 %>
 <div class="mt-4 pb-8 border-b-2">
   <%# TODO: Why is this id needed %>
   <h3 id="<%= "book-#{@book.id}" %>" class="mb-4">
@@ -33,15 +34,17 @@
     <% end %>
   </div>
 </div>
+<% end %>
 
-<div class="mt-4">
+<div class="mt-4 pb-8 border-b-2">
   <h3 class="mb-4">
     Domains:
   </h3>
 
   <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
     <%= form_with(model: @book, url: change_book_domains_path(@book)) do |form| %>
-      <% @domains_options.each do |domain_option| %>
+    <% domains_options = @user_domains.map { |d| { id: d.id, title: d.title, selected: @book_current_domains.include?(d) } } %>
+      <% domains_options.each do |domain_option| %>
         <div class="mb-2">
           <%= label_tag(domain_option[:title]) do %>
             <%= check_box_tag("domains_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
@@ -50,6 +53,27 @@
         </div>
       <% end %>
       <%= form.submit "Update Domains", class: "action-link" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-4 pb-8 border-b-2">
+  <h3 class="mb-4">
+    Concepts:
+  </h3>
+
+  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
+    <%= form_with(model: @book, url: change_book_concepts_path(@book)) do |form| %>
+    <% concepts_options = @user_concepts.map { |c| { id: c.id, name: c.name, selected: @book_current_concepts.include?(c) } } %>
+      <% concepts_options.each do |concept_option| %>
+        <div class="mb-2">
+          <%= label_tag(concept_option[:name]) do %>
+            <%= check_box_tag("concepts_ids[]", concept_option[:id], concept_option[:selected], id: concept_option[:id]) %>
+            <span><%= concept_option[:name] %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.submit "Update Concepts", class: "action-link" %>
     <% end %>
   </div>
 </div>

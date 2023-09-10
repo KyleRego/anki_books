@@ -34,6 +34,14 @@ class Book < ApplicationRecord
   end
   # rubocop:enable Rails/Delegate
 
+  def ordered_concepts
+    concepts.order(:name)
+  end
+
+  def ordered_domains
+    domains.order(:title)
+  end
+
   def ordered_notes
     BasicNote.joins(article: :book)
              .where(articles: { book_id: id })
