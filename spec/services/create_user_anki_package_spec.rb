@@ -12,16 +12,35 @@ RSpec.describe CreateUserAnkiPackage do
 
     let(:anki_deck_file_path) { subject }
 
-    before { create_user_anki_deck }
-
     after { FileUtils.rm_f(anki_deck_file_path) }
 
     it "creates an Anki deck zip file in the system tmp directory" do
+      create_user_anki_deck
       expect(File).to exist(anki_deck_file_path)
     end
 
     it "returns a path to the Anki deck zip file it creates" do
+      create_user_anki_deck
       expect(anki_deck_file_path).to match(described_class.path_to_anki_package_regex)
+    end
+
+    context "when the user has cloze notes from the neuroplasticity fixture article" do
+      before do
+        book = create(:book, users: [user])
+        create(:neuroplasticity_article, book:)
+        create(:concept, books: [book], user:, name: "nervous system")
+        create(:concept, books: [book], user:, name: "neuron")
+        create(:concept, books: [book], user:, name: "brain")
+      end
+
+      it "creates the user's cloze notes" do
+        expect { create_user_anki_deck }.to change(ClozeNote, :count).by(7)
+      end
+
+      it "creates an Anki deck zip file in the system tmp directory" do
+        create_user_anki_deck
+        expect(File).to exist(anki_deck_file_path)
+      end
     end
   end
 

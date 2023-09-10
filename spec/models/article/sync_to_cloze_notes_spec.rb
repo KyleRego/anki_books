@@ -145,11 +145,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     end
   end
 
-  context "when article content is article_content.txt" do
-    let(:content) do
-      art_cont_path = Rails.root.join("spec/models/article/article_content.txt")
-      File.read(art_cont_path)
-    end
+  context "when article is the neuroplasticity fixture article" do
+    let(:article) { create(:neuroplasticity_article, book:) }
 
     context "when one concept that matches one sentence" do
       before do

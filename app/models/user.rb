@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   has_many :books_users, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_users
+  has_many :articles, through: :books
 
   has_one_attached :anki_package
 
@@ -34,6 +35,16 @@ class User < ApplicationRecord
   # Returns all of the user's basic notes
   def basic_notes
     BasicNote.joins("inner join articles on basic_notes.article_id = articles.id
+                     inner join books on articles.book_id = books.id
+                     inner join books_users on books_users.book_id = books.id
+                     inner join users on books_users.user_id = users.id
+                     where users.id = '#{id}'")
+  end
+
+  ##
+  # Returns all of the user's cloze notes
+  def cloze_notes
+    ClozeNote.joins("inner join articles on cloze_notes.article_id = articles.id
                      inner join books on articles.book_id = books.id
                      inner join books_users on books_users.book_id = books.id
                      inner join users on books_users.user_id = users.id

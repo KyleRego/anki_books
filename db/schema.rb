@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_10_133517) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_10_170141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -112,6 +112,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_133517) do
     t.uuid "article_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "anki_guid", null: false
+    t.index ["anki_guid"], name: "index_cloze_notes_on_anki_guid", unique: true
     t.index ["article_id"], name: "index_cloze_notes_on_article_id"
   end
 

@@ -1,5 +1,5 @@
 <div class="trix-content">
-  <h1>Neuroplasticity</h1><div>
+  <h1>Neuroplasticity (source: Wikipedia https://en.wikipedia.org/w/index.php?title=Neuroplasticity&oldid=1172522991)</h1><div>
 <br>Neuroplasticity, also known as neural plasticity, or brain plasticity, is the ability of neural networks in the brain to change through growth and reorganization.<br><br>
 </div><h2>Neurobiology</h2><div>
 <br>There are different ideas and theories on what biological process allow for neuroplasticity to occur. The core of this phenomenon is based upon synapses and how connections between them change based on neuron functioning. It is widely agreed upon that neuroplasticity takes on many forms, as it is a result of a variety of pathways. These pathways, mainly signaling cascades, allow for gene expression alterations that lead to neuronal changes, and thus neuroplasticity.<br><br>There are a number of other factors that are thought to play a role in the biological processes underlying the changing of neural networks in the brain. Some of these factors include synapse regulation via phosphorylation, the role of inflammation and inflammatory cytokines, proteins such as Bcl-2 proteins and neutrophorins, and energy production via mitochondria.<br><br>

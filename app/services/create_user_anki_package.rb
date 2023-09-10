@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/MethodLength
+
 # :nodoc:
 class CreateUserAnkiPackage
   def self.path_to_anki_package_regex
@@ -24,17 +26,29 @@ class CreateUserAnkiPackage
 
   # rubocop:disable Metrics/AbcSize
   def perform
+    user.articles.each(&:sync_to_cloze_notes)
+
     AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
       deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
       deck.save
 
-      note_type = anki21_database.find_note_type_by name: "Basic"
+      basic_note_type = anki21_database.find_note_type_by(name: "Basic")
 
       user.basic_notes.each do |basic_note|
-        anki_note = AnkiRecord::Note.new(note_type:, deck:)
+        anki_note = AnkiRecord::Note.new(note_type: basic_note_type, deck:)
         anki_note.front = basic_note.anki_front
         anki_note.back = basic_note.anki_back
         anki_note.guid = basic_note.anki_guid
+        anki_note.save
+      end
+
+      cloze_note_type = anki21_database.find_note_type_by(name: "Cloze")
+
+      user.cloze_notes.each do |cloze_note|
+        anki_note = AnkiRecord::Note.new(note_type: cloze_note_type, deck:)
+        anki_note.text = cloze_note.anki_sentence
+        anki_note.back_extra = ""
+        anki_note.guid = cloze_note.anki_guid
         anki_note.save
       end
     end
@@ -64,3 +78,4 @@ class CreateUserAnkiPackage
     @timestamp ||= anki_milliseconds_timestamp
   end
 end
+# rubocop:enable Metrics/MethodLength

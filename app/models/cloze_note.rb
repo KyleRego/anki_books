@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 ##
-# Represents an Anki Cloze Deletion note
+# Represents an Anki cloze note
 # == Schema Information
 #
 # Table name: cloze_notes
@@ -21,8 +21,26 @@
 #  fk_rails_...  (article_id => articles.id)
 #
 class ClozeNote < ApplicationRecord
+  include AnkiGuidable
+
+  before_validation :set_anki_guid_if_nil
+
   belongs_to :article
 
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :concepts, through: :cloze_notes_concepts
+
+  def anki_sentence
+    result = sentence
+    concepts.order(:name).each_with_index do |concept, index|
+      result = result.gsub(concept.name, "{{c#{index + 1}::#{concept.name}}}")
+    end
+    result
+  end
+
+  private
+
+  def set_anki_guid_if_nil
+    self.anki_guid ||= anki_globally_unique_id
+  end
 end
