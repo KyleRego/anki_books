@@ -5,23 +5,36 @@
 # frozen_string_literal: true
 
 RSpec.describe Concept, "#valid?" do
-  it "is valid with a name and user" do
-    concept = build(:concept, name: "Example Title", user: create(:user))
-    expect(concept).to be_valid
+  subject(:concept) { build(:concept, name:, user:) }
+
+  let(:name) { "example concept name" }
+  let(:user) { create(:user) }
+
+  context "when concept has a name and user" do
+    it { is_expected.to be_valid }
   end
 
-  it "is invalid without a user" do
-    concept = build(:concept, name: "Example Title", user: nil)
-    expect(concept).not_to be_valid
+  context "when concept does not have a user" do
+    let(:user) { nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is invalid with an empty string name" do
-    concept = build(:concept, name: "", user: create(:user))
-    expect(concept).to be_invalid
+  context "when name is an empty string" do
+    let(:name) { "" }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is invalid without a name" do
-    concept = build(:concept, name: nil, user: create(:user))
-    expect(concept).to be_invalid
+  context "when name is nil" do
+    let(:name) { nil }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  context "when name is the same as one of the user's other concepts" do
+    before { create(:concept, name:, user:) }
+
+    it { is_expected.not_to be_valid }
   end
 end

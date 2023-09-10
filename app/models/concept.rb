@@ -36,7 +36,7 @@ class Concept < ApplicationRecord
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :cloze_notes, through: :cloze_notes_concepts
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :user }
 
   before_save { self.name = name.strip }
 end
