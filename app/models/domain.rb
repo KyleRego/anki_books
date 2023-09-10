@@ -33,7 +33,7 @@ class Domain < ApplicationRecord
   ##
   # Returns all basic notes of the domain's books and child domains
   # (including nested) in a consistent order
-  def ordered_notes
+  def ordered_basic_notes
     query = <<~SQL.squish
       WITH RECURSIVE domain_hierarchy AS (
         SELECT id, title, parent_domain_id FROM domains WHERE id = ?

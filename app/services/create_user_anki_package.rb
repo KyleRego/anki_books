@@ -30,7 +30,7 @@ class CreateUserAnkiPackage
 
       note_type = anki21_database.find_note_type_by name: "Basic"
 
-      user.notes.each do |basic_note|
+      user.basic_notes.each do |basic_note|
         anki_note = AnkiRecord::Note.new(note_type:, deck:)
         anki_note.front = basic_note.anki_front
         anki_note.back = basic_note.anki_back

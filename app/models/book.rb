@@ -42,7 +42,7 @@ class Book < ApplicationRecord
     domains.order(:title)
   end
 
-  def ordered_notes
+  def ordered_basic_notes
     BasicNote.joins(article: :book)
              .where(articles: { book_id: id })
              .order("articles.ordinal_position, basic_notes.ordinal_position")

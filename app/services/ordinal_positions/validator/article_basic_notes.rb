@@ -11,7 +11,7 @@ module OrdinalPositions
       private
 
       def ordinal_positions
-        parent.ordered_notes.pluck(:ordinal_position)
+        parent.ordered_basic_notes.pluck(:ordinal_position)
       end
 
       def expected_ordinal_positions

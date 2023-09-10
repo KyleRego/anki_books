@@ -76,7 +76,7 @@ class BooksController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @book.ordered_notes
+    @basic_notes = @book.ordered_basic_notes
   end
 
   private

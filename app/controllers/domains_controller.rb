@@ -71,7 +71,7 @@ class DomainsController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @domain.ordered_notes
+    @basic_notes = @domain.ordered_basic_notes
   end
 
   def change_books

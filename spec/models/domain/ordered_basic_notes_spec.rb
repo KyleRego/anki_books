@@ -4,8 +4,8 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Domain, "#ordered_notes" do
-  subject(:ordered_notes) { domain.ordered_notes }
+RSpec.describe Domain, "#ordered_basic_notes" do
+  subject(:ordered_basic_notes) { domain.ordered_basic_notes }
 
   let(:user) { create(:user) }
   let(:domain) { create(:domain, user:) }
@@ -22,7 +22,7 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns an empty collection" do
-      expect(ordered_notes).to be_empty
+      expect(ordered_basic_notes).to be_empty
     end
   end
 
@@ -35,9 +35,9 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the 10 basic notes" do
-      expect(ordered_notes.count).to eq 10
-      expect(ordered_notes.first.ordinal_position).to eq 0
-      expect(ordered_notes.last.ordinal_position).to eq 9
+      expect(ordered_basic_notes.count).to eq 10
+      expect(ordered_basic_notes.first.ordinal_position).to eq 0
+      expect(ordered_basic_notes.last.ordinal_position).to eq 9
     end
   end
 
@@ -61,11 +61,11 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the 20 basic notes in the correct order" do
-      expect(ordered_notes.count).to eq 20
-      expect(ordered_notes.first.article.id).to eq first_book_first_article.id
-      expect(ordered_notes[6].article.id).to eq first_book_second_article.id
-      expect(ordered_notes[11].article.id).to eq second_book_first_article.id
-      expect(ordered_notes[16].article.id).to eq second_book_second_article.id
+      expect(ordered_basic_notes.count).to eq 20
+      expect(ordered_basic_notes.first.article.id).to eq first_book_first_article.id
+      expect(ordered_basic_notes[6].article.id).to eq first_book_second_article.id
+      expect(ordered_basic_notes[11].article.id).to eq second_book_first_article.id
+      expect(ordered_basic_notes[16].article.id).to eq second_book_second_article.id
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the 10 basic notes with no duplicates" do
-      expect(ordered_notes.count).to eq 10
+      expect(ordered_basic_notes.count).to eq 10
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the nested domain's book basic notes" do
-      expect(ordered_notes.count).to eq 11
+      expect(ordered_basic_notes.count).to eq 11
     end
   end
 
@@ -124,10 +124,10 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the basic notes in order of the child domain titles" do
-      expect(ordered_notes.count).to eq 3
-      expect(ordered_notes.first.article.book).to eq first_book
-      expect(ordered_notes.second.article.book).to eq second_book
-      expect(ordered_notes.third.article.book).to eq third_book
+      expect(ordered_basic_notes.count).to eq 3
+      expect(ordered_basic_notes.first.article.book).to eq first_book
+      expect(ordered_basic_notes.second.article.book).to eq second_book
+      expect(ordered_basic_notes.third.article.book).to eq third_book
     end
   end
 
@@ -154,7 +154,7 @@ RSpec.describe Domain, "#ordered_notes" do
     end
 
     it "returns the right basic notes" do
-      expect(ordered_notes.count).to eq 12
+      expect(ordered_basic_notes.count).to eq 12
     end
   end
 end

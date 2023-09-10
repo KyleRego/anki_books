@@ -108,12 +108,11 @@ class SentenceConceptsMatch
     @cloze_note_synced = false
   end
 
-  def concept_names
-    concepts.map(&:name).join(", ")
-  end
-
   def inspect
+    # :nocov:
+    concept_names = concepts.map(&:name).join(", ")
     "\"SentenceConceptsMatch article_sentence: #{sentence} concepts: #{concept_names}\""
+    # :nocov:
   end
 end
 
@@ -131,7 +130,9 @@ class ClozeNoteSentenceMatch
   private
 
   def inspect
+    # :nocov:
     "\"ClozeNoteSentenceMatch article_sentence: #{article_sentence} cloze_note_sentence: #{cloze_note.sentence} distance: #{distance}\""
+    # :nocov:
   end
 end
 

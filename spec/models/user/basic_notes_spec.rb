@@ -8,7 +8,7 @@ RSpec.describe User, "#notes" do
   include_context "when the user has two books, three articles, 5 basic notes per article"
 
   it "returns the basic notes of the user's books' articles" do
-    expect(user.notes.count).to eq 15
+    expect(user.basic_notes.count).to eq 15
   end
 
   context "when there are basic notes that do not belong to the user" do
@@ -18,7 +18,7 @@ RSpec.describe User, "#notes" do
     end
 
     it "does not include the other basic notes" do
-      expect(user.notes.count).to eq 15
+      expect(user.basic_notes.count).to eq 15
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe User, "#notes" do
     end
 
     it "does not include the other user's basic notes" do
-      expect(user.notes.count).to eq 15
+      expect(user.basic_notes.count).to eq 15
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe User, "#notes" do
     end
 
     it "returns the basic notes of the user's books' articles" do
-      expect(user.notes.count).to eq 23
+      expect(user.basic_notes.count).to eq 23
     end
 
     context "when there are basic notes that do belong to a different user" do
@@ -55,7 +55,7 @@ RSpec.describe User, "#notes" do
       end
 
       it "does not include the other user's basic notes" do
-        expect(user.notes.count).to eq 23
+        expect(user.basic_notes.count).to eq 23
       end
     end
   end

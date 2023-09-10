@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :concept do
-    name { Faker::Emotion.noun }
+    name { Faker::Emotion.unique.noun }
     parent_concept { nil }
     user { nil }
   end

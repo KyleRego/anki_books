@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   ##
   # Returns all of the user's basic notes
-  def notes
+  def basic_notes
     BasicNote.joins("inner join articles on basic_notes.article_id = articles.id
                      inner join books on articles.book_id = books.id
                      inner join books_users on books_users.book_id = books.id

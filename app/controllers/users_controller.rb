@@ -83,7 +83,7 @@ class UsersController < ApplicationController
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      current_user.notes.each do |basic_note|
+      current_user.basic_notes.each do |basic_note|
         csv << attributes.map { |attr| basic_note.send(attr) }
       end
     end

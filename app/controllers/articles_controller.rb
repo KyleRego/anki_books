@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to root_path, status: :moved_permanently
     else
-      @basic_notes = @article.ordered_notes
+      @basic_notes = @article.ordered_basic_notes
     end
   end
 
@@ -90,7 +90,9 @@ class ArticlesController < ApplicationController
     elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @article, child_to_position: note, new_ordinal_position:)
       head :ok
     else
+      # :nocov:
       head :unprocessable_entity
+      # :nocov:
     end
   end
 
@@ -98,7 +100,7 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to homepage_study_cards_path, status: :moved_permanently
     else
-      @basic_notes = @article.ordered_notes
+      @basic_notes = @article.ordered_basic_notes
     end
   end
 
