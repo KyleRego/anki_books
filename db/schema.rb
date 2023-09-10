@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_08_014721) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_10_125119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -83,11 +83,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_014721) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "books_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "book_id", null: false
+    t.uuid "concept_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "concept_id"], name: "index_books_concepts_on_book_id_and_concept_id", unique: true
+  end
+
   create_table "books_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "book_id", null: false
     t.uuid "domain_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["book_id", "domain_id"], name: "index_books_domains_on_book_id_and_domain_id", unique: true
   end
 
   create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

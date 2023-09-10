@@ -21,6 +21,8 @@
 #  fk_rails_...  (book_id => books.id)
 #
 class Article < ApplicationRecord
+  include Article::SyncToClozeNotes
+
   belongs_to :book
 
   has_rich_text :content
@@ -35,23 +37,5 @@ class Article < ApplicationRecord
 
   def notes_count
     basic_notes.count
-  end
-
-  ##
-  # Returns an array of strings which are the matching sentences
-  # of the article for the string +concept_name+
-  def cloze_sentences(concept_name:)
-    article_content = content.to_plain_text
-    regex_for_concept = cloze_sentence_regex(concept_name:)
-    article_content.scan(regex_for_concept).flatten
-  end
-
-  private
-
-  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
-  CLOZE_SENTENCE_END = /\."?/
-
-  def cloze_sentence_regex(concept_name:)
-    /#{CLOZE_SENTENCE_START}[^.\n]*\b#{concept_name}\b[^.\n]*#{CLOZE_SENTENCE_END}/
   end
 end

@@ -14,6 +14,9 @@
 #  updated_at :datetime         not null
 #
 class Book < ApplicationRecord
+  has_many :books_concepts, dependent: :destroy
+  has_many :concepts, through: :books_concepts
+
   has_many :books_users, dependent: :destroy
   has_many :users, through: :books_users
 

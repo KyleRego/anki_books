@@ -4,6 +4,10 @@
 
 # frozen_string_literal: true
 
+##
+# A concept is used to generate cloze deletion cards from the long-text
+# its associated article--the concept name is the key word that becomes the
+# fill in the blank of the sentence.
 # == Schema Information
 #
 # Table name: concepts
@@ -20,15 +24,14 @@
 #  fk_rails_...  (parent_concept_id => concepts.id)
 #  fk_rails_...  (user_id => users.id)
 #
-
-##
-# A concept is used to generate cloze deletion cards from the long-text
-# its associated article.
 class Concept < ApplicationRecord
   belongs_to :user, optional: false
 
   belongs_to :parent_concept, optional: true, class_name: "Concept", inverse_of: :concepts
   has_many :concepts, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
+
+  has_many :books_concepts, dependent: :destroy
+  has_many :books, through: :books_concepts
 
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :cloze_notes, through: :cloze_notes_concepts

@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+##
+# Represents an Anki Cloze Deletion note
 # == Schema Information
 #
 # Table name: cloze_notes
@@ -11,18 +13,13 @@
 #  id         :uuid             not null, primary key
 #  sentence   :text             not null
 #  article_id :uuid             not null
-#  concept_id :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Foreign Keys
 #
 #  fk_rails_...  (article_id => articles.id)
-#  fk_rails_...  (concept_id => concepts.id)
 #
-
-##
-# Represents an Anki Cloze Deletion note
 class ClozeNote < ApplicationRecord
   belongs_to :article
 

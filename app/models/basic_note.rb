@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+#
+# Represents an Anki basic note (front and back flashcard)
 # == Schema Information
 #
 # Table name: basic_notes
@@ -21,10 +23,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (article_id => articles.id)
-#
-
-##
-# Represents a Basic Anki note (front and back flashcard)
 class BasicNote < ApplicationRecord
   include AnkiTimestampable
   include AnkiGuidable
