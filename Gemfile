@@ -88,3 +88,5 @@ gem "bcrypt", "~> 3.1"
 gem "anki_record", "~> 0.4.1"
 
 gem "whenever", require: false
+
+gem "text", "~> 1.3"

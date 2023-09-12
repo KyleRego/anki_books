@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+require "text"
+
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/MethodLength
@@ -21,6 +23,17 @@ module Article::SyncToClozeNotes
     article_content.scan(regex_for_concept).flatten
   end
 
+  private
+
+  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
+  CLOZE_SENTENCE_END = /\."?/
+
+  def cloze_sentence_regex(concept_name:)
+    /#{CLOZE_SENTENCE_START}[^.\n]*\b#{concept_name}\b[^.\n]*#{CLOZE_SENTENCE_END}/
+  end
+
+  public
+
   ##
   # Syncs the cloze sentences of the article with its cloze notes
   def sync_to_cloze_notes
@@ -33,6 +46,7 @@ module Article::SyncToClozeNotes
       concept_name = concept.name
       article_cloze_sentences = cloze_sentences(concept_name:)
       article_cloze_sentences.each do |article_cloze_sentence|
+        logger.debug(article_cloze_sentence)
         match = sentence_concepts_matches.find { |sc_match| sc_match.sentence == article_cloze_sentence }
         match ||= SentenceConceptsMatch.new(sentence: article_cloze_sentence)
 
@@ -42,15 +56,22 @@ module Article::SyncToClozeNotes
     end
 
     sentence_concepts_matches.each do |sentence_concepts_match|
-      sentence = sentence_concepts_match.sentence.gsub("'", "\\'")
+      article_sentence = sentence_concepts_match.sentence
+      logger.debug(article_sentence)
 
-      levenshtein_ordered_cloze_notes = cloze_notes
-                                        .select("*, levenshtein(sentence, '#{sentence}'::text) AS distance")
-                                        .order("distance ASC")
+      # TODO: Refactor this to use a struct or tuple or something
+      # rubocop:disable Style/MultilineBlockChain
+      levenshtein_ordered_cloze_notes = cloze_notes.map do |cloze_note|
+        [cloze_note, Text::Levenshtein.distance(article_sentence, cloze_note.sentence)]
+      end.sort_by do |_, distance|
+        distance
+      end
+      # rubocop:enable Style/MultilineBlockChain
+
       levenshtein_ordered_cloze_notes.each do |cloze_note_with_distance|
-        cloze_note_sentence_matches << ClozeNoteSentenceMatch.new(article_sentence: sentence,
-                                                                  cloze_note: cloze_note_with_distance,
-                                                                  distance: cloze_note_with_distance.distance)
+        cloze_note_sentence_matches << ClozeNoteSentenceMatch.new(article_sentence:,
+                                                                  cloze_note: cloze_note_with_distance[0],
+                                                                  distance: cloze_note_with_distance[1])
       end
     end
 
@@ -80,15 +101,6 @@ module Article::SyncToClozeNotes
 
     cloze_notes.where.not(id: synced_cloze_note_ids).destroy_all
   end
-end
-
-  private
-
-CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
-CLOZE_SENTENCE_END = /\."?/
-
-def cloze_sentence_regex(concept_name:)
-  /#{CLOZE_SENTENCE_START}[^.\n]*\b#{concept_name}\b[^.\n]*#{CLOZE_SENTENCE_END}/
 end
 
 ##

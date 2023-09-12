@@ -102,7 +102,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
     it "creates one cloze note for each of the two concept sentence matches" do
       expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(2)
-      expect(article.cloze_notes.pluck(:sentence).sort).to eq ["Ethernet is in the link layer.", "UDP is a protocol."]
+      expect(article.cloze_notes.reload.pluck(:sentence).sort).to eq ["Ethernet is in the link layer.", "UDP is a protocol."]
     end
   end
 
@@ -141,7 +141,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
     it "syncs the article content sentence to the article cloze notes" do
       expect { sync_article_to_cloze_notes }.not_to change(ClozeNote, :count)
-      expect(article.cloze_notes.pluck(:sentence).sort).to eq ["Internet.", "Link layer.", "TCP.", "UDP."]
+      expect(article.cloze_notes.reload.pluck(:sentence).sort).to eq ["Internet.", "Link layer.", "TCP.", "UDP."]
     end
   end
 
@@ -189,7 +189,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
       it "creates the cloze notes from the article sentences" do
         expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(7)
-        expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+        expect(article.cloze_notes.reload.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
       end
 
       context "when there are outdated cloze notes that need to be updated" do
@@ -201,7 +201,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
         it "syncs the cloze notes with the article sentences" do
           expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(4)
-          expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+          expect(article.cloze_notes.reload.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
         end
       end
 
@@ -213,7 +213,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
         it "deletes the outdated cloze note and syncs the cloze notes with the article sentences" do
           expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(6)
-          expect(article.cloze_notes.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
+          expect(article.cloze_notes.reload.pluck(:sentence).sort).to eq expected_cloze_sentences_after_sync
         end
       end
     end
