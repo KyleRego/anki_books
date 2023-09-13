@@ -26,11 +26,15 @@ RSpec.describe "GET /concepts/:id/manage", "#manage" do
         get_concepts_manage
         expect(response).to be_successful
       end
-    end
 
-    it "redirects to the homepage if the concept is not found" do
-      get "/concepts/asdf/manage"
-      expect(response).to redirect_to(root_path)
+      context "when concept cannot be found because it was deleted" do
+        before { concept.destroy }
+
+        it "redirects to the homepage" do
+          get_concepts_manage
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

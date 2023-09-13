@@ -20,11 +20,6 @@ RSpec.describe "GET /articles/:id", "#show" do
       expect(response).to redirect_to root_path
     end
 
-    it "redirects to the homepage if the article does not exist" do
-      get "/articles/asdf"
-      expect(response).to redirect_to root_path
-    end
-
     context "when the article belongs to one of the user's books" do
       let(:book) { create(:book, users: [user]) }
 
@@ -37,6 +32,15 @@ RSpec.describe "GET /articles/:id", "#show" do
         let(:article) { create(:article, book:, system: true) }
 
         it "redirects to the root path" do
+          get_articles_show
+          expect(response).to redirect_to root_path
+        end
+      end
+
+      context "when article cannot be found because it was deleted" do
+        before { article.destroy }
+
+        it "redirects to the homepage" do
           get_articles_show
           expect(response).to redirect_to root_path
         end

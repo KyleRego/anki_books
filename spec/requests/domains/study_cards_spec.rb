@@ -26,11 +26,15 @@ RSpec.describe "GET /domains/:id/study_cards", "#study_cards" do
         get_domain_study_cards
         expect(response).to be_successful
       end
-    end
 
-    it "redirects to the homepage if the domain is not found" do
-      get "/domains/asdf/study_cards"
-      expect(response).to redirect_to(root_path)
+      context "when domain cannot be found because it was deleted" do
+        before { domain.destroy }
+
+        it "redirects to the homepage" do
+          get_domain_study_cards
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

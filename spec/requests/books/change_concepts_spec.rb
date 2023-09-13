@@ -29,6 +29,15 @@ RSpec.describe "PATCH /books/:id/change_concepts", "#change_concepts" do
         expect(response).to redirect_to(manage_book_path(book))
       end
 
+      context "when book cannot be found because it was deleted" do
+        before { book.destroy }
+
+        it "redirects to the homepage" do
+          patch_books_change_concepts
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
       context "when concepts_ids param is given and are ids of the user's concepts" do
         let(:concepts_ids) { user.concepts.first(3).pluck(:id) }
 
@@ -64,11 +73,6 @@ RSpec.describe "PATCH /books/:id/change_concepts", "#change_concepts" do
           expect(book.concepts.count).to eq 2
         end
       end
-    end
-
-    it "redirects to the homepage if the book is not found" do
-      get "/books/asdf/edit"
-      expect(response).to redirect_to(root_path)
     end
   end
 end

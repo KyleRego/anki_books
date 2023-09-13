@@ -33,11 +33,15 @@ RSpec.describe "GET /books/:id", "#show" do
         get_books_show
         expect(response).to be_successful
       end
-    end
 
-    it "redirects to the homepage if the book is not found" do
-      get "/books/asdf"
-      expect(response).to redirect_to(root_path)
+      context "when book cannot be found because it was deleted" do
+        before { book.destroy }
+
+        it "redirects to the homepage" do
+          get_books_show
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

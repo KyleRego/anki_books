@@ -15,11 +15,6 @@ RSpec.describe "GET /articles/:id/edit", "#edit" do
   context "when user is logged in" do
     include_context "when the user is logged in"
 
-    it "redirects to the homepage if the article does not exist" do
-      get "/articles/asdf/edit"
-      expect(response).to redirect_to root_path
-    end
-
     it "redirects to the homepage if it does not belong to one of the users' books" do
       get_articles_edit
       expect(response).to redirect_to root_path
@@ -31,6 +26,15 @@ RSpec.describe "GET /articles/:id/edit", "#edit" do
       it "returns a 200 response" do
         get_articles_edit
         expect(response).to be_successful
+      end
+
+      context "when article cannot be found because it was deleted" do
+        before { article.destroy }
+
+        it "redirects to the homepage" do
+          get_articles_edit
+          expect(response).to redirect_to root_path
+        end
       end
     end
   end

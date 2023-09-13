@@ -65,12 +65,16 @@ RSpec.describe "PATCH /articles/:id/change_book", "#change_book" do
             expect(first_book.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
           end
         end
-      end
-    end
 
-    it "returns a 422 response if the second book does not exist" do
-      patch change_article_book_path(article), params: { book_id: "asdf" }
-      expect(response).to have_http_status :unprocessable_entity
+        context "when second book does not exist" do
+          before { second_book.destroy }
+
+          it "returns a 422 response" do
+            patch_articles_change_book
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+      end
     end
   end
 end

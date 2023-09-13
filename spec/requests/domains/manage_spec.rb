@@ -27,6 +27,15 @@ RSpec.describe "GET /domains/:id/manage", "#manage" do
         expect(response).to be_successful
       end
 
+      context "when domain cannot be found because it was deleted" do
+        before { domain.destroy }
+
+        it "redirects to the homepage" do
+          get_domains_manage
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
       context "when the domain has books and child domains" do
         before do
           create_list(:book, 4, users: [user]).each { |book| domain.books << book }
@@ -38,11 +47,6 @@ RSpec.describe "GET /domains/:id/manage", "#manage" do
           expect(response).to be_successful
         end
       end
-    end
-
-    it "redirects to the homepage if the domain is not found" do
-      get "/domains/asdf/manage"
-      expect(response).to redirect_to(root_path)
     end
   end
 end

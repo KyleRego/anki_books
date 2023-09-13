@@ -15,11 +15,6 @@ RSpec.describe "GET /articles/:id/manage", "#manage" do
   context "when user is logged in" do
     include_context "when the user is logged in"
 
-    it "redirects to the homepage if the article does not exist" do
-      get "/articles/asdf/manage"
-      expect(response).to redirect_to root_path
-    end
-
     context "when the article belongs to one of the user's books" do
       let(:book) { create(:book, users: [user]) }
       let(:article) { create(:article, book:) }
@@ -38,6 +33,14 @@ RSpec.describe "GET /articles/:id/manage", "#manage" do
         it "returns a success response" do
           get_articles_manage
           expect(response).to be_successful
+        end
+      end
+
+      context "when article cannot be found because it was deleted" do
+        before { article.destroy }
+
+        it "redirects to the homepage" do
+          expect(response).to redirect_to root_path
         end
       end
     end

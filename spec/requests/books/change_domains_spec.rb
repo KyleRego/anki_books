@@ -29,6 +29,15 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
         expect(response).to redirect_to(manage_book_path(book))
       end
 
+      context "when book cannot be found because it was deleted" do
+        before { book.destroy }
+
+        it "redirects to the homepage" do
+          patch_books_change_domains
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
       context "when domains_ids param is given and are ids of the user's domains" do
         let(:domains_ids) { user.domains.first(3).pluck(:id) }
 
@@ -64,11 +73,6 @@ RSpec.describe "PATCH /books/:id/change_domains", "#change_domains" do
           expect(book.domains.count).to eq 2
         end
       end
-    end
-
-    it "redirects to the homepage if the book is not found" do
-      get "/books/asdf/edit"
-      expect(response).to redirect_to(root_path)
     end
   end
 end
