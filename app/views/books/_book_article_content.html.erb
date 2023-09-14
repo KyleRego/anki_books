@@ -2,14 +2,21 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% if logged_in? %>
-  <div><%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %></div>
-<% end %>
 <div class="flex flex-col sm:flex-row">
   <% if @basic_notes.any? %>
-    <div class="sm:w-8/12"><%= @article.content %></div>
+    <div class="sm:w-8/12">
+      <% if logged_in? %><div class="sticky top-8 z-50 bg-white flex-row justify-end">
+        <%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %>
+      </div><% end %>
+      <%= @article.content %>
+    </div>
     <%= render "book_article_notes" %>
   <% else %>
-    <div><%= @article.content %></div>
+    <div>
+      <% if logged_in? %><div class="sticky top-8 z-50 bg-white flew-row justify-end">
+        <%= link_to(@article.title, article_path(@article), class: "font-semibold mr-4") %>
+      </div><% end %>
+      <%= @article.content %>
+    </div>
   <% end %>
 </div>
