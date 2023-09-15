@@ -13,12 +13,31 @@ RSpec.describe ClozeNote, "#valid?" do
   let(:sentence) { "The half life of caffeine is about 5 hours." }
   let(:concepts) { [create(:concept, name: "caffeine", user:)] }
 
-  context "when anki_guid is the same as a different cloze note" do
-    let(:other_cloze_note) { create(:cloze_note, article:) }
+  it { is_expected.to be_valid }
 
-    it "returns false" do
-      basic_note.anki_guid = other_cloze_note.anki_guid
-      expect(basic_note).not_to be_valid
+  context "when article is nil" do
+    let(:article) { nil }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  context "when sentence is an empty string" do
+    let(:sentence) { "" }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  context "when sentence is nil" do
+    let(:sentence) { nil }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  context "when anki_guid is the same as a different cloze note" do
+    before do
+      basic_note.anki_guid = create(:cloze_note, article:).anki_guid
     end
+
+    it { is_expected.not_to be_valid }
   end
 end

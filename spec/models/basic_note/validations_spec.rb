@@ -5,32 +5,51 @@
 # frozen_string_literal: true
 
 RSpec.describe BasicNote, "#valid?" do
+  subject(:basic_note) { build(:basic_note, article:, front:, back:) }
+
   let(:article) { create(:article) }
+  let(:front) { "What is the front?" }
+  let(:back) { "This is the back." }
 
-  it "is valid with a front and back" do
-    basic_note = build(:basic_note, article:)
-    expect(basic_note).to be_valid
+  it { is_expected.to be_valid }
+
+  context "when article is nil" do
+    let(:article) { nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is not valid without a front" do
-    basic_note = build(:basic_note, article:, front: nil)
-    expect(basic_note).not_to be_valid
+  context "when front is nil" do
+    let(:front) { nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is not valid without a back" do
-    basic_note = build(:basic_note, article:, back: nil)
-    expect(basic_note).not_to be_valid
+  context "when back is nil" do
+    let(:back) { nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is not valid with the same ordinal_position as a different note of the article" do
-    existing_basic_note = create(:basic_note, article:)
-    basic_note = build(:basic_note, article:, ordinal_position: existing_basic_note.ordinal_position)
-    expect(basic_note).not_to be_valid
+  context "when ordinal position is nil" do
+    before { basic_note.ordinal_position = nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is not valid with the same anki_guid as an existing basic note" do
-    existing_basic_note = create(:basic_note, article:, anki_guid: "12345678")
-    basic_note = build(:basic_note, article:, anki_guid: existing_basic_note.anki_guid)
-    expect(basic_note).not_to be_valid
+  context "when ordinal position is the same as a different note of the same article" do
+    before do
+      basic_note.ordinal_position = create(:basic_note, article:).ordinal_position
+    end
+
+    it { is_expected.not_to be_valid }
+  end
+
+  context "when anki_guid is the same as an existing note" do
+    before do
+      basic_note.anki_guid = create(:basic_note, article:).anki_guid
+    end
+
+    it { is_expected.not_to be_valid }
   end
 end

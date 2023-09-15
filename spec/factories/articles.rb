@@ -24,7 +24,7 @@ FactoryBot.define do
   factory :article do
     title { "Hello World" }
     book { create(:book) }
-    ordinal_position { book.articles_count }
+    ordinal_position { book&.articles_count }
   end
 
   factory :neuroplasticity_article, class: "Article" do

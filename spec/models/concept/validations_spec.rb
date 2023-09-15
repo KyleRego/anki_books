@@ -10,11 +10,9 @@ RSpec.describe Concept, "#valid?" do
   let(:name) { "example concept name" }
   let(:user) { create(:user) }
 
-  context "when concept has a name and user" do
-    it { is_expected.to be_valid }
-  end
+  it { is_expected.to be_valid }
 
-  context "when concept does not have a user" do
+  context "when user is nil" do
     let(:user) { nil }
 
     it { is_expected.not_to be_valid }

@@ -5,23 +5,28 @@
 # frozen_string_literal: true
 
 RSpec.describe Domain, "#valid?" do
-  it "is valid with a title" do
-    domain = build(:domain, title: "Example Title", user: create(:user))
-    expect(domain).to be_valid
+  subject(:domain) { build(:domain, user:, title:) }
+
+  let(:user) { create(:user) }
+  let(:title) { "Example title" }
+
+  it { is_expected.to be_valid }
+
+  context "when user is nil" do
+    let(:user) { nil }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is invalid without a user" do
-    domain = build(:domain, title: "Example Title", user: nil)
-    expect(domain).not_to be_valid
+  context "when title is an empty string" do
+    let(:title) { "" }
+
+    it { is_expected.not_to be_valid }
   end
 
-  it "is invalid with an empty string title" do
-    domain = build(:domain, title: "", user: create(:user))
-    expect(domain).to be_invalid
-  end
+  context "when title is nil" do
+    let(:title) { nil }
 
-  it "is invalid without a title" do
-    domain = build(:domain, title: nil, user: create(:user))
-    expect(domain).to be_invalid
+    it { is_expected.not_to be_valid }
   end
 end

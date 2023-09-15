@@ -35,4 +35,6 @@ class ClozeNote < ApplicationRecord
 
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :concepts, through: :cloze_notes_concepts
+
+  validates :sentence, presence: true
 end
