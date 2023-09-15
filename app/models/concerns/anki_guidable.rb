@@ -8,7 +8,19 @@
 module AnkiGuidable
   extend ActiveSupport::Concern
 
-  def anki_globally_unique_id
-    AnkiRecord::Helpers::AnkiGuidHelper.globally_unique_id
+  included do
+    before_validation :set_anki_guid_if_nil
+
+    validates :anki_guid, presence: true, uniqueness: true
+
+    def anki_globally_unique_id
+      AnkiRecord::Helpers::AnkiGuidHelper.globally_unique_id
+    end
+
+    private
+
+    def set_anki_guid_if_nil
+      self.anki_guid ||= anki_globally_unique_id
+    end
   end
 end

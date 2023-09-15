@@ -9,6 +9,7 @@
 #  article_id :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  anki_guid  :string           not null
 #
 # Foreign Keys
 #

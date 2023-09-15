@@ -15,6 +15,7 @@
 #  article_id :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  anki_guid  :string           not null
 #
 # Foreign Keys
 #
@@ -30,16 +31,8 @@ class ClozeNote < ApplicationRecord
   # is used instead rather than here (AnkiContentable)
   include Rails.application.routes.url_helpers
 
-  before_validation :set_anki_guid_if_nil
-
   belongs_to :article
 
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :concepts, through: :cloze_notes_concepts
-
-  private
-
-  def set_anki_guid_if_nil
-    self.anki_guid ||= anki_globally_unique_id
-  end
 end

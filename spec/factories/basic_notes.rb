@@ -11,7 +11,6 @@
 #  id               :uuid             not null, primary key
 #  front            :text
 #  back             :text
-#  anki_id          :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  article_id       :uuid             not null

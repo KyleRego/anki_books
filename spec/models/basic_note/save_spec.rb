@@ -7,18 +7,15 @@
 RSpec.describe BasicNote, "#save" do
   let(:article) { create(:article) }
 
-  it "gives the basic note an anki_id and anki_guid when saving a basic note with these nil" do
-    basic_note = build(:basic_note, article:, anki_id: nil, anki_guid: nil)
+  it "saves with a anki_guid if anki_guid was nil" do
+    basic_note = build(:basic_note, article:, anki_guid: nil)
     basic_note.save
-    expect(basic_note.anki_id).not_to be_nil
     expect(basic_note.anki_guid).not_to be_nil
   end
 
-  it "does not change the anki_id and anki_guid when saving a basic note with these" do
+  it "does not change anki_guid if anki_guid was not nil" do
     basic_note = create(:basic_note, article:)
-    anki_id = basic_note.anki_id
     anki_guid = basic_note.anki_guid
-    expect(basic_note.anki_id).to eq anki_id
     expect(basic_note.anki_guid).to eq anki_guid
   end
 end
