@@ -4,8 +4,8 @@
 
 # frozen_string_literal: true
 
-RSpec.describe ClozeNote, "#anki_sentence" do
-  subject(:anki_sentence) { cloze_note.anki_sentence }
+RSpec.describe ClozeNote, "#anki_text" do
+  subject(:anki_text) { cloze_note.anki_text }
 
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
@@ -19,7 +19,7 @@ RSpec.describe ClozeNote, "#anki_sentence" do
     end
 
     it "returns an Anki cloze deletion version of the sentence" do
-      expect(anki_sentence).to eq "Structural plasticity is {{c1::brain}}'s ability to change."
+      expect(anki_text).to eq "Structural plasticity is {{c1::brain}}'s ability to change."
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe ClozeNote, "#anki_sentence" do
     end
 
     it "returns an Anki cloze deletion version of the sentence" do
-      expect(anki_sentence).to eq "A quotation related to neuroplasticity is \"related to the {{c1::nervous system}}.\""
+      expect(anki_text).to eq "A quotation related to neuroplasticity is \"related to the {{c1::nervous system}}.\""
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe ClozeNote, "#anki_sentence" do
     end
 
     it "returns an Anki cloze deletion version with the cloze deletions having ci in alphabetic order" do
-      expect(anki_sentence).to eq "The {{c2::nervous system}} includes the {{c1::brain}}."
+      expect(anki_text).to eq "The {{c2::nervous system}} includes the {{c1::brain}}."
     end
   end
 
@@ -56,7 +56,7 @@ RSpec.describe ClozeNote, "#anki_sentence" do
     end
 
     it "returns an Anki cloze deletion version with two c1 cloze deletions for the concept" do
-      expect(anki_sentence).to eq "A {{c1::brain}} is an example of a {{c1::brain}}."
+      expect(anki_text).to eq "A {{c1::brain}} is an example of a {{c1::brain}}."
     end
   end
 end

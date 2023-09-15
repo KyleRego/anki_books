@@ -46,8 +46,8 @@ class CreateUserAnkiPackage
 
       user.cloze_notes.each do |cloze_note|
         anki_note = AnkiRecord::Note.new(note_type: cloze_note_type, deck:)
-        anki_note.text = cloze_note.anki_sentence
-        anki_note.back_extra = ""
+        anki_note.text = cloze_note.anki_text
+        anki_note.back_extra = cloze_note.anki_back_extra
         anki_note.guid = cloze_note.anki_guid
         anki_note.save
       end

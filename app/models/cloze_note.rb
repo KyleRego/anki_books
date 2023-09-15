@@ -23,20 +23,19 @@
 class ClozeNote < ApplicationRecord
   include AnkiGuidable
 
+  include ClozeNote::AnkiContentable
+
+  # TODO: See if this (and same in Basic Note)
+  # can be included into the module where the url helper
+  # is used instead rather than here (AnkiContentable)
+  include Rails.application.routes.url_helpers
+
   before_validation :set_anki_guid_if_nil
 
   belongs_to :article
 
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :concepts, through: :cloze_notes_concepts
-
-  def anki_sentence
-    result = sentence
-    concepts.order(:name).each_with_index do |concept, index|
-      result = result.gsub(concept.name, "{{c#{index + 1}::#{concept.name}}}")
-    end
-    result
-  end
 
   private
 
