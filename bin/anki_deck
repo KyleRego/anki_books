@@ -1,0 +1,11 @@
+#!/bin/bash
+
+anki_package_path="./anki_books_source_code_deck.apkg"
+
+if [ -e "$anki_package_path" ]; then
+  ruby lib/anki_deck_script/source_deck_update.rb
+  echo "$anki_package_path updated."
+else
+  ruby lib/anki_deck_script/source_deck_create.rb
+  echo "$anki_package_path created."
+fi
