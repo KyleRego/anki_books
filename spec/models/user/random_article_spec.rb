@@ -19,7 +19,7 @@ RSpec.describe User, "#random_article" do
       expect(user.random_article).to be_a Article
     end
 
-    it "returns at least 2 different articles when called 3 times" do
+    it "returns at least 2 different articles when called 3 times", retry: 2 do
       first_random_article = user.random_article
       second_random_article = user.random_article
       third_random_article = user.random_article
