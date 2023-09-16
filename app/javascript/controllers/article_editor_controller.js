@@ -8,12 +8,19 @@ export default class extends Controller {
   static targets = [ "editorContainer" ];
 
   connect() {
-    // TODO: Use a CSS class selector instead of this one or a Stimulus target attribute
     this.toolbarTarget = this.editorContainerTarget.querySelector("[id^='trix-toolbar-']");
+    this.configureToolbar();
     this.setupHeaderButtonsGroup();
     this.addHeaderButtonsGroupToButtonsRow();
     this.removeOriginalHeadersButton();
     this.changeKeyboardShortcuts();
+  }
+
+  configureToolbar() {
+    const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
+    this.toolbarTarget.classList.add("sticky");
+    this.toolbarTarget.classList.add("z-50");
+    this.toolbarTarget.style.top = `${topNavBarHeight - 1}px`;
   }
 
   setupHeaderButtonsGroup() {

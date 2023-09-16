@@ -18,8 +18,8 @@
   </head>
 
   <body>
+    <%= render "layouts/top_nav" %>
     <main class="sm:px-8 px-4 pb-4 flex-col">
-      <%= render "layouts/top_nav" %>
       <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>

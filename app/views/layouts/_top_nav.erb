@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<nav class="py-2 sticky top-0 z-50 bg-white">
+<nav id="top-nav" class="py-2 sticky top-0 z-50 bg-white">
   <div class="flex justify-end flex-wrap-reverse">
 
     <%= yield :page_specific_links %>
@@ -30,12 +30,12 @@
 
       <%= link_to("Random article", user_random_article_path, class: "font-semibold mr-4") %>
 
-      <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold" %>
+      <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold mr-4" %>
 
     <% elsif current_page?(login_path) %>
-      <%= link_to "Home", root_path, class: "font-semibold" %>
+      <%= link_to "Home", root_path, class: "font-semibold mr-4" %>
     <% else %>
-      <%= link_to "Login", login_path, class: "font-semibold" %>
+      <%= link_to "Login", login_path, class: "font-semibold mr-4" %>
     <% end %>
 
   </div>
