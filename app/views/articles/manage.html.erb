@@ -2,11 +2,19 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<% content_for :page_specific_links do %>
+  <%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %>
+<% end %>
+
 <h2>Manage article: <%= @article.title %></h2>
 
 <div class="mt-4 pb-4 border-b-2">
+  <%= link_to "View article", article_path(@article) %>
+</div>
+
+<div class="mt-4 pb-4 border-b-2">
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
-    <%= select_tag("book_id", options_from_collection_for_select(@other_books, :id, :title), title: "Move the article to a different book") %>
+    <%= select_tag("book_id", options_from_collection_for_select(@user_other_books, :id, :title), title: "Move the article to a different book") %>
     <br>
     <%= form.submit "Move this article to a different book", class: "action-link mt-4" %>
   <% end %>
@@ -23,7 +31,7 @@
         <% end %>
       </div>
     <% end %>
-    <%= select_tag("target_article_id", options_from_collection_for_select(@other_articles, :id, :title), title: "Move basic notes to a different article") %>
+    <%= select_tag("target_article_id", options_from_collection_for_select(@book_other_articles, :id, :title), title: "Move basic notes to a different article") %>
     <br>
     <%= form.submit "Transfer selected basic notes to a different article", class: "action-link mt-4" %>
   <% end %>
