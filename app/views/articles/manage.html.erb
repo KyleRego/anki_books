@@ -13,16 +13,23 @@
 </div>
 
 <div class="mt-4 pb-4 border-b-2">
+  <h3 class="mb-4">Change book:</h3>
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
-    <%= select_tag("book_id", options_from_collection_for_select(@user_other_books, :id, :title), title: "Move the article to a different book") %>
-    <br>
-    <%= form.submit "Move this article to a different book", class: "action-link mt-4" %>
+    <div>
+      <%= select_tag("book_id",
+                      options_from_collection_for_select(@user_other_books, :id, :title),
+                      prompt: "Select a book",
+                      title: "Move the article to a different book") %>
+    </div>
+    <%= form.submit "Move article to selected book", class: "action-link mt-4" %>
   <% end %>
 </div>
 
+<% if @article_basic_notes.any? %>
 <div class="mt-4 pb-4 border-b-2">
+  <h3 class="mb-4">Transfer basic notes to a different article:</h3>
   <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
-    <% @article.ordered_basic_notes.each do |basic_note| %>
+    <% @article_basic_notes.each do |basic_note| %>
       <div class="mb-4">
         <%= label_tag(basic_note.id) do %>
           <%= check_box_tag("basic_note_ids[]", basic_note.id, nil, id: basic_note.id) %>
@@ -31,14 +38,19 @@
         <% end %>
       </div>
     <% end %>
-    <%= select_tag("target_article_id", options_from_collection_for_select(@book_other_articles, :id, :title), title: "Move basic notes to a different article") %>
-    <br>
-    <%= form.submit "Transfer selected basic notes to a different article", class: "action-link mt-4" %>
+    <div>
+      <%= select_tag("target_article_id",
+                      options_from_collection_for_select(@book_other_articles, :id, :title),
+                      prompt: "Select an article",
+                      title: "Move basic notes to a different article") %>
+    </div>
+    <%= form.submit "Move basic notes to selected article", class: "action-link mt-4" %>
   <% end %>
 </div>
+<% end %>
 
 <div class="mt-4">
-  <%= button_to "Delete #{@article.title}",
+  <%= button_to "Delete article: #{@article.title}",
     article_path(@article),
     class: "text-red-500 hover:text-red-600 action-link",
     method: :delete,

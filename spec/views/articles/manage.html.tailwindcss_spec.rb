@@ -13,6 +13,7 @@ RSpec.describe "articles/manage" do
     assign(:article, article)
     assign(:book, book)
     assign(:user_other_books, Book.none)
+    assign(:article_basic_notes, article.ordered_basic_notes)
     assign(:book_other_articles, Article.none)
   end
 
@@ -23,7 +24,20 @@ RSpec.describe "articles/manage" do
 
   it "includes a link to the articles of the article's book in the nav" do
     render template: "articles/manage", layout: "layouts/application"
-
     expect(rendered).to have_selector("a[href=\"#{book_articles_path(book)}\"]")
+  end
+
+  it "does not show 'Transfer basic notes to a different article:' when the article has no basic notes" do
+    render
+    expect(rendered).not_to have_text("Transfer basic notes to a different article:")
+  end
+
+  context "when article has a basic note" do
+    before { create(:basic_note, article:) }
+
+    it "shows 'Transfer basic notes to a different article:'" do
+      render
+      expect(rendered).to have_text("Transfer basic notes to a different article:")
+    end
   end
 end

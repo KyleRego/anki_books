@@ -106,6 +106,7 @@ class ArticlesController < ApplicationController
 
   def manage
     @user_other_books = current_user.books.where.not(id: @book.id)
+    @article_basic_notes = @article.ordered_basic_notes
     @book_other_articles = @book.ordered_articles.where.not(id: @article.id)
   end
 
