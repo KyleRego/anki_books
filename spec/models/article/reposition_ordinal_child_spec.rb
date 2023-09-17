@@ -4,9 +4,9 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Article, "#reposition_child" do
-  subject(:reposition_child) do
-    article.reposition_child(child: basic_note, new_ordinal_position:)
+RSpec.describe Article, "#reposition_ordinal_child" do
+  subject(:reposition_ordinal_child) do
+    article.reposition_ordinal_child(child: basic_note, new_ordinal_position:)
   end
 
   let(:book) { create(:book) }
@@ -20,7 +20,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { 1 }
 
       it "returns true and repositions the basic notes" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(basic_note.reload.ordinal_position).to eq 1
         expect(article.correct_children_ordinal_positions?).to be true
       end
@@ -31,7 +31,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "returns true and repositions the basic notes" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(basic_note.reload.ordinal_position).to eq 0
         expect(article.correct_children_ordinal_positions?).to be true
       end
@@ -42,7 +42,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { 2 }
 
       it "returns false and does not reposition the basic notes" do
-        expect(reposition_child).to be false
+        expect(reposition_ordinal_child).to be false
         expect(article.basic_notes.find_by(ordinal_position: 2)).to be_nil
         expect(article.correct_children_ordinal_positions?).to be true
       end
@@ -53,7 +53,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { basic_note.ordinal_position }
 
       it "returns true and leaves the notes with the same positions" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(basic_note.reload.ordinal_position).to eq new_ordinal_position
         expect(article.correct_children_ordinal_positions?).to be true
       end
@@ -65,7 +65,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "raises an ArgumentError and does not change the basic note" do
-        expect { reposition_child }.to raise_error ArgumentError
+        expect { reposition_ordinal_child }.to raise_error ArgumentError
         expect(basic_note.reload.article).to eq other_article
         expect(article.correct_children_ordinal_positions?).to be true
       end
@@ -76,7 +76,7 @@ RSpec.describe Article, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "raises an ArgumentError and does not change the basic note" do
-        expect { reposition_child }.to raise_error ArgumentError
+        expect { reposition_ordinal_child }.to raise_error ArgumentError
         expect(basic_note.new_record?).to be true
         expect(article.correct_children_ordinal_positions?).to be true
       end

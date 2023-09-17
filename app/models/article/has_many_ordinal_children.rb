@@ -10,16 +10,36 @@
 module Article::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
-  def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
+  def move_ordinal_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
     removed_article_ordinal_position = child.ordinal_position
     child.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
-    new_parent.reposition_child(child:, new_ordinal_position:)
+    new_parent.reposition_ordinal_child(child:, new_ordinal_position:)
     basic_notes.order(:ordinal_position).where("ordinal_position > ?", removed_article_ordinal_position).each do |basic_note|
       basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
     end
   end
+
+  # rubocop:disable Metrics/AbcSize
+
+  ##
+  # Moves +children+ articles to +new_parent+ and shifts the other
+  # articles of self appropriately
+  def move_ordinal_children_to_new_parent(children:, new_parent:)
+    raise ArgumentError unless new_parent.book == book
+
+    article_ids = children.pluck(:article_id)
+    raise ArgumentError unless article_ids.uniq.count == 1 && article_ids.first == id
+
+    children.order(:ordinal_position).each do |basic_note|
+      basic_note.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
+    end
+    ordered_basic_notes.each_with_index do |basic_note, index|
+      basic_note.update(ordinal_position: index)
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

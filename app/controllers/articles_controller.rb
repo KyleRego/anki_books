@@ -84,14 +84,14 @@ class ArticlesController < ApplicationController
 
     new_ordinal_position = params[:new_ordinal_position].to_i
     if @article.id == basic_note.article_id
-      if @article.reposition_child(child: basic_note, new_ordinal_position:)
+      if @article.reposition_ordinal_child(child: basic_note, new_ordinal_position:)
         head :ok
       else
         head :unprocessable_entity
       end
     else
       # TODO: basic_note.move_to_new_parent to remove LoD dependency
-      basic_note.article.move_child_to_new_parent(new_parent: @article, child: basic_note, new_ordinal_position:)
+      basic_note.article.move_ordinal_child_to_new_parent(new_parent: @article, child: basic_note, new_ordinal_position:)
       head :ok
     end
   end
@@ -118,8 +118,8 @@ class ArticlesController < ApplicationController
     elsif @target_book == @book
       head :ok
     else
-      @book.move_child_to_new_parent(new_parent: @target_book, child: @article,
-                                     new_ordinal_position: @target_book.articles_count)
+      @book.move_ordinal_child_to_new_parent(new_parent: @target_book, child: @article,
+                                             new_ordinal_position: @target_book.articles_count)
       redirect_to book_articles_path(@book),
                   flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     end
@@ -132,12 +132,11 @@ class ArticlesController < ApplicationController
       not_found_or_unauthorized
     else
       children_to_position = @article.basic_notes.where(id: params[:basic_note_ids])
-
-      OrdinalPositions::GroupMover::ArticleBasicNotes.perform(new_parent: target_article,
-                                                              old_parent: @article,
-                                                              children_to_position:)
+      @article.move_ordinal_children_to_new_parent(children: children_to_position, new_parent: target_article)
       redirect_to manage_article_path(@article), flash: { notice: "Selected basic notes moved to #{target_article.title}." }
     end
+  rescue ArgumentError
+    head :unprocessable_entity
   end
 
   private

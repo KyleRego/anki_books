@@ -63,10 +63,9 @@ RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_note
             create_list(:basic_note, 3, article:).map(&:id)
           end
 
-          it "redirects to the manage article page but does not move any basic notes" do
+          it "returns a 422 response" do
             patch_articles_transfer_basic_notes
-            expect(response).to redirect_to(manage_article_path(article))
-            expect(article.basic_notes.count).to eq 10
+            expect(response).to have_http_status(:unprocessable_entity)
           end
         end
 

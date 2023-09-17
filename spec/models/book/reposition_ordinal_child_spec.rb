@@ -4,9 +4,9 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Book, "#reposition_child" do
-  subject(:reposition_child) do
-    book.reposition_child(child: article, new_ordinal_position:)
+RSpec.describe Book, "#reposition_ordinal_child" do
+  subject(:reposition_ordinal_child) do
+    book.reposition_ordinal_child(child: article, new_ordinal_position:)
   end
 
   let(:book) { create(:book) }
@@ -20,7 +20,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { 1 }
 
       it "returns true and repositions the articles" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(article.reload.ordinal_position).to eq 1
         expect(book.correct_children_ordinal_positions?).to be true
       end
@@ -31,7 +31,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "returns true and repositions the articles" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(article.reload.ordinal_position).to eq 0
         expect(book.correct_children_ordinal_positions?).to be true
       end
@@ -42,7 +42,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { 2 }
 
       it "returns false and does not reposition the articles" do
-        expect(reposition_child).to be false
+        expect(reposition_ordinal_child).to be false
         expect(book.articles.find_by(ordinal_position: 2)).to be_nil
         expect(book.correct_children_ordinal_positions?).to be true
       end
@@ -53,7 +53,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { article.ordinal_position }
 
       it "returns true and leaves the notes with the same positions" do
-        expect(reposition_child).to be true
+        expect(reposition_ordinal_child).to be true
         expect(article.reload.ordinal_position).to eq new_ordinal_position
         expect(book.correct_children_ordinal_positions?).to be true
       end
@@ -65,7 +65,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "raises an ArgumentError and does not change the article" do
-        expect { reposition_child }.to raise_error ArgumentError
+        expect { reposition_ordinal_child }.to raise_error ArgumentError
         expect(article.reload.book).to eq other_book
         expect(book.correct_children_ordinal_positions?).to be true
       end
@@ -76,7 +76,7 @@ RSpec.describe Book, "#reposition_child" do
       let(:new_ordinal_position) { 0 }
 
       it "raises an ArgumentError and does not change the article" do
-        expect { reposition_child }.to raise_error ArgumentError
+        expect { reposition_ordinal_child }.to raise_error ArgumentError
         expect(article.new_record?).to be true
         expect(book.correct_children_ordinal_positions?).to be true
       end

@@ -4,9 +4,9 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Book, "#move_child_to_new_parent" do
-  subject(:move_child_to_new_parent) do
-    book.move_child_to_new_parent(child: article, new_parent:, new_ordinal_position:)
+RSpec.describe Book, "#move_ordinal_child_to_new_parent" do
+  subject(:move_ordinal_child_to_new_parent) do
+    book.move_ordinal_child_to_new_parent(child: article, new_parent:, new_ordinal_position:)
   end
 
   context "when moving article from a book with one article to a book with no articles" do
@@ -18,7 +18,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 0 }
 
       it "moves the article and returns true" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(article.reload.book).to eq new_parent
         expect(article.ordinal_position).to eq new_ordinal_position
         expect(book.correct_children_ordinal_positions?).to be true
@@ -30,7 +30,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { -1 }
 
       it "moves the article and puts it at the end of the book (ordinal position 0)" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(article.reload.book).to eq new_parent
         expect(article.ordinal_position).to eq(new_parent.articles_count - 1)
         expect(book.correct_children_ordinal_positions?).to be true
@@ -42,7 +42,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "moves the article and puts it at the end of the book (ordinal position 0)" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(article.reload.book).to eq new_parent
         expect(article.reload.ordinal_position).to eq 0
         expect(book.correct_children_ordinal_positions?).to be true
@@ -56,7 +56,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "raises an ArgumentError and does not move the article" do
-        expect { move_child_to_new_parent }.to raise_error ArgumentError
+        expect { move_ordinal_child_to_new_parent }.to raise_error ArgumentError
         expect(article.reload.book).to eq other_book
         expect(article.ordinal_position).to eq 0
       end
@@ -67,7 +67,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "raises an ArgumentError and does not move the article" do
-        expect { move_child_to_new_parent }.to raise_error ArgumentError
+        expect { move_ordinal_child_to_new_parent }.to raise_error ArgumentError
         expect(article.new_record?).to be true
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 0 }
 
       it "moves the article and shifts other articles correctly" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(article.reload.book).to eq new_parent
         expect(article.reload.ordinal_position).to eq new_ordinal_position
         expect(book.correct_children_ordinal_positions?).to be true
@@ -101,7 +101,7 @@ RSpec.describe Book, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 2 }
 
       it "moves the article and shifts other articles correctly" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(article.reload.book).to eq new_parent
         expect(article.reload.ordinal_position).to eq new_ordinal_position
         expect(book.correct_children_ordinal_positions?).to be true

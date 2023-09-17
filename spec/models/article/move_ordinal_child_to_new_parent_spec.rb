@@ -4,9 +4,9 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Article, "#move_child_to_new_parent" do
-  subject(:move_child_to_new_parent) do
-    article.move_child_to_new_parent(child: basic_note, new_parent:, new_ordinal_position:)
+RSpec.describe Article, "#move_ordinal_child_to_new_parent" do
+  subject(:move_ordinal_child_to_new_parent) do
+    article.move_ordinal_child_to_new_parent(child: basic_note, new_parent:, new_ordinal_position:)
   end
 
   context "when moving basic note from a article with one basic note to a article with no basic notes" do
@@ -18,7 +18,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 0 }
 
       it "moves the basic note and returns true" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
         expect(basic_note.ordinal_position).to eq new_ordinal_position
         expect(article.correct_children_ordinal_positions?).to be true
@@ -30,7 +30,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { -1 }
 
       it "moves the basic note and puts it at the end of the article (ordinal position 0)" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
         expect(basic_note.ordinal_position).to eq(new_parent.basic_notes_count - 1)
         expect(article.correct_children_ordinal_positions?).to be true
@@ -42,7 +42,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "moves the basic note and puts it at the end of the article (ordinal position 0)" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
         expect(basic_note.reload.ordinal_position).to eq 0
         expect(article.correct_children_ordinal_positions?).to be true
@@ -56,7 +56,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "raises an ArgumentError and does not move the basic note" do
-        expect { move_child_to_new_parent }.to raise_error ArgumentError
+        expect { move_ordinal_child_to_new_parent }.to raise_error ArgumentError
         expect(basic_note.reload.article).to eq other_article
         expect(basic_note.ordinal_position).to eq 0
       end
@@ -67,7 +67,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 1 }
 
       it "raises an ArgumentError and does not move the basic note" do
-        expect { move_child_to_new_parent }.to raise_error ArgumentError
+        expect { move_ordinal_child_to_new_parent }.to raise_error ArgumentError
         expect(basic_note.new_record?).to be true
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 0 }
 
       it "moves the basic note and shifts other basic notes correctly" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
         expect(basic_note.reload.ordinal_position).to eq new_ordinal_position
         expect(article.correct_children_ordinal_positions?).to be true
@@ -101,7 +101,7 @@ RSpec.describe Article, "#move_child_to_new_parent" do
       let(:new_ordinal_position) { 2 }
 
       it "moves the basic note and shifts other basic notes correctly" do
-        move_child_to_new_parent
+        move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
         expect(basic_note.reload.ordinal_position).to eq new_ordinal_position
         expect(article.correct_children_ordinal_positions?).to be true

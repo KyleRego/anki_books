@@ -10,22 +10,26 @@
 module Book::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
+  ##
+  # Destroys +child+ article and shifts the other
+  # articles of self appropriately
   def destroy_ordinal_child(child:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
     deleted_ordinal_position = child.ordinal_position
-
     child.destroy!
-
     shift_articles_down_to_replace_missing_position(missing_position: deleted_ordinal_position)
   end
 
-  def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
+  ##
+  # Moves +child+ article to +new_parent+ book at +new_ordinal_position+
+  # and shifts the other articles of self appropriately
+  def move_ordinal_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
     removed_ordinal_position = child.ordinal_position
     child.update(book: new_parent, ordinal_position: new_parent.articles_count)
-    new_parent.reposition_child(child:, new_ordinal_position:)
+    new_parent.reposition_ordinal_child(child:, new_ordinal_position:)
     shift_articles_down_to_replace_missing_position(missing_position: removed_ordinal_position)
   end
 
