@@ -21,21 +21,21 @@ RSpec.describe "GET /articles/:id/study_cards", "#study_cards" do
       expect(response).to redirect_to(root_path)
     end
 
-    context "when the article is a system article" do
-      let(:article) { create(:article, book:, system: true) }
-
-      it "redirects to the homepage study cards page for the article" do
-        get_articles_study_cards
-        expect(response).to redirect_to(homepage_study_cards_path)
-      end
-    end
-
     context "when the article belongs to one of the user's books" do
       let(:book) { create(:book, users: [user]) }
 
       it "returns a 200 response" do
         get_articles_study_cards
         expect(response).to be_successful
+      end
+
+      context "when the user's article is the system article" do
+        let(:article) { create(:article, book:, system: true) }
+
+        it "redirects to the homepage study cards page for the article" do
+          get_articles_study_cards
+          expect(response).to redirect_to(homepage_study_cards_path)
+        end
       end
     end
   end

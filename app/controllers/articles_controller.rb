@@ -8,7 +8,7 @@
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login
-  before_action :set_article, except: %i[index new create]
+  before_action :set_article_and_book, except: %i[index new create]
 
   def index
     @book = Book.includes(:domains).includes(:articles)
@@ -75,7 +75,6 @@ class ArticlesController < ApplicationController
 
   # TODO: If this can also move note to other article, it should
   # be renamed
-  # TODO: Need to change how it authorizes user against article
   def change_note_ordinal_position
     basic_note = BasicNote.find(params[:note_id])
     unless @current_user.can_access_note?(note: basic_note)
@@ -150,18 +149,12 @@ class ArticlesController < ApplicationController
 
   private
 
-  def set_article
-    @article = Article.find_by(id: params[:id])
+  def set_article_and_book
+    @article = current_user.articles.find_by(id: params[:id])
     if @article.nil?
       not_found_or_unauthorized
-    elsif @article.system
-      @book = @article.book
-      nil
     else
       @book = @article.book
-      return if current_user.can_access_book?(book: @book)
-
-      not_found_or_unauthorized
     end
   end
 
