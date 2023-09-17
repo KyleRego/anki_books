@@ -68,7 +68,7 @@ class ArticlesController < ApplicationController
     if @article.system
       head :unprocessable_entity
     else
-      OrdinalPositions::Deleter::BookArticles.perform(child_to_delete: @article)
+      @book.destroy_ordinal_child(child: @article)
       redirect_to book_articles_path(@book)
     end
   end

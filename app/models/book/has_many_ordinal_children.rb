@@ -10,18 +10,34 @@
 module Book::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
+  def destroy_ordinal_child(child:)
+    raise ArgumentError unless child_belongs_to_parent?(child:)
+
+    deleted_ordinal_position = child.ordinal_position
+
+    child.destroy!
+
+    shift_articles_down_to_replace_missing_position(missing_position: deleted_ordinal_position)
+  end
+
   def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
-    removed_basic_note_ordinal_position = child.ordinal_position
+    removed_ordinal_position = child.ordinal_position
     child.update(book: new_parent, ordinal_position: new_parent.articles_count)
     new_parent.reposition_child(child:, new_ordinal_position:)
-    articles.order(:ordinal_position).where("ordinal_position > ?", removed_basic_note_ordinal_position).each do |article|
-      article.update!(ordinal_position: article.ordinal_position - 1)
-    end
+    shift_articles_down_to_replace_missing_position(missing_position: removed_ordinal_position)
   end
 
   private
+
+  def shift_articles_down_to_replace_missing_position(missing_position:)
+    # rubocop:disable Rails/FindEach
+    articles.where("ordinal_position > ?", missing_position).each do |article|
+      article.update!(ordinal_position: article.ordinal_position - 1)
+    end
+    # rubocop:enable Rails/FindEach
+  end
 
   def ordinal_positions
     ordered_articles.pluck(:ordinal_position)

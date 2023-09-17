@@ -48,6 +48,14 @@ module HasManyOrdinalChildrenBase
 
     ##
     # Must be implemented by the derived classes
+    def destroy_ordinal_child(child:)
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
+    end
+
+    ##
+    # Must be implemented by the derived classes
     def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
       # :nocov:
       raise NotImplementedError
