@@ -13,7 +13,7 @@ class UpdateUserAnkiPackagesJob < ApplicationJob
 
   def perform
     @user = User.first
-    package_path = CreateUserAnkiPackage.perform(user:)
+    package_path = CreateUserAnkiPackageJob.perform_now(user:)
     user.update_anki_package(package_path:, name_for_attachment:)
     DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(package_path:)
   end

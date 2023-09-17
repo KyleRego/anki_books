@@ -19,7 +19,7 @@ RSpec.describe "GET /download_anki_deck", "#download_anki_deck" do
     include_context "when the user is logged in"
     before do
       fixture_path = "./spec/fixtures/anki_package.apkg"
-      allow(CreateUserAnkiPackage).to receive(:perform).and_return(fixture_path)
+      allow(CreateUserAnkiPackageJob).to receive(:perform_now).and_return(fixture_path)
     end
 
     it "returns a success response" do

@@ -11,7 +11,7 @@ class DeleteAnkiPackageJob < ApplicationJob
   def perform(anki_deck_file_path:)
     raise ArgumentError unless anki_deck_file_path.end_with?(".apkg")
 
-    raise ArgumentError unless anki_deck_file_path.match?(CreateUserAnkiPackage.path_to_anki_package_regex)
+    raise ArgumentError unless anki_deck_file_path.match?(CreateUserAnkiPackageJob.path_to_anki_package_regex)
 
     directory_to_delete = Pathname.new(anki_deck_file_path).dirname
 

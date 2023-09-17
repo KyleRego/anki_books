@@ -18,7 +18,7 @@ RSpec.describe DeleteAnkiPackageJob do
   end
 
   context "when there is an Anki deck file to delete" do
-    let(:anki_deck_file_path) { CreateUserAnkiPackage.perform(user:) }
+    let(:anki_deck_file_path) { CreateUserAnkiPackageJob.perform_now(user:) }
 
     before do
       anki_deck_file_path

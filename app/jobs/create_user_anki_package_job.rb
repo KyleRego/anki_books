@@ -7,25 +7,15 @@
 # rubocop:disable Metrics/MethodLength
 
 # :nodoc:
-class CreateUserAnkiPackage
+class CreateUserAnkiPackageJob < ApplicationJob
+  include AnkiTimestampable
+
   def self.path_to_anki_package_regex
     %r{\A/tmp/\d{13}/anki_books_package_\d{13}.apkg\z}
   end
 
-  def self.perform(user:)
-    new(user:).perform
-  end
-
-  include AnkiTimestampable
-
-  attr_reader :user
-
-  def initialize(user:)
-    @user = user
-  end
-
   # rubocop:disable Metrics/AbcSize
-  def perform
+  def perform(user:)
     user.articles.each(&:sync_to_cloze_notes)
 
     AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
@@ -57,6 +47,8 @@ class CreateUserAnkiPackage
   # rubocop:enable Metrics/AbcSize
 
   private
+
+  attr_reader :user
 
   def created_anki_deck_path
     "#{target_directory}/#{name}.apkg"

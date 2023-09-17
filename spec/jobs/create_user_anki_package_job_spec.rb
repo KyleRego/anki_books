@@ -4,9 +4,9 @@
 
 # frozen_string_literal: true
 
-RSpec.describe CreateUserAnkiPackage do
+RSpec.describe CreateUserAnkiPackageJob do
   describe ".perform" do
-    subject(:create_user_anki_deck) { described_class.perform(user:) }
+    subject(:create_user_anki_deck) { described_class.perform_now(user:) }
 
     include_context "when the user has two books, three articles, 5 basic notes per article"
 
