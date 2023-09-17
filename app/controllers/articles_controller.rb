@@ -73,21 +73,24 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # TODO: If this can also move note to other article, it should
+  # be renamed
+  # TODO: Need to change how it authorizes user against article
   def change_note_ordinal_position
-    note = BasicNote.find(params[:note_id])
-    unless @current_user.can_access_note?(note:)
+    basic_note = BasicNote.find(params[:note_id])
+    unless @current_user.can_access_note?(note: basic_note)
       head :unprocessable_entity
       return
     end
 
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if @article.id == note.article_id
-      if OrdinalPositions::AddChildAtPosition.perform(parent: @article, child_to_position: note, new_ordinal_position:)
+    if @article.id == basic_note.article_id
+      if @article.reposition_child(child: basic_note, new_ordinal_position:)
         head :ok
       else
         head :unprocessable_entity
       end
-    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @article, child_to_position: note, new_ordinal_position:)
+    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @article, child_to_position: basic_note, new_ordinal_position:)
       head :ok
     else
       # :nocov:

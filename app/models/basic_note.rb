@@ -37,5 +37,7 @@ class BasicNote < ApplicationRecord
 
   validates :front, presence: true
   validates :back, presence: true
-  validates :ordinal_position, presence: true, uniqueness: { scope: :article_id }
+  validates :ordinal_position, presence: true,
+                               uniqueness: { scope: :article_id },
+                               numericality: { greater_than_or_equal_to: 0 }
 end

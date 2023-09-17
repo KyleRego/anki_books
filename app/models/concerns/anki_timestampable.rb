@@ -4,15 +4,17 @@
 
 # frozen_string_literal: true
 
-# :nodoc:
+##
+# Module to contain the dependency on the AnkiRecord::Helpers::TimeHelper
+# to a single place.
 module AnkiTimestampable
   extend ActiveSupport::Concern
 
   included do
     include AnkiRecord::Helpers::TimeHelper
-  end
 
-  def anki_milliseconds_timestamp
-    milliseconds_since_epoch
+    def anki_milliseconds_timestamp
+      milliseconds_since_epoch
+    end
   end
 end

@@ -22,6 +22,7 @@
 #
 class Article < ApplicationRecord
   include Article::SyncToClozeNotes
+  include Article::HasManyOrdinalChildren
 
   belongs_to :book
 
@@ -35,6 +36,7 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :book_id }
 
+  # TODO: Rename to basic_notes_count
   def notes_count
     basic_notes.count
   end

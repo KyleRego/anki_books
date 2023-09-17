@@ -43,8 +43,9 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
         before { create(:basic_note, article:) }
 
-        it "does not create a basic note" do
-          expect { post_basic_notes_create }.not_to change(BasicNote, :count)
+        it "creates a basic note and puts it at the end of the article" do
+          expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+          expect(article.correct_children_ordinal_positions?).to be true
         end
       end
 
@@ -54,8 +55,9 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
         before { create(:basic_note, article:) }
 
-        it "does not create a basic note" do
-          expect { post_basic_notes_create }.not_to change(BasicNote, :count)
+        it "creates a basic note and puts it at the end of the article" do
+          expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+          expect(article.correct_children_ordinal_positions?).to be true
         end
       end
     end
@@ -91,6 +93,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
       it "creates a basic note at ordinal position 1 and shifts the middle note" do
         expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
         expect(article.basic_notes.order(:created_at).last.ordinal_position).to eq 1
+        expect(article.correct_children_ordinal_positions?).to be true
       end
     end
   end

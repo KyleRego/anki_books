@@ -14,6 +14,8 @@
 #  updated_at :datetime         not null
 #
 class Book < ApplicationRecord
+  include Book::HasManyOrdinalChildren
+
   has_many :books_concepts, dependent: :destroy
   has_many :concepts, through: :books_concepts
 

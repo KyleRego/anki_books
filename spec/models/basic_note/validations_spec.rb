@@ -52,4 +52,10 @@ RSpec.describe BasicNote, "#valid?" do
 
     it { is_expected.not_to be_valid }
   end
+
+  context "when ordinal position is negative" do
+    before { basic_note.ordinal_position = -1 }
+
+    it { is_expected.not_to be_valid }
+  end
 end

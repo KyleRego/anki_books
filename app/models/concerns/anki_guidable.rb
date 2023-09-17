@@ -4,7 +4,9 @@
 
 # frozen_string_literal: true
 
-# :nodoc:
+##
+# Module to contain the dependency on AnkiRecord::Helpers::AnkiGuidHelper
+# to a single place.
 module AnkiGuidable
   extend ActiveSupport::Concern
 

@@ -40,9 +40,9 @@ class BasicNotesController < ApplicationController
     @basic_note.ordinal_position = @article.notes_count
     @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    unless @basic_note.valid? && OrdinalPositions::AddChildAtPosition.perform(parent: @article,
-                                                                              child_to_position: @basic_note,
-                                                                              new_ordinal_position: ordinal_position_param)
+    if @basic_note.save
+      @article.reposition_child(child: @basic_note, new_ordinal_position: ordinal_position_param)
+    else
       turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new",

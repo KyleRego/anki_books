@@ -5,11 +5,9 @@
 <h2 class="mb-4">Domains</h2>
 
 <% @domains.each do |domain| %>
-  <div>
-    <%= link_to domain.title, domain_path(domain) %>
-  </div>
+  <div><%= link_to domain.title, domain_path(domain) %></div>
 <% end %>
 
 <div class="my-4">
-  <%= link_to "New domain", new_domain_path %>
+  <%= link_to "New domain", new_domain_path, class: "action-link" %>
 </div>

@@ -16,7 +16,7 @@ module OrdinalPositions
 
       def move_child_to_position_to_new_parent
         child_to_position.update(book: new_parent, ordinal_position: new_parent.articles_count)
-        ::OrdinalPositions::Setter::BookArticles.perform(parent: new_parent, child_to_position:, new_ordinal_position:)
+        new_parent.reposition_child(child: child_to_position, new_ordinal_position:)
       end
 
       def shift_old_parent_children
