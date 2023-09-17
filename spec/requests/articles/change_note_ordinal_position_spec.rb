@@ -59,7 +59,7 @@ RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_
       end
 
       context "when the desired new_ordinal_position is the number of notes the article has" do
-        let(:new_ordinal_position) { target_article.notes_count }
+        let(:new_ordinal_position) { target_article.basic_notes_count }
 
         it "returns a 422 response" do
           post_articles_change_note_ordinal_position

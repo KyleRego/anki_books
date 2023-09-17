@@ -37,7 +37,7 @@ class BasicNotesController < ApplicationController
 
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
-    @basic_note.ordinal_position = @article.notes_count
+    @basic_note.ordinal_position = @article.basic_notes_count
     @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
 
     if @basic_note.save

@@ -15,7 +15,7 @@ module OrdinalPositions
       end
 
       def expected_ordinal_positions
-        (0...parent.notes_count).to_a
+        (0...parent.basic_notes_count).to_a
       end
     end
   end

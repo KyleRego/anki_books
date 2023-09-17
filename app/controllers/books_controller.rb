@@ -50,7 +50,7 @@ class BooksController < ApplicationController
   def manage
     @book_current_domains = @book.domains
     @user_domains = current_user.ordered_domains
-    @book_current_concepts = @book.concepts
+    @book_current_concepts = @book.ordered_concepts
     @user_concepts = current_user.ordered_concepts
   end
 

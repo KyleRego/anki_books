@@ -21,7 +21,7 @@ module OrdinalPositions
 
       def move_children_to_position_to_new_parent
         children_to_position.order(:ordinal_position).each do |basic_note|
-          basic_note.update(article: new_parent, ordinal_position: new_parent.notes_count)
+          basic_note.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
         end
       end
 

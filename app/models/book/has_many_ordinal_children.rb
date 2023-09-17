@@ -10,6 +10,17 @@
 module Book::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
+  def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
+    raise ArgumentError unless child_belongs_to_parent?(child:)
+
+    removed_basic_note_ordinal_position = child.ordinal_position
+    child.update(book: new_parent, ordinal_position: new_parent.articles_count)
+    new_parent.reposition_child(child:, new_ordinal_position:)
+    articles.order(:ordinal_position).where("ordinal_position > ?", removed_basic_note_ordinal_position).each do |article|
+      article.update!(ordinal_position: article.ordinal_position - 1)
+    end
+  end
+
   private
 
   def ordinal_positions

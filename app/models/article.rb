@@ -36,8 +36,5 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :book_id }
 
-  # TODO: Rename to basic_notes_count
-  def notes_count
-    basic_notes.count
-  end
+  delegate :count, to: :basic_notes, prefix: true
 end

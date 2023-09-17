@@ -46,6 +46,14 @@ module HasManyOrdinalChildrenBase
       true
     end
 
+    ##
+    # Must be implemented by the derived classes
+    def move_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
+    end
+
     private
 
     def valid_child_ordinal_position?(new_ordinal_position:)

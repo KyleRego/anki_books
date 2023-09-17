@@ -89,12 +89,10 @@ class ArticlesController < ApplicationController
       else
         head :unprocessable_entity
       end
-    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @article, child_to_position: basic_note, new_ordinal_position:)
-      head :ok
     else
-      # :nocov:
-      head :unprocessable_entity
-      # :nocov:
+      # TODO: basic_note.move_to_new_parent to remove LoD dependency
+      basic_note.article.move_child_to_new_parent(new_parent: @article, child: basic_note, new_ordinal_position:)
+      head :ok
     end
   end
 
@@ -115,21 +113,16 @@ class ArticlesController < ApplicationController
   def change_book
     @target_book = current_user.books.find_by(id: params[:book_id])
 
-    # rubocop:disable Lint/DuplicateBranch
     if !@target_book
       head :unprocessable_entity
     elsif @target_book == @book
       head :ok
-    elsif OrdinalPositions::MoveChildToNewParent.perform(new_parent: @target_book,
-                                                         child_to_position: @article,
-                                                         new_ordinal_position: @target_book.articles_count)
-      redirect_to book_articles_path(@book), flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     else
-      # :nocov:
-      head :unprocessable_entity
-      # :nocov:
+      @book.move_child_to_new_parent(new_parent: @target_book, child: @article,
+                                     new_ordinal_position: @target_book.articles_count)
+      redirect_to book_articles_path(@book),
+                  flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     end
-    # rubocop:enable Lint/DuplicateBranch
   end
 
   def transfer_basic_notes

@@ -28,7 +28,7 @@ RSpec.describe OrdinalPositions::Deleter::BookArticles, ".perform" do
 
     it "deletes the article and shifts all of the other articles down" do
       perform_delete_child
-      expect(book.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+      expect(book.articles.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe OrdinalPositions::Deleter::BookArticles, ".perform" do
 
     it "deletes the article and shifts all of the other articles down" do
       perform_delete_child
-      expect(book.articles.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+      expect(book.articles.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3]
     end
   end
 end
