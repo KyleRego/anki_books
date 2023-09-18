@@ -26,6 +26,6 @@ class HomepageController < ApplicationController
     # it homepage and having the homepage be a book once the larger book
     # view is completed.
     @article = Article.find_by(system: true)
-    @basic_notes = @article.ordered_basic_notes
+    @basic_notes = @article.basic_notes.ordered
   end
 end

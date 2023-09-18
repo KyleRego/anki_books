@@ -14,8 +14,8 @@ class ArticlesController < ApplicationController
     @book = Book.includes(:domains).includes(:articles)
                 .find_by(id: params[:book_id])
     if @book && current_user.can_access_book?(book: @book)
-      @domains = @book.ordered_domains
-      @articles = @book.ordered_articles
+      @domains = @book.domains.ordered
+      @articles = @book.articles.ordered
     else
       not_found_or_unauthorized
     end
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to root_path, status: :moved_permanently
     else
-      @basic_notes = @article.ordered_basic_notes
+      @basic_notes = @article.basic_notes.ordered
     end
   end
 
@@ -100,14 +100,14 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to homepage_study_cards_path, status: :moved_permanently
     else
-      @basic_notes = @article.ordered_basic_notes
+      @basic_notes = @article.basic_notes.ordered
     end
   end
 
   def manage
     @user_other_books = current_user.books.where.not(id: @book.id)
-    @article_basic_notes = @article.ordered_basic_notes
-    @book_other_articles = @book.ordered_articles.where.not(id: @article.id)
+    @article_basic_notes = @article.basic_notes.ordered
+    @book_other_articles = @book.articles.ordered.where.not(id: @article.id)
   end
 
   def change_book

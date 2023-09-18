@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Domain < ApplicationRecord
+  validates :title, presence: true
+
   belongs_to :user, optional: false
   has_many :books_domains, dependent: :destroy
   has_many :books, -> { order(:title) }, through: :books_domains
@@ -28,7 +30,7 @@ class Domain < ApplicationRecord
   belongs_to :parent_domain, optional: true, class_name: "Domain", inverse_of: :domains
   has_many :domains, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
 
-  validates :title, presence: true
+  scope :ordered, -> { order(:title) }
 
   ##
   # Returns all basic notes of the domain's books and child domains

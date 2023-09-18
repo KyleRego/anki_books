@@ -29,12 +29,12 @@ class Article < ApplicationRecord
   has_rich_text :content
 
   has_many :basic_notes, dependent: :destroy
-  has_many :ordered_basic_notes, -> { order(:ordinal_position) }, class_name: "BasicNote", inverse_of: :article, dependent: :destroy
-
   has_many :cloze_notes, dependent: :destroy
 
   validates :title, presence: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :book_id }
+
+  scope :ordered, -> { order(:ordinal_position) }
 
   delegate :count, to: :basic_notes, prefix: true
 end

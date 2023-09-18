@@ -33,6 +33,22 @@ module Book::HasManyOrdinalChildren
     shift_articles_down_to_replace_missing_position(missing_position: removed_ordinal_position)
   end
 
+  ##
+  # Moves +children+ articles to +new_parent+ and shifts the other
+  # articles of self appropriately
+  def move_ordinal_children_to_new_parent(children:, new_parent:)
+    book_ids = children.pluck(:book_id)
+    raise ArgumentError unless book_ids.uniq.count == 1 && book_ids.first == id
+
+    children.order(:ordinal_position).each do |article|
+      article.update(book: new_parent, ordinal_position: new_parent.articles_count)
+    end
+
+    articles.ordered.each_with_index do |article, index|
+      article.update(ordinal_position: index)
+    end
+  end
+
   private
 
   def shift_articles_down_to_replace_missing_position(missing_position:)
@@ -44,7 +60,7 @@ module Book::HasManyOrdinalChildren
   end
 
   def ordinal_positions
-    ordered_articles.pluck(:ordinal_position)
+    articles.ordered.pluck(:ordinal_position)
   end
 
   def expected_ordinal_positions

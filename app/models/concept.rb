@@ -25,6 +25,10 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Concept < ApplicationRecord
+  validates :name, presence: true, uniqueness: { scope: :user }
+
+  before_save { self.name = name.strip }
+
   belongs_to :user, optional: false
 
   belongs_to :parent_concept, optional: true, class_name: "Concept", inverse_of: :concepts
@@ -36,11 +40,5 @@ class Concept < ApplicationRecord
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :cloze_notes, through: :cloze_notes_concepts
 
-  validates :name, presence: true, uniqueness: { scope: :user }
-
-  before_save { self.name = name.strip }
-
-  def ordered_books
-    books.order(:title)
-  end
+  scope :ordered, -> { order(:name) }
 end

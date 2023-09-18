@@ -14,7 +14,7 @@ class ConceptsController < ApplicationController
   end
 
   def show
-    @books = @concept.ordered_books
+    @books = @concept.books.ordered
   end
 
   def manage; end

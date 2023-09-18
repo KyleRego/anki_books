@@ -16,6 +16,8 @@
 class Book < ApplicationRecord
   include Book::HasManyOrdinalChildren
 
+  validates :title, presence: true
+
   has_many :books_concepts, dependent: :destroy
   has_many :concepts, through: :books_concepts
 
@@ -26,23 +28,10 @@ class Book < ApplicationRecord
   has_many :domains, through: :books_domains
 
   has_many :articles, dependent: :destroy
-  has_many :ordered_articles, -> { order(:ordinal_position) }, class_name: "Article", inverse_of: :book, dependent: :destroy
 
-  validates :title, presence: true
+  scope :ordered, -> { order(:title) }
 
-  # rubocop:disable Rails/Delegate
-  def articles_count
-    articles.count
-  end
-  # rubocop:enable Rails/Delegate
-
-  def ordered_concepts
-    concepts.order(:name)
-  end
-
-  def ordered_domains
-    domains.order(:title)
-  end
+  delegate :count, to: :articles, prefix: true
 
   def ordered_basic_notes
     BasicNote.joins(article: :book)

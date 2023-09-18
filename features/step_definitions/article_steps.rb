@@ -107,3 +107,8 @@ end
 Then "I should see the fixture image {string} on the page" do |string|
   expect(page).to have_css("img[src$='#{string}']")
 end
+
+When "I check the checkbox for the article with title {string}" do |string|
+  article = Article.find_by(title: string)
+  check(article.id)
+end

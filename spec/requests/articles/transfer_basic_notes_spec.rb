@@ -4,6 +4,7 @@
 
 # frozen_string_literal: true
 
+# TODO: Needs some refactoring
 RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_notes" do
   subject(:patch_articles_transfer_basic_notes) do
     params = { target_article_id: target_article.id, basic_note_ids: }
@@ -34,6 +35,11 @@ RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_note
 
       let(:basic_note_ids) { article.basic_notes.first(5).map(&:id) }
 
+      it "redirects to the homepage if the target article does not belong to the user" do
+        patch_articles_transfer_basic_notes
+        expect(response).to redirect_to(root_path)
+      end
+
       context "when the target article belongs to one of the user's other books" do
         let(:target_article) do
           book = create(:book, users: [user])
@@ -52,7 +58,7 @@ RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_note
         it "redirects to the manage article page and moves the basic notes to target article" do
           patch_articles_transfer_basic_notes
           expect(response).to redirect_to(manage_article_path(article))
-          expect(article.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3, 4]
+          expect(article.correct_children_ordinal_positions?).to be true
           expect(target_article.basic_notes.count).to eq 5
           expect(target_article.basic_notes.pluck(:id).sort).to eq basic_note_ids.sort
         end
@@ -80,17 +86,11 @@ RSpec.describe "PATCH /articles/:id/transfer_basic_notes", "#transfer_basic_note
           it "redirects to the manage article page and moves only the basic notes from the article" do
             patch_articles_transfer_basic_notes
             expect(response).to redirect_to(manage_article_path(article))
-            expect(article.basic_notes.pluck(:ordinal_position)).to eq [0, 1, 2, 3]
+            expect(article.correct_children_ordinal_positions?).to be true
             expect(target_article.basic_notes.count).to eq 6
             expect(target_article.basic_notes.pluck(:id).sort).to eq valid_basic_note_ids.sort
           end
         end
-      end
-
-      context "when the target article does not belong to the user"
-      it "redirects to the homepage" do
-        patch_articles_transfer_basic_notes
-        expect(response).to redirect_to(root_path)
       end
     end
   end

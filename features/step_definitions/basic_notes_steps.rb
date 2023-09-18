@@ -57,3 +57,8 @@ Then "the front of the note at position {string} should be {string}" do |positio
   note_at_specified_ordinal_position = notes[position.to_i].find("[draggable=\"true\"]")
   expect(note_at_specified_ordinal_position.text).to include front
 end
+
+When "I check the checkbox for the basic note with front {string}" do |string|
+  basic_note = BasicNote.find_by(front: string)
+  check(basic_note.id)
+end

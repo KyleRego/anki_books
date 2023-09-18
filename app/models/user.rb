@@ -51,14 +51,6 @@ class User < ApplicationRecord
                      where users.id = '#{id}'")
   end
 
-  def ordered_concepts
-    concepts.order(:name)
-  end
-
-  def ordered_domains
-    domains.order(:title)
-  end
-
   # :nodoc:
   def can_access_book?(book:)
     books.include?(book)

@@ -49,9 +49,10 @@ class BooksController < ApplicationController
 
   def manage
     @book_current_domains = @book.domains
-    @user_domains = current_user.ordered_domains
-    @book_current_concepts = @book.ordered_concepts
-    @user_concepts = current_user.ordered_concepts
+    @user_domains = current_user.domains.ordered
+    @book_current_concepts = @book.concepts.ordered
+    @user_concepts = current_user.concepts.ordered
+    @user_other_books = current_user.books.ordered
   end
 
   def change_article_ordinal_position
@@ -79,6 +80,20 @@ class BooksController < ApplicationController
     @basic_notes = @book.ordered_basic_notes
   end
 
+  def transfer_articles
+    target_book = current_user.books.find_by(id: params[:target_book_id])
+
+    if target_book.nil?
+      not_found_or_unauthorized
+    else
+      children_to_position = @book.articles.where(id: params[:article_ids])
+      @book.move_ordinal_children_to_new_parent(children: children_to_position, new_parent: target_book)
+      redirect_to manage_book_path(@book), flash: { notice: "Selected articles moved to #{target_book.title}." }
+    end
+  rescue ArgumentError
+    head :unprocessable_entity
+  end
+
   private
 
   def book_params
@@ -93,6 +108,6 @@ class BooksController < ApplicationController
   end
 
   def set_articles
-    @articles = @book.ordered_articles
+    @articles = @book.articles.ordered
   end
 end

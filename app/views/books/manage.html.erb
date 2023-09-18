@@ -36,6 +36,29 @@
 </div>
 <% end %>
 
+<% if @user_other_books.any? && @articles.any? %>
+<div class="mt-4 pb-4 border-b-2">
+  <h3 class="mb-4">Transfer articles to a different book:</h3>
+  <%= form_with(model: @book, url: book_transfer_articles_path(@book)) do |form| %>
+    <% @articles.each do |article| %>
+      <div class="mb-4">
+        <%= label_tag(article.id) do %>
+          <%= check_box_tag("article_ids[]", article.id, nil, id: article.id) %>
+          <span><%= article.title %></span>
+        <% end %>
+      </div>
+    <% end %>
+    <div>
+      <%= select_tag("target_book_id",
+                      options_from_collection_for_select(@user_other_books, :id, :title),
+                      prompt: "Select a book",
+                      title: "Select a book to move articles to") %>
+    </div>
+    <%= form.submit "Move articles to selected book", class: "action-link mt-4" %>
+  <% end %>
+</div>
+<% end %>
+
 <div class="mt-4 pb-8 border-b-2">
   <h3 class="mb-4">
     Domains:

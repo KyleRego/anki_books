@@ -15,12 +15,18 @@ RSpec.describe "books/manage" do
     assign(:user_domains, Domain.none)
     assign(:book_current_concepts, Concept.none)
     assign(:user_concepts, Concept.none)
+    assign(:user_other_books, create_list(:book, 1, users: [user]))
   end
 
   context "when the book has no articles" do
     it "does not show 'Reorder articles:'" do
       render
       expect(rendered).not_to have_text("Reorder articles")
+    end
+
+    it "does not show 'Transfer articles to a different book:'" do
+      render
+      expect(rendered).not_to have_text("Transfer articles to a different book:")
     end
   end
 
@@ -33,6 +39,19 @@ RSpec.describe "books/manage" do
     it "does not show 'Reorder articles:'" do
       render
       expect(rendered).not_to have_text("Reorder articles")
+    end
+  end
+
+  context "when the book has an article and the user has other books" do
+    before do
+      create(:article, book:)
+      assign(:articles, book.articles)
+      assign(:user_other_books, create_list(:book, 1, users: [user]))
+    end
+
+    it "shows 'Transfer articles to a different book:'" do
+      render
+      expect(rendered).to have_text("Transfer articles to a different book:")
     end
   end
 

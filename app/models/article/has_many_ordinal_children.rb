@@ -24,8 +24,8 @@ module Article::HasManyOrdinalChildren
   # rubocop:disable Metrics/AbcSize
 
   ##
-  # Moves +children+ articles to +new_parent+ and shifts the other
-  # articles of self appropriately
+  # Moves +children+ basic notes to +new_parent+ and shifts the other
+  # basic notes of self appropriately
   def move_ordinal_children_to_new_parent(children:, new_parent:)
     raise ArgumentError unless new_parent.book == book
 
@@ -35,7 +35,7 @@ module Article::HasManyOrdinalChildren
     children.order(:ordinal_position).each do |basic_note|
       basic_note.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
     end
-    ordered_basic_notes.each_with_index do |basic_note, index|
+    basic_notes.ordered.each_with_index do |basic_note, index|
       basic_note.update(ordinal_position: index)
     end
   end
@@ -44,7 +44,7 @@ module Article::HasManyOrdinalChildren
   private
 
   def ordinal_positions
-    ordered_basic_notes.pluck(:ordinal_position)
+    basic_notes.ordered.pluck(:ordinal_position)
   end
 
   def expected_ordinal_positions

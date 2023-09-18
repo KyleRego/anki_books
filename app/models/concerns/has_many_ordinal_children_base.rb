@@ -25,6 +25,9 @@ module HasManyOrdinalChildrenBase
       ordinal_positions == expected_ordinal_positions
     end
 
+    ##
+    # Repositions +child+ to self at +new_ordinal_position+
+    # This is a template method
     def reposition_ordinal_child(child:, new_ordinal_position:)
       raise ArgumentError unless child_belongs_to_parent?(child:)
 
@@ -71,6 +74,24 @@ module HasManyOrdinalChildrenBase
     end
 
     private
+
+    def expected_ordinal_positions
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
+    end
+
+    def child_belongs_to_parent?(child:)
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
+    end
+
+    def shift_other_children_and_move_child_to_new_ordinal_position(child:, new_ordinal_position:)
+      # :nocov:
+      raise NotImplementedError
+      # :nocov:
+    end
 
     def valid_child_ordinal_position?(new_ordinal_position:)
       expected_ordinal_positions.include?(new_ordinal_position)
