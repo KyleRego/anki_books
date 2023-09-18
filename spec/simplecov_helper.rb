@@ -18,5 +18,4 @@ SimpleCov.start do
   add_group "Models", %r{app/models/.*}
   add_group "Controllers", %r{app/controllers/.*}
   add_group "Jobs", %r{app/jobs/.*}
-  add_group "Services", %r{app/services/.*}
 end
