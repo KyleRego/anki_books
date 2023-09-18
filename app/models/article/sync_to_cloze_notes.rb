@@ -6,6 +6,55 @@
 
 require "text"
 
+##
+# A mapping between an article cloze sentence and concepts
+class SentenceConceptsMatch
+  def initialize(sentence:)
+    @sentence = sentence
+    @concepts = []
+    @cloze_note_synced = false
+  end
+
+  attr_accessor :cloze_note_synced
+
+  attr_reader :sentence, :concepts
+
+  def <<(concept)
+    @concepts << concept
+  end
+
+  def delete(concept:)
+    @concepts.delete(concept)
+  end
+
+  def inspect
+    # :nocov:
+    concept_names = concepts.map(&:name).join(", ")
+    "\"SentenceConceptsMatch article_sentence: #{sentence} concepts: #{concept_names}\""
+    # :nocov:
+  end
+end
+
+##
+# A mapping between an article cloze sentence and one of the article's cloze notes
+class ClozeNoteSentenceMatch
+  def initialize(article_sentence:, cloze_note:, distance:)
+    @article_sentence = article_sentence
+    @cloze_note = cloze_note
+    @distance = distance
+  end
+
+  attr_reader :distance, :article_sentence, :cloze_note
+
+  private
+
+  def inspect
+    # :nocov:
+    "\"ClozeNoteSentenceMatch article_sentence: #{article_sentence} cloze_note_sentence: #{cloze_note.sentence} distance: #{distance}\""
+    # :nocov:
+  end
+end
+
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/MethodLength
@@ -23,6 +72,47 @@ module Article::SyncToClozeNotes
     article_content.scan(regex_for_concept).flatten
   end
 
+  ##
+  # Returns an array of SentenceConceptMatch objects that excludes
+  # matching a concept to a sentence if the concept name is also
+  # a part of a longer concept name that also matches around the
+  # same place
+  def cloze_sentence_concept_matches(concepts:)
+    sentence_concepts_matches = []
+
+    concepts.each do |concept|
+      concept_name = concept.name
+      article_cloze_sentences = cloze_sentences(concept_name:)
+      article_cloze_sentences.each do |article_cloze_sentence|
+        match = sentence_concepts_matches.find { |sc_match| sc_match.sentence == article_cloze_sentence }
+        unless match
+          match = SentenceConceptsMatch.new(sentence: article_cloze_sentence)
+          sentence_concepts_matches << match
+        end
+        match << concept
+      end
+    end
+
+    sentence_concepts_matches.each do |match|
+      next unless match.concepts.count > 1
+
+      sentence_with_concepts_edited_out = match.sentence
+
+      concepts_ordered_by_decreasing_length = match.concepts.sort_by { |match_conc| match_conc.name.length }.reverse
+
+      concepts_ordered_by_decreasing_length.each_with_index do |match_concept, index|
+        match_conc_name = match_concept.name
+        if index.zero? || sentence_with_concepts_edited_out.include?(match_conc_name)
+          sentence_with_concepts_edited_out = sentence_with_concepts_edited_out.gsub(match_conc_name, "")
+        else
+          match.delete(concept: match_concept)
+        end
+      end
+    end
+
+    sentence_concepts_matches
+  end
+
   private
 
   CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
@@ -38,22 +128,9 @@ module Article::SyncToClozeNotes
   # Syncs the cloze sentences of the article with its cloze notes
   def sync_to_cloze_notes
     concepts = book.concepts
-    sentence_concepts_matches = []
+    sentence_concepts_matches = cloze_sentence_concept_matches(concepts:)
     cloze_note_sentence_matches = []
     synced_cloze_note_ids = []
-
-    concepts.each do |concept|
-      concept_name = concept.name
-      article_cloze_sentences = cloze_sentences(concept_name:)
-      article_cloze_sentences.each do |article_cloze_sentence|
-        logger.debug(article_cloze_sentence)
-        match = sentence_concepts_matches.find { |sc_match| sc_match.sentence == article_cloze_sentence }
-        match ||= SentenceConceptsMatch.new(sentence: article_cloze_sentence)
-
-        match << concept
-        sentence_concepts_matches << match
-      end
-    end
 
     sentence_concepts_matches.each do |sentence_concepts_match|
       article_sentence = sentence_concepts_match.sentence
@@ -100,51 +177,6 @@ module Article::SyncToClozeNotes
     end
 
     cloze_notes.where.not(id: synced_cloze_note_ids).destroy_all
-  end
-end
-
-##
-# A mapping between an article cloze sentence and concepts
-class SentenceConceptsMatch
-  def initialize(sentence:)
-    @sentence = sentence
-    @concepts = []
-  end
-
-  attr_accessor :cloze_note_synced
-
-  attr_reader :sentence, :concepts
-
-  def <<(concept)
-    @concepts << concept
-    @cloze_note_synced = false
-  end
-
-  def inspect
-    # :nocov:
-    concept_names = concepts.map(&:name).join(", ")
-    "\"SentenceConceptsMatch article_sentence: #{sentence} concepts: #{concept_names}\""
-    # :nocov:
-  end
-end
-
-##
-# A mapping between an article cloze sentence and one of the article's cloze notes
-class ClozeNoteSentenceMatch
-  def initialize(article_sentence:, cloze_note:, distance:)
-    @article_sentence = article_sentence
-    @cloze_note = cloze_note
-    @distance = distance
-  end
-
-  attr_reader :distance, :article_sentence, :cloze_note
-
-  private
-
-  def inspect
-    # :nocov:
-    "\"ClozeNoteSentenceMatch article_sentence: #{article_sentence} cloze_note_sentence: #{cloze_note.sentence} distance: #{distance}\""
-    # :nocov:
   end
 end
 
