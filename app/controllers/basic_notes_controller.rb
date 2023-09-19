@@ -10,12 +10,10 @@ class BasicNotesController < ApplicationController
 
   before_action :require_login, only: %i[create edit update new]
   before_action :require_turbo_request
-  before_action :set_article, only: %i[create edit update new show]
+  before_action :set_article, only: %i[create edit update new]
   before_action :require_user_can_access_article, only: %i[create edit update new]
-  before_action :set_basic_note, only: %i[show edit update]
+  before_action :set_basic_note, only: %i[edit update]
   before_action :require_user_can_access_note, only: %i[edit update]
-
-  def show; end
 
   def new
     # Turbo-Frame header has the id of the turbo frame element
@@ -57,7 +55,7 @@ class BasicNotesController < ApplicationController
                                                   partial: "study_cards/basic_note",
                                                   locals: { basic_note: @basic_note })
       else
-        redirect_to article_basic_note_path(@article, @basic_note)
+        render partial: "articles/basic_note/show"
       end
     else
       render :edit, status: :unprocessable_entity

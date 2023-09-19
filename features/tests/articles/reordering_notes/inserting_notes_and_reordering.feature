@@ -30,7 +30,7 @@ Feature: Flipping a basic note between front and back
     And I click the "Create Basic note" button
     And I drag the note at position "2" to the dropzone at position "0"
     And I drag the note at position "0" to the dropzone at position "1"
-    Then the front of the note at position "0" should be "test insert note"
+    Then the front of the note at position "1" should be "test insert note"
 
   Scenario: Adding a new note in the middle and then reordering it
     Given the test user has a book called "test book 1"

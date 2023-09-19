@@ -1,0 +1,38 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
+  <div class="reorderable-basic-note-unit" data-controller="reorder-basic-notes--position-added-reorderable-unit">
+    <div data-controller="reorder-basic-notes--basic-note-dropzone">
+
+      <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
+        <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
+
+          <div class="flex flex-row pl-0 p-1">
+            <div class="min-w-0 flex-1">
+              <div data-controller="reorder-basic-notes--basic-note-draggable">
+                <div class="draggable-div-of-note" draggable="true" data-reorder-basic-notes--basic-note-draggable-target="note">
+                  <%= render partial: "articles/basic_note/flippable_basic_note" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-shrink flex flex-col wm-vertical-lr">
+              <div><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+
+      <div>
+        <%= render partial: "articles/basic_note/sibling_new_basic_note_link", locals: { previous_sibling: @basic_note } %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="mt-6">
+    <%= render partial: "articles/basic_note/flippable_basic_note" %>
+  </div>
+<% end %>

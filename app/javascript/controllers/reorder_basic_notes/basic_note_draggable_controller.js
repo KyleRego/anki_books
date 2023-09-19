@@ -8,6 +8,8 @@ export default class extends Controller {
   static targets = ["note"];
 
   initialize() {
+    this.existingBasicNoteTurboFrameSelector = ".existing-basic-note-turbo-frame";
+    this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.boundHandleDragStart = this.handleDragStart.bind(this);
   }
 
@@ -16,6 +18,10 @@ export default class extends Controller {
   }
 
   handleDragStart(event) {
-    event.dataTransfer.setData("text/plain", this.noteTarget.closest(".existing-basic-note-turbo-frame").id);
+    const noteDOMId = this.noteTarget.closest(this.existingBasicNoteTurboFrameSelector).id
+    this.articleNotesArea = this.noteTarget.closest(this.articleNotesAreaSelector);
+    const sourceArticleId = this.articleNotesArea.id.split("article-notes-").slice(1).join("-");
+    const data = {noteDOMId: noteDOMId, sourceArticleId: sourceArticleId}
+    event.dataTransfer.setData("text/plain", JSON.stringify(data));
   }
 }

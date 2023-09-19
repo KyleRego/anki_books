@@ -7,9 +7,7 @@
 <% end %>
 
 <% @book.articles.each do |article| %>
-  <div class="mb-8">
-    <% @article = article %>
-    <% @basic_notes = article.basic_notes %>
-    <%= render partial: "book_article_content" %>
-  </div>
+  <% @article = article %>
+  <% @basic_notes = article.basic_notes %>
+  <%= render partial: "articles/content" %>
 <% end %>

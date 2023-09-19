@@ -28,10 +28,5 @@ RSpec.describe BasicNotesController do
       path = "/articles/#{article_id}/basic_notes/#{basic_note_id}"
       expect(patch: path).to route_to("basic_notes#update", article_id:, id: basic_note_id)
     end
-
-    it "routes to #show" do
-      path = "/articles/#{article_id}/basic_notes/#{basic_note_id}"
-      expect(get: path).to route_to("basic_notes#show", article_id:, id: basic_note_id)
-    end
   end
 end

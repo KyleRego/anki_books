@@ -4,9 +4,9 @@
 
 <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
 
-  <%= render partial: "basic_notes/flippable_basic_note" %>
+  <%= render partial: "articles/basic_note/flippable_basic_note" %>
 
   <% if logged_in? && current_user.can_access_note?(note: @basic_note) %>
-    <%= render partial: "basic_notes/edit_basic_note_link" %>
+    <%= render partial: "articles/basic_note/edit_basic_note_link" %>
   <% end %>
 <% end %>

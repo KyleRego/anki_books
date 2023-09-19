@@ -67,7 +67,7 @@ RSpec.describe "DELETE /articles/:id", "#destroy" do
 
       it "deletes the article and shifts the higher ordinal position articles down" do
         expect { delete_articles_destroy }.to change(Article, :count).by(-1)
-        expect(book.articles.reload.pluck(:ordinal_position).sort).to eq [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        expect(book.correct_children_ordinal_positions?).to be true
       end
     end
   end

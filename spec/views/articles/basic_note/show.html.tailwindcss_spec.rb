@@ -4,7 +4,11 @@
 
 # frozen_string_literal: true
 
-RSpec.describe "basic_notes/show" do
+RSpec.describe "articles/basic_note/show" do
+  subject(:render_article_basic_note) do
+    render partial: "articles/basic_note/show"
+  end
+
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
@@ -22,17 +26,17 @@ RSpec.describe "basic_notes/show" do
     end
 
     it "renders the basic note as draggable" do
-      render
-      expect(rendered).to have_css(".draggable-div-of-note[draggable='true']")
+      render_article_basic_note
+      expect(rendered).to have_css("div.draggable-div-of-note[draggable='true']")
     end
   end
 
-  context "when user is not logged in and needs to be" do
-    it "renders the basic note without the draggable element" do
-      render
+  context "when user is not logged in" do
+    it "renders the basic note without the draggable div element" do
+      render_article_basic_note
       expect(rendered).to match(TEST_BASIC_NOTE_FRONT)
       expect(rendered).to match(TEST_BASIC_NOTE_BACK)
-      expect(rendered).not_to have_css(".draggable-div-of-note")
+      expect(rendered).not_to have_css("div.draggable-div-of-note")
     end
   end
 end

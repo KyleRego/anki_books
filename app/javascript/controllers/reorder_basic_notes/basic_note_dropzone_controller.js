@@ -5,11 +5,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["editDropzone", "newDropzone"];
+  static targets = ["dropzone"];
 
   initialize() {
     this.turboBasicNoteIdPrefix = "basic-note-";
     this.turboBasicNoteIdPrefixLength = this.turboBasicNoteIdPrefix.length;
+    this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
     this.boundHandleDragLeave = this.handleDragLeave.bind(this);
@@ -18,14 +19,10 @@ export default class extends Controller {
   }
 
   connect() {
-    this.editDropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
-    this.editDropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
-    this.editDropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
-    this.editDropzoneTarget.addEventListener("drop", this.boundHandleDrop);
-    this.newDropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
-    this.newDropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
-    this.newDropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
-    this.newDropzoneTarget.addEventListener("drop", this.boundHandleDrop);
+    this.dropzoneTarget.addEventListener("dragenter", this.boundHandleDragEnter);
+    this.dropzoneTarget.addEventListener("dragleave", this.boundHandleDragLeave);
+    this.dropzoneTarget.addEventListener("dragover", this.boundHandleDragOver);
+    this.dropzoneTarget.addEventListener("drop", this.boundHandleDrop);
     this.nestedDragEnterLevels = 0;
   }
 
@@ -36,13 +33,11 @@ export default class extends Controller {
   }
 
   addColorToDropzone() {
-    this.editDropzoneTarget.classList.add("bg-blue-200");
-    this.newDropzoneTarget.classList.add("bg-blue-200");
+    this.dropzoneTarget.classList.add("bg-blue-200");
   }
 
   removeColorFromDropzone() {
-    this.editDropzoneTarget.classList.remove("bg-blue-200");
-    this.newDropzoneTarget.classList.remove("bg-blue-200");
+    this.dropzoneTarget.classList.remove("bg-blue-200");
   }
 
   handleDragLeave(event) {
@@ -62,49 +57,42 @@ export default class extends Controller {
     event.preventDefault();
     this.nestedDragEnterLevels = 0;
     this.removeColorFromDropzone();
-    this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
-    const noteTurboId = event.dataTransfer.getData("text/plain");
-    this.draggedNote = document.getElementById(noteTurboId).closest(this.reorderableBasicNoteCSSSelector);
-    const noteId = noteTurboId.slice(this.turboBasicNoteIdPrefixLength);
-    this.noteOfDropzone = this.editDropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
-    const articleId = this.noteOfDropzone.closest("[id^=\"article-notes-\"]").id.split("notes-").slice(1).join("-");
-    const ordinalPositionsResult = this.draggedNoteAndDropzoneOrdinalPositions();
-    this.oldOrdinalPosition = ordinalPositionsResult[0];
-    this.newOrdinalPosition = ordinalPositionsResult[1];
-    if (this.newOrdinalPosition < this.oldOrdinalPosition) {
-      this.newOrdinalPosition += 1;
+    const data = event.dataTransfer.getData("text/plain");
+    const noteDOMId = JSON.parse(data)["noteDOMId"];
+    const sourceArticleId = JSON.parse(data)["sourceArticleId"];
+    const noteId = noteDOMId.slice(this.turboBasicNoteIdPrefixLength);
+    this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
+    this.articleNotesArea = this.noteOfDropzone.closest(this.articleNotesAreaSelector);
+    this.articleNotes = this.articleNotesArea.querySelectorAll(this.reorderableBasicNoteCSSSelector);
+    const targetArticleId = this.articleNotesArea.id.split("article-notes-").slice(1).join("-");
+    const newOrdinalPosition = this.dropzoneOrdinalPosition();
+    let oldOrdinalPosition = null;
+    if (sourceArticleId === targetArticleId) {
+      this.draggedNote = document.getElementById(noteDOMId).closest(this.reorderableBasicNoteCSSSelector);
+      oldOrdinalPosition = this.draggedNoteOrdinalPosition();
     }
-    if (this.dropDoesNotMoveDraggedNote()) {
-      return;
-    } else {
-      this.handleChangeNoteOrdinalPosition(articleId, noteId);
-    }
+    this.handleChangeNoteOrdinalPosition(targetArticleId, noteId, oldOrdinalPosition, newOrdinalPosition);
   }
 
- draggedNoteAndDropzoneOrdinalPositions() {
-    let draggedNotePosition = null;
-    let noteOfDropzonePosition = null;
+ dropzoneOrdinalPosition() {
     for (let i = 0; i < this.articleNotes.length; i++) {
-      if (!draggedNotePosition && (this.articleNotes[i] === this.draggedNote)) {
-        draggedNotePosition = i;
-      }
-      if (!noteOfDropzonePosition && (this.articleNotes[i] === this.noteOfDropzone)) {
-        noteOfDropzonePosition = i;
-      }
-      if (!!draggedNotePosition && !!noteOfDropzonePosition) {
-        break;
+      if (this.articleNotes[i] === this.noteOfDropzone) {
+        return i;
       }
     }
-    return [draggedNotePosition, noteOfDropzonePosition];
   }
 
-  dropDoesNotMoveDraggedNote() {
-    return ((this.oldOrdinalPosition === this.newOrdinalPosition));
+  draggedNoteOrdinalPosition() {
+    for (let i = 0; i < this.articleNotes.length; i++) {
+      if (this.articleNotes[i] === this.draggedNote) {
+        return i;
+      }
+    }    
   }
 
-  handleChangeNoteOrdinalPosition(articleId, noteId) {
-    const url = `/articles/${articleId}/change_note_ordinal_position`;
-    const params = {note_id: noteId, new_ordinal_position: this.newOrdinalPosition};
+  handleChangeNoteOrdinalPosition(targetArticleId, noteId, oldOrdinalPosition, newOrdinalPosition) {
+    const url = `/articles/${targetArticleId}/change_note_ordinal_position`;
+    const params = {note_id: noteId, new_ordinal_position: newOrdinalPosition};
     const authenticityToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ?? null;
     fetch(url, {
       method: "POST",
@@ -116,7 +104,7 @@ export default class extends Controller {
     })
     .then((response) => {
       if (response.status === 200) {
-        this.updateNoteOrdinalPositionInHTML();
+        this.updateNoteOrdinalPositionInHTML(oldOrdinalPosition, newOrdinalPosition);
       }
       else {
         console.log("Something went wrong reordering the note (the server response status code was not 200).");
@@ -127,7 +115,12 @@ export default class extends Controller {
     });
   }
 
-  updateNoteOrdinalPositionInHTML() {
-    this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+  updateNoteOrdinalPositionInHTML(oldOrdinalPosition, newOrdinalPosition) {
+    // oldOrdinalPosition is null if draggedNote is from a different article
+    if (oldOrdinalPosition && (newOrdinalPosition <= oldOrdinalPosition)) {
+      this.noteOfDropzone.insertAdjacentElement("beforebegin", this.draggedNote);
+    } else {
+      this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+    }
   }
 }

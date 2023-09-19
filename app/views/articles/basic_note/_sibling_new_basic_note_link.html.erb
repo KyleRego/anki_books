@@ -3,7 +3,5 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= turbo_frame_tag previous_sibling.new_sibling_note_turbo_id, class: "new-note-turbo-frame" do %>
-  <div>
-    <%= link_to "New note", new_article_basic_note_path(@article), class: "action-link" %>
-  </div>
+  <%= link_to "New note", new_article_basic_note_path(@article), class: "action-link" %>
 <% end %>

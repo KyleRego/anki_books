@@ -2,6 +2,4 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="flex flex-row justify-between">
-  <%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "action-link" %>
-</div>
+<%= link_to "Edit", edit_article_basic_note_path(@basic_note.article.id, @basic_note), class: "action-link" %>

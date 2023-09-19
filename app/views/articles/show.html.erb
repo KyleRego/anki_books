@@ -12,12 +12,4 @@
   <% end %>
 <% end %>
 
-<div class="flex flex-col sm:flex-row">
-  <% if logged_in? || @basic_notes.any? %><div class="sm:w-8/12"><% else %><div><% end %>
-    <%= @article.content %>
-  </div>
-
-  <% if logged_in? || @basic_notes.any? %>
-    <%= render "articles/article_notes" %>
-  <% end %>
-</div>
+<%= render partial: "articles/content" %>

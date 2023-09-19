@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   get "/random_article", to: "users#random_article", as: "user_random_article"
 
   resources :articles, only: [], param: :id do
-    resources :basic_notes, only: %i[new create edit update show]
+    resources :basic_notes, only: %i[new create edit update]
   end
 
   get "/downloads", to: "users#downloads", as: "downloads"
