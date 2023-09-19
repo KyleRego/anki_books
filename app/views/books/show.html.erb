@@ -10,10 +10,10 @@
 <% @book.articles.each do |article| %>
   <% @article = article %>
   <% @basic_notes = article.basic_notes %>
-  <div class="border-black border-b">
+  <div class="border-black border-b" data-controller="second-nav-top">
 
     <% if logged_in? %>
-      <div class="sticky top-8 z-50 bg-white flex-row justify-end">
+      <div class="sticky z-50 bg-white flex-row justify-end" data-second-nav-top-target="nav">
         <%= link_to(@article.title, article_path(@article)) %>
       </div>
     <% end %>
