@@ -8,6 +8,8 @@ export default class extends Controller {
   static targets = ["editDropzone", "newDropzone"];
 
   initialize() {
+    this.turboBasicNoteIdPrefix = "basic-note-";
+    this.turboBasicNoteIdPrefixLength = this.turboBasicNoteIdPrefix.length;
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
     this.boundHandleDragLeave = this.handleDragLeave.bind(this);
@@ -63,7 +65,7 @@ export default class extends Controller {
     this.articleNotes = document.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const noteTurboId = event.dataTransfer.getData("text/plain");
     this.draggedNote = document.getElementById(noteTurboId).closest(this.reorderableBasicNoteCSSSelector);
-    const noteId = noteTurboId.split("-").slice(3).join("-");
+    const noteId = noteTurboId.slice(this.turboBasicNoteIdPrefixLength);
     this.noteOfDropzone = this.editDropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
     const articleId = this.noteOfDropzone.closest("[id^=\"article-notes-\"]").id.split("notes-").slice(1).join("-");
     const ordinalPositionsResult = this.draggedNoteAndDropzoneOrdinalPositions();

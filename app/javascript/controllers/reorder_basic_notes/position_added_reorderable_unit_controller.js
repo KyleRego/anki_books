@@ -4,6 +4,9 @@
 
 import { Controller } from "@hotwired/stimulus"
 
+// Manipulates the DOM: when a new basic note is added, the Turbo Frame is inserted inside
+// a reorderable unit. The new HTML reorderable unit needs to be moved outside of that parent
+// and after it.
 export default class extends Controller {
 
   connect() {

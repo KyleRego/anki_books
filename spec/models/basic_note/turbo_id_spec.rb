@@ -9,6 +9,6 @@ RSpec.describe BasicNote, "#turbo_id" do
   let(:basic_note) { create(:basic_note, article:) }
 
   it "returns a string with the note's id" do
-    expect(basic_note.turbo_id).to eq "turbo-basic-note-#{basic_note.id}"
+    expect(basic_note.turbo_id).to eq "basic-note-#{basic_note.id}"
   end
 end
