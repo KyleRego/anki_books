@@ -1,0 +1,19 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<div class="reorderable-basic-note-unit" data-controller="reorder-basic-notes--position-added-reorderable-unit">
+  <div data-controller="reorder-basic-notes--basic-note-dropzone">
+    <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
+      <div data-controller="reorder-basic-notes--basic-note-draggable">
+        <div id="<%= @basic_note.turbo_id %>">
+          <div class="draggable-div-of-note" draggable="true" data-reorder-basic-notes--basic-note-draggable-target="note">
+            <div class="py-3">
+              <%= render partial: "articles/basic_note/flippable_basic_note" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

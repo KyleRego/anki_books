@@ -9,7 +9,6 @@ export default class extends Controller {
 
   initialize() {
     this.turboBasicNoteIdPrefix = "basic-note-";
-    this.turboBasicNoteIdPrefixLength = this.turboBasicNoteIdPrefix.length;
     this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
@@ -58,17 +57,16 @@ export default class extends Controller {
     this.nestedDragEnterLevels = 0;
     this.removeColorFromDropzone();
     const data = event.dataTransfer.getData("text/plain");
-    const noteDOMId = JSON.parse(data)["noteDOMId"];
+    const noteId = JSON.parse(data)["noteId"];
     const sourceArticleId = JSON.parse(data)["sourceArticleId"];
-    const noteId = noteDOMId.slice(this.turboBasicNoteIdPrefixLength);
     this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);
     this.articleNotesArea = this.noteOfDropzone.closest(this.articleNotesAreaSelector);
     this.articleNotes = this.articleNotesArea.querySelectorAll(this.reorderableBasicNoteCSSSelector);
     const targetArticleId = this.articleNotesArea.id.split("article-notes-").slice(1).join("-");
     const newOrdinalPosition = this.dropzoneOrdinalPosition();
+    this.draggedNote = document.getElementById(`${this.turboBasicNoteIdPrefix}${noteId}`).closest(this.reorderableBasicNoteCSSSelector);
     let oldOrdinalPosition = null;
     if (sourceArticleId === targetArticleId) {
-      this.draggedNote = document.getElementById(noteDOMId).closest(this.reorderableBasicNoteCSSSelector);
       oldOrdinalPosition = this.draggedNoteOrdinalPosition();
     }
     this.handleChangeNoteOrdinalPosition(targetArticleId, noteId, oldOrdinalPosition, newOrdinalPosition);
@@ -117,10 +115,14 @@ export default class extends Controller {
 
   updateNoteOrdinalPositionInHTML(oldOrdinalPosition, newOrdinalPosition) {
     // oldOrdinalPosition is null if draggedNote is from a different article
-    if (oldOrdinalPosition && (newOrdinalPosition <= oldOrdinalPosition)) {
-      this.noteOfDropzone.insertAdjacentElement("beforebegin", this.draggedNote);
+    if (oldOrdinalPosition != null) {
+      if (newOrdinalPosition < oldOrdinalPosition) {
+        this.noteOfDropzone.insertAdjacentElement("beforebegin", this.draggedNote);
+      } else {
+        this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+      }
     } else {
-      this.noteOfDropzone.insertAdjacentElement("afterend", this.draggedNote);
+      this.noteOfDropzone.insertAdjacentElement("beforebegin", this.draggedNote);
     }
   }
 }

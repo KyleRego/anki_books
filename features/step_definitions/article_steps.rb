@@ -85,6 +85,11 @@ When "I focus the article editor" do
   page.execute_script("arguments[0].focus();", element)
 end
 
+Then "the article {string} should have {int} basic notes" do |string, int|
+  article = Article.find_by(title: string)
+  expect(article.basic_notes_count).to eq int
+end
+
 Then "I should be redirected to the article {string}" do |article_title|
   article = Article.find_by(title: article_title)
   expect(page).to have_current_path article_path(article)

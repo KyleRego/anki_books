@@ -8,12 +8,16 @@
      class="sm:max-height-calc-from-screen sm:sticky sm:top-12 sm:w-4/12 sm:ml-4
             sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full reorderable-basic-note-units-container">
 
-  <% if logged_in? %>
+  <% if logged_in? && !@books_show %>
     <%= render "articles/basic_note/first_new_basic_note_link" %>
   <% end %>
 
   <% @basic_notes&.each do |basic_note| %>
     <% @basic_note = basic_note %>
-    <%= render partial: "articles/basic_note/show" %>
+    <% if @books_show %>
+      <%= render partial: "books/basic_note/show" %>
+    <% else %>
+      <%= render partial: "articles/basic_note/show" %>
+    <% end %>
   <% end %>
 </div>

@@ -2,12 +2,6 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% if logged_in? %>
-  <div class="sticky top-8 z-50 bg-white flex-row justify-end">
-    <%= link_to("Edit article", edit_article_path(@article), class: "action-link") %>
-  </div>
-<% end %>
-
 <div class="flex flex-col sm:flex-row">
   <div class="sm:w-8/12">
     <%= @article.content %>
