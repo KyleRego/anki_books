@@ -15,7 +15,9 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
   include BasicNotesHelper
 
-  let(:article) { create(:article) }
+  let(:user) { create(:user) }
+  let(:book) { create(:book, users: [user]) }
+  let(:article) { create(:article, book:) }
   let(:front) { "Front " }
   let(:back) { "Back" }
   let(:ordinal_position) { 0 }

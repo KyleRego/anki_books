@@ -25,6 +25,14 @@ Copyright (C) 2023 Kyle Rego */
     @apply text-black font-semibold;
   }
 
+  .danger-link {
+    @apply text-black font-medium cursor-pointer;
+  }
+
+  .danger-link:hover {
+    @apply text-red-600 font-semibold;
+  }
+
   h1 {
     @apply text-4xl font-bold;
     overflow-wrap: anywhere;

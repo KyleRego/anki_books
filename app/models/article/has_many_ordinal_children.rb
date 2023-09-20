@@ -10,6 +10,17 @@
 module Article::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
+  ##
+  # Destroys +child+ basic note and shifts the other
+  # basic notes of self appropriately
+  def destroy_ordinal_child(child:)
+    raise ArgumentError unless child_belongs_to_parent?(child:)
+
+    deleted_ordinal_position = child.ordinal_position
+    child.destroy!
+    shift_basic_notes_down_to_replace_missing_position(missing_position: deleted_ordinal_position)
+  end
+
   def move_ordinal_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
@@ -42,6 +53,14 @@ module Article::HasManyOrdinalChildren
   # rubocop:enable Metrics/AbcSize
 
   private
+
+  def shift_basic_notes_down_to_replace_missing_position(missing_position:)
+    # rubocop:disable Rails/FindEach
+    basic_notes.where("ordinal_position > ?", missing_position).each do |basic_note|
+      basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
+    end
+    # rubocop:enable Rails/FindEach
+  end
 
   def ordinal_positions
     basic_notes.ordered.pluck(:ordinal_position)

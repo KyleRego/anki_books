@@ -11,7 +11,8 @@ RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
 
   let(:params) { { basic_note: { front:, back: }, options: { on_study_cards: } } }
   let(:user) { create(:user) }
-  let(:article) { create(:article) }
+  let(:book) { create(:book, users: [user]) }
+  let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
   let(:front) { "new front" }
   let(:back) { "new back" }

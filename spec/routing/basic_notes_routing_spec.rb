@@ -28,5 +28,10 @@ RSpec.describe BasicNotesController do
       path = "/articles/#{article_id}/basic_notes/#{basic_note_id}"
       expect(patch: path).to route_to("basic_notes#update", article_id:, id: basic_note_id)
     end
+
+    it "routes to #destroy" do
+      path = "/articles/#{article_id}/basic_notes/#{basic_note_id}"
+      expect(delete: path).to route_to("basic_notes#destroy", article_id:, id: basic_note_id)
+    end
   end
 end

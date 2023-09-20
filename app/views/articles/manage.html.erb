@@ -26,33 +26,55 @@
 </div>
 
 <% if @article_basic_notes.any? %>
-<div class="mt-4 pb-4 border-b-2">
-  <h3 class="mb-4">Transfer basic notes to a different article:</h3>
-  <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
-    <% @article_basic_notes.each do |basic_note| %>
-      <div class="mb-4">
-        <%= label_tag(basic_note.id) do %>
-          <%= check_box_tag("basic_note_ids[]", basic_note.id, nil, id: basic_note.id) %>
-          <span class="mr-4"><%= basic_note.front %></span>
-          <span><%= basic_note.back %></span>
-        <% end %>
+  <div class="mt-4 pb-4 border-b-2">
+    <h3 class="mb-4">Transfer basic notes to a different article:</h3>
+    <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
+      <% @article_basic_notes.each do |basic_note| %>
+        <div class="mb-4">
+          <%= label_tag(basic_note.id) do %>
+            <%= check_box_tag("basic_note_ids[]", basic_note.id, nil, id: basic_note.id) %>
+            <span class="mr-4"><%= basic_note.front %></span>
+            <span><%= basic_note.back %></span>
+          <% end %>
+        </div>
+      <% end %>
+      <div>
+        <%= select_tag("target_article_id",
+                        options_from_collection_for_select(@book_other_articles, :id, :title),
+                        prompt: "Select an article",
+                        title: "Move basic notes to a different article") %>
       </div>
+      <%= form.submit "Move basic notes to selected article", class: "action-link mt-4" %>
     <% end %>
-    <div>
-      <%= select_tag("target_article_id",
-                      options_from_collection_for_select(@book_other_articles, :id, :title),
-                      prompt: "Select an article",
-                      title: "Move basic notes to a different article") %>
+  </div>
+
+  <div class="mt-4 pb-4 border-b-2">
+    <h3 class="mb-4">Delete basic notes:</h3>
+    <div class="flex flex-wrap">
+      <% @article_basic_notes.each do |basic_note| %>
+        <div class="border border-blue-400 bg-blue-50 text-center p-2 m-1">
+
+          <div class="border-black border-b p-1"><%= basic_note.front %></div>
+          <div class="p-1"><%= basic_note.back %></div>
+
+          <div>
+            <%= button_to "Delete",
+              article_basic_note_path(@article, basic_note),
+              class: "danger-link",
+              method: :delete,
+              form: { data: { turbo_confirm: "Are you sure you want to delete #{basic_note.front.first(20)}...?"} } %>
+          </div>
+
+        </div>
+      <% end %>
     </div>
-    <%= form.submit "Move basic notes to selected article", class: "action-link mt-4" %>
-  <% end %>
-</div>
+  </div>
 <% end %>
 
 <div class="mt-4">
   <%= button_to "Delete article: #{@article.title}",
     article_path(@article),
-    class: "text-red-500 hover:text-red-600 action-link",
+    class: "danger-link",
     method: :delete,
     form: { data: { turbo_confirm: "Are you sure you want to delete #{@article.title}?"} } %>
 </div>

@@ -7,7 +7,9 @@
 RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   subject(:get_basic_notes_edit) { get edit_article_basic_note_path(article, basic_note), headers: }
 
-  let(:article) { create(:article) }
+  let(:user) { create(:user) }
+  let(:book) { create(:book, users: [user]) }
+  let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
   let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
 

@@ -9,7 +9,7 @@
       <div data-reorder-basic-notes--basic-note-dropzone-target="dropzone" class="note-droppable-area">
         <%= turbo_frame_tag @basic_note.turbo_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
 
-          <div class="flex flex-row pl-0 p-1">
+          <div class="flex flex-row">
             <div class="min-w-0 flex-1">
               <div data-controller="reorder-basic-notes--basic-note-draggable">
                 <div class="draggable-div-of-note" draggable="true" data-reorder-basic-notes--basic-note-draggable-target="note">
@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex-shrink flex flex-col wm-vertical-lr">
-              <div><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
+              <div class="text-center"><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
             </div>
           </div>
 

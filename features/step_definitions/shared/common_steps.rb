@@ -112,6 +112,7 @@ Then "I should see a nested list element with text {string} under the list eleme
   parent_element = find("li", text: parent_text)
   expect(parent_element).to have_css("li", text: nested_text)
 end
+
 Then "I should not see the image {string} on the page" do |string|
   expect(page).to_not have_css("img[src$='#{string}']")
 end

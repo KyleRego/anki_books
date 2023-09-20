@@ -8,12 +8,12 @@
 class BasicNotesController < ApplicationController
   include BasicNotesHelper
 
-  before_action :require_login, only: %i[create edit update new]
-  before_action :require_turbo_request
-  before_action :set_article, only: %i[create edit update new]
-  before_action :require_user_can_access_article, only: %i[create edit update new]
-  before_action :set_basic_note, only: %i[edit update]
-  before_action :require_user_can_access_note, only: %i[edit update]
+  before_action :require_login, only: %i[create edit update new destroy]
+  before_action :require_turbo_request, except: %i[destroy]
+  before_action :set_article, only: %i[create edit update new destroy]
+  before_action :require_user_can_access_article, only: %i[create edit update new destroy]
+  before_action :set_basic_note, only: %i[edit update destroy]
+  before_action :require_user_can_access_note, only: %i[edit update destroy]
 
   def new
     # Turbo-Frame header has the id of the turbo frame element
@@ -62,14 +62,26 @@ class BasicNotesController < ApplicationController
     end
   end
 
+  # TODO: Flash message on successful basic note deletion
+  def destroy
+    @article.destroy_ordinal_child(child: @basic_note)
+    redirect_to manage_article_path(@article)
+  end
+
   private
 
   def set_article
-    @article = Article.find(params[:article_id])
+    @article = Article.find_by(id: params[:article_id])
+    return if @article
+
+    not_found_or_unauthorized
   end
 
   def set_basic_note
-    @basic_note = @article.basic_notes.find(params[:id])
+    @basic_note = @article.basic_notes.find_by(id: params[:id])
+    return if @basic_note
+
+    not_found_or_unauthorized
   end
 
   def basic_note_params
@@ -81,10 +93,14 @@ class BasicNotesController < ApplicationController
   end
 
   def require_user_can_access_article
-    current_user.can_access_article?(article: @article)
+    return if current_user.can_access_article?(article: @article)
+
+    not_found_or_unauthorized
   end
 
   def require_user_can_access_note
-    current_user.can_access_note?(note: @basic_note)
+    return if current_user.can_access_note?(note: @basic_note)
+
+    not_found_or_unauthorized
   end
 end
