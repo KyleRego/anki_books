@@ -18,10 +18,11 @@ RSpec.describe ClozeNote, "#anki_back_extra" do
   end
 
   it "includes a link back to the article" do
-    expect(cloze_note.anki_back_extra).to include("/articles/#{article.id}\">Article</a>")
+    expect(cloze_note.anki_back_extra).to include("/articles/#{article.id}\">Anki Books</a>")
   end
 
   it "includes a last downloaded at timestamp" do
-    expect(cloze_note.anki_back_extra).to include("<br>Last downloaded at: #{DateTime.current.to_fs(:short)}")
+    expect(cloze_note.anki_back_extra).to include("<br>Downloaded from")
+    expect(cloze_note.anki_back_extra).to include(DateTime.current.strftime("%b %d"))
   end
 end

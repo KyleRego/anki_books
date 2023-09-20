@@ -16,16 +16,16 @@ module ClozeNote::AnkiContentable
   end
 
   def anki_back_extra
-    "<br>#{article_link}<br>#{last_downloaded_at_stamp}"
+    "<br>#{last_downloaded_at_stamp}"
   end
 
   private
 
   def article_link
-    "<a href=\"#{article_url(article)}\">Article</a>"
+    "<a href=\"#{article_url(article)}\">Anki Books</a>"
   end
 
   def last_downloaded_at_stamp
-    "Last downloaded at: #{DateTime.current.to_fs(:short)}"
+    "Downloaded from #{article_link}: #{DateTime.current.strftime('%b %d')}"
   end
 end
