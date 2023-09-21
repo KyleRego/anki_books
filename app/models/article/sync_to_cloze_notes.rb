@@ -73,10 +73,8 @@ module Article::SyncToClozeNotes
   end
 
   ##
-  # Returns an array of SentenceConceptMatch objects that excludes
-  # matching a concept to a sentence if the concept name is also
-  # a part of a longer concept name that also matches around the
-  # same place
+  # Returns an array of SentenceConceptMatch objects. Best understood
+  # by reading the output of the RSpec specifications with --format doc
   def cloze_sentence_concept_matches(concepts:)
     sentence_concepts_matches = []
 
@@ -102,7 +100,7 @@ module Article::SyncToClozeNotes
 
       concepts_ordered_by_decreasing_length.each_with_index do |match_concept, index|
         match_conc_name = match_concept.name
-        if index.zero? || sentence_with_concepts_edited_out.include?(match_conc_name)
+        if index.zero? || sentence_with_concepts_edited_out =~ /\b#{match_conc_name}\b/
           sentence_with_concepts_edited_out = sentence_with_concepts_edited_out.gsub(match_conc_name, "")
         else
           match.delete(concept: match_concept)

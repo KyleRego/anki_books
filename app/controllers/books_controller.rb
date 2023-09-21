@@ -15,6 +15,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @use_book_version = true
     @book = Book.includes(articles: :basic_notes)
                 .order("articles.ordinal_position")
                 .order("basic_notes.ordinal_position").find(params[:id])

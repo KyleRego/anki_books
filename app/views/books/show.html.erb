@@ -6,7 +6,6 @@
   <%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %>
 <% end %>
 
-<% @books_show = true %>
 <% @book.articles.each do |article| %>
   <% @article = article %>
   <% @basic_notes = article.basic_notes %>

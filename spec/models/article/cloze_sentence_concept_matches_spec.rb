@@ -59,4 +59,19 @@ RSpec.describe Article, "#cloze_sentence_concept_matches" do
       expect(match.concepts.map(&:name).sort).to eq ["brain", "frontal lobes"]
     end
   end
+
+  context "when one concept name includes a different concept name that also appears inside a different word" do
+    let(:content) { "A third technique is exception aggregation: handling many exceptions with a single piece of code." }
+    let(:concept_one) { create(:concept, user:, name: "exception aggregation") }
+    let(:concept_two) { create(:concept, user:, name: "exception") }
+    let(:concepts) { [concept_one, concept_two] }
+
+    it "creates a match with the concept" do
+      expect(cloze_sentence_concept_matches.size).to eq 1
+      match = cloze_sentence_concept_matches.first
+      expect(match.sentence).to eq content
+      expect(match.concepts.count).to eq 1
+      expect(match.concepts.map(&:name).sort).to eq ["exception aggregation"]
+    end
+  end
 end

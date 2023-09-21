@@ -20,3 +20,10 @@
     <div><%= link_to book.title, book_path(book) %></div>
   <% end %>
 </div>
+
+<div class="mt-4 pb-4 border-b-2">
+  <h4 class="pb-2">Cloze notes:</h4>
+  <% @cloze_notes.each do |cloze_note| %>
+    <p><%= link_to cloze_note.sentence, article_path(cloze_note.article) %></p>
+  <% end %>
+</div>

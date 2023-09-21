@@ -16,6 +16,7 @@ class ConceptsController < ApplicationController
   def show
     @parent_concept = @concept.parent_concept
     @books = @concept.books.ordered
+    @cloze_notes = @concept.cloze_notes.includes(:article)
   end
 
   def manage
@@ -26,7 +27,7 @@ class ConceptsController < ApplicationController
     parent_concept = current_user.concepts.find_by(id: params[:parent_concept_id])
     if parent_concept
       parent_concept.concepts << @concept
-      redirect_to manage_concept_path(@concept), flash: { notice: "Parent concept set" }
+      redirect_to manage_concept_path(@concept), flash: { notice: "Parent concept updated" }
     else
       not_found_or_unauthorized
     end

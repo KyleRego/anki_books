@@ -39,6 +39,23 @@ RSpec.describe "GET /concepts/:id", "#show" do
         end
       end
 
+      context "when the concept has some cloze notes" do
+        before do
+          book = create(:book, users: [user])
+          article = create(:article, book:)
+          concept = create(:concept, user:, name: "nervous system")
+          create(:cloze_note, sentence: "Research into the nervous system oftentimes is related to neuroplasticity.",
+                              concepts: [concept], article:)
+          create(:cloze_note, sentence: "New neurons continue to grow throughout the life of the nervous system.",
+                              concepts: [concept], article:)
+        end
+
+        it "returns a success response" do
+          get_concepts_show
+          expect(response).to be_successful
+        end
+      end
+
       context "when concept is not found (it was deleted)" do
         before { concept.destroy }
 
