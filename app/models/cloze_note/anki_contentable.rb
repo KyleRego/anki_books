@@ -32,6 +32,6 @@ module ClozeNote::AnkiContentable
   end
 
   def last_downloaded_at_stamp
-    "Downloaded from #{article_link}: #{DateTime.current.strftime('%b %d')}"
+    "Downloaded from #{article_link}: #{DateTime.current.strftime('%b %d %I:%M %z')}"
   end
 end

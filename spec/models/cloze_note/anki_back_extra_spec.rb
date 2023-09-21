@@ -23,6 +23,6 @@ RSpec.describe ClozeNote, "#anki_back_extra" do
 
   it "includes a last downloaded at timestamp" do
     expect(cloze_note.anki_back_extra).to include("<br>Downloaded from")
-    expect(cloze_note.anki_back_extra).to include(DateTime.current.strftime("%b %d"))
+    expect(cloze_note.anki_back_extra).to include(DateTime.current.strftime("%b %d %I:%M %z"))
   end
 end

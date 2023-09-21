@@ -27,6 +27,6 @@ module BasicNote::AnkiContentable
   end
 
   def last_downloaded_at_stamp
-    "Downloaded from #{note_link}: #{DateTime.current.strftime('%b %d')}"
+    "Downloaded from #{note_link}: #{DateTime.current.strftime('%b %d %I:%M %z')}"
   end
 end

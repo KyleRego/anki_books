@@ -32,6 +32,6 @@ RSpec.describe BasicNote, "#anki_back" do
 
   it "includes a last downloaded at timestamp" do
     expect(basic_note.anki_back).to include("<br>Downloaded from")
-    expect(basic_note.anki_back).to include(DateTime.current.strftime("%b %d"))
+    expect(basic_note.anki_back).to include(DateTime.current.strftime("%b %d %I:%M %z"))
   end
 end
