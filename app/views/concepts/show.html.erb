@@ -8,7 +8,13 @@
 
 <h2><%= @concept.name %></h2>
 
-<div class="my-4">
+<% if @parent_concept %>
+<div class="mt-4 pb-4 border-b-2">
+  <h4>Parent concept: <%= @parent_concept.name %></h4>
+</div>
+<% end %>
+
+<div class="mt-4 pb-4 border-b-2">
   <h4 class="pb-2">Books:</h4>
   <% @books.each do |book| %>
     <div><%= link_to book.title, book_path(book) %></div>

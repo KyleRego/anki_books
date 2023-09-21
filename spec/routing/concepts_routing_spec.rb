@@ -35,5 +35,10 @@ RSpec.describe ConceptsController do
     it "routes to #manage" do
       expect(get: "/concepts/#{concept_id}/manage").to route_to("concepts#manage", id: concept_id)
     end
+
+    it "routes to #change_parent_concept" do
+      path = "/concepts/#{concept_id}/change_parent_concept"
+      expect(patch: path).to route_to("concepts#change_parent_concept", id: concept_id)
+    end
   end
 end

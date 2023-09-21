@@ -32,7 +32,7 @@ class Concept < ApplicationRecord
   belongs_to :user, optional: false
 
   belongs_to :parent_concept, optional: true, class_name: "Concept", inverse_of: :concepts
-  has_many :concepts, foreign_key: :parent_domain_id, inverse_of: :parent_domain, dependent: nil
+  has_many :concepts, foreign_key: :parent_concept_id, inverse_of: :parent_concept, dependent: nil
 
   has_many :books_concepts, dependent: :destroy
   has_many :books, through: :books_concepts

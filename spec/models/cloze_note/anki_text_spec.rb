@@ -59,4 +59,17 @@ RSpec.describe ClozeNote, "#anki_text" do
       expect(anki_text).to eq "A {{c1::brain}} is an example of a {{c1::brain}}."
     end
   end
+
+  context "when cloze note has a concept and that concept's parent concept" do
+    let(:cloze_note) do
+      parent_concept = create(:concept, user:, name: "brain")
+      concept = create(:concept, user:, name: "frontal lobes", parent_concept:)
+      sentence = "The frontal lobes are part of the brain."
+      create(:cloze_note, article:, sentence:, concepts: [concept, parent_concept])
+    end
+
+    it "makes one cloze deletion for the concept only (the parent concept does not get one)" do
+      expect(anki_text).to eq "The {{c1::frontal lobes}} are part of the brain."
+    end
+  end
 end

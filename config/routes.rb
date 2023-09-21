@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   resources :concepts, except: %i[destroy]
   get "/concepts/:id/manage", to: "concepts#manage", as: "manage_concept"
+  patch "/concepts/:id/change_parent_concept", to: "concepts#change_parent_concept", as: "change_parent_concept"
 
   resources :books, except: %i[destroy] do
     resources :articles, only: %i[new index]
