@@ -22,7 +22,7 @@ AnkiRecord::AnkiPackage.update(path: "./#{Package_name}.apkg") do |anki21_databa
 
     note = anki21_database.find_notes_by_exact_text_match(text: file_path).first
     note ||= AnkiRecord::Note.new(note_type:, deck:)
-    note.file = file_path
+    note.file = "#{file.path}: #{DateTime.now.strftime('%b %d %I:%M %z')}"
     note.code = note_code_content
     note.save
 

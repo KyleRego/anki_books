@@ -22,7 +22,7 @@ AnkiRecord::AnkiPackage.create(name: Package_name) do |anki21_database|
     note_code_content = "<pre><code>#{contents}</code></pre>"
 
     note = AnkiRecord::Note.new(note_type:, deck:)
-    note.file = file.path
+    note.file = "#{file.path}: #{DateTime.now.strftime('%b %d %I:%M %z')}"
     note.code = note_code_content
     note.save
 
