@@ -11,16 +11,3 @@
 <div class="mt-4 pb-4 border-b-2">
   <%= link_to "Edit concept", edit_concept_path(@concept), class: "action-link" %>
 </div>
-
-<div class="mt-4 pb-4 border-b-2">
-  <h3 class="mb-4">Change parent concept:</h3>
-  <%= form_with(model: @concept, url: change_parent_concept_path(@concept)) do |form| %>
-    <div>
-      <%= select_tag("parent_concept_id",
-                      options_from_collection_for_select(@user_other_concepts, :id, :name),
-                      prompt: "Select a concept",
-                      title: "Select a parent concept") %>
-    </div>
-    <%= form.submit "Update parent concept", class: "action-link mt-4" %>
-  <% end %>
-</div>

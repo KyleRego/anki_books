@@ -31,6 +31,9 @@ class Article < ApplicationRecord
   has_many :basic_notes, dependent: :destroy
   has_many :cloze_notes, dependent: :destroy
 
+  has_many :articles_concepts, dependent: :destroy
+  has_many :concepts, through: :articles_concepts
+
   validates :title, presence: true
   validates :ordinal_position, presence: true, uniqueness: { scope: :book_id }
 

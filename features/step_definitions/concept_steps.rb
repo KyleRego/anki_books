@@ -8,8 +8,8 @@ Given "the test user has a concept called {string}" do |concept_name|
   create(:concept, name: concept_name, user: @test_user)
 end
 
-Given "the book {string} has the {string} concept" do |book_title, concept_name|
-  book = Book.find_by(title: book_title)
+Given "the article {string} has the {string} concept" do |article_title, concept_name|
+  article = Article.find_by(title: article_title)
   concept = Concept.find_by(name: concept_name)
-  book.concepts << concept
+  article.concepts << concept
 end

@@ -27,10 +27,10 @@ RSpec.describe CreateUserAnkiPackageJob do
     context "when the user has cloze notes from the neuroplasticity fixture article" do
       before do
         book = create(:book, users: [user])
-        create(:neuroplasticity_article, book:)
-        create(:concept, books: [book], user:, name: "nervous system")
-        create(:concept, books: [book], user:, name: "neuron")
-        create(:concept, books: [book], user:, name: "brain")
+        article = create(:neuroplasticity_article, book:)
+        create(:concept, articles: [article], user:, name: "nervous system")
+        create(:concept, articles: [article], user:, name: "neuron")
+        create(:concept, articles: [article], user:, name: "brain")
       end
 
       it "creates the user's cloze notes" do

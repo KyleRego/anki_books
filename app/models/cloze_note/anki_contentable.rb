@@ -9,12 +9,9 @@
 module ClozeNote::AnkiContentable
   def anki_text
     result = sentence
-    parent_concepts = Concept.where(id: concepts.pluck(:parent_concept_id))
 
     cloze_counter = 0
     concepts.order(:name).each do |concept|
-      next if parent_concepts.include?(concept)
-
       result = result.gsub(concept.name, "{{c#{cloze_counter + 1}::#{concept.name}}}")
       cloze_counter += 1
     end

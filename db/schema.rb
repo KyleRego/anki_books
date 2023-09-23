@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_113951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -64,6 +64,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
     t.index ["ordinal_position", "book_id"], name: "index_articles_on_ordinal_position_and_book_id", unique: true
   end
 
+  create_table "articles_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "concept_id", null: false
+    t.uuid "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id", "concept_id"], name: "index_articles_concepts_on_article_id_and_concept_id", unique: true
+  end
+
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "front"
     t.text "back"
@@ -80,14 +88,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "books_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "book_id", null: false
-    t.uuid "concept_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id", "concept_id"], name: "index_books_concepts_on_book_id_and_concept_id", unique: true
   end
 
   create_table "books_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -128,7 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "parent_concept_id"
     t.uuid "user_id", null: false
     t.index ["user_id", "name"], name: "index_concepts_on_user_id_and_name", unique: true
   end
@@ -154,6 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "books"
+  add_foreign_key "articles_concepts", "articles"
+  add_foreign_key "articles_concepts", "concepts"
   add_foreign_key "basic_notes", "articles"
   add_foreign_key "books_domains", "books"
   add_foreign_key "books_domains", "domains"
@@ -162,7 +163,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_100251) do
   add_foreign_key "cloze_notes", "articles"
   add_foreign_key "cloze_notes_concepts", "cloze_notes"
   add_foreign_key "cloze_notes_concepts", "concepts"
-  add_foreign_key "concepts", "concepts", column: "parent_concept_id"
   add_foreign_key "concepts", "users"
   add_foreign_key "domains", "domains", column: "parent_domain_id"
   add_foreign_key "domains", "users"

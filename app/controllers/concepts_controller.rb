@@ -7,30 +7,19 @@
 # :nodoc:
 class ConceptsController < ApplicationController
   before_action :require_login
-  before_action :set_concept, only: %w[show manage edit update change_parent_concept]
+  before_action :set_concept, only: %w[show manage edit update]
 
   def index
     @concepts = current_user.concepts.order(:name)
   end
 
   def show
-    @parent_concept = @concept.parent_concept
-    @books = @concept.books.ordered
     @cloze_notes = @concept.cloze_notes.includes(:article)
+    @articles = @concept.articles.order(:title)
   end
 
   def manage
     @user_other_concepts = current_user.concepts.ordered
-  end
-
-  def change_parent_concept
-    parent_concept = current_user.concepts.find_by(id: params[:parent_concept_id])
-    if parent_concept
-      parent_concept.concepts << @concept
-      redirect_to manage_concept_path(@concept), flash: { notice: "Parent concept updated" }
-    else
-      not_found_or_unauthorized
-    end
   end
 
   def new

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
                                                      as: "change_article_note_ordinal_position"
   patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
   patch "/articles/:id/transfer_basic_notes", to: "articles#transfer_basic_notes", as: "article_transfer_basic_notes"
+  patch "/articles/:id/change_concepts", to: "articles#change_concepts", as: "change_article_concepts"
 
   resources :domains
   get "/root_domains", to: "domains#root_domains", as: "root_domains"
@@ -31,7 +32,6 @@ Rails.application.routes.draw do
 
   resources :concepts, except: %i[destroy]
   get "/concepts/:id/manage", to: "concepts#manage", as: "manage_concept"
-  patch "/concepts/:id/change_parent_concept", to: "concepts#change_parent_concept", as: "change_parent_concept"
 
   resources :books, except: %i[destroy] do
     resources :articles, only: %i[new index]
@@ -40,7 +40,6 @@ Rails.application.routes.draw do
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
   patch "/books/:id/change_domains", to: "books#change_domains", as: "change_book_domains"
-  patch "/books/:id/change_concepts", to: "books#change_concepts", as: "change_book_concepts"
   patch "/books/:id/transfer_articles", to: "books#transfer_articles", as: "book_transfer_articles"
 
   get "/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"

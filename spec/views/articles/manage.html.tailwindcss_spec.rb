@@ -13,6 +13,8 @@ RSpec.describe "articles/manage" do
     assign(:article, article)
     assign(:book, book)
     assign(:user_other_books, Book.none)
+    assign(:article_current_concepts, Concept.none)
+    assign(:user_concepts, Concept.none)
     assign(:article_basic_notes, article.basic_notes.ordered)
     assign(:book_other_articles, Article.none)
   end

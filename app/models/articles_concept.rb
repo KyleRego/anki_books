@@ -16,8 +16,8 @@
 # frozen_string_literal: true
 
 ##
-# Join table between books and concepts
-class BooksConcept < ApplicationRecord
-  belongs_to :book
+# Join table between articles and concepts
+class ArticlesConcept < ApplicationRecord
+  belongs_to :article
   belongs_to :concept
 end

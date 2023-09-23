@@ -106,6 +106,8 @@ class ArticlesController < ApplicationController
 
   def manage
     @user_other_books = current_user.books.where.not(id: @book.id)
+    @article_current_concepts = @article.concepts.ordered
+    @user_concepts = current_user.concepts.ordered
     @article_basic_notes = @article.basic_notes.ordered
     @book_other_articles = @book.articles.ordered.where.not(id: @article.id)
   end
@@ -137,6 +139,11 @@ class ArticlesController < ApplicationController
     end
   rescue ArgumentError
     head :unprocessable_entity
+  end
+
+  def change_concepts
+    @article.concepts = current_user.concepts.where(id: params[:concepts_ids])
+    redirect_to manage_article_path(@article), flash: { notice: "Concepts successfully updated" }
   end
 
   private

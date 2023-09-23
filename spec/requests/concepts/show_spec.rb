@@ -27,10 +27,12 @@ RSpec.describe "GET /concepts/:id", "#show" do
         expect(response).to be_successful
       end
 
-      context "when the concept is associated with some of the user's books" do
+      context "when the concept is associated with some of the user's articles" do
         before do
-          books = create_list(:book, 4, users: [user])
-          concept.books = books
+          book_one = create(:book, users: [user])
+          book_two = create(:book, users: [user])
+          concept.articles << create_list(:article, 2, book: book_one)
+          concept.articles << create_list(:article, 2, book: book_two)
         end
 
         it "returns a success response" do

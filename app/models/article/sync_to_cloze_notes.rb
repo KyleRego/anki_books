@@ -125,7 +125,6 @@ module Article::SyncToClozeNotes
   ##
   # Syncs the cloze sentences of the article with its cloze notes
   def sync_to_cloze_notes
-    concepts = book.concepts
     sentence_concepts_matches = cloze_sentence_concept_matches(concepts:)
     cloze_note_sentence_matches = []
     synced_cloze_note_ids = []

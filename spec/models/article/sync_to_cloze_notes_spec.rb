@@ -30,7 +30,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
   context "when user has one concept which does not match" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
-    before { create(:concept, books: [book], user:, name: "Rainbow") }
+    before { create(:concept, articles: [article], user:, name: "Rainbow") }
 
     it "does not change the number of cloze notes" do
       expect { sync_article_to_cloze_notes }.not_to change(ClozeNote, :count)
@@ -40,7 +40,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
   context "when user has one matching concept, and article has no cloze notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
-    before { create(:concept, books: [book], user:, name: "UDP") }
+    before { create(:concept, articles: [article], user:, name: "UDP") }
 
     it "creates a cloze note for the concept" do
       expect { sync_article_to_cloze_notes }.to change(ClozeNote, :count).by(1)
@@ -52,7 +52,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      concept = create(:concept, books: [book], user:, name: "UDP")
+      concept = create(:concept, articles: [article], user:, name: "UDP")
       create(:cloze_note, sentence: "UDP is a protocol.", concepts: [concept], article:)
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      concept = create(:concept, books: [book], user:, name: "UDP")
+      concept = create(:concept, articles: [article], user:, name: "UDP")
       create(:cloze_note, sentence: "UDP is a protocol.", concepts: [concept], article:)
       create(:cloze_note, sentence: "UDP.", concepts: [concept], article:)
     end
@@ -81,8 +81,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      create(:concept, books: [book], user:, name: "UDP")
-      concept = create(:concept, books: [book], user:, name: "Ethernet")
+      create(:concept, articles: [article], user:, name: "UDP")
+      concept = create(:concept, articles: [article], user:, name: "Ethernet")
       create(:cloze_note, sentence: "Kitty cats.", concepts: [concept], article:)
     end
 
@@ -96,8 +96,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      create(:concept, books: [book], user:, name: "UDP")
-      create(:concept, books: [book], user:, name: "link layer")
+      create(:concept, articles: [article], user:, name: "UDP")
+      create(:concept, articles: [article], user:, name: "link layer")
     end
 
     it "creates one cloze note for each of the two concept sentence matches" do
@@ -110,8 +110,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a protocol. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      concept_one = create(:concept, books: [book], user:, name: "Ethernet")
-      concept_two = create(:concept, books: [book], user:, name: "link layer")
+      concept_one = create(:concept, articles: [article], user:, name: "Ethernet")
+      concept_two = create(:concept, articles: [article], user:, name: "link layer")
       create(:cloze_note, sentence: "Ethernet is in the blimpy link layer.",
                           concepts: [concept_one, concept_two],
                           article:)
@@ -127,10 +127,10 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP. UDP. Ethernet. Link layer. Transport layer. Internet. IP. Packet. Segment. Datagram." }
 
     before do
-      concept_one = create(:concept, books: [book], user:, name: "TCP")
-      concept_two = create(:concept, books: [book], user:, name: "UDP")
-      concept_three = create(:concept, books: [book], user:, name: "Link layer")
-      concept_four = create(:concept, books: [book], user:, name: "Internet")
+      concept_one = create(:concept, articles: [article], user:, name: "TCP")
+      concept_two = create(:concept, articles: [article], user:, name: "UDP")
+      concept_three = create(:concept, articles: [article], user:, name: "Link layer")
+      concept_four = create(:concept, articles: [article], user:, name: "Internet")
       create(:cloze_note, sentence: "Ethernet is in the blimpy Link layer.",
                           concepts: [concept_three],
                           article:)
@@ -150,7 +150,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
     context "when one concept that matches one sentence" do
       before do
-        create(:concept, books: [book], user:, name: "structural neuroplasticity")
+        create(:concept, articles: [article], user:, name: "structural neuroplasticity")
       end
 
       it "creates a cloze note for that sentence" do
@@ -162,7 +162,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
     context "when one concept matches a sentence that ends with a quotation around the term" do
       before do
-        create(:concept, books: [book], user:, name: "nervous system")
+        create(:concept, articles: [article], user:, name: "nervous system")
       end
 
       it "creates a cloze note that keeps the quotation mark" do
@@ -171,9 +171,9 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     end
 
     context "when there are many concepts" do
-      let!(:concept_one) { create(:concept, books: [book], user:, name: "nervous system") }
-      let!(:concept_two) { create(:concept, books: [book], user:, name: "neuron") }
-      let!(:concept_three) { create(:concept, books: [book], user:, name: "brain") }
+      let!(:concept_one) { create(:concept, articles: [article], user:, name: "nervous system") }
+      let!(:concept_two) { create(:concept, articles: [article], user:, name: "neuron") }
+      let!(:concept_three) { create(:concept, articles: [article], user:, name: "brain") }
 
       let(:expected_cloze_sentences_after_sync) do
         # rubocop:disable Layout/LineLength
@@ -207,7 +207,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
       context "when there is an outdated cloze note for a concept is not present anymore" do
         before do
-          concept = create(:concept, books: [book], user:, name: "Organic Chemistry")
+          concept = create(:concept, articles: [article], user:, name: "Organic Chemistry")
           create(:cloze_note, article:, concepts: [concept], sentence: "Sophomore chemistry students might study Organic Chemistry.")
         end
 
@@ -219,8 +219,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     end
 
     context "when there is a sentence that matches two concepts" do
-      let!(:concept_one) { create(:concept, books: [book], user:, name: "cytokines") }
-      let!(:concept_two) { create(:concept, books: [book], user:, name: "phosphorylation") }
+      let!(:concept_one) { create(:concept, articles: [article], user:, name: "cytokines") }
+      let!(:concept_two) { create(:concept, articles: [article], user:, name: "phosphorylation") }
       let(:article_sentence) do
         # rubocop:disable Layout/LineLength
         "Some of these factors include synapse regulation via phosphorylation, the role of inflammation and inflammatory cytokines, proteins such as Bcl-2 proteins and neutrophorins, and energy production via mitochondria."
@@ -264,7 +264,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
       context "when the sentence is the same, but a concept has been removed from the new version of the sentence" do
         before do
-          third_concept = create(:concept, books: [book], user:, name: "blimpy")
+          third_concept = create(:concept, articles: [article], user:, name: "blimpy")
           create(:cloze_note, article:,
                               concepts: [concept_one, concept_two, third_concept],
                               sentence: article_sentence.gsub("phosphorylation", "blimpy phosphorylation"))

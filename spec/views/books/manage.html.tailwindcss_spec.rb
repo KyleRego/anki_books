@@ -13,8 +13,6 @@ RSpec.describe "books/manage" do
     assign(:articles, Article.none)
     assign(:book_current_domains, Domain.none)
     assign(:user_domains, Domain.none)
-    assign(:book_current_concepts, Concept.none)
-    assign(:user_concepts, Concept.none)
     assign(:user_other_books, create_list(:book, 1, users: [user]))
   end
 

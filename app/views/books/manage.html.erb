@@ -79,24 +79,3 @@
     <% end %>
   </div>
 </div>
-
-<div class="mt-4 pb-8 border-b-2">
-  <h3 class="mb-4">
-    Concepts:
-  </h3>
-
-  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-    <%= form_with(model: @book, url: change_book_concepts_path(@book)) do |form| %>
-    <% concepts_options = @user_concepts.map { |c| { id: c.id, name: c.name, selected: @book_current_concepts.include?(c) } } %>
-      <% concepts_options.each do |concept_option| %>
-        <div class="mb-2">
-          <%= label_tag(concept_option[:name]) do %>
-            <%= check_box_tag("concepts_ids[]", concept_option[:id], concept_option[:selected], id: concept_option[:id]) %>
-            <span><%= concept_option[:name] %></span>
-          <% end %>
-        </div>
-      <% end %>
-      <%= form.submit "Update Concepts", class: "action-link" %>
-    <% end %>
-  </div>
-</div>

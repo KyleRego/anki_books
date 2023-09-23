@@ -45,21 +45,6 @@ RSpec.describe Article, "#cloze_sentence_concept_matches" do
     end
   end
 
-  context "when concept and its parent concept appear separately in the sentence" do
-    let(:content) { "The frontal lobes of the brain are where some executive processes operate." }
-    let(:parent_concept) { create(:concept, user:, name: "brain") }
-    let(:concept) { create(:concept, user:, name: "frontal lobes", parent_concept:) }
-    let(:concepts) { [parent_concept, concept] }
-
-    it "creates one match with the sentence to both concepts" do
-      expect(cloze_sentence_concept_matches.size).to eq 1
-      match = cloze_sentence_concept_matches.first
-      expect(match.sentence).to eq content
-      expect(match.concepts.count).to eq 2
-      expect(match.concepts.map(&:name).sort).to eq ["brain", "frontal lobes"]
-    end
-  end
-
   context "when one concept name includes a different concept name that also appears inside a different word" do
     let(:content) { "A third technique is exception aggregation: handling many exceptions with a single piece of code." }
     let(:concept_one) { create(:concept, user:, name: "exception aggregation") }

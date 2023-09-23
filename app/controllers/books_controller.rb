@@ -51,8 +51,6 @@ class BooksController < ApplicationController
   def manage
     @book_current_domains = @book.domains
     @user_domains = current_user.domains.ordered
-    @book_current_concepts = @book.concepts.ordered
-    @user_concepts = current_user.concepts.ordered
     @user_other_books = current_user.books.ordered
   end
 
@@ -70,11 +68,6 @@ class BooksController < ApplicationController
   def change_domains
     @book.domains = current_user.domains.where(id: params[:domains_ids])
     redirect_to manage_book_path(@book), flash: { notice: "Domains successfully updated" }
-  end
-
-  def change_concepts
-    @book.concepts = current_user.concepts.where(id: params[:concepts_ids])
-    redirect_to manage_book_path(@book), flash: { notice: "Concepts successfully updated" }
   end
 
   def study_cards
