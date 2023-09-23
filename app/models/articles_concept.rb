@@ -4,13 +4,18 @@
 
 # == Schema Information
 #
-# Table name: books_concepts
+# Table name: articles_concepts
 #
 #  id         :uuid             not null, primary key
-#  book_id    :uuid             not null
 #  concept_id :uuid             not null
+#  article_id :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => articles.id)
+#  fk_rails_...  (concept_id => concepts.id)
 #
 
 # frozen_string_literal: true

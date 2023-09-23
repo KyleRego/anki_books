@@ -4,16 +4,14 @@
 #
 # Table name: concepts
 #
-#  id                :uuid             not null, primary key
-#  name              :string           not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  parent_concept_id :uuid
-#  user_id           :uuid             not null
+#  id         :uuid             not null, primary key
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :uuid             not null
 #
 # Foreign Keys
 #
-#  fk_rails_...  (parent_concept_id => concepts.id)
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
