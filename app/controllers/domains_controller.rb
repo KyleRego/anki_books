@@ -66,8 +66,9 @@ class DomainsController < ApplicationController
   end
 
   def destroy
+    @domain.domains.each { |c_d| c_d.update(parent_domain_id: nil) }
     @domain.destroy!
-    redirect_to books_path, flash: { success: "Domain successfully deleted" }
+    redirect_to domains_path
   end
 
   def study_cards

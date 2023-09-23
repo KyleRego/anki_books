@@ -2,7 +2,7 @@
 # is licensed under the GNU Affero General Public License, version 3
 # Copyright (C) 2023 Kyle Rego
 
-Feature: Deleting an article domains
+Feature: Deleting a domain
 
   Background:
     Given the test user has a domain called "Test domain"
@@ -17,7 +17,7 @@ Feature: Deleting an article domains
   Scenario: Accepting deleting the domain
     When I click the "Delete Test domain" button and accept the confirmation
     Then I should not see "Test domain"
-    And I should see "Book of the test domain that is not deleted"
+    And I should see "Domains"
 
   @javascript
   Scenario: Dismissing the confirmation for deleting the domain

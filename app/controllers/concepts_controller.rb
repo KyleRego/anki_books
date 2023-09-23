@@ -7,7 +7,7 @@
 # :nodoc:
 class ConceptsController < ApplicationController
   before_action :require_login
-  before_action :set_concept, only: %w[show manage edit update]
+  before_action :set_concept, except: %w[index new create]
 
   def index
     @concepts = current_user.concepts.order(:name)
@@ -45,6 +45,11 @@ class ConceptsController < ApplicationController
       flash.now[:alert] = @concept.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @concept.destroy!
+    redirect_to concepts_path
   end
 
   private

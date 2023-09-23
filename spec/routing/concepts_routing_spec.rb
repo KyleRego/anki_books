@@ -32,6 +32,10 @@ RSpec.describe ConceptsController do
       expect(get: "/concepts/#{concept_id}").to route_to("concepts#show", id: concept_id)
     end
 
+    it "routes to #destroy" do
+      expect(delete: "/concepts/#{concept_id}").to route_to("concepts#destroy", id: concept_id)
+    end
+
     it "routes to #manage" do
       expect(get: "/concepts/#{concept_id}/manage").to route_to("concepts#manage", id: concept_id)
     end

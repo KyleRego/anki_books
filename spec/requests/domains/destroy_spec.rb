@@ -31,9 +31,18 @@ RSpec.describe "DELETE /domains/:id", "#destroy" do
     context "when the domain does belong to the user" do
       let!(:domain) { create(:domain, user:) }
 
-      it "deletes the domain and redirects to the user's books" do
+      it "deletes the domain and redirects to the user's domains" do
         expect { delete_domains_destroy }.to change(Domain, :count).by(-1)
-        expect(response).to redirect_to books_path
+        expect(response).to redirect_to domains_path
+      end
+
+      context "when the domain has a child domain" do
+        let!(:child_domain) { create(:domain, parent_domain: domain, user:) }
+
+        it "deletes the domain and nullifies the parent_domain_id of the child domain" do
+          expect { delete_domains_destroy }.to change(Domain, :count).by(-1)
+          expect(child_domain.reload.parent_domain).to be_nil
+        end
       end
 
       context "when the domain belongs to the user and has some associated books" do
