@@ -9,14 +9,5 @@
 <% @book.articles.each do |article| %>
   <% @article = article %>
   <% @basic_notes = article.basic_notes %>
-  <div class="border-black border-b" data-controller="set-top-under-nav">
-
-    <% if logged_in? %>
-      <div class="sticky z-50 bg-white flex-row justify-end" data-set-top-under-nav-target="element">
-        <%= link_to(@article.title, article_path(@article)) %>
-      </div>
-    <% end %>
-
-    <%= render partial: "articles/content" %>
-  </div>
+  <div><%= render partial: "articles/content" %></div>
 <% end %>

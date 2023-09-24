@@ -4,7 +4,6 @@
 
 <% content_for :page_specific_links do %>
   <% if logged_in? && current_user.can_access_article?(article: @article) %>
-    <%= link_to "Manage article", manage_article_path(@article), class: "font-semibold mr-4" %>
     <%= link_to("#{@book.title}", book_articles_path(@book), class: "font-semibold mr-4") %>
   <% end %>
   <% if @article.basic_notes.any? %>
