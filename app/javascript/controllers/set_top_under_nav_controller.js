@@ -8,10 +8,10 @@ import { Controller } from "@hotwired/stimulus"
 // by what it should be to be below the top nav, which can have
 // a different height depending on the screen width
 export default class extends Controller {
-  static targets = [ "nav" ];
+  static targets = [ "element" ];
 
   initialize() {
     const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
-    this.navTarget.style.top = `${topNavBarHeight - 1}px`;
+    this.elementTarget.style.top = `${topNavBarHeight - 1}px`;
   }
 }

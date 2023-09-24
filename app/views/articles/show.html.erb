@@ -12,10 +12,4 @@
   <% end %>
 <% end %>
 
-<% if logged_in? %>
-  <div class="sticky top-8 z-50 bg-white flex-row justify-end">
-    <%= link_to("Edit article", edit_article_path(@article), class: "action-link") %>
-  </div>
-<% end %>
-
 <%= render partial: "articles/content" %>
