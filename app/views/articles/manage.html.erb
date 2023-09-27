@@ -25,27 +25,6 @@
   <% end %>
 </div>
 
-<div class="mt-4 pb-8 border-b-2">
-  <h3 class="mb-4">
-    Concepts:
-  </h3>
-
-  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-    <%= form_with(model: @article, url: change_article_concepts_path(@article)) do |form| %>
-    <% concepts_options = @user_concepts.map { |c| { id: c.id, name: c.name, selected: @article_current_concepts.include?(c) } } %>
-      <% concepts_options.each do |concept_option| %>
-        <div class="mb-2">
-          <%= label_tag(concept_option[:name]) do %>
-            <%= check_box_tag("concepts_ids[]", concept_option[:id], concept_option[:selected], id: concept_option[:id]) %>
-            <span><%= concept_option[:name] %></span>
-          <% end %>
-        </div>
-      <% end %>
-      <%= form.submit "Update concepts", class: "action-link" %>
-    <% end %>
-  </div>
-</div>
-
 <% if @article_basic_notes.any? %>
   <div class="mt-4 pb-4 border-b-2">
     <h3 class="mb-4">Transfer basic notes to a different article:</h3>

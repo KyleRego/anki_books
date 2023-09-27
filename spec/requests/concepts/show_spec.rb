@@ -27,28 +27,14 @@ RSpec.describe "GET /concepts/:id", "#show" do
         expect(response).to be_successful
       end
 
-      context "when the concept is associated with some of the user's articles" do
-        before do
-          book_one = create(:book, users: [user])
-          book_two = create(:book, users: [user])
-          concept.articles << create_list(:article, 2, book: book_one)
-          concept.articles << create_list(:article, 2, book: book_two)
-        end
-
-        it "returns a success response" do
-          get_concepts_show
-          expect(response).to be_successful
-        end
-      end
-
       context "when the concept has some cloze notes" do
         before do
           book = create(:book, users: [user])
           article = create(:article, book:)
           concept = create(:concept, user:, name: "nervous system")
-          create(:cloze_note, sentence: "Research into the nervous system oftentimes is related to neuroplasticity.",
+          create(:cloze_note, sentence: "Research into the {{c1::nervous system}} oftentimes is related to neuroplasticity.",
                               concepts: [concept], article:)
-          create(:cloze_note, sentence: "New neurons continue to grow throughout the life of the nervous system.",
+          create(:cloze_note, sentence: "New neurons continue to grow throughout the life of the {{c1::nervous system}}.",
                               concepts: [concept], article:)
         end
 

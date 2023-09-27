@@ -26,11 +26,4 @@ FactoryBot.define do
     book { create(:book) }
     ordinal_position { book&.articles_count }
   end
-
-  factory :neuroplasticity_article, class: "Article" do
-    title { "Neuroplasticity" }
-    book { create(:book) }
-    ordinal_position { book.articles_count }
-    content { Rails.root.join("spec/fixtures/neuroplasticity_article_content.txt").read }
-  end
 end

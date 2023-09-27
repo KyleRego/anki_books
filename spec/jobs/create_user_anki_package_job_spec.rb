@@ -24,17 +24,23 @@ RSpec.describe CreateUserAnkiPackageJob do
       expect(anki_deck_file_path).to match(described_class.path_to_anki_package_regex)
     end
 
-    context "when the user has cloze notes from the neuroplasticity fixture article" do
+    context "when article content has 6 cloze notes for 3 concepts where 2 already exist" do
       before do
         book = create(:book, users: [user])
-        article = create(:neuroplasticity_article, book:)
-        create(:concept, articles: [article], user:, name: "nervous system")
-        create(:concept, articles: [article], user:, name: "neuron")
-        create(:concept, articles: [article], user:, name: "brain")
+        content = "The {{c1::nervous system}}. {{c2::brain}}. Thinking {{c3::brain}} time."
+        content += " There is a {{c1::neuron}}. The {{c1::brain}} has a {{c2::neuron}}."
+        content += " One {{c2::brain}} per {{c1::nervous system}}."
+        create(:article, book:, content:)
+        create(:concept, user:, name: "nervous system")
+        create(:concept, user:, name: "neuron")
+      end
+
+      it "creates the missing concept" do
+        expect { create_user_anki_deck }.to change(Concept, :count).by(1)
       end
 
       it "creates the user's cloze notes" do
-        expect { create_user_anki_deck }.to change(ClozeNote, :count).by(7)
+        expect { create_user_anki_deck }.to change(ClozeNote, :count).by(6)
       end
 
       it "creates an Anki deck zip file in the system tmp directory" do

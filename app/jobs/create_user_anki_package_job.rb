@@ -16,7 +16,10 @@ class CreateUserAnkiPackageJob < ApplicationJob
 
   # rubocop:disable Metrics/AbcSize
   def perform(user:)
-    user.articles.each(&:sync_to_cloze_notes)
+    # TODO: Use a callback to update article cloze notes on saving article
+    user.articles.each do |article|
+      article.sync_to_cloze_notes(user:)
+    end
 
     AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
       deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
@@ -36,7 +39,7 @@ class CreateUserAnkiPackageJob < ApplicationJob
 
       user.cloze_notes.each do |cloze_note|
         anki_note = AnkiRecord::Note.new(note_type: cloze_note_type, deck:)
-        anki_note.text = cloze_note.anki_text
+        anki_note.text = cloze_note.sentence
         anki_note.back_extra = cloze_note.anki_back_extra
         anki_note.guid = cloze_note.anki_guid
         anki_note.save

@@ -15,7 +15,6 @@ class ConceptsController < ApplicationController
 
   def show
     @cloze_notes = @concept.cloze_notes.includes(:article)
-    @articles = @concept.articles.order(:title)
   end
 
   def manage

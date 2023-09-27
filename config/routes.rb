@@ -22,7 +22,6 @@ Rails.application.routes.draw do
                                                      as: "change_article_note_ordinal_position"
   patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
   patch "/articles/:id/transfer_basic_notes", to: "articles#transfer_basic_notes", as: "article_transfer_basic_notes"
-  patch "/articles/:id/change_concepts", to: "articles#change_concepts", as: "change_article_concepts"
 
   resources :domains
   get "/root_domains", to: "domains#root_domains", as: "root_domains"
@@ -60,7 +59,6 @@ Rails.application.routes.draw do
   get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
   get "/download_cloze_notes_data", to: "users#download_cloze_notes_data", as: "download_cloze_notes_data"
   get "/download_books_domains_data", to: "users#download_books_domains_data", as: "download_books_domains_data"
-  get "/download_articles_concepts_data", to: "users#download_articles_concepts_data", as: "download_articles_concepts_data"
   get "/download_cloze_notes_concepts_data", to: "users#download_cloze_notes_concepts_data", as: "download_cloze_notes_concepts_data"
   # :nocov:
 end

@@ -29,9 +29,6 @@ class Concept < ApplicationRecord
 
   belongs_to :user, optional: false
 
-  has_many :articles_concepts, dependent: :destroy
-  has_many :articles, through: :articles_concepts
-
   has_many :cloze_notes_concepts, dependent: :destroy
   has_many :cloze_notes, through: :cloze_notes_concepts
 

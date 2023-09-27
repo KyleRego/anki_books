@@ -6,8 +6,6 @@
 
 require "csv"
 
-# rubocop:disable Metrics/ClassLength
-
 # :nodoc:
 class UsersController < ApplicationController
   before_action :require_login
@@ -18,6 +16,7 @@ class UsersController < ApplicationController
     DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(anki_deck_file_path:)
   end
 
+  # :nocov:
   def download_domains_data
     attributes = %w[id title parent_domain_id]
 
@@ -32,7 +31,6 @@ class UsersController < ApplicationController
     send_data data, filename: "domains.csv"
   end
 
-  # :nocov:
   def download_books_data
     attributes = %w[id title]
 
@@ -121,22 +119,6 @@ class UsersController < ApplicationController
     send_data data, filename: "books_domains.csv"
   end
 
-  def download_articles_concepts_data
-    attributes = %w[article_id concept_id]
-
-    data = CSV.generate(headers: true) do |csv|
-      csv << attributes
-
-      current_user.concepts.each do |concept|
-        concept.articles_concepts.each do |articles_concept|
-          csv << attributes.map { |attr| articles_concept.send(attr) }
-        end
-      end
-    end
-
-    send_data data, filename: "articles_concepts.csv"
-  end
-
   def download_cloze_notes_concepts_data
     attributes = %w[cloze_note_id concept_id]
 
@@ -160,5 +142,3 @@ class UsersController < ApplicationController
     redirect_to article_path(article)
   end
 end
-
-# rubocop:enable Metrics/ClassLength

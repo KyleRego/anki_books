@@ -13,7 +13,7 @@
   <% else %>
   <div class="sm:w-8/12">
   <% end %>
-    <%= @article.content %>
+    <%= @article.content_without_cloze_markers %>
   </div>
 
 <% if logged_in? || @basic_notes.any? %>

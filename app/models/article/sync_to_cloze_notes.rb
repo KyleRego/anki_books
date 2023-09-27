@@ -7,35 +7,6 @@
 require "text"
 
 ##
-# A mapping between an article cloze sentence and concepts
-class SentenceConceptsMatch
-  def initialize(sentence:)
-    @sentence = sentence
-    @concepts = []
-    @cloze_note_synced = false
-  end
-
-  attr_accessor :cloze_note_synced
-
-  attr_reader :sentence, :concepts
-
-  def <<(concept)
-    @concepts << concept
-  end
-
-  def delete(concept:)
-    @concepts.delete(concept)
-  end
-
-  def inspect
-    # :nocov:
-    concept_names = concepts.map(&:name).join(", ")
-    "\"SentenceConceptsMatch article_sentence: #{sentence} concepts: #{concept_names}\""
-    # :nocov:
-  end
-end
-
-##
 # A mapping between an article cloze sentence and one of the article's cloze notes
 class ClozeNoteSentenceMatch
   def initialize(article_sentence:, cloze_note:, distance:)
@@ -64,112 +35,93 @@ end
 # Module for methods related to extracting cloze notes from articles
 module Article::SyncToClozeNotes
   ##
-  # Returns an array of strings which are the matching sentences
-  # of the article for the string +concept_name+
-  def cloze_sentences(concept_name:)
-    article_content = content.to_plain_text
-    regex_for_concept = cloze_sentence_regex(concept_name:)
-    article_content.scan(regex_for_concept).flatten
+  # Returns the article content with Anki cloze deletion markers removed
+  # TODO: This should only hide markers if they are correctly contained
+  # inside a sentence that will be used to create a cloze note
+  def content_without_cloze_markers
+    ActionText::Content.new content.body&.to_html&.gsub(CLOZE_MARKERS_CONTAINER, '\1')
   end
 
   ##
-  # Returns an array of SentenceConceptMatch objects. Best understood
-  # by reading the output of the RSpec specifications with --format doc
-  def cloze_sentence_concept_matches(concepts:)
-    sentence_concepts_matches = []
-
-    concepts.each do |concept|
-      concept_name = concept.name
-      article_cloze_sentences = cloze_sentences(concept_name:)
-      article_cloze_sentences.each do |article_cloze_sentence|
-        match = sentence_concepts_matches.find { |sc_match| sc_match.sentence == article_cloze_sentence }
-        unless match
-          match = SentenceConceptsMatch.new(sentence: article_cloze_sentence)
-          sentence_concepts_matches << match
-        end
-        match << concept
-      end
-    end
-
-    sentence_concepts_matches.each do |match|
-      next unless match.concepts.count > 1
-
-      sentence_with_concepts_edited_out = match.sentence
-
-      concepts_ordered_by_decreasing_length = match.concepts.sort_by { |match_conc| match_conc.name.length }.reverse
-
-      concepts_ordered_by_decreasing_length.each_with_index do |match_concept, index|
-        match_conc_name = match_concept.name
-        if index.zero? || sentence_with_concepts_edited_out =~ /\b#{match_conc_name}\b/
-          sentence_with_concepts_edited_out = sentence_with_concepts_edited_out.gsub(match_conc_name, "")
-        else
-          match.delete(concept: match_concept)
-        end
-      end
-    end
-
-    sentence_concepts_matches
+  # Returns an array of strings which are the sentences that match the cloze sentence regular expression
+  def cloze_sentences
+    content.to_plain_text.scan(cloze_sentence_regular_expression).map(&:first)
   end
+
+  ##
+  # Returns an array of ClozeSentenceConcepts structs that represent the sentences and
+  # what concepts are present in them
+  def cloze_sentence_concepts_structs
+    cloze_sentences.map do |cloze_sent|
+      concepts = cloze_sent.scan(CLOZE_MARKERS_CONTAINER).flatten
+      ClozeSentenceConcepts.new(sentence: cloze_sent, concepts:)
+    end
+  end
+
+  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
+  CLOZE_MARKERS_CONTAINER = /\{\{c\d::(.*?)\}\}/
+  CLOZE_SENTENCE_END = /\."?/
 
   private
 
-  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
-  CLOZE_SENTENCE_END = /\."?/
-
-  def cloze_sentence_regex(concept_name:)
-    /#{CLOZE_SENTENCE_START}[^.\n]*\b#{concept_name}\b[^.\n]*#{CLOZE_SENTENCE_END}/
+  def cloze_sentence_regular_expression
+    /(#{CLOZE_SENTENCE_START}[^.\n]*#{CLOZE_MARKERS_CONTAINER}[^.\n]*#{CLOZE_SENTENCE_END})/o
   end
 
   public
 
   ##
   # Syncs the cloze sentences of the article with its cloze notes
-  def sync_to_cloze_notes
-    sentence_concepts_matches = cloze_sentence_concept_matches(concepts:)
-    cloze_note_sentence_matches = []
+  def sync_to_cloze_notes(user:)
+    cloze_sent_concepts_structs = cloze_sentence_concepts_structs
+    note_cloze_sentence_match = []
     synced_cloze_note_ids = []
 
-    sentence_concepts_matches.each do |sentence_concepts_match|
-      article_sentence = sentence_concepts_match.sentence
-      logger.debug(article_sentence)
+    cloze_sent_concepts_structs.each do |cloze_sent_concepts_struct|
+      cloze_sent_concepts_struct.cloze_note_synced = false
 
-      # TODO: Refactor this to use a struct or tuple or something
+      concepts_for_cloze_note = []
+      cloze_sent_concepts_struct.concepts.each do |concept_name|
+        existing_concept = user.concepts.find_by(name: concept_name)
+        concepts_for_cloze_note << (existing_concept || user.concepts.create!(name: concept_name))
+      end
+      cloze_sent_concepts_struct.concepts = concepts_for_cloze_note
+
+      cloze_sentence = cloze_sent_concepts_struct.sentence
+
       # rubocop:disable Style/MultilineBlockChain
       levenshtein_ordered_cloze_notes = cloze_notes.map do |cloze_note|
-        [cloze_note, Text::Levenshtein.distance(article_sentence, cloze_note.sentence)]
+        [cloze_note, Text::Levenshtein.distance(cloze_sentence, cloze_note.sentence)]
       end.sort_by do |_, distance|
         distance
       end
       # rubocop:enable Style/MultilineBlockChain
 
       levenshtein_ordered_cloze_notes.each do |cloze_note_with_distance|
-        cloze_note_sentence_matches << ClozeNoteSentenceMatch.new(article_sentence:,
-                                                                  cloze_note: cloze_note_with_distance[0],
-                                                                  distance: cloze_note_with_distance[1])
+        note_cloze_sentence_match << ClozeNoteSentenceMatch.new(article_sentence: cloze_sentence,
+                                                                cloze_note: cloze_note_with_distance[0],
+                                                                distance: cloze_note_with_distance[1])
       end
     end
 
-    sorted_cloze_note_sentence_matches = cloze_note_sentence_matches.sort_by(&:distance)
-    uniq_cloze_note_sentence_matches = sorted_cloze_note_sentence_matches.group_by do |cloze_note_sentence_match|
+    sorted_note_cloze_sentence_match = note_cloze_sentence_match.sort_by(&:distance)
+    best_cloze_note_sentence_matches = sorted_note_cloze_sentence_match.group_by do |cloze_note_sentence_match|
       cloze_note_sentence_match.cloze_note.sentence
     end.values.map(&:first).group_by(&:article_sentence).values.map(&:first)
 
-    uniq_cloze_note_sentence_matches.each do |cloze_note_sentence_match|
+    best_cloze_note_sentence_matches.each do |cloze_note_sentence_match|
       article_sentence = cloze_note_sentence_match.article_sentence
-      sentence_concepts_match = sentence_concepts_matches.find { |sc_match| sc_match.sentence == article_sentence }
+      cloze_sent_concepts_struct = cloze_sent_concepts_structs.find { |sc_match| sc_match.sentence == article_sentence }
       cloze_note = cloze_note_sentence_match.cloze_note
-      cloze_note.concepts = sentence_concepts_match.concepts
+      cloze_note.concepts = cloze_sent_concepts_struct.concepts
       cloze_note.update!(sentence: article_sentence)
-      sentence_concepts_match.cloze_note_synced = true
+      cloze_sent_concepts_struct.cloze_note_synced = true
       synced_cloze_note_ids << cloze_note.id
     end
 
-    sentence_concepts_matches.select { |sc_match| sc_match.cloze_note_synced == false }.each do |sentence_concept_match|
-      article_sentence = sentence_concept_match.sentence
-      next if cloze_notes.find_by(sentence: article_sentence)
-
-      cloze_note = cloze_notes.create!(sentence: article_sentence)
-      cloze_note.concepts = sentence_concept_match.concepts
+    cloze_sent_concepts_structs.select { |sc_match| sc_match.cloze_note_synced == false }.each do |cloze_sent_concepts_struct|
+      article_sentence = cloze_sent_concepts_struct.sentence
+      cloze_note = cloze_notes.create!(sentence: article_sentence, concepts: cloze_sent_concepts_struct.concepts)
       synced_cloze_note_ids << cloze_note.id
     end
 

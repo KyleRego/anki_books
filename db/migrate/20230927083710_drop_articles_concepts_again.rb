@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
-Given "the test user has a concept called {string}" do |concept_name|
-  create(:concept, name: concept_name, user: @test_user)
+class DropArticlesConceptsAgain < ActiveRecord::Migration[7.0]
+  def change
+    drop_table :articles_concepts
+  end
 end
