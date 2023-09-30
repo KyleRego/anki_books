@@ -23,7 +23,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Concept < ApplicationRecord
-  validates :name, presence: true, uniqueness: { scope: :user }
+  validates :name, presence: true, uniqueness: { scope: :user, case_sensitive: false }
 
   before_save { self.name = name.strip }
 

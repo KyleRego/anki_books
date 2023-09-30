@@ -82,7 +82,7 @@ module Article::SyncToClozeNotes
 
       concepts_for_cloze_note = []
       cloze_sent_concepts_struct.concepts.each do |concept_name|
-        existing_concept = user.concepts.find_by(name: concept_name)
+        existing_concept = user.concepts.where("lower(name) = ?", concept_name.downcase).first
         concepts_for_cloze_note << (existing_concept || user.concepts.create!(name: concept_name))
       end
       cloze_sent_concepts_struct.concepts = concepts_for_cloze_note

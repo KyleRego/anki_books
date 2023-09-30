@@ -35,4 +35,10 @@ RSpec.describe Concept, "#valid?" do
 
     it { is_expected.not_to be_valid }
   end
+
+  context "when name is the same as one of the user's other concepts but with case difference" do
+    before { create(:concept, name: name.upcase, user:) }
+
+    it { is_expected.not_to be_valid }
+  end
 end

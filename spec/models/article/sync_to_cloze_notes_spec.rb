@@ -117,4 +117,14 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
       expect(cloze_note.concepts.first.name).to eq "protocol"
     end
   end
+
+  context "when content has one cloze matching an existing concept but there is a difference in case" do
+    let(:content) { "TCP is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
+    let!(:concept) { create(:concept, user:, name: "Protocol") }
+
+    it "creates the cloze note and case-insensitively matches it to the existing concept" do
+      sync_article_to_cloze_notes
+      expect(article.cloze_notes.first.concepts.first).to eq concept
+    end
+  end
 end
