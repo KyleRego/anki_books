@@ -52,6 +52,10 @@ module Article::HasManyOrdinalChildren
   end
   # rubocop:enable Metrics/AbcSize
 
+  def expected_ordinal_positions
+    (0...basic_notes_count).to_a
+  end
+
   private
 
   def shift_basic_notes_down_to_replace_missing_position(missing_position:)
@@ -64,10 +68,6 @@ module Article::HasManyOrdinalChildren
 
   def ordinal_positions
     basic_notes.ordered.pluck(:ordinal_position)
-  end
-
-  def expected_ordinal_positions
-    (0...basic_notes_count).to_a
   end
 
   def child_belongs_to_parent?(child:)
