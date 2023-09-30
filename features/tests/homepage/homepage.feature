@@ -21,7 +21,8 @@ Feature: The website homepage
     Then I should be on the root path
 
   Scenario: Visiting the homepage when logged in
-    Given I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     When I visit the root path
     Then I should see "Books"
     And I should not see a link to the homepage article's book

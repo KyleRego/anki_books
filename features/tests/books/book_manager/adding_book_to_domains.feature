@@ -5,9 +5,10 @@
 Feature: Adding the book to domains
 
   Scenario: Adding a book to a domain
-    Given the test user has a domain called "Test domain"
-    And the test user has a book called "Test book"
-    And I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a domain called "Test domain"
+    And the user "test_user" has a book called "Test book"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
     And I click the "Test book" link
     And I click the "Manage book" link
@@ -20,10 +21,11 @@ Feature: Adding the book to domains
     Then the checkbox labeled "Test book" should be checked
 
   Scenario: Removing a book from a domain
-    Given the test user has a domain called "domain"
-    And the test user has a book called "Test book 1"
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a domain called "domain"
+    And the user "test_user" has a book called "Test book 1"
     And the book "Test book 1" belongs to the "domain" domain
-    And I am logged in as the test user
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
     And I click the "Test book" link
     And I click the "Manage book" link

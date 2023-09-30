@@ -7,7 +7,7 @@
 CUCUMBER_TEST_BASIC_NOTE_FRONT = "What kind of note is this note?"
 CUCUMBER_TEST_BASIC_NOTE_BACK = "This is a Basic note."
 
-Given "the book {string} has an article called {string}" do |book_title, article_title|
+Given "the book {string} has the article {string}" do |book_title, article_title|
   book = Book.find_by(title: book_title)
   create(:article, title: article_title, book:)
 end

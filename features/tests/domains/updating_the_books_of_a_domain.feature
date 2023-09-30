@@ -5,12 +5,13 @@
 Feature: Updating a domain's books
 
   Scenario: Updating a domain's books
-    Given the test user has a domain called "Test domain"
-    And the test user has a book called "Test book 1"
-    And the test user has a book called "Test book 2"
-    And the test user has a book called "Test book 3"
-    And the test user has a book called "Test book 4"
-    And I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a domain called "Test domain"
+    And the user "test_user" has a book called "Test book 1"
+    And the user "test_user" has a book called "Test book 2"
+    And the user "test_user" has a book called "Test book 3"
+    And the user "test_user" has a book called "Test book 4"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Domains" link
     And I click the "Test domain" link
     And I click the "Manage domain" link

@@ -6,16 +6,17 @@
 Feature: Studying cards of a domain
 
   Background:
-    Given the test user has a domain called "domain 1"
-    And the test user has a book called "Book 1"
-    And the test user has a book called "Book 2"
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a domain called "domain 1"
+    And the user "test_user" has a book called "Book 1"
+    And the user "test_user" has a book called "Book 2"
     And the book "Book 1" belongs to the "domain 1" domain
     And the book "Book 2" belongs to the "domain 1" domain
-    And the book "Book 1" has an article called "test article 1"
+    And the book "Book 1" has the article "test article 1"
     And the article "test article 1" has 3 basic notes
-    And the book "Book 2" has an article called "test article 2"
+    And the book "Book 2" has the article "test article 2"
     And the article "test article 1" has 3 basic notes
-    And I am logged in as the test user
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Domains" link
     And I click the "domain 1" link
   

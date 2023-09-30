@@ -5,10 +5,11 @@
 Feature: Deleting a domain
 
   Background:
-    Given the test user has a domain called "Test domain"
-    And the test user has a book called "Book of the test domain that is not deleted"
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a domain called "Test domain"
+    And the user "test_user" has a book called "Book of the test domain that is not deleted"
     And the book "Book of the test domain that is not deleted" belongs to the "Test domain" domain
-    And I am logged in as the test user
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Domains" link
     And I click the "Test domain" link
     And I click the "Manage domain" link

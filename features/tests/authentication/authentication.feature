@@ -6,7 +6,7 @@ Feature: User authentication
 
   Background:
     Given I visit the root path
-    And there is a user with username "test_user", email "test@example.com", and password "123abc777www"
+    And there is a user "test_user", email "test@example.com", and password "123abc777www"
 
   Scenario: Logging in with valid credentials
     When I click the "Login" link
@@ -36,8 +36,8 @@ Feature: User authentication
     Then I should see the homepage
 
   Scenario: Logging in after getting redirected to the login page
-    Given the test user has a book called "test book 0"
-    And the book "test book 0" has an article called "test article 0"
+    Given the user "test_user" has a book called "test book 0"
+    And the book "test book 0" has the article "test article 0"
     When I visit the Books page
     Then I should see "Anki Books"
     And I fill in the "Email" field with "test@example.com"

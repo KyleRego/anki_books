@@ -7,8 +7,9 @@
 PARENT_DOMAINS_FORM_SELECTOR = ".change-parent-domains-area"
 CHILD_DOMAINS_FORM_SELECTOR = ".change-child-domains-area"
 
-Given "the test user has a domain called {string}" do |book_title|
-  create(:domain, title: book_title, user: @test_user)
+Given "the user {string} has a domain called {string}" do |username, book_title|
+  user = User.find_by(username:)
+  create(:domain, title: book_title, user:)
 end
 
 Given "the book {string} belongs to the {string} domain" do |book_title, domain_title|

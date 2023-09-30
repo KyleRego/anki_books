@@ -4,6 +4,7 @@
 
 # frozen_string_literal: true
 
-Given "the test user has a concept called {string}" do |concept_name|
-  create(:concept, name: concept_name, user: @test_user)
+Given "the user {string} has a concept called {string}" do |username, concept_name|
+  user = User.find_by(username:)
+  create(:concept, name: concept_name, user:)
 end

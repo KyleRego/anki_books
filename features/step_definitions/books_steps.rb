@@ -4,8 +4,9 @@
 
 # frozen_string_literal: true
 
-Given "the test user has a book called {string}" do |book_title|
-  create(:book, title: book_title, users: [@test_user])
+Given "the user {string} has a book called {string}" do |username, book_title|
+  user = User.find_by(username:)
+  create(:book, title: book_title, users: [user])
 end
 
 Given "the book {string} has {int} numbered articles" do |book_title, int|

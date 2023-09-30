@@ -5,12 +5,13 @@
 Feature: Moving articles to a different book from the manage book page
 
   Background:
-    Given the test user has a book called "source book"
-    And the book "source book" has an article called "test article 1 - a"
-    And the book "source book" has an article called "test article 2 - b"
-    And the book "source book" has an article called "test article 3 - c"
-    And the test user has a book called "target book"
-    And I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a book called "source book"
+    And the book "source book" has the article "test article 1 - a"
+    And the book "source book" has the article "test article 2 - b"
+    And the book "source book" has the article "test article 3 - c"
+    And the user "test_user" has a book called "target book"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
     And I click the "source book" link
     And I click the "Manage book" link

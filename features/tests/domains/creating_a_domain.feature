@@ -5,7 +5,8 @@
 Feature: Creating domains
 
   Scenario: Creating a new domain
-    Given I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Domains" link
     And I click the "New domain" link
     When I fill in the "Title" field with "A new domain title"

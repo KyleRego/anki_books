@@ -5,7 +5,8 @@
 Feature: Setting up concepts
 
   Scenario: Creating a new concept and then updating its name
-    Given I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Concepts" link
     And I click the "New concept" link
     When I fill in the "Name" field with "A new concept name"

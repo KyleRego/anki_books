@@ -6,7 +6,8 @@ Feature: Creating a book
 
 @javascript
 Scenario: Creating a new book from the Books page
-    Given I am logged in as the test user
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     When I visit the root path
     And I click the "Books" link
     And I click the "New book" link

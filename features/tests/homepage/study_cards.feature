@@ -12,9 +12,10 @@ Feature: Studying the cards of the homepage
     Then I should not see "Edit"
 
   Scenario: Visiting the homepage when it has a basic note logged in as the homepage article's user
-    Given the test user has a book called "Book with system article"
+    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And the user "test_user" has a book called "Book with system article"
     And the homepage belongs to the book "Book with system article"
-    And I am logged in as the test user
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And the homepage has a basic note
     And I visit the root path
     And I click the "Study cards" link
@@ -27,7 +28,8 @@ Feature: Studying the cards of the homepage
 
   Scenario: Visiting the homepage when it has a basic note logged in as a random user
     Given the homepage belongs to the book "Book with system article"
-    And I am logged in as the test user
+    And there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
+    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And the homepage has a basic note
     And I visit the root path
     And I click the "Study cards" link
