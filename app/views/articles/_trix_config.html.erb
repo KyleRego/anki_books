@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<script>
+<%= javascript_tag nonce: true do -%> <%# erblint:disable NoJavascriptTagHelper %>
   // Changes the Trix.config to support the subheadings.
   // The order that things need to load seems to make it necessary
   // to add this to the head after the modules
@@ -42,4 +42,4 @@
       group: false,
     };
   })
-</script>
+<% end -%>
