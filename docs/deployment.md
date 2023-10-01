@@ -13,7 +13,7 @@
 
 Note that `apache2.conf` and `ankibooks.io.conf` have absolute file path references to the Ruby interpreter and Passenger gem that will need to be updated if newer versions of these are used.
 
-## Suggestions if you want to deploy your own instance:
+## Tips for setting up Anki Books on a home server:
 
 - Flash a USB (recommended at least 16 Gb) with Ubuntu and use it to install Ubuntu on an old laptop.
 - Set up a port forwarding rule for port 22 (SSH) on your gateway router to your new Ubuntu server.
@@ -37,5 +37,3 @@ The server will also need libvips installed:
 ```
 sudo apt-get install libvips libvips-tools
 ```
-
-You can use other Linux distributions/operating systems, web servers, and application servers, or do this on the cloud instead of a local machine (the above is just generally what I did). Other relational databases could be used, but PostgreSQL is recommended because the migrations assume that the `pgcrypto` extension is being used and I'm not sure what changes may need to made to account for that. It may also be good to get the application running locally before doing any of the above.

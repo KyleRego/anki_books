@@ -32,8 +32,8 @@ RSpec.describe FixOrdinalPositionsJob, ".perform" do
       first_bad_ord_pos_article = book.articles.second
       second_bad_ord_pos_article = book.articles.fourth
       third_bad_ord_pos_article = book.articles[7]
-      first_bad_ord_pos_article.ordinal_position = -7
-      second_bad_ord_pos_article.ordinal_position = -4
+      first_bad_ord_pos_article.ordinal_position = 11
+      second_bad_ord_pos_article.ordinal_position = 20
       third_bad_ord_pos_article.ordinal_position = 15
       first_bad_ord_pos_article.save(validate: false)
       second_bad_ord_pos_article.save(validate: false)
@@ -56,10 +56,10 @@ RSpec.describe FixOrdinalPositionsJob, ".perform" do
       second_basic_note = article.basic_notes.second
       third_basic_note = article.basic_notes.third
       fourth_basic_note = article.basic_notes[6]
-      first_basic_note.ordinal_position = -5
+      first_basic_note.ordinal_position = 15
       second_basic_note.ordinal_position = 11
       third_basic_note.ordinal_position = 13
-      fourth_basic_note.ordinal_position = -10
+      fourth_basic_note.ordinal_position = 25
       first_basic_note.save(validate: false)
       second_basic_note.save(validate: false)
       third_basic_note.save(validate: false)

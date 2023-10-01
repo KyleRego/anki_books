@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_27_083710) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_01_101015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_083710) do
     t.uuid "book_id", null: false
     t.integer "ordinal_position", null: false
     t.index ["ordinal_position", "book_id"], name: "index_articles_on_ordinal_position_and_book_id", unique: true
+    t.check_constraint "ordinal_position >= 0", name: "articles_ordinal_position_check"
   end
 
   create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -74,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_083710) do
     t.string "anki_guid", null: false
     t.index ["anki_guid"], name: "index_basic_notes_on_anki_guid", unique: true
     t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
+    t.check_constraint "ordinal_position >= 0", name: "basic_notes_ordinal_position_check"
   end
 
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -121,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_083710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
+    t.index "lower((name)::text)", name: "index_concepts_on_lower_name"
     t.index ["user_id", "name"], name: "index_concepts_on_user_id_and_name", unique: true
   end
 
