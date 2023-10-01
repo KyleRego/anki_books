@@ -19,7 +19,7 @@ export default class extends Controller {
   configureToolbar() {
     const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
     this.toolbarTarget.classList.add("sticky");
-    this.toolbarTarget.classList.add("z-50");
+    this.toolbarTarget.classList.add("z-40");
     this.toolbarTarget.style.top = `${topNavBarHeight - 1}px`;
   }
 

@@ -11,17 +11,13 @@ export default class extends Controller {
   static targets = [ "element" ];
 
   initialize() {
-    const topNavBar = document.querySelector("#top-nav")
+    const topNavBar = document.querySelector("#top-nav");
     let topNavBarHeight = topNavBar.offsetHeight;
     this.elementTarget.style.top = `${topNavBarHeight - 1}px`;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry === topNavBar) {
-          topNavBarHeight = topNavBar.offsetHeight;
-          this.elementTarget.style.top = `${topNavBarHeight - 1}px`;
-        }
-      }
+      topNavBarHeight = topNavBar.offsetHeight;
+      this.elementTarget.style.top = `${topNavBarHeight - 1}px`;
     });
 
     resizeObserver.observe(topNavBar);
