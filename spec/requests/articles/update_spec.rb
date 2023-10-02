@@ -55,7 +55,7 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
           it "does not update the article" do
             patch_articles_update
             expect(article.reload.title).not_to eq("")
-            expect(flash[:alert]).to eq("The article must have a title.")
+            expect(flash[:alert]).not_to be_empty
           end
         end
       end

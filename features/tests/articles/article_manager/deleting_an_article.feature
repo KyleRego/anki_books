@@ -18,7 +18,8 @@ Feature: Deleting an article
   @javascript
   Scenario: Confirmation before deleting an article and confirming deletes the article
     When I click the "Delete article: test article 1" button and accept the confirmation
-    Then I should not see "test article 1"
+    Then I should see "Article successfully deleted."
+    And I should not see "test article 1"
 
   @javascript
   Scenario: Confirmation before deleting an article and dismissing does not delete the article

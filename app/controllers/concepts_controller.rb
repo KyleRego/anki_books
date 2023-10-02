@@ -48,7 +48,8 @@ class ConceptsController < ApplicationController
 
   def destroy
     @concept.destroy!
-    redirect_to concepts_path
+    flash[:notice] = "Concept successfully deleted."
+    redirect_to concepts_path, status: :see_other
   end
 
   private

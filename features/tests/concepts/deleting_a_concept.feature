@@ -15,7 +15,8 @@ Feature: Deleting a concept
   @javascript
   Scenario: Accepting deleting the concept
     When I click the "Delete Test concept" button and accept the confirmation
-    Then I should not see "Test concept"
+    Then I should see "Concept successfully deleted."
+    And I should not see "Test concept"
     And I should see "Concepts"
 
   @javascript

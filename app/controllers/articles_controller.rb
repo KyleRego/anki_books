@@ -59,7 +59,7 @@ class ArticlesController < ApplicationController
       redirect_to @article.system ? root_path : article_path(@article)
     else
       @book = @article.book
-      flash.now[:alert] = "The article must have a title."
+      flash.now[:alert] = @article.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
   end
@@ -69,7 +69,8 @@ class ArticlesController < ApplicationController
       head :unprocessable_entity
     else
       @book.destroy_ordinal_child(child: @article)
-      redirect_to book_articles_path(@book)
+      flash[:notice] = "Article successfully deleted."
+      redirect_to book_articles_path(@book), status: :see_other
     end
   end
 

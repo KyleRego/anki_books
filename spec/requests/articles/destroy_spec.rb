@@ -37,6 +37,7 @@ RSpec.describe "DELETE /articles/:id", "#destroy" do
       it "deletes the article and redirects to show the book" do
         expect { delete_articles_destroy }.to change(Article, :count).by(-1)
         expect(response).to redirect_to book_articles_path(book)
+        expect(flash[:notice]).not_to be_empty
       end
 
       context "when the article is a system article" do
