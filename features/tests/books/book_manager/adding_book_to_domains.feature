@@ -10,7 +10,7 @@ Feature: Adding the book to domains
     And the user "test_user" has a book called "Test book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "Test book" link
+    And I click the last "Test book" link
     And I click the "Manage book" link
     And I check the checkbox labeled "Test domain"
     And I click the "Update Domains" button
@@ -27,7 +27,7 @@ Feature: Adding the book to domains
     And the book "Test book 1" belongs to the "domain" domain
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "Test book" link
+    And I click the last "Test book" link
     And I click the "Manage book" link
     And I uncheck the checkbox labeled "domain"
     And I click the "Update Domains" button

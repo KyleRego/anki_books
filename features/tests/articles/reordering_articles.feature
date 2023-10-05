@@ -12,7 +12,7 @@ Feature: Reordering the articles of a book
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     When I visit the root path
     And I click the "Books" link
-    And I click the "Reordering test book" link
+    And I click the last "Reordering test book" link
     And I click the "Manage book" link
 
   Scenario: Dragging an article up

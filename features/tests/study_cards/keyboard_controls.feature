@@ -15,7 +15,7 @@ Feature: Studying the basic notes of a book using keyboard
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I visit the root path
     And I click the "Books" link
-    And I click the "test book 1" link
+    And I click the last "test book 1" link
     And I click the "Study cards" link
 
   Scenario: Using keyboard to move forward and backward through notes in normal order

@@ -16,6 +16,7 @@ class ArticlesController < ApplicationController
     if @book && current_user.can_access_book?(book: @book)
       @domains = @book.domains.ordered
       @articles = @book.articles.ordered
+      @parent_book = @book.parent_book
     else
       not_found_or_unauthorized
     end

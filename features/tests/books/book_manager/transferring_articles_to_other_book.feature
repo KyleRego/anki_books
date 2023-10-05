@@ -13,7 +13,7 @@ Feature: Moving articles to a different book from the manage book page
     And the user "test_user" has a book called "target book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "source book" link
+    And I click the last "source book" link
     And I click the "Manage book" link
   
   Scenario: Transferring articles to the other book
@@ -23,7 +23,7 @@ Feature: Moving articles to a different book from the manage book page
     And I click the "Move articles to selected book" button
     Then I should see "Selected articles moved to target book."
     And I click the "Books" link
-    And I click the "target book" link
+    And I click the last "target book" link
     Then I should see "test article 1 - a"
     And I should see "test article 2 - b"
     And I should not see "test article 3 - c"

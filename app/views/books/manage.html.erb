@@ -12,6 +12,19 @@
   <%= link_to "Edit book", edit_book_path(@book), class: "action-link" %>
 </div>
 
+<div class="mt-4 pb-4 border-b-2">
+  <h3 class="mb-4">Change parent book:</h3>
+  <%= form_with(model: @book, url: change_parent_book_path(@book)) do |form| %>
+    <div>
+      <%= select_tag("parent_book_id",
+                      options_from_collection_for_select(@user_other_books, :id, :title),
+                      prompt: "Select a book",
+                      title: "Select a parent book") %>
+    </div>
+    <%= form.submit "Update parent book", class: "action-link mt-4" %>
+  <% end %>
+</div>
+
 <% if @articles.count > 1 %>
 <div class="mt-4 pb-8 border-b-2">
   <%# TODO: Why is this id needed %>

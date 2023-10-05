@@ -14,7 +14,7 @@ Feature: Moving an article to a different book
     And the article "test article 1" has 2 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "test book 1" link
+    And I click the last "test book 1" link
     And I click the "test article 1" link
     And I click the "Manage article" link
 
@@ -24,5 +24,5 @@ Feature: Moving an article to a different book
     And I click the "Move article to selected book" button
     Then I should see "successfully moved to"
     When I click the "Books" link
-    And I click the "test book 2" link
+    And I click the last "test book 2" link
     Then I should see "test article 1"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_01_103808) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_111309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_01_103808) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "parent_book_id"
   end
 
   create_table "books_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -149,6 +150,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_01_103808) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "books"
   add_foreign_key "basic_notes", "articles"
+  add_foreign_key "books", "books", column: "parent_book_id"
   add_foreign_key "books_domains", "books"
   add_foreign_key "books_domains", "domains"
   add_foreign_key "books_users", "books"

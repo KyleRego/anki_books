@@ -23,6 +23,6 @@ Feature: Updating a domain's books
     And the checkbox labeled "Test book 3" should not be checked
     And the checkbox labeled "Test book 4" should be checked
     And I click the "Books" link
-    And I click the "Test book 1" link
+    And I click the last "Test book 1" link
     And I click the "Manage book" link
     Then the checkbox labeled "Test domain" should be checked

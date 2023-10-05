@@ -14,7 +14,7 @@ Feature: Creating an article
     And the article "test article 2" has 2 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "My first book" link
+    And I click the last "My first book" link
     And I click the "My first book" link
     Then I should see "Books"
     And I should see "My first book"

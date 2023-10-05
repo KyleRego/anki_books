@@ -1,0 +1,16 @@
+<ul>
+  <% if @tree_depth > 0 %>
+  <li class="pl-8">
+  <% else %>
+  <li>
+  <% end %>
+  <%= link_to @book_node.title, book_articles_path(@book_node) %>
+  <% if @book_node.books.any? %>
+    <% @book_node.books.each do |inner_book| %>
+      <% @book_node = inner_book %>
+      <% @tree_depth += 1 %>
+      <%= render "book_link_tree_node" %>
+    <% end %>
+  <% end %>
+  </li>
+</ul>

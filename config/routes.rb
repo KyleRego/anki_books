@@ -40,6 +40,7 @@ Rails.application.routes.draw do
                                                      as: "change_book_article_ordinal_position"
   patch "/books/:id/change_domains", to: "books#change_domains", as: "change_book_domains"
   patch "/books/:id/transfer_articles", to: "books#transfer_articles", as: "book_transfer_articles"
+  patch "/books/:id/change_parent_book", to: "books#change_parent_book", as: "change_parent_book"
 
   get "/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
   get "/random_article", to: "users#random_article", as: "user_random_article"

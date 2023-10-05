@@ -12,6 +12,7 @@ class BooksController < ApplicationController
 
   def index
     @books = current_user.books
+    @root_books = current_user.books.where(parent_book_id: nil).order(:title)
   end
 
   def show
@@ -87,6 +88,31 @@ class BooksController < ApplicationController
   rescue ArgumentError
     head :unprocessable_entity
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def change_parent_book
+    if params[:parent_book_id].nil?
+      @book.update(parent_book_id: nil)
+      redirect_to manage_book_path(@book), flash: { notice: "Parent book successfully removed" }
+      return
+    end
+
+    parent_book = current_user.books.find_by(id: params[:parent_book_id])
+
+    if parent_book.nil?
+      not_found_or_unauthorized
+      return
+    end
+
+    if parent_book == @book
+      redirect_to manage_book_path(@book), flash: { alert: "Parent book cannot be itself" }
+      return
+    end
+
+    parent_book.books << @book
+    redirect_to manage_book_path(@book), flash: { notice: "Parent book successfully updated" }
+  end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

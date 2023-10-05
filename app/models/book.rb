@@ -18,6 +18,9 @@ class Book < ApplicationRecord
 
   validates :title, presence: true
 
+  belongs_to :parent_book, optional: true, class_name: "Book", inverse_of: :books
+  has_many :books, foreign_key: :parent_book_id, inverse_of: :parent_book, dependent: nil
+
   has_many :books_users, dependent: :destroy
   has_many :users, through: :books_users
 

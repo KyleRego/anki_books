@@ -9,7 +9,7 @@ Feature: Editing a book's title
     And the user "test_user" has a book called "My first book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "My first book" link
+    And I click the last "My first book" link
     And I click the "Manage book" link
     And I click the "Edit book" link
 
@@ -19,7 +19,7 @@ Feature: Editing a book's title
   Scenario: Updating the book title
     When I fill in the "Title" field with "new title"
     And I click the "Update Book" button
-    And I click the "new title" link
+    And I click the last "new title" link
     Then I should see "new title"
 
   Scenario: Trying to update the book title to be an empty string

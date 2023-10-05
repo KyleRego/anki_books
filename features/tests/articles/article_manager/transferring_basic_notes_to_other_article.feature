@@ -13,7 +13,7 @@ Feature: Moving basic notes to a different article
     And the article "test article 2" has 2 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "test book 1" link
+    And I click the last "test book 1" link
     And I click the "test article 1" link
     And I click the "Manage article" link
   
@@ -25,7 +25,7 @@ Feature: Moving basic notes to a different article
     And I click the "Move basic notes to selected article" button
     Then I should see "Selected basic notes moved to test article 2."
     And I click the "Books" link
-    And I click the "test book 1" link
+    And I click the last "test book 1" link
     And I click the "test article 2" link
     Then I should see "Front of note 0"
     And I should see "Front of note 2"

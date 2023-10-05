@@ -10,7 +10,7 @@ Scenario: Creating a new book from the Books page
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     When I visit the root path
     And I click the "Books" link
-    And I click the "New book" link
+    And I click the last "New book" link
     When I fill in the "Title" field with "My new book!"
     And I click the "Create Book" button
     Then I should see "My new book!"

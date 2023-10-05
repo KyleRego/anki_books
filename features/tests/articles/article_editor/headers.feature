@@ -27,10 +27,10 @@ Feature: Adding headers when editing an article
     Then I should see a "H1" heading with the text "My H1 heading"
 
   Scenario: Using the headers button group to add an H2 subheading
-    When I fill in the article editor with "My H3 heading"
+    When I fill in the article editor with "My H2 heading"
     And I click the "H2" button
     And I click the "Update Article" button
-    Then I should see a "H2" heading with the text "My H3 heading"
+    Then I should see a "H2" heading with the text "My H2 heading"
 
   Scenario: Using the headers button group to add an H3 subheading
     When I fill in the article editor with "My H3 heading"

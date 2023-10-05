@@ -10,7 +10,7 @@ Feature: Creating an article
     And the user "test_user" has a book called "My first book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I click the "Books" link
-    And I click the "My first book" link
+    And I click the last "My first book" link
     And I click the "New article" link
     And I fill in the article editor with "content of a new article"
     And I click the "Create Article" button
