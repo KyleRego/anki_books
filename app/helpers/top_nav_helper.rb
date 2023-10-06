@@ -15,14 +15,6 @@ module TopNavHelper
     !current_page?(concepts_path)
   end
 
-  def show_link_to_domains_in_top_nav?
-    !current_page?(domains_path)
-  end
-
-  def show_link_to_root_domains_in_top_nav?
-    !current_page?(root_domains_path)
-  end
-
   def show_link_to_downloads_in_top_nav?
     !current_page?(downloads_path)
   end

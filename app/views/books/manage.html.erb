@@ -71,24 +71,3 @@
   <% end %>
 </div>
 <% end %>
-
-<div class="mt-4 pb-8 border-b-2">
-  <h3 class="mb-4">
-    Domains:
-  </h3>
-
-  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-    <%= form_with(model: @book, url: change_book_domains_path(@book)) do |form| %>
-    <% domains_options = @user_domains.map { |d| { id: d.id, title: d.title, selected: @book_current_domains.include?(d) } } %>
-      <% domains_options.each do |domain_option| %>
-        <div class="mb-2">
-          <%= label_tag(domain_option[:title]) do %>
-            <%= check_box_tag("domains_ids[]", domain_option[:id], domain_option[:selected], id: domain_option[:id]) %>
-            <span><%= domain_option[:title] %></span>
-          <% end %>
-        </div>
-      <% end %>
-      <%= form.submit "Update Domains", class: "action-link" %>
-    <% end %>
-  </div>
-</div>

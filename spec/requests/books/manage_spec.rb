@@ -28,15 +28,6 @@ RSpec.describe "GET /books/:id/manage", "#manage" do
         expect(response).to be_successful
       end
 
-      context "when user has many domains" do
-        before { create_list(:domain, 5, user:) }
-
-        it "returns a success response" do
-          get_books_manage
-          expect(response).to be_successful
-        end
-      end
-
       context "when book is not found (it was deleted)" do
         before { book.destroy }
 

@@ -25,11 +25,11 @@
   </div>
 </div>
 
-<% if @domains.any? %>
+<% if @child_books.any? %>
   <div class="my-4 pb-4 border-b-2">
-    <h4 class="mb-2">Domains:</h4>
-    <% @domains.each do |domain| %>
-      <div><%= link_to domain.title, domain_path(domain) %></div>
+    <h4 class="mb-2">Children books:</h4>
+    <% @child_books.each do |child_book| %>
+      <div><%= link_to child_book.title, book_articles_path(child_book) %></div>
     <% end %>
   </div>
 <% end %>

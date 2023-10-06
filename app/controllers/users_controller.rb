@@ -17,19 +17,6 @@ class UsersController < ApplicationController
   end
 
   # :nocov:
-  def download_domains_data
-    attributes = %w[id title parent_domain_id]
-
-    data = CSV.generate(headers: true) do |csv|
-      csv << attributes
-
-      current_user.domains.each do |domain|
-        csv << attributes.map { |attr| domain.send(attr) }
-      end
-    end
-
-    send_data data, filename: "domains.csv"
-  end
 
   def download_books_data
     attributes = %w[id title]
@@ -101,22 +88,6 @@ class UsersController < ApplicationController
     end
 
     send_data data, filename: "cloze_notes.csv"
-  end
-
-  def download_books_domains_data
-    attributes = %w[book_id domain_id]
-
-    data = CSV.generate(headers: true) do |csv|
-      csv << attributes
-
-      current_user.books.each do |book|
-        book.books_domains.each do |books_domain|
-          csv << attributes.map { |attr| books_domain.send(attr) }
-        end
-      end
-    end
-
-    send_data data, filename: "books_domains.csv"
   end
 
   def download_cloze_notes_concepts_data

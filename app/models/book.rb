@@ -24,9 +24,6 @@ class Book < ApplicationRecord
   has_many :books_users, dependent: :destroy
   has_many :users, through: :books_users
 
-  has_many :books_domains, dependent: :destroy
-  has_many :domains, through: :books_domains
-
   has_many :articles, dependent: :destroy
 
   scope :ordered, -> { order(:title) }

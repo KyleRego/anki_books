@@ -11,8 +11,6 @@
         <%= link_to "Back to article", back_to_article_path(@article), class: "font-semibold" %>
       <% elsif @book %>
         <%= link_to "Back to book", book_articles_path(@book), class: "font-semibold" %>
-      <% elsif @domain %>
-        <%= link_to "Back to domain", domain_path(@domain), class: "font-semibold" %>
       <% end %>
     </div>
 

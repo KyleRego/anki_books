@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get "/study_cards", to: "homepage#study_cards", as: "homepage_study_cards"
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
-  get "/domains/:id/study_cards", to: "domains#study_cards", as: "study_domain_cards"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
@@ -23,12 +22,6 @@ Rails.application.routes.draw do
   patch "/articles/:id/change_book", to: "articles#change_book", as: "change_article_book"
   patch "/articles/:id/transfer_basic_notes", to: "articles#transfer_basic_notes", as: "article_transfer_basic_notes"
 
-  resources :domains
-  get "/root_domains", to: "domains#root_domains", as: "root_domains"
-  get "/domains/:id/manage", to: "domains#manage", as: "manage_domain"
-  patch "/domains/:id/change_books", to: "domains#change_books", as: "change_domain_books"
-  patch "/domains/:id/change_child_domains", to: "domains#change_child_domains", as: "change_child_domains"
-
   resources :concepts
   get "/concepts/:id/manage", to: "concepts#manage", as: "manage_concept"
 
@@ -38,7 +31,6 @@ Rails.application.routes.draw do
   get "/books/:id/manage", to: "books#manage", as: "manage_book"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",
                                                      as: "change_book_article_ordinal_position"
-  patch "/books/:id/change_domains", to: "books#change_domains", as: "change_book_domains"
   patch "/books/:id/transfer_articles", to: "books#transfer_articles", as: "book_transfer_articles"
   patch "/books/:id/change_parent_book", to: "books#change_parent_book", as: "change_parent_book"
 
@@ -53,13 +45,11 @@ Rails.application.routes.draw do
   # TODO: This is tech debt as I wanted to get this automated quickly
   # It should be one download with a zip file of what these endpoints give individually.
   # :nocov:
-  get "/download_domains_data", to: "users#download_domains_data", as: "download_domains_data"
   get "/download_books_data", to: "users#download_books_data", as: "download_books_data"
   get "/download_articles_data", to: "users#download_articles_data", as: "download_articles_data"
   get "/download_concepts_data", to: "users#download_concepts_data", as: "download_concepts_data"
   get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
   get "/download_cloze_notes_data", to: "users#download_cloze_notes_data", as: "download_cloze_notes_data"
-  get "/download_books_domains_data", to: "users#download_books_domains_data", as: "download_books_domains_data"
   get "/download_cloze_notes_concepts_data", to: "users#download_cloze_notes_concepts_data", as: "download_cloze_notes_concepts_data"
   # :nocov:
 end

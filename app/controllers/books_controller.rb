@@ -8,7 +8,7 @@
 class BooksController < ApplicationController
   before_action :require_login
   before_action :set_book, except: %w[index new create]
-  before_action :set_articles, only: %w[manage change_domains]
+  before_action :set_articles, only: %w[manage]
 
   def index
     @books = current_user.books
@@ -50,8 +50,6 @@ class BooksController < ApplicationController
   end
 
   def manage
-    @book_current_domains = @book.domains
-    @user_domains = current_user.domains.ordered
     @user_other_books = current_user.books.ordered
   end
 
@@ -64,11 +62,6 @@ class BooksController < ApplicationController
     else
       head :unprocessable_entity
     end
-  end
-
-  def change_domains
-    @book.domains = current_user.domains.where(id: params[:domains_ids])
-    redirect_to manage_book_path(@book), flash: { notice: "Domains successfully updated" }
   end
 
   def study_cards

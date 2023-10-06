@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_111309) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_06_090012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -85,14 +85,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_111309) do
     t.uuid "parent_book_id"
   end
 
-  create_table "books_domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "book_id", null: false
-    t.uuid "domain_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id", "domain_id"], name: "index_books_domains_on_book_id_and_domain_id", unique: true
-  end
-
   create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "book_id", null: false
@@ -128,14 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_111309) do
     t.index ["user_id", "name"], name: "index_concepts_on_user_id_and_name", unique: true
   end
 
-  create_table "domains", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "user_id", null: false
-    t.uuid "parent_domain_id"
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
     t.string "username"
@@ -151,14 +135,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_111309) do
   add_foreign_key "articles", "books"
   add_foreign_key "basic_notes", "articles"
   add_foreign_key "books", "books", column: "parent_book_id"
-  add_foreign_key "books_domains", "books"
-  add_foreign_key "books_domains", "domains"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
   add_foreign_key "cloze_notes", "articles"
   add_foreign_key "cloze_notes_concepts", "cloze_notes"
   add_foreign_key "cloze_notes_concepts", "concepts"
   add_foreign_key "concepts", "users"
-  add_foreign_key "domains", "domains", column: "parent_domain_id"
-  add_foreign_key "domains", "users"
 end
