@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   # :nocov:
 
   def download_books_data
-    attributes = %w[id title]
+    attributes = %w[id title parent_book_id]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
   end
 
   def download_cloze_notes_data
-    attributes = %w[id sentence]
+    attributes = %w[id sentence article_id]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
