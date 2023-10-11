@@ -12,21 +12,16 @@ module BasicNote::AnkiContentable
   end
 
   def anki_back
-    content = format_for_input_to_anki(field: back)
-    "#{content}<br><br>#{last_downloaded_at_stamp}"
+    format_for_input_to_anki(field: back)
+  end
+
+  def url
+    "#{article_url(article)}##{turbo_id}"
   end
 
   private
 
   def format_for_input_to_anki(field:)
     html_escape(field).gsub("\n", "<br>")
-  end
-
-  def note_link
-    "<a href=\"#{article_url(article)}##{turbo_id}\">Anki Books</a>"
-  end
-
-  def last_downloaded_at_stamp
-    "Downloaded from #{note_link}: #{DateTime.current.strftime('%b %d %I:%M %z')}"
   end
 end

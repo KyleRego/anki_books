@@ -4,8 +4,8 @@
 
 # frozen_string_literal: true
 
-RSpec.describe ClozeNote, "#anki_back_extra" do
-  subject(:anki_back_extra) { cloze_note.anki_back_extra }
+RSpec.describe ClozeNote, "#url" do
+  subject(:url) { cloze_note.url }
 
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
@@ -17,12 +17,7 @@ RSpec.describe ClozeNote, "#anki_back_extra" do
     create(:cloze_note, article:, sentence:, concepts: [concept])
   end
 
-  it "includes a link back to the article" do
-    expect(cloze_note.anki_back_extra).to include("/articles/#{article.id}\">Anki Books</a>")
-  end
-
-  it "includes a last downloaded at timestamp" do
-    expect(cloze_note.anki_back_extra).to include("<br>Downloaded from")
-    expect(cloze_note.anki_back_extra).to include(DateTime.current.strftime("%b %d %I:%M %z"))
+  it "returns a URL with the article path" do
+    expect(url).to include("/articles/#{article.id}")
   end
 end

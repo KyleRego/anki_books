@@ -25,13 +25,4 @@ RSpec.describe BasicNote, "#anki_back" do
     basic_note.back = "hello\nworld\nWhat is a <turbo-frame>?"
     expect(basic_note.anki_back).to start_with("hello<br>world<br>What is a &lt;turbo-frame&gt;?")
   end
-
-  it "includes an Edit link to the basic note on the website" do
-    expect(basic_note.anki_back).to include("/articles/#{article_id}##{turbo_id}\">Anki Books</a>")
-  end
-
-  it "includes a last downloaded at timestamp" do
-    expect(basic_note.anki_back).to include("<br>Downloaded from")
-    expect(basic_note.anki_back).to include(DateTime.current.strftime("%b %d %I:%M %z"))
-  end
 end
