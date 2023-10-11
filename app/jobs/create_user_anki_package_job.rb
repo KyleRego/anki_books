@@ -52,7 +52,7 @@ class CreateUserAnkiPackageJob < ApplicationJob
 
       user.cloze_notes.each do |cloze_note|
         anki_note = AnkiRecord::Note.new(note_type: cloze_note_type, deck:)
-        anki_note.text = cloze_note.sentence
+        anki_note.text = cloze_note.anki_text
         anki_note.back_extra = ""
         anki_note.url = cloze_note.url
         anki_note.downloaded_at = downloaded_at_timestamp

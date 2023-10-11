@@ -27,8 +27,9 @@ class ClozeNote < ApplicationRecord
   include ClozeNote::AnkiContentable
 
   # TODO: See if this (and same in Basic Note)
-  # can be included into the module where the url helper
+  # can be included into the module where they are used
   # is used instead rather than here (AnkiContentable)
+  include ERB::Util
   include Rails.application.routes.url_helpers
 
   belongs_to :article

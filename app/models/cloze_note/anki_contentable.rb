@@ -7,6 +7,10 @@
 ##
 # Methods related to the Anki content generated for Anki cloze deletion notes
 module ClozeNote::AnkiContentable
+  def anki_text
+    html_escape(sentence)
+  end
+
   def url
     article_url(article)
   end
