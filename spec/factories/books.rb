@@ -8,10 +8,15 @@
 #
 # Table name: books
 #
-#  id         :uuid             not null, primary key
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id             :uuid             not null, primary key
+#  title          :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  parent_book_id :uuid
+#
+# Foreign Keys
+#
+#  fk_rails_...  (parent_book_id => books.id)
 #
 FactoryBot.define do
   factory :book do
