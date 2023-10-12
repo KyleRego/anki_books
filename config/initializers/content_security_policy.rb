@@ -18,7 +18,7 @@ Rails.application.configure do
     # policy.report_uri "/csp-violation-report-endpoint"
   end
 
-  config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
   config.content_security_policy_nonce_directives = %w[script-src style-src]
 
   # Report violations without enforcing the policy.
