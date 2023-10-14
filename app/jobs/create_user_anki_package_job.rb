@@ -109,6 +109,9 @@ class CreateUserAnkiPackageJob < ApplicationJob
       <hr id=answer>
 
       {{Back}}
+      <br>
+      <br>
+      <a href="{{URL}}">Source</a>
     TEMPLATE
 
     css = <<~CSS
@@ -140,6 +143,8 @@ class CreateUserAnkiPackageJob < ApplicationJob
     template.answer_format = <<~TEMPLATE
       {{cloze:Text}}<br>
       {{Back Extra}}
+      <br>
+      <a href="{{URL}}">Source</a>
     TEMPLATE
 
     css = <<~CSS
