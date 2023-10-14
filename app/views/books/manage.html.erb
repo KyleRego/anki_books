@@ -19,7 +19,8 @@
       <%= select_tag("parent_book_id",
                       options_from_collection_for_select(@user_other_books, :id, :title),
                       prompt: "Select a book",
-                      title: "Select a parent book") %>
+                      title: "Select a parent book",
+                      include_blank: "No parent") %>
     </div>
     <%= form.submit "Update parent book", class: "action-link mt-4" %>
   <% end %>

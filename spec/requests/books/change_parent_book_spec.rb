@@ -37,6 +37,16 @@ RSpec.describe "GET /books/:id/change_parent_book", "#change_parent_book" do
       end
     end
 
+    context "when params has an emptry string parent_book_id" do
+      let(:params) { { parent_book_id: "" } }
+
+      it "sets the parent_book_id to nil" do
+        patch_books_change_parent_book
+        expect(response).to redirect_to(manage_book_path(book))
+        expect(book.reload.parent_book).to be_nil
+      end
+    end
+
     context "when params parent_book_id is the book" do
       let(:params) { { parent_book_id: book.id } }
 

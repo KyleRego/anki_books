@@ -84,7 +84,7 @@ class BooksController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def change_parent_book
-    if params[:parent_book_id].nil?
+    if params[:parent_book_id].blank?
       @book.update(parent_book_id: nil)
       redirect_to manage_book_path(@book), flash: { notice: "Parent book successfully removed" }
       return
