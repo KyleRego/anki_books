@@ -12,8 +12,12 @@ RSpec.describe UsersController do
       expect(get: "/download_anki_deck").to route_to("users#download_anki_deck")
     end
 
-    it "routes to #random_article" do
-      expect(get: "/random_article").to route_to("users#random_article")
+    it "routes to #random_reading_article" do
+      expect(get: "/random_reading_article").to route_to("users#random_reading_article")
+    end
+
+    it "routes to #random_writing_article" do
+      expect(get: "/random_writing_article").to route_to("users#random_writing_article")
     end
 
     it "routes to #downloads" do

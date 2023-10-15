@@ -108,8 +108,23 @@ class UsersController < ApplicationController
 
   # :nocov:
 
-  def random_article
-    article = current_user.random_article
-    redirect_to article_path(article)
+  def random_reading_article
+    article = current_user.random_reading_article
+    if article
+      redirect_to article_path(article)
+    else
+      flash[:notice] = "No incomplete reading articles found."
+      redirect_to books_path
+    end
+  end
+
+  def random_writing_article
+    article = current_user.random_writing_article
+    if article
+      redirect_to article_path(article)
+    else
+      flash[:notice] = "No incomplete writing articles found."
+      redirect_to books_path
+    end
   end
 end

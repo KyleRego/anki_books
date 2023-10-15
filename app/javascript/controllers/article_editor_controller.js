@@ -20,7 +20,7 @@ export default class extends Controller {
     const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
     this.toolbarTarget.classList.add("sticky");
     this.toolbarTarget.classList.add("z-40");
-    this.toolbarTarget.style.top = `${topNavBarHeight - 1}px`;
+    this.toolbarTarget.style.top = `${topNavBarHeight}px`;
   }
 
   setupHeaderButtonsGroup() {

@@ -6,7 +6,7 @@
 
 RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
   subject(:patch_articles_update) do
-    params = { article: { title:, content: } }
+    params = { article: { title:, content:, reading:, writing:, complete: } }
     patch article_path(article), params:
   end
 
@@ -14,6 +14,9 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
   let(:content) { "some content" }
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
+  let(:reading) { true }
+  let(:writing) { false }
+  let(:complete) { false }
 
   include_examples "user is not logged in and needs to be"
 
@@ -36,6 +39,19 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
           expect(article.reload.title).to eq(title)
           expect(flash[:notice]).to eq("Article updated successfully.")
           expect(response).to redirect_to(article_path(article))
+        end
+
+        context "when reading, writing, complete are in the params" do
+          let(:reading) { false }
+          let(:writing) { true }
+          let(:complete) { false }
+
+          it "updates the article with those attributes updated to the param values" do
+            patch_articles_update
+            expect(article.reload.reading).to be reading
+            expect(article.reload.writing).to be writing
+            expect(article.reload.complete).to be complete
+          end
         end
 
         context "when it is the system article" do

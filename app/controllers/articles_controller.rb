@@ -152,7 +152,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :content, :book_id)
+    params.require(:article).permit(:title, :content, :book_id, :reading, :writing, :complete)
   end
 end
 # rubocop:enable Metrics/ClassLength

@@ -8,6 +8,10 @@
     <%= yield :page_specific_links %>
 
     <% if logged_in? %>
+      <%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %>
+
+      <%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %>
+
       <% if show_link_to_concepts_in_top_nav? %>
         <%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %>
       <% end %>
@@ -19,8 +23,6 @@
       <% if show_link_to_downloads_in_top_nav? %>
         <%= link_to("Downloads", downloads_path, class: "font-semibold mr-4") %>
       <% end %>
-
-      <%= link_to("Random article", user_random_article_path, class: "font-semibold mr-4") %>
 
       <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold mr-4" %>
 

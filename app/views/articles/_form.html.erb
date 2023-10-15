@@ -17,6 +17,21 @@
     <%= form.rich_text_area :content %>
   </div>
 
+  <div class="my-2">
+    <%= form.label :reading %>
+    <%= form.check_box(:reading, {}) %>
+  <div>
+
+  <div class="my-2">
+    <%= form.label :writing %>
+    <%= form.check_box(:writing, {}) %>
+  <div>
+
+  <div class="my-2">
+    <%= form.label :complete %>
+    <%= form.check_box(:complete, {}) %>
+  <div>
+
   <div class="mt-2">
     <%= form.hidden_field :book_id, value: @book.id %>
     <%= form.submit class: "action-link" %>

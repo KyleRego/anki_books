@@ -66,12 +66,15 @@ class User < ApplicationRecord
   end
 
   ##
-  # Returns a randomly selected article that belongs to the user
-  def random_article
-    Article.joins("inner join books on articles.book_id = books.id
-                   inner join books_users on books_users.book_id = books.id
-                   inner join users on books_users.user_id = users.id
-                   where users.id = '#{id}'").sample
+  # Returns one of the user's articles that has reading: true and complete: false
+  def random_reading_article
+    articles.where(reading: true, complete: false).sample
+  end
+
+  ##
+  # Returns one of the user's articles that has writing: true and complete: false
+  def random_writing_article
+    articles.where(writing: true, complete: false).sample
   end
 
   def update_anki_package(package_path:, name_for_attachment:)
