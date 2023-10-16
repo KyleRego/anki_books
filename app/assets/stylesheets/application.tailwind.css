@@ -9,11 +9,28 @@ Copyright (C) 2023 Kyle Rego */
 @import "actiontext.css";
 
 @layer components {
-  a, .nav-link {
+  .basic-note-colors {
+    @apply border-blue-400;
+    @apply bg-blue-50;
+  }
+
+  .flash-notice-colors {
+    @apply border-green-400;
+    @apply bg-green-50;
+    @apply text-green-900;
+  }
+
+  .flash-alert-colors {
+    @apply border-red-400;
+    @apply bg-red-50;
+    @apply text-red-900;
+  }
+
+  a {
     @apply text-blue-500;
   }
 
-  a:hover, .nav-link:hover {
+  a:hover {
     @apply text-blue-600; 
   }
 
@@ -31,6 +48,56 @@ Copyright (C) 2023 Kyle Rego */
 
   .danger-link:hover {
     @apply text-red-600 font-semibold;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .app-body, .app-body * {
+      background-color: #111827;
+      color: #f5f5f5;
+    }
+
+    div.trix-content span {
+      background-color: transparent;
+    }
+
+    .basic-note-colors {
+      background-color: inherit;
+      color: inherit;
+    }
+
+    .flash-notice-colors {
+      background-color: inherit;
+      color: inherit;
+    }
+
+    .flash-alert-colors {
+      background-color: inherit;
+      color: inherit;
+    }
+
+    a {
+      @apply text-blue-300;
+    }
+
+    a:hover {
+      @apply text-blue-400;
+    }
+
+    .action-link {
+      @apply text-white font-medium cursor-pointer;
+    }
+
+    .action-link:hover {
+      @apply text-white font-semibold;
+    }
+
+    .danger-link {
+      @apply text-white font-medium cursor-pointer;
+    }
+
+    .danger-link:hover {
+      @apply text-red-500 font-semibold;
+    }
   }
 
   h1 {

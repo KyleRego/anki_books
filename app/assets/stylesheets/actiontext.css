@@ -109,6 +109,5 @@ trix-editor pre {
 trix-toolbar {
     top: 0;
     position: sticky;
-    background: white;
     z-index: 1;
 }
