@@ -5,7 +5,7 @@
 <% if notice.present? %>
   <p class="flex justify-between align-middle
             border
-            border-green-400 bg-green-50 text-green-900
+            flash-notice-colors
             font-semibold rounded-md text-center
             py-3 px-4 my-4 mx-auto max-w-sm"
      data-controller="flash-messages"
@@ -26,8 +26,8 @@
 
 <% if alert.present? %>
   <p class="flex justify-between align-middle
-            border border-red-400
-          bg-red-50 text-red-900 font-semibold
+            border font-semibold
+            flash-alert-colors
             py-3 px-4 rounded-md text-center my-4 mx-auto max-w-sm"
      data-controller="flash-messages"
      data-flash-messages-target="message">

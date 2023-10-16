@@ -5,7 +5,7 @@
 <div class="flex flex-col sm:flex-row">
   <% if logged_in? %>
   <div class="sm:w-8/12" data-controller="set-top-under-nav">
-    <div class="sticky top-8 z-40 bg-white" data-set-top-under-nav-target="element">
+    <div class="sticky top-8 z-40" data-set-top-under-nav-target="element">
       <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") unless current_page?(article_path(@article)) %>
       <%= link_to("Edit article", edit_article_path(@article), class: "action-link mr-4") %>
       <%= link_to("Manage article", manage_article_path(@article), class: "action-link") %>
