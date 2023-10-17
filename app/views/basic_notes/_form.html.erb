@@ -4,18 +4,18 @@
 
 <div class="mx-auto">
   <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-    <div class="border border-blue-400 bg-blue-50 text-center mx-auto px-4 pb-2 pt-8 my-4">
+    <div class="border border-blue-400 bg-blue-50 dark:bg-inherit text-center mx-auto px-4 mr-6 pb-2 pt-8 my-4">
 
       <%= render "errors" %>
 
       <div>
         <%= form.label :front, class: "hidden" %>
-        <%= form.text_area :front, class: "w-full h-24" %>
+        <%= form.text_area :front, class: "w-full h-24 text-black dark:bg-gray-300" %>
       </div>
 
       <div class="mt-4">
         <%= form.label :back, class: "hidden" %>
-        <%= form.text_area :back, class: "w-full h-24" %>
+        <%= form.text_area :back, class: "w-full h-24 text-black dark:bg-gray-300" %>
       </div>
 
       <% on_study_cards_value = @on_study_cards ? "true" : "false" %>

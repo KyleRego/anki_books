@@ -9,23 +9,6 @@ Copyright (C) 2023 Kyle Rego */
 @import "actiontext.css";
 
 @layer components {
-  .basic-note-colors {
-    @apply border-blue-400;
-    @apply bg-blue-50;
-  }
-
-  .flash-notice-colors {
-    @apply border-green-400;
-    @apply bg-green-50;
-    @apply text-green-900;
-  }
-
-  .flash-alert-colors {
-    @apply border-red-400;
-    @apply bg-red-50;
-    @apply text-red-900;
-  }
-
   a {
     @apply text-blue-500;
   }
@@ -51,28 +34,8 @@ Copyright (C) 2023 Kyle Rego */
   }
 
   @media (prefers-color-scheme: dark) {
-    .app-body, .app-body * {
-      background-color: #111827;
-      color: #f5f5f5;
-    }
-
     div.trix-content span {
       background-color: transparent;
-    }
-
-    .basic-note-colors {
-      background-color: inherit;
-      color: inherit;
-    }
-
-    .flash-notice-colors {
-      background-color: inherit;
-      color: inherit;
-    }
-
-    .flash-alert-colors {
-      background-color: inherit;
-      color: inherit;
     }
 
     a {
