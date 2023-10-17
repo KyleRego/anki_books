@@ -38,7 +38,11 @@ Copyright (C) 2023 Kyle Rego */
       background-color: transparent;
     }
 
-    textarea, input, pre, select {
+    * {
+      color: white;
+    }
+
+    textarea, input, pre, select, option {
       @apply text-black;
       @apply bg-gray-300;
     }
