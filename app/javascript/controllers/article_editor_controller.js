@@ -20,6 +20,8 @@ export default class extends Controller {
     const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
     this.toolbarTarget.classList.add("sticky");
     this.toolbarTarget.classList.add("z-40");
+    this.toolbarTarget.classList.add("bg-white");
+    this.toolbarTarget.classList.add("dark:bg-gray-900");
     this.toolbarTarget.style.top = `${topNavBarHeight}px`;
   }
 
