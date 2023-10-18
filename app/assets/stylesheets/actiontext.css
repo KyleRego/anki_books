@@ -40,10 +40,12 @@ Copyright (C) 2023 Kyle Rego */
     line-height: 1.2;
 }
 
-.dark-mode .trix-content .attachment--preview .attachment__caption {
-    color: white;
-    font-size: 0.9em;
-    line-height: 1.2;
+@media (prefers-color-scheme: dark) {
+    .trix-content .attachment--preview .attachment__caption {
+      color: white;
+      font-size: 0.9em;
+      line-height: 1.2;
+  }
 }
 
 .trix-content * {
