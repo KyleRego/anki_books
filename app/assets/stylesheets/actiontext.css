@@ -1,127 +1,129 @@
-/* Anki Books, a note-taking app to organize knowledge,
-is licensed under the GNU Affero General Public License, version 3
-Copyright (C) 2023 Kyle Rego */
+@layer trix {
+  /* Anki Books, a note-taking app to organize knowledge,
+  is licensed under the GNU Affero General Public License, version 3
+  Copyright (C) 2023 Kyle Rego */
 
-/*
- * Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
- * the trix-editor content (whether displayed or under editing). Feel free to incorporate this
- * inclusion directly in any other asset bundle and remove this file.
- *
- *= require trix
-*/
+  /*
+  * Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
+  * the trix-editor content (whether displayed or under editing). Feel free to incorporate this
+  * inclusion directly in any other asset bundle and remove this file.
+  *
+  *= require trix
+  */
 
-/*
- * We need to override trix.css’s image gallery styles to accommodate the
- * <action-text-attachment> element we wrap around attachments. Otherwise,
- * images in galleries will be squished by the max-width: 33%; rule.
-*/
-.trix-content .attachment-gallery > action-text-attachment,
-.trix-content .attachment-gallery > .attachment {
-  flex: 1 0 33%;
-  padding: 0 0.5em;
-  max-width: 33%;
-}
+  /*
+  * We need to override trix.css’s image gallery styles to accommodate the
+  * <action-text-attachment> element we wrap around attachments. Otherwise,
+  * images in galleries will be squished by the max-width: 33%; rule.
+  */
+  .trix-content .attachment-gallery > action-text-attachment,
+  .trix-content .attachment-gallery > .attachment {
+    flex: 1 0 33%;
+    padding: 0 0.5em;
+    max-width: 33%;
+  }
 
-.trix-content .attachment-gallery.attachment-gallery--2 > action-text-attachment,
-.trix-content .attachment-gallery.attachment-gallery--2 > .attachment, .trix-content .attachment-gallery.attachment-gallery--4 > action-text-attachment,
-.trix-content .attachment-gallery.attachment-gallery--4 > .attachment {
-  flex-basis: 50%;
-  max-width: 50%;
-}
+  .trix-content .attachment-gallery.attachment-gallery--2 > action-text-attachment,
+  .trix-content .attachment-gallery.attachment-gallery--2 > .attachment, .trix-content .attachment-gallery.attachment-gallery--4 > action-text-attachment,
+  .trix-content .attachment-gallery.attachment-gallery--4 > .attachment {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
 
-.trix-content action-text-attachment .attachment {
-  padding: 0 !important;
-  max-width: 100% !important;
-}
+  .trix-content action-text-attachment .attachment {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
 
-.trix-content .attachment--preview .attachment__caption {
-    color: black;
-    font-size: 0.9em;
-    line-height: 1.2;
-}
-
-@media (prefers-color-scheme: dark) {
-    .trix-content .attachment--preview .attachment__caption {
-      color: white;
+  .trix-content .attachment--preview .attachment__caption {
+      color: black;
       font-size: 0.9em;
       line-height: 1.2;
   }
-}
 
-.trix-content * {
-  font-size: 16px;
-}
+  @media (prefers-color-scheme: dark) {
+      .trix-content .attachment--preview .attachment__caption {
+        color: white;
+        font-size: 0.9em;
+        line-height: 1.2;
+    }
+  }
 
-/* TODO: Figure out a way to not need these header rulesets
-They are needed right now to overwrite the default Trix stylesheet styles */
-.trix-content h1 {
-  font-size: 36px !important;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
+  .trix-content * {
+    font-size: 16px;
+  }
 
-.trix-content h2 {
-  font-size: 32px !important;
-  font-weight: 650;
-  overflow-wrap: anywhere;
-}
+  /* TODO: Figure out a way to not need these header rulesets
+  They are needed right now to overwrite the default Trix stylesheet styles */
+  .trix-content h1 {
+    font-size: 36px !important;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content h3 {
-  font-size: 28px !important;
-  font-weight: 650;
-  overflow-wrap: anywhere;
-}
+  .trix-content h2 {
+    font-size: 32px !important;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content h4 {
-  font-size: 24px !important;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
+  .trix-content h3 {
+    font-size: 28px !important;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content h5 {
-  font-size: 20px !important;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
+  .trix-content h4 {
+    font-size: 24px !important;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content h6 {
-  font-size: 16px !important;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
+  .trix-content h5 {
+    font-size: 20px !important;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content pre {
-  overflow-x: auto;
-  background-color: #272822;
-  padding: 1em !important;
-  font-size: 16px;
-  font-family: "Monaco", "Menlo", "Consolas", monospace;
-  line-height: 1.5;
-  border: 1px solid #000000;
-  border-radius: 3px;
-  padding: 0;
-}
+  .trix-content h6 {
+    font-size: 16px !important;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
 
-.trix-content img {
-  margin: auto;
-}
+  .trix-content pre {
+    overflow-x: auto;
+    background-color: #272822;
+    padding: 1em !important;
+    font-size: 16px;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+    line-height: 1.5;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    padding: 0;
+  }
 
-.trix-content ul li {
-  list-style-type: circle;
-  list-style-position: inside;
-}
+  .trix-content img {
+    margin: auto;
+  }
 
-.trix-content ol li {
-  list-style-type: decimal;
-  list-style-position: inside;
-}
+  .trix-content ul li {
+    list-style-type: circle;
+    list-style-position: inside;
+  }
 
-trix-editor pre {
-  background-color: white !important;
-}
+  .trix-content ol li {
+    list-style-type: decimal;
+    list-style-position: inside;
+  }
 
-trix-toolbar {
-    top: 0;
-    position: sticky;
-    z-index: 1;
+  trix-editor pre {
+    background-color: white !important;
+  }
+
+  trix-toolbar {
+      top: 0;
+      position: sticky;
+      z-index: 1;
+  }
 }

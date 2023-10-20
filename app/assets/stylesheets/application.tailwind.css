@@ -6,8 +6,6 @@ Copyright (C) 2023 Kyle Rego */
 @tailwind components;
 @tailwind utilities;
 
-@import "actiontext.css";
-
 @layer components {
   a {
     @apply text-blue-500;
