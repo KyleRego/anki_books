@@ -2,6 +2,8 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@import "./tailwind.css" layer(tailwind);
-@import "./actiontext.css";
+@layer tailwind-base, tailwind-components, tailwind-utilities, railscasts;
+
+@import "./tailwind.css";
 @import "./railscasts.css" layer(railscasts);
+@import "./actiontext.css"

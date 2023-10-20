@@ -2,6 +2,10 @@
   is licensed under the GNU Affero General Public License, version 3
   Copyright (C) 2023 Kyle Rego */
 
+  /* It may be due to tree-shaking that getting this CSS into a cascade layer
+  seems to be difficult. Action Text renders HTML with .trix-content and
+  the CSS here applied to it is getting removed (?) */
+
 /*
   * Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
   * the trix-editor content (whether displayed or under editing). Feel free to incorporate this

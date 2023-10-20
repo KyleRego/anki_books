@@ -2,8 +2,6 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@layer tailwind-base, tailwind-components, tailwind-utilities;
-
 @layer tailwind-base {
   @tailwind base;
 }
