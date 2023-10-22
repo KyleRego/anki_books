@@ -2,18 +2,34 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@import "./backgrounds.css";
-@import "./border-radius.css";
-@import "./borders.css";
-@import "./flex.css";
-@import "./heights.css";
-@import "./margins.css";
-@import "./paddings.css";
-@import "./widths.css";
+@import "./_backgrounds.css";
+@import "./_border-radius.css";
+@import "./_borders.css";
+@import "./_flex.css";
+@import "./_heights.css";
+@import "./_margins.css";
+@import "./_paddings.css";
+@import "./_widths.css";
 
 @layer utilities {
   .wm-vertical-lr {
     writing-mode: vertical-lr;
+  }
+
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
+  }
+
+  .break-words {
+    overflow-wrap: break-word;
+  }
+
+  .break-anywhere {
+    overflow-wrap: anywhere;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
   }
 
   .text-center {
@@ -26,6 +42,26 @@ Copyright (C) 2023 Kyle Rego */
 
   .sticky {
     position: sticky;
+  }
+
+  .position-sticky-sm-static {
+    position: static;
+  }
+
+  @media (min-width: 640px) {
+    .position-sticky-sm-static {
+      position: sticky;
+    }
+  }
+
+  .overflow-y-auto-sm-scroll {
+    overflow-y: auto;
+  }
+
+  @media (min-width: 640px) {
+    .overflow-y-auto-sm-scroll {
+      overflow-y: scroll;
+    }
   }
 
   .top-0 {

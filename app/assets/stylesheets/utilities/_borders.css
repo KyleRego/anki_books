@@ -6,4 +6,8 @@ Copyright (C) 2023 Kyle Rego */
   .border-black {
     border: 1px solid black;
   }
+
+  .border-black-top {
+    border-top: 1px solid black;
+  }
 }

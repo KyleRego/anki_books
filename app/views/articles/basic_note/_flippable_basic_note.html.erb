@@ -4,15 +4,14 @@
 
 <div data-controller="basic-note-flippable">
   <div data-basic-note-flippable-target="flippableNote"
-        class="border-black dark:border-blue-400 bg-blue-50 dark:bg-inherit cursor-pointer py-3 px-2 border font-medium text-center">
+        class="cursor-pointer py-3 px-2 border-black text-center" tabindex="0">
 
-    <div class="bg-blue-50 dark:bg-inherit">
+    <div class="">
       <span class="whitespace-pre-wrap break-words"><%= @basic_note.front %></span>
     </div>
 
-    <div data-basic-note-flippable-target="flippableNoteBack"
-          class="bg-blue-50 dark:bg-inherit border-t border-black dark:border-blue-400 mt-2 pt-2" hidden>
-      <span class="whitespace-pre-wrap break-words bg-inherit"><%= @basic_note.back %></span>
+    <div data-basic-note-flippable-target="flippableNoteBack" class="mt-2 pt-2 border-black-top" hidden>
+      <span class="whitespace-pre-wrap break-words"><%= @basic_note.back %></span>
     </div>
 
   </div>

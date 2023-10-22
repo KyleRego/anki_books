@@ -18,23 +18,23 @@
     <div class="<%= css_class_for_div_wrapping_studiable_notes %>">
       <% @basic_notes&.each do |basic_note| %>
         <% @basic_note = basic_note %>
-        <div class="studiable-note" hidden>
+        <div class="studiable-note max-w-2-3 mx-auto" hidden>
           <%= render partial: "study_cards/basic_note" %>
         </div>
       <% end %>
     </div>
 
     <div class="m-auto w-max flex flex-row">
-      <span data-study-cards-target="studyPreviousCard" class="action-link mr-4" hidden>
+      <span data-study-cards-target="studyPreviousCard" class="action-link mr-4" hidden tabindex="0">
         Previous card
       </span>
-      <span data-study-cards-target="startStudyWithFirstCard" class="action-link cursor-pointer mr-4">
+      <span data-study-cards-target="startStudyWithFirstCard" class="action-link cursor-pointer mr-4" tabindex="0">
         First card
       </span>
-      <span data-study-cards-target="startRandomOrderStudy" class="action-link cursor-pointer">
+      <span data-study-cards-target="startRandomOrderStudy" class="action-link cursor-pointer" tabindex="0">
         Random order
       </span>
-      <span data-study-cards-target="studyNextCard" class="action-link cursor-pointer" hidden>
+      <span data-study-cards-target="studyNextCard" class="action-link cursor-pointer" hidden tabindex="0">
         Next card
       </span>
     </div>

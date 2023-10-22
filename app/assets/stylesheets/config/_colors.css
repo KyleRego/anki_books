@@ -5,7 +5,7 @@ Copyright (C) 2023 Kyle Rego */
 @layer config {
   :root {
     --primary-blue: rgb(0, 68, 255);
-    --primary-hover-blue: rgb(0, 32, 255);
+    --primary-hover-blue: rgb(51, 0, 255);
     --primary-light-gray: #ebebebfd;
   }
 }
