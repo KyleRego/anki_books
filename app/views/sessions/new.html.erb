@@ -2,19 +2,19 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="max-w-sm mx-auto mt-28">
-  <h1 class="mb-4 text-2xl font-semibold text-center text-blue-600 dark:text-green-400">Anki Books</h1>
+<div class="max-w-96 mx-auto mt-28">
+  <h1 class="mb-4 text-center">Anki Books</h1>
   <%= form_with(url: login_path, local: true) do |form| %>
-    <div class="">
+    <div class="my-2">
       <%= form.label :email, class: "block font-semibold my-2" %>
-      <%= form.email_field :email, class: "w-full rounded-md px-3", name: "session[email]" %>
+      <%= form.email_field :email, autocomplete: "username", class: "w-full", name: "session[email]" %>
     </div>
-    <div>
+    <div class="my-2">
       <%= form.label :password, class: "block font-semibold my-2" %>
-      <%= form.password_field :password, class: "w-full rounded-md px-3", name: "session[password]" %>
+      <%= form.password_field :password, autocomplete: "current-password", class: "w-full", name: "session[password]" %>
     </div>
     <div class="w-full text-center my-1">
-      <%= form.submit "Log in", class: "action-link text-blue-600 hover:text-blue-800 dark:text-green-400 hover:dark:text-green-600 rounded-md p-1" %>
+      <%= form.submit "Log in", class: "action-link p-1" %>
     </div>
   <% end %>
 </div>

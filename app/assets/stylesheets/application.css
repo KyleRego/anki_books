@@ -2,8 +2,11 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@layer tailwind-base, tailwind-components, tailwind-utilities, railscasts;
+@layer reset, base, components, utilities, railscasts;
 
-@import "./tailwind.css";
+@import "./modern-normalize.css" layer(reset);
+@import "./base.css" layer(base);
+@import "./components.css" layer(components);
+@import "./utilities" layer(utilities);
 @import "./railscasts.css" layer(railscasts);
 @import "./actiontext.css"
