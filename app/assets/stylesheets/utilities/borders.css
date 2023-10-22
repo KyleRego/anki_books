@@ -3,7 +3,7 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
-  .border {
-    border: 1px;
+  .border-black {
+    border: 1px solid black;
   }
 }

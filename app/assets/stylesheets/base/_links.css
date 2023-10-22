@@ -4,12 +4,12 @@ Copyright (C) 2023 Kyle Rego */
 
 @layer base {
   a {
-    color: rgb(0, 127, 255);
+    color: var(--primary-blue);
     text-decoration: none;
   }
 
   a:hover {
-    color: rgb(0, 65, 255);
+    color: var(--primary-hover-blue);
   }
 
   .action-link,

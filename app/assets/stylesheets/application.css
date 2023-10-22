@@ -2,8 +2,9 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@layer reset, base, components, utilities, railscasts;
+@layer reset, config, base, components, utilities, railscasts;
 
+@import "./config/index";
 @import "./preflight-reset.css";
 @import "./base/index";
 @import "./components.css";
