@@ -8,9 +8,9 @@
 
     <div class="mt-16">
       <% if @article %>
-        <%= link_to "Back to article", back_to_article_path(@article), class: "font-semibold" %>
+        <%= link_to "Back to article", back_to_article_path(@article), class: "" %>
       <% elsif @book %>
-        <%= link_to "Back to book", book_articles_path(@book), class: "font-semibold" %>
+        <%= link_to "Back to book", book_articles_path(@book), class: "" %>
       <% end %>
     </div>
 
@@ -25,16 +25,16 @@
     </div>
 
     <div class="m-auto w-max flex flex-row">
-      <span data-study-cards-target="studyPreviousCard" class="font-semibold cursor-pointer mr-4" hidden>
+      <span data-study-cards-target="studyPreviousCard" class="action-link mr-4" hidden>
         Previous card
       </span>
-      <span data-study-cards-target="startStudyWithFirstCard" class="font-semibold cursor-pointer mr-4">
+      <span data-study-cards-target="startStudyWithFirstCard" class="action-link cursor-pointer mr-4">
         First card
       </span>
-      <span data-study-cards-target="startRandomOrderStudy" class="font-semibold cursor-pointer">
+      <span data-study-cards-target="startRandomOrderStudy" class="action-link cursor-pointer">
         Random order
       </span>
-      <span data-study-cards-target="studyNextCard" class="font-semibold cursor-pointer" hidden>
+      <span data-study-cards-target="studyNextCard" class="action-link cursor-pointer" hidden>
         Next card
       </span>
     </div>

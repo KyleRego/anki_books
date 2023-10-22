@@ -6,11 +6,11 @@
   <h1 class="mb-4 text-center">Anki Books</h1>
   <%= form_with(url: login_path, local: true) do |form| %>
     <div class="my-2">
-      <%= form.label :email, class: "block font-semibold my-2" %>
+      <%= form.label :email, class: "block my-2" %>
       <%= form.email_field :email, autocomplete: "username", class: "w-full", name: "session[email]" %>
     </div>
     <div class="my-2">
-      <%= form.label :password, class: "block font-semibold my-2" %>
+      <%= form.label :password, class: "block my-2" %>
       <%= form.password_field :password, autocomplete: "current-password", class: "w-full", name: "session[password]" %>
     </div>
     <div class="w-full text-center my-1">
