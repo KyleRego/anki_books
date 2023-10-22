@@ -12,14 +12,14 @@ Copyright (C) 2023 Kyle Rego */
     color: var(--primary-hover-blue);
   }
 
-  .action-link,
+  .action,
   .danger-link {
     color: black;
     font-weight: 500;
     cursor: pointer;
   }
 
-  .action-link:hover {
+  .action:hover {
     font-weight: 600;
     color: var(--primary-hover-blue);
   }

@@ -7,8 +7,8 @@
     <% if logged_in? %>
       <div class="sticky z-50 bg-white" data-set-top-under-nav-target="element">
         <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") unless current_page?(article_path(@article)) %>
-        <%= link_to("Edit article", edit_article_path(@article), class: "action-link mr-4") %>
-        <%= link_to("Manage article", manage_article_path(@article), class: "action-link") %>
+        <%= link_to("Edit article", edit_article_path(@article), class: "action mr-4") %>
+        <%= link_to("Manage article", manage_article_path(@article), class: "action") %>
       </div>
     <% end %>
 

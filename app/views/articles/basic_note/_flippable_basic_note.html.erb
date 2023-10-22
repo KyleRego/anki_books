@@ -4,13 +4,13 @@
 
 <div data-controller="basic-note-flippable">
   <div data-basic-note-flippable-target="flippableNote"
-        class="cursor-pointer py-3 px-2 border-black text-center" tabindex="0">
+        class="cursor-pointer p-2 border-black text-center" tabindex="0">
 
     <div class="">
       <span class="whitespace-pre-wrap break-words"><%= @basic_note.front %></span>
     </div>
 
-    <div data-basic-note-flippable-target="flippableNoteBack" class="mt-2 pt-2 border-black-top" hidden>
+    <div data-basic-note-flippable-target="flippableNoteBack" class="mt-1 pt-1 border-black-top" hidden>
       <span class="whitespace-pre-wrap break-words"><%= @basic_note.back %></span>
     </div>
 
