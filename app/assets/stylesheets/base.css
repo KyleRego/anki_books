@@ -1,26 +1,28 @@
 /* Anki Books, a note-taking app to organize knowledge,
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
+@layer base {
+  a {
+    color: rgb(0, 127, 255);
+  }
 
-a {
-  color: rgb(0, 127, 255);
-}
+  a:hover {
+    color: rgb(0, 65, 255);
+  }
 
-a:hover {
-  color: rgb(0, 65, 255);
-}
+  .action-link,
+  .danger-link {
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+  }
 
-.action-link, .danger-link {
-  color: black;
-  font-weight: 500;
-  cursor: pointer;
-}
+  .action-link:hover {
+    font-weight: 600;
+  }
 
-.action-link:hover {
-  font-weight: 600;
-}
-
-.danger-link:hover {
-  color: red;
-  font-weight: 600;
+  .danger-link:hover {
+    color: red;
+    font-weight: 600;
+  }
 }

@@ -1,0 +1,19 @@
+/* Anki Books, a note-taking app to organize knowledge,
+is licensed under the GNU Affero General Public License, version 3
+Copyright (C) 2023 Kyle Rego */
+
+@layer utilities {
+  .p-1 {
+    padding: 0.25rem;
+  }
+
+  .px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}

@@ -21,7 +21,7 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Capybara.register_driver :selenium_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  # options.add_argument("--headless=new")
+  options.add_argument("--headless=new")
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 

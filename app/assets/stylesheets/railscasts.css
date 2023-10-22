@@ -1,3 +1,4 @@
+@layer railscasts {
 /*!
   Theme: Railscasts
   Author: Ryan Bates (http://railscasts.com)
@@ -174,4 +175,5 @@ code.hljs {
 /* for v10 compatible themes */
 .hljs-meta-keyword {
   font-weight: bold;
+}
 }
