@@ -1,3 +1,7 @@
+# /* Anki Books, a note-taking app to organize knowledge,
+# is licensed under the GNU Affero General Public License, version 3
+# Copyright (C) 2023 Kyle Rego */
+
 # frozen_string_literal: true
 
 require_relative "./paddings_writer"
@@ -5,6 +9,7 @@ require_relative "../license_comment"
 
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/BlockLength
 
 NOTABLE_PADDINGS = <<-NOTABLE_PADDINGS
   .p-auto {
@@ -30,46 +35,48 @@ class PaddingsWriter
     result += "@layer utilities {"
     result += "\n"
     result += NOTABLE_PADDINGS
-    result += "\n"
     number_of_padding_ruleset_groups.times do |i|
-      rems = "#{0.25 * (i + 1)}rem"
-      result += "  .p-1 {\n"
+      num = i + 1
+      rems = "#{0.25 * num}rem"
+      result += "\n  .p-#{num} {\n"
       result += "    padding: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .px-1 {\n"
+      result += "  .px-#{num} {\n"
       result += "    padding-left: #{rems};\n"
       result += "    padding-right: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .py-1 {\n"
+      result += "  .py-#{num} {\n"
       result += "    padding-top: #{rems};\n"
       result += "    padding-bottom: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .pl-1 {\n"
+      result += "  .pl-#{num} {\n"
       result += "    padding-left: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .pr-1 {\n"
+      result += "  .pr-#{num} {\n"
       result += "    padding-right: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .pt-1 {\n"
+      result += "  .pt-#{num} {\n"
       result += "    padding-top: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .pb-1 {\n"
+      result += "  .pb-#{num} {\n"
       result += "    padding-bottom: #{rems};\n"
-      result += "  }\n"
-      result += "}\n"
+      result += "  }"
+      result += "\n"
     end
+    result += "}"
     result
   end
 
   def self.write_to(path:)
-    File.write(path, call(number_of_padding_ruleset_groups: 1))
+    File.write(path, call(number_of_padding_ruleset_groups: 8))
   end
 end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/BlockLength

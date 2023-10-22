@@ -103,89 +103,93 @@ Copyright (C) 2023 Kyle Rego */
   }
 
   .p-4 {
-    padding: 1rem;
+    padding: 1.0rem;
   }
 
   .px-4 {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.0rem;
+    padding-right: 1.0rem;
   }
 
   .py-4 {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 1.0rem;
+    padding-bottom: 1.0rem;
   }
 
   .pl-4 {
-    padding-left: 1rem;
+    padding-left: 1.0rem;
   }
 
   .pr-4 {
-    padding-right: 1rem;
+    padding-right: 1.0rem;
   }
 
   .pt-4 {
-    padding-top: 1rem;
+    padding-top: 1.0rem;
   }
 
   .pb-4 {
-    padding-bottom: 1rem;
+    padding-bottom: 1.0rem;
   }
 
   .p-5 {
-    padding: 1.25;
+    padding: 1.25rem;
   }
 
   .px-5 {
-    padding-left: 1.25;
-    padding-right: 1.25;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .py-5 {
-    padding-top: 1.25;
-    padding-bottom: 1.25;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
 
   .pl-5 {
-    padding-left: 1.25;
+    padding-left: 1.25rem;
   }
 
   .pr-5 {
-    padding-right: 1.25;
+    padding-right: 1.25rem;
   }
 
   .pt-5 {
-    padding-top: 1.25;
+    padding-top: 1.25rem;
   }
 
-  .pb-6 {
-    padding-bottom: 1.25;
+  .pb-5 {
+    padding-bottom: 1.25rem;
+  }
+
+  .p-6 {
+    padding: 1.5rem;
   }
 
   .px-6 {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .py-6 {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .pl-6 {
-    margin-left: 1.5rem;
+    padding-left: 1.5rem;
   }
 
   .pr-6 {
-    margin-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .pt-6 {
-    margin-top: 1.5rem;
+    padding-top: 1.5rem;
   }
 
   .pb-6 {
-    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .p-7 {
@@ -219,32 +223,32 @@ Copyright (C) 2023 Kyle Rego */
   }
 
   .p-8 {
-    margin-left: 2rem;
-    margin-right: 2rem;
+    padding: 2.0rem;
+  }
+
+  .px-8 {
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
   }
 
   .py-8 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    padding-top: 2.0rem;
+    padding-bottom: 2.0rem;
   }
 
   .pl-8 {
-    margin-left: 2rem;
+    padding-left: 2.0rem;
   }
 
   .pr-8 {
-    margin-left: 2rem;
+    padding-right: 2.0rem;
   }
 
   .pt-8 {
-    margin-top: 2rem;
+    padding-top: 2.0rem;
   }
 
   .pb-8 {
-    margin-bottom: 2rem;
-  }
-
-  .pt-8 {
-    margin-top: 2rem;
+    padding-bottom: 2.0rem;
   }
 }
