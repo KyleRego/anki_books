@@ -16,9 +16,9 @@
     <%= yield :head %>
   </head>
 
-  <body class="bg-white dark:bg-gray-900 text-black dark:text-gray-50">
+  <body>
     <%= render "layouts/top_nav" %>
-    <main class="sm:px-8 px-4 pb-4 flex-col">
+    <main class="px-4 pb-4 flex-col">
       <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>

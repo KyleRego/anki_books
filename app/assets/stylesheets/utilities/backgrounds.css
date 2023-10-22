@@ -3,15 +3,15 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
-  .w-full {
-    width: 100%;
+  .bg-white {
+    background-color: white;
   }
 
-  .max-w-96 {
-    max-width: 24rem;
+  .bg-light-green {
+    background-color: lightgreen;
   }
 
-  .w-6 {
-    width: 1.5rem;
+  .bg-red {
+    background-color: red;
   }
 }

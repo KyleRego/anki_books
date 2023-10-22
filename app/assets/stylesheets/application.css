@@ -4,8 +4,8 @@ Copyright (C) 2023 Kyle Rego */
 
 @layer reset, base, components, utilities, railscasts;
 
-@import "./modern-normalize.css";
-@import "./base.css";
+@import "./preflight-reset.css";
+@import "./base/index";
 @import "./components.css";
 @import "./utilities/index";
 @import "./railscasts.css";

@@ -8,7 +8,7 @@ Copyright (C) 2023 Kyle Rego */
   }
 
   a:hover {
-    @apply text-blue-600; 
+    @apply text-blue-600;
   }
 
   .action-link {
@@ -36,7 +36,11 @@ Copyright (C) 2023 Kyle Rego */
       color: white;
     }
 
-    textarea, input, pre, select, option {
+    textarea,
+    input,
+    pre,
+    select,
+    option {
       @apply text-black;
       @apply bg-gray-300;
     }
@@ -65,46 +69,8 @@ Copyright (C) 2023 Kyle Rego */
       @apply text-red-500 font-semibold;
     }
   }
-
-  h1 {
-    @apply text-4xl font-bold;
-    overflow-wrap: anywhere;
-  }
-
-  h2 {
-    @apply text-3xl;
-    font-weight: 650;
-    overflow-wrap: anywhere;
-  }
-
-  h3 {
-    @apply text-2xl;
-    font-weight: 650;
-    overflow-wrap: anywhere;
-  }
-
-  h4 {
-    @apply text-xl font-semibold;
-    overflow-wrap: anywhere;
-  }
-
-  h5 {
-    @apply text-lg font-semibold;
-    overflow-wrap: anywhere;
-  }
-
-  h6 {
-    @apply text-base font-semibold;
-    overflow-wrap: anywhere;
-  }
 }
 
-.wm-vertical-lr {
-  writing-mode: vertical-lr;
-}
 
-@media (min-width: 640px) {
-  .sm\:max-height-calc-from-screen {
-    max-height: calc(100vh - 4rem);
-  }
-}
+
+@media (min-width: 640px) {}

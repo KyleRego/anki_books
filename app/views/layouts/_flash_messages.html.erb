@@ -3,13 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% if notice.present? %>
-  <p class="flex justify-between align-middle
-            border
-            border-green-400
-            bg-green-50 dark:bg-inherit
-            text-green-900 dark:text-inherit
-            text-center
-            py-3 px-4 my-4 mx-auto max-w-sm"
+  <p class="flex justify-between align-middle border text-center mx-auto max-w-96 bg-light-green"
      data-controller="flash-messages"
      data-flash-messages-target="message">
     <span class="flex flex-col justify-center">
@@ -27,21 +21,16 @@
 <% end %>
 
 <% if alert.present? %>
-  <p class="flex justify-between align-middle
-            border
-            border-red-400
-            bg-red-50 dark:bg-inherit
-            text-red-900 dark:text-inherit
-            py-3 px-4 text-center my-4 mx-auto max-w-sm"
+  <p class="flex justify-between align-middle border text-center mx-auto max-w-96 bg-red"
      data-controller="flash-messages"
      data-flash-messages-target="message">
-    <span class="flex flex-col justify-center">
+    <span class="flex flex-col justify-center p-1">
       <%= render "layouts/heroicons/exclamation_triangle" %>
     </span>
     <span>
       <%= alert %>
     </span>
-    <button class="flex flex-col justify-center cursor-pointer"
+    <button class="flex flex-col justify-center cursor-pointer p-1"
           data-flash-messages-target="closeIcon"
           title="Dismiss">
       <%= render "layouts/heroicons/x_mark" %>

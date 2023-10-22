@@ -3,15 +3,11 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
-  .w-full {
-    width: 100%;
+  .max-h-screen {
+    max-height: calc(100vh - 4rem);
   }
 
-  .max-w-96 {
-    max-width: 24rem;
-  }
-
-  .w-6 {
-    width: 1.5rem;
+  .h-6 {
+    height: 1.5rem;
   }
 }

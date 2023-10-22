@@ -5,7 +5,7 @@
 <div class="flex flex-col sm:flex-row">
   <% if logged_in? %>
   <div class="sm:w-8/12" data-controller="set-top-under-nav">
-    <div class="sticky top-8 z-40 bg-white dark:bg-gray-900" data-set-top-under-nav-target="element">
+    <div class="sticky top-8 z-50 bg-white dark:bg-gray-900" data-set-top-under-nav-target="element">
       <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") unless current_page?(article_path(@article)) %>
       <%= link_to("Edit article", edit_article_path(@article), class: "action-link mr-4") %>
       <%= link_to("Manage article", manage_article_path(@article), class: "action-link") %>
@@ -21,7 +21,7 @@
     <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
     <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
     <div id="article-notes-<%= @article.id %>"
-        class="sm:max-height-calc-from-screen sm:sticky sm:ml-4
+        class="max-h-screen sm:sticky sm:ml-4
                 sm:overflow-x-auto sm:overflow-y-scroll h-full max-h-full reorderable-basic-note-units-container"
                 data-set-top-under-nav-target="element">
 

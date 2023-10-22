@@ -3,15 +3,7 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
-  .w-full {
-    width: 100%;
-  }
-
-  .max-w-96 {
-    max-width: 24rem;
-  }
-
-  .w-6 {
-    width: 1.5rem;
+  .rounded-md {
+    border-radius: 0.375rem;
   }
 }

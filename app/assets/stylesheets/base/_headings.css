@@ -1,0 +1,39 @@
+/* Anki Books, a note-taking app to organize knowledge,
+is licensed under the GNU Affero General Public License, version 3
+Copyright (C) 2023 Kyle Rego */
+@layer base {
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  h5 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  h6 {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+}

@@ -2,12 +2,20 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
+@import "./backgrounds.css";
+@import "./border-radius.css";
+@import "./borders.css";
 @import "./flex.css";
+@import "./heights.css";
 @import "./margins.css";
 @import "./paddings.css";
 @import "./widths.css";
 
 @layer utilities {
+  .wm-vertical-lr {
+    writing-mode: vertical-lr;
+  }
+
   .text-center {
     text-align: center;
   }
@@ -22,6 +30,10 @@ Copyright (C) 2023 Kyle Rego */
 
   .top-0 {
     top: 0;
+  }
+
+  .z-50 {
+    z-index: 50;
   }
 
   .font-semibold {
