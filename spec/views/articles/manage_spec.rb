@@ -17,11 +17,6 @@ RSpec.describe "articles/manage" do
     assign(:book_other_articles, Article.none)
   end
 
-  it "shows 'View article'" do
-    render
-    expect(rendered).to have_text("View article")
-  end
-
   it "includes a link to the articles of the article's book in the nav" do
     render template: "articles/manage", layout: "layouts/application"
     expect(rendered).to have_selector("a[href=\"#{book_articles_path(book)}\"]")

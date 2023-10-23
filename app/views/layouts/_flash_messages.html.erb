@@ -3,13 +3,14 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% if notice.present? %>
-  <p class="flex justify-between align-middle border text-center mx-auto max-w-96 bg-light-green"
+  <p class="flex justify-between items-center rounded-md
+            border text-center mx-auto p-1 max-w-96 bg-light-green"
      data-controller="flash-messages"
      data-flash-messages-target="message">
     <span class="flex flex-col justify-center">
       <%= render "layouts/heroicons/check" %>
     </span>
-    <span>
+    <span class="font-normal-medium">
       <%= notice %>
     </span>
     <button class="flex flex-col justify-center cursor-pointer"
@@ -21,13 +22,14 @@
 <% end %>
 
 <% if alert.present? %>
-  <p class="flex justify-between align-middle border text-center mx-auto max-w-96 bg-red"
+  <p class="flex justify-between items-center rounded-md
+            border text-center mx-auto p-1 max-w-96 bg-red"
      data-controller="flash-messages"
      data-flash-messages-target="message">
     <span class="flex flex-col justify-center p-1">
       <%= render "layouts/heroicons/exclamation_triangle" %>
     </span>
-    <span>
+    <span class="font-normal-medium">
       <%= alert %>
     </span>
     <button class="flex flex-col justify-center cursor-pointer p-1"
