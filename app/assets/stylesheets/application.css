@@ -2,12 +2,28 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@layer reset, config, base, components, utilities, railscasts;
+/* 
+ *= require "config/colors.css"
+ *= require "preflight-reset"
+ *= require "base/headings.css"
+ *= require "base/inputs.css"
+ *= require "base/links.css"
+ *= require "base/other.css"
+ *= require "base/select.css"
+ *= require "base/textarea.css"
+ *= require "utilities/background_color.css"
+ *= require "utilities/border-radius.css"
+ *= require "utilities/borders.css"
+ *= require "utilities/flex.css"
+ *= require "utilities/font_weight.css"
+ *= require "utilities/heights.css"
+ *= require "utilities/margins.css"
+ *= require "utilities/other.css"
+ *= require "utilities/paddings.css"
+ *= require "utilities/text_color.css"
+ *= require "utilities/widths.css"
+ *= require "railscasts"
+ *= require "actiontext"
+ */
 
-@import "./config/index";
-@import "./preflight-reset.css";
-@import "./base/index";
-@import "./components.css";
-@import "./utilities/index";
-@import "./railscasts.css";
-@import "./actiontext.css"
+@layer reset, config, base, components, utilities, railscasts;

@@ -2,12 +2,6 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@import "./_headings.css";
-@import "./_inputs.css";
-@import "./_links.css";
-@import "./_select.css";
-@import "./_textarea.css";
-
 @layer base {
   * {
     font-family: ui-sans-serif, system-ui;

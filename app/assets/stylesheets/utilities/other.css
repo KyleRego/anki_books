@@ -2,17 +2,6 @@
 is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
-@import "./_background_color.css";
-@import "./_border-radius.css";
-@import "./_borders.css";
-@import "./_flex.css";
-@import "./_font_weight.css";
-@import "./_heights.css";
-@import "./_margins.css";
-@import "./_paddings.css";
-@import "./_text_color.css";
-@import "./_widths.css";
-
 @layer utilities {
   .wm-vertical-lr {
     writing-mode: vertical-lr;
