@@ -10,31 +10,31 @@ Copyright (C) 2023 Kyle Rego */
   }
 
   h2 {
-    font-size: 1.875rem;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 575;
     overflow-wrap: anywhere;
   }
 
   h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 550;
     overflow-wrap: anywhere;
   }
 
   h4 {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 525;
     overflow-wrap: anywhere;
   }
 
   h5 {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 500;
     overflow-wrap: anywhere;
   }
 
   h6 {
-    font-weight: 600;
+    font-weight: 475;
     overflow-wrap: anywhere;
   }
 }

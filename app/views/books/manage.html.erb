@@ -8,11 +8,11 @@
 
 <h2>Manage book: <%= @book.title %></h2>
 
-<div class="mt-4 pb-4 border-b-2">
+<div class="mt-4 pb-4 border-black-b">
   <%= link_to "Edit book", edit_book_path(@book), class: "action" %>
 </div>
 
-<div class="mt-4 pb-4 border-b-2">
+<div class="mt-4 pb-4 border-black-b">
   <h3 class="mb-4">Change parent book:</h3>
   <%= form_with(model: @book, url: change_parent_book_path(@book)) do |form| %>
     <div>
@@ -27,7 +27,7 @@
 </div>
 
 <% if @articles.count > 1 %>
-<div class="mt-4 pb-8 border-b-2">
+<div class="mt-4 pb-8 border-black-b">
   <%# TODO: Why is this id needed %>
   <h3 id="<%= "book-#{@book.id}" %>" class="mb-4">
     Reorder articles:
@@ -51,7 +51,7 @@
 <% end %>
 
 <% if @user_other_books.any? && @articles.any? %>
-<div class="mt-4 pb-4 border-b-2">
+<div class="mt-4 pb-4 border-black-b">
   <h3 class="mb-4">Transfer articles to a different book:</h3>
   <%= form_with(model: @book, url: book_transfer_articles_path(@book)) do |form| %>
     <% @articles.each do |article| %>

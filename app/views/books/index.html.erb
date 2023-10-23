@@ -2,9 +2,13 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h2 class="mb-4">Books</h2>
+<h1>Books</h1>
 
-<div class="mt-4 pb-4 border-b-2">
+<div class="my-2">
+  <%= link_to "New book", new_book_path, class: "action" %>
+</div>
+
+<div class="pb-4 border-black-b">
   <h3 class="mb-2">Tree</h2>
   <% @root_books.each do |book| %>
     <% @book_node = book %>
@@ -19,5 +23,4 @@
   <% @books.each do |book| %>
     <div><%= link_to book.title, book_articles_path(book) %></div>
   <% end %>
-  <div class="my-4"><%= link_to "New book", new_book_path, class: "action" %></div>
 </div>

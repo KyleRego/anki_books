@@ -3,10 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= form_with(model: @book, url:) do |form| %>
-  <div class="my-2">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "w-full" %>
-  </div>
-
+  <%= form.label :title %>
+  <%= form.text_field :title, class: "w-full" %>
   <%= form.submit class: "action" %>
 <% end %>

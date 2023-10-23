@@ -2,40 +2,40 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h2 class="mb-4">Downloads</h2>
+<h1>Downloads</h2>
 
-<div class="my-4">
+<div class="my-2">
   <%= link_to "Create and download Anki deck", user_download_anki_deck_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
 <% if current_user.anki_package.attached? %>
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download Anki deck created by job",
       rails_blob_path(current_user.anki_package, disposition: "attachment"),
       data: { turbo: "false" }, class: "action" %>
 </div>
 <% end %>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download books data", download_books_data_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download articles data", download_articles_data_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download concepts data", download_concepts_data_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download basic notes data", download_basic_notes_data_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download cloze notes data", download_cloze_notes_data_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
-<div class="my-4">
+<div class="my-3">
   <%= link_to "Download cloze notes concepts data", download_cloze_notes_concepts_data_path, data: { turbo: "false" }, class: "action" %>
 </div>

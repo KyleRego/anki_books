@@ -7,7 +7,7 @@
 <% end %>
 
 <%= form_with(model: @article, url:) do |form| %>
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :title %>
     <%= form.text_field :title, class: "w-full" %>
   </div>
@@ -17,22 +17,22 @@
     <%= form.rich_text_area :content %>
   </div>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :reading %>
     <%= form.check_box(:reading, {}) %>
-  <div>
+  </div>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :writing %>
     <%= form.check_box(:writing, {}) %>
-  <div>
+  </div>
 
-  <div class="my-2">
+  <div class="my-1">
     <%= form.label :complete %>
     <%= form.check_box(:complete, {}) %>
-  <div>
+  </div>
 
-  <div class="mt-2">
+  <div class="mt-1">
     <%= form.hidden_field :book_id, value: @book.id %>
     <%= form.submit class: "action" %>
   </div>

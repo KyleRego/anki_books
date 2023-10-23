@@ -6,13 +6,13 @@
   <%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %>
 <% end %>
 
-<h2>Manage article: <%= @article.title %></h2>
+<h1>Manage article:</h1>
 
-<div class="mt-4 pb-4 border-b-2">
-  <%= link_to "View article", article_path(@article) %>
-</div>
+<h2 class="mt-2 pb-2 border-black-b">
+  <%= link_to @article.title, article_path(@article) %>
+</h2>
 
-<div class="mt-4 pb-4 border-b-2">
+<div class="mt-4 pb-4 border-black-b">
   <h3 class="mb-4">Change book:</h3>
   <%= form_with(model: @article, url: change_article_book_path(@article)) do |form| %>
     <div>
@@ -26,7 +26,7 @@
 </div>
 
 <% if @article_basic_notes.any? %>
-  <div class="mt-4 pb-4 border-b-2">
+  <div class="mt-4 pb-4 border-black-b">
     <h3 class="mb-4">Transfer basic notes to a different article:</h3>
     <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
       <% @article_basic_notes.each do |basic_note| %>
@@ -48,13 +48,13 @@
     <% end %>
   </div>
 
-  <div class="mt-4 pb-4 border-b-2">
+  <div class="mt-4 pb-4 border-black-b">
     <h3 class="mb-4">Delete basic notes:</h3>
     <div class="flex flex-wrap">
       <% @article_basic_notes.each do |basic_note| %>
-        <div class="border-black dark:border-blue-400 bg-blue-50 dark:bg-gray-900 border text-center p-2 m-1">
+        <div class="border-black text-center p-2 m-1">
 
-          <div class="border-black dark:border-blue-400 border-b p-1"><%= basic_note.front %></div>
+          <div class="border-black-b p-1"><%= basic_note.front %></div>
           <div class="p-1"><%= basic_note.back %></div>
 
           <div>
@@ -62,7 +62,7 @@
               article_basic_note_path(@article, basic_note),
               class: "danger-link",
               method: :delete,
-              form: { data: { turbo_confirm: "Are you sure you want to delete #{basic_note.front.first(20)}...?"} } %>
+              form: { data: { turbo_confirm: "Are you sure you want to delete #{basic_note.front.first(200)}...?"} } %>
           </div>
 
         </div>

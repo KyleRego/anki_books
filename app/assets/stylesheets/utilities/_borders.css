@@ -7,7 +7,11 @@ Copyright (C) 2023 Kyle Rego */
     border: 1px solid black;
   }
 
-  .border-black-top {
+  .border-black-t {
     border-top: 1px solid black;
+  }
+
+  .border-black-b {
+    border-bottom: 1px solid black;
   }
 }

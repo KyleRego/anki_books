@@ -3,8 +3,25 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer base {
-  input[type="email"], input[type="password"], input[type="text"] {
+  input[type="email"], input[type="password"] {
     background-color: var(--primary-light-gray);
+  }
+
+  input[type="text"] {
+    padding: 0.25rem;
+    background-color: var(--primary-light-gray);
+  }
+
+  label + input[type="text"] {
+    margin-top: 0.25rem;
+  }
+
+  input ~ label {
+    margin-top: 0.25rem;
+  }
+
+  input ~ input[type="submit"] {
+    margin-top: 0.25rem;
   }
 
   input.action:hover {

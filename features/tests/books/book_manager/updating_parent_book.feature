@@ -16,4 +16,4 @@ Feature: Parent book
     And I click the "Update parent book" button
     Then I should see "Parent book successfully updated"
     When I click the "Book to be child" link
-    Then I should see "Parent book (Book to be parent)"
+    Then I should see "Parent book: Book to be parent"

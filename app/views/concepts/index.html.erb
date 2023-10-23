@@ -2,10 +2,12 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h2 class="mb-4">Concepts</h2>
+<h2>Concepts</h2>
+
+<div class="my-2">
+  <%= link_to "New concept", new_concept_path, class: "action" %>
+</div>
 
 <% @concepts.each do |concept| %>
   <div><%= link_to concept.name, concept_path(concept) %></div>
 <% end %>
-
-<div class="my-4"><%= link_to "New concept", new_concept_path, class: "action" %></div>

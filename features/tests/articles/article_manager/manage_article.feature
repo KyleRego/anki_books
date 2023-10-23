@@ -17,8 +17,8 @@ Feature: Visiting the manage page of an article
 
   @javascript
   Scenario: Viewing the Manage article page
-    Then I should see "Manage article: test article 1"
-    And I should see "View article"
+    Then I should see "Manage article"
+    And I should see "test article 1"
     And I should see "Change book:"
     And I should see "Transfer basic notes to a different article:"
     And I should see "Delete article: test article 1"
