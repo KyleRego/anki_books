@@ -9,13 +9,22 @@ export default class extends Controller {
 
   initialize() {
     this.boundHandleStudyCardsKeydown = this.handleStudyCardsKeydown.bind(this);
+
+    this.boundHandleStudyWithFirstCardKeydown = this.handleStudyWithFirstCardKeydown.bind(this);
+    this.boundHandleStudyWithRandomCardKeydown = this.handleStudyWithRandomCardKeydown.bind(this);
   }
 
   connect() {
     this.cardsToStudy = this.cardsToStudy();
     this.numberOfCards = this.cardsToStudy.length;
     this.startStudyWithFirstCardTarget.addEventListener("click", () => this.startStudyWithFirstCard());
+
+    this.startStudyWithFirstCardTarget.addEventListener("keydown", this.boundHandleStudyWithFirstCardKeydown);
+
     this.startRandomOrderStudyTarget.addEventListener("click", () => this.startRandomOrderStudy());
+
+    this.startRandomOrderStudyTarget.addEventListener("keydown", this.boundHandleStudyWithRandomCardKeydown);
+
     this.studyPreviousCardTarget.addEventListener("click", () => this.studyPreviousCard());
     this.studyNextCardTarget.addEventListener("click", () => this.studyNextCard());
     this.ordinalPositionOfCurrentCard = 0;
@@ -33,21 +42,35 @@ export default class extends Controller {
     return this.currentCard().querySelector('[data-basic-note-flippable-target="flippableNoteBack"]');
   }
 
-  startStudyWithFirstCard() {
-    this.startStudy();
+  handleStudyWithFirstCardKeydown(event) {
+    if (event.key == "Enter") {
+      this.startStudyWithFirstCard(true);
+    }
+  }
+
+  startStudyWithFirstCard(usingKeyboard = false) {
+    this.startStudy(usingKeyboard);
     this.cardsToStudy[0].hidden = false;
   }
 
-  startRandomOrderStudy() {
-    this.startStudy();
+  handleStudyWithRandomCardKeydown(event) {
+    if (event.key == "Enter") {
+      this.startStudyWithFirstCard(true);
+    }
+  }
+
+  startRandomOrderStudy(usingKeyboard = false) {
+    this.startStudy(usingKeyboard);
     this.randomizeCards();
   }
 
-  startStudy() {
+  startStudy(usingKeyboard = false) {
     this.startStudyWithFirstCardTarget.hidden = true;
     this.startRandomOrderStudyTarget.hidden = true;
-    this.studyPreviousCardTarget.hidden = false;
-    this.studyNextCardTarget.hidden = false;
+    if (usingKeyboard == false) {
+      this.studyPreviousCardTarget.hidden = false;
+      this.studyNextCardTarget.hidden = false;
+    }
     document.addEventListener("keydown", this.boundHandleStudyCardsKeydown);
   }
 
