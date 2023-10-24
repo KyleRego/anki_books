@@ -40,3 +40,6 @@ coverage
 coverage-*
 
 anki_books_source_code_deck.apkg
+
+selenium_nunit/obj/
+selenium_nunit/bin/
