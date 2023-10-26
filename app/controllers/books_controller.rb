@@ -7,6 +7,7 @@
 # :nodoc:
 class BooksController < ApplicationController
   before_action :require_login
+  before_action :set_public_book, only: %w[show]
   before_action :set_book, except: %w[index new create]
   before_action :set_articles, only: %w[manage]
 
@@ -113,8 +114,12 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title)
   end
 
+  def set_public_book
+    @book = Book.where(public: true).find_by(id: params[:id])
+  end
+
   def set_book
-    @book = current_user.books.find_by(id: params[:id])
+    @book ||= current_user.books.find_by(id: params[:id])
     return if @book
 
     not_found_or_unauthorized

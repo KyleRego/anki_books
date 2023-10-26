@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_15_102811) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_26_151536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -86,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_15_102811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "parent_book_id"
+    t.boolean "public", default: false, null: false
   end
 
   create_table "books_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

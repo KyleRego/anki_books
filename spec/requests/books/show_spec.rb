@@ -7,7 +7,8 @@
 RSpec.describe "GET /books/:id", "#show" do
   subject(:get_books_show) { get book_path(book) }
 
-  let(:book) { create(:book) }
+  let(:book) { create(:book, public:) }
+  let(:public) { false }
 
   before do
     3.times do
@@ -24,6 +25,15 @@ RSpec.describe "GET /books/:id", "#show" do
     it "redirects to the homepage if the book does not belong to the user" do
       get_books_show
       expect(response).to redirect_to(root_path)
+    end
+
+    context "when the book is public" do
+      let(:public) { true }
+
+      it "returns a success response" do
+        get_books_show
+        expect(response).to be_successful
+      end
     end
 
     context "when the book belongs to the user" do

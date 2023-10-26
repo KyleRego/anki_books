@@ -22,5 +22,7 @@ FactoryBot.define do
   factory :book do
     title { "Book title" }
     users { [] }
+
+    public { [true, false].sample }
   end
 end
