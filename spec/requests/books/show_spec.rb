@@ -17,7 +17,21 @@ RSpec.describe "GET /books/:id", "#show" do
     end
   end
 
-  include_examples "user is not logged in and needs to be"
+  context "when the book is private" do
+    it "redirects to the login page" do
+      get_books_show
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  context "when the book is public" do
+    let(:public) { true }
+
+    it "returns a success response" do
+      get_books_show
+      expect(response).to be_successful
+    end
+  end
 
   context "when user is logged in" do
     include_context "when the user is logged in"
