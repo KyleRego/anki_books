@@ -8,23 +8,16 @@
 
       <%= render "errors" %>
 
-      <div>
-        <%= form.label :front, class: "hidden" %>
-        <%= form.text_area :front, class: "w-full h-24" %>
-      </div>
+      <%= form.label :front, class: "hidden" %>
+      <%= form.text_area :front, class: "w-full h-24", required: true %>
 
-      <div class="mt-4">
-        <%= form.label :back, class: "hidden" %>
-        <%= form.text_area :back, class: "w-full h-24" %>
-      </div>
+      <%= form.label :back, class: "hidden" %>
+      <%= form.text_area :back, class: "w-full h-24", required: true %>
 
       <% on_study_cards_value = @on_study_cards ? "true" : "false" %>
       <%= hidden_field :options, :on_study_cards, value: on_study_cards_value %>
 
-      <div class="inline">
-        <%= form.submit class: "action" %>
-      </div>
-
+      <%= form.submit class: "action" %>
     </div>
   <% end %>
 </div>

@@ -15,6 +15,9 @@
 #  system           :boolean          default(FALSE), not null
 #  book_id          :uuid             not null
 #  ordinal_position :integer          not null
+#  reading          :boolean          default(TRUE), not null
+#  writing          :boolean          default(FALSE), not null
+#  complete         :boolean          default(FALSE), not null
 #
 # Foreign Keys
 #

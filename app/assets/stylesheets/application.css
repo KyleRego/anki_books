@@ -21,6 +21,7 @@ Copyright (C) 2023 Kyle Rego */
  *= require "utilities/other.css"
  *= require "utilities/paddings.css"
  *= require "utilities/text_color.css"
+ *= require "utilities/vertical-align.css"
  *= require "utilities/widths.css"
  *= require "railscasts"
  *= require "actiontext"

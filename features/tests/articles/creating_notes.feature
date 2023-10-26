@@ -18,28 +18,3 @@ Feature: Creating a basic note
     Then I should see "Front of my note" in a basic note
     And I should see "Edit" in a basic note
     And I should see 2 links with the text "New note"
-
-  Scenario: Error messages when trying to create an invalid note
-    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
-    And the user "test_user" has a book called "test book 0"
-    And the book "test book 0" has the article "test article 0"
-    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I am viewing the article "test article 0"
-    When I click the "New note" link
-    And I click the "Create Basic note" button
-    Then I should see "2 validation errors"
-    And I should see "Front can't be blank"
-    And I should see "Back can't be blank"
-
-  Scenario: Error messages when trying to create an invalid note for an article with a note
-    Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
-    And the user "test_user" has a book called "test book 1"
-    And the book "test book 1" has the article "test article 1"
-    And the article "test article 1" has 3 basic notes
-    And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I am viewing the article "test article 1"
-    When I click the last "New note" link
-    And I click the "Create Basic note" button
-    Then I should see "2 validation errors"
-    And I should see "Front can't be blank"
-    And I should see "Back can't be blank"

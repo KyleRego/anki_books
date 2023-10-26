@@ -23,7 +23,12 @@
     <%= link_to "New article", new_book_article_path(@book), class: "action" %>
   </div>
   <% @articles.each do |article| %>
-    <div><%= link_to article.title, article_path(article) %></div>
+    <div>
+      <%= link_to article.title, article_path(article) %>
+      <% if article.complete %>
+        <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+      <% end %>
+    </div>
   <% end %>
 </div>
 

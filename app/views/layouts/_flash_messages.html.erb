@@ -8,7 +8,7 @@
      data-controller="flash-messages"
      data-flash-messages-target="message">
     <span class="flex flex-col justify-center">
-      <%= render "layouts/heroicons/check" %>
+      <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
     </span>
     <span class="font-normal-medium">
       <%= notice %>
