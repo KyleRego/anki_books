@@ -7,7 +7,7 @@ Copyright (C) 2023 Kyle Rego */
     background-color: var(--primary-light-gray);
   }
 
-  input[type="text"] {
+  input[type="text"], input[type="email"], input[type="password"] {
     padding: 0.25rem;
     background-color: var(--primary-light-gray);
   }

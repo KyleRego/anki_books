@@ -3,18 +3,14 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <div class="max-w-96 mx-auto">
-  <h1 class="mb-4 text-center">Anki Books</h1>
+  <h1 class="text-center">Anki Books</h1>
   <%= form_with(url: login_path, local: true) do |form| %>
-    <div class="my-2">
-      <%= form.label :email, class: "block my-2" %>
-      <%= form.email_field :email, autocomplete: "username", class: "w-full rounded-md p-1 border-black", name: "session[email]" %>
-    </div>
-    <div class="my-2">
-      <%= form.label :password, class: "block my-2" %>
-      <%= form.password_field :password, autocomplete: "current-password", class: "w-full rounded-md p-1 border-black", name: "session[password]" %>
-    </div>
-    <div class="w-full text-center my-1">
-      <%= form.submit "Log in", class: "action p-1" %>
-    </div>
+    <%= form.label :email %>
+    <%= form.email_field :email, autocomplete: "username", class: "w-full", name: "session[email]", required: true %>
+
+    <%= form.label :password %>
+    <%= form.password_field :password, autocomplete: "current-password", class: "w-full", name: "session[password]", required: true %>
+
+    <%= form.submit "Log in", id: "login", class: "action" %>
   <% end %>
 </div>

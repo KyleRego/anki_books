@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 [TestFixture]
-public class UnitTest1 {
+public class LoggingInAsTestUser {
   private IWebDriver driver;
   public IDictionary<string, object> Vars {get; private set;}
   private IJavaScriptExecutor js;
@@ -12,6 +12,7 @@ public class UnitTest1 {
   [SetUp]
   public void SetUp() {
     driver = new ChromeDriver();
+    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
     js = (IJavaScriptExecutor)driver;
     Vars = new Dictionary<string, object>();
   }
@@ -26,5 +27,10 @@ public class UnitTest1 {
     driver.Navigate().GoToUrl("http://localhost:3000/");
     driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
     driver.FindElement(By.LinkText("Login")).Click();
+    IWebElement emailInput = driver.FindElement(By.Id("email"));
+    IWebElement passwordInput = driver.FindElement(By.Id("password"));
+    emailInput.SendKeys("test@example.com");
+    passwordInput.SendKeys("1234asdf!!!!");
+    driver.FindElement(By.Id("login"));
   }
 }
