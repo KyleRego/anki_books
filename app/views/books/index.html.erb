@@ -21,6 +21,11 @@
   <h3 class="mb-2">All</h2>
 
   <% @books.each do |book| %>
-    <div><%= link_to book.title, book_articles_path(book) %></div>
+    <div>
+      <%= link_to book.title, book_articles_path(book) %>
+      <% if book.public %>
+        <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+      <% end %>
+    </div>
   <% end %>
 </div>
