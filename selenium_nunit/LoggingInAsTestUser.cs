@@ -31,6 +31,6 @@ public class LoggingInAsTestUser {
     IWebElement passwordInput = driver.FindElement(By.Id("password"));
     emailInput.SendKeys("test@example.com");
     passwordInput.SendKeys("1234asdf!!!!");
-    driver.FindElement(By.Id("login"));
+    driver.FindElement(By.Id("login")).Click();
   }
 }
