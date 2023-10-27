@@ -2,30 +2,32 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h1>Books</h1>
+<h1 id="books-index-heading">Books</h1>
 
 <div class="my-2">
   <%= link_to "New book", new_book_path, class: "action" %>
 </div>
 
-<div class="pb-4 border-black-b">
-  <h3 class="mb-2">Tree</h2>
-  <% @root_books.each do |book| %>
-    <% @book_node = book %>
-    <% @tree_depth = 0 %>
-    <%= render "book_link_tree_node" %>
-  <% end %>
-</div>
+<div class="flex flex-row-sm-col">
+  <div class="pr-4-sm-0 border-black-r-sm-none" id="alphabetical-books-index">
+    <h3 class="mb-2">Alphabetical</h2>
 
-<div class="mt-4">
-  <h3 class="mb-2">All</h2>
+    <% @books.each do |book| %>
+      <div>
+        <%= link_to book.title, book_articles_path(book) %>
+        <% if book.public %>
+          <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
-  <% @books.each do |book| %>
-    <div>
-      <%= link_to book.title, book_articles_path(book) %>
-      <% if book.public %>
-        <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="ml-4-sm-0" id="tree-books-index">
+    <h3 class="mb-2">Tree</h2>
+    <% @root_books.each do |book| %>
+      <% @book_node = book %>
+      <% @tree_depth = 0 %>
+      <%= render "book_link_tree_node" %>
+    <% end %>
+  </div>
 </div>

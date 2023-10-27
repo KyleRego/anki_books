@@ -4,7 +4,10 @@
   <% else %>
   <li>
   <% end %>
-  <%= link_to @book_node.title, book_articles_path(@book_node) %>
+    <%= link_to @book_node.title, book_articles_path(@book_node) %>
+    <% if @book_node.public %>
+      <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+    <% end %>
   <% if @book_node.books.any? %>
     <% @book_node.books.order(:title).each do |inner_book| %>
       <% @book_node = inner_book %>

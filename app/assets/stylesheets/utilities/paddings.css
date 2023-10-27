@@ -12,6 +12,16 @@ Copyright (C) 2023 Kyle Rego */
     margin-right: auto;
   }
 
+  .pr-4-sm-0 {
+    padding-right: 0rem;
+  }
+
+  @media (min-width: 640px) {
+    .pr-4-sm-0 {
+      padding-right: 1rem;
+    }
+  }
+
   .p-1 {
     padding: 0.25rem;
   }
