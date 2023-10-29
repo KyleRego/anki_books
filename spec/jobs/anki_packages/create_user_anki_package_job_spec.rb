@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe CreateUserAnkiPackageJob do
+RSpec.describe AnkiPackages::CreateUserAnkiPackageJob do
   describe ".perform" do
     subject(:create_user_anki_deck) { described_class.perform_now(user:) }
 
@@ -21,7 +21,7 @@ RSpec.describe CreateUserAnkiPackageJob do
 
     it "returns a path to the Anki deck zip file it creates" do
       create_user_anki_deck
-      expect(anki_deck_file_path).to match(described_class.path_to_anki_package_regex)
+      expect(anki_deck_file_path).to match(AnkiPackages::SharedAnkiPackageJobMethods.path_to_anki_package_regex)
     end
 
     context "when article content has 6 cloze notes for 3 concepts where 2 already exist" do
@@ -47,33 +47,6 @@ RSpec.describe CreateUserAnkiPackageJob do
         create_user_anki_deck
         expect(File).to exist(anki_deck_file_path)
       end
-    end
-  end
-
-  describe ".path_to_anki_package_regex" do
-    it "does not match a path that clearly does not have the intended structure" do
-      path = "/tmp/random"
-      expect(path.match?(described_class.path_to_anki_package_regex)).to be false
-    end
-
-    it "does not match a path that almost has the intended structure" do
-      path = "/tmp/1686400375479/anki_boks_package_1686400375479.apkg"
-      expect(path.match?(described_class.path_to_anki_package_regex)).to be false
-    end
-
-    it "does not match a path where the first timestamp in the path has the wrong number of digits" do
-      path = "/tmp/16864003754791/anki_books_package_1686400375479.apkg"
-      expect(path.match?(described_class.path_to_anki_package_regex)).to be false
-    end
-
-    it "does not match a path where the second timestamp in the path has the wrong number of digits" do
-      path = "/tmp/1686400375479/anki_books_package_16864003754791.apkg"
-      expect(path.match?(described_class.path_to_anki_package_regex)).to be false
-    end
-
-    it "matches a path that has the exact intended structure" do
-      path = "/tmp/1686400375479/anki_books_package_1686400375479.apkg"
-      expect(path.match?(described_class.path_to_anki_package_regex)).to be true
     end
   end
 end

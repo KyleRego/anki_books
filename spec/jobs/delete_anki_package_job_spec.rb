@@ -17,8 +17,26 @@ RSpec.describe DeleteAnkiPackageJob do
     expect { described_class.perform_now(anki_deck_file_path: "/temporary/example.apkg") }.to raise_error(ArgumentError)
   end
 
-  context "when there is an Anki deck file to delete" do
-    let(:anki_deck_file_path) { CreateUserAnkiPackageJob.perform_now(user:) }
+  context "when there is a user Anki package file to delete" do
+    let(:anki_deck_file_path) { AnkiPackages::CreateUserAnkiPackageJob.perform_now(user:) }
+
+    before do
+      anki_deck_file_path
+      described_class.perform_now(anki_deck_file_path:)
+    end
+
+    it "deletes the Anki deck file" do
+      expect(File).not_to exist(anki_deck_file_path)
+    end
+
+    it "deletes the directory in tmp that the Anki deck file was in" do
+      directory_to_delete = Pathname.new(anki_deck_file_path).dirname
+      expect(File).not_to exist(directory_to_delete)
+    end
+  end
+
+  context "when there is an article Anki package file to delete" do
+    let(:anki_deck_file_path) { AnkiPackages::CreateArticleAnkiPackageJob.perform_now(article:) }
 
     before do
       anki_deck_file_path

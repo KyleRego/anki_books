@@ -5,10 +5,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Article, "#sync_to_cloze_notes" do
-  let(:sync_article_to_cloze_notes) { article.sync_to_cloze_notes(user:) }
+  let(:sync_article_to_cloze_notes) { article.sync_to_cloze_notes(users:) }
 
-  let(:user) { create(:user) }
-  let(:book) { create(:book, users: [user]) }
+  let(:users) { create_list(:user, 1) }
+  let(:book) { create(:book, users:) }
   let(:article) { create(:article, book:, content:) }
 
   context "when article has no content" do
@@ -43,7 +43,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
   context "when content has one cloze for a concept that already exists and article has no cloze notes" do
     let(:content) { "TCP is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
-    before { create(:concept, user:, name: "protocol") }
+    before { create(:concept, user: users.first, name: "protocol") }
 
     it "creates a cloze note for the concept but does not create a new concept" do
       expect do
@@ -57,8 +57,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     before do
-      concept_one = create(:concept, user:, name: "protocol")
-      concept_two = create(:concept, user:, name: "UDP")
+      concept_one = create(:concept, user: users.first, name: "protocol")
+      concept_two = create(:concept, user: users.first, name: "UDP")
       create(:cloze_note, sentence: "TCP is a {{c1::protocol}}.", article:, concepts: [concept_one])
       create(:cloze_note, sentence: "{{c1::UDP}} is a protocol.", article:, concepts: [concept_two])
     end
@@ -73,7 +73,7 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "{{c2::TCP}} is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     let!(:cloze_note) do
-      concept = create(:concept, user:, name: "protocol")
+      concept = create(:concept, user: users.first, name: "protocol")
       create(:cloze_note, sentence: "TCP is a {{c1::protocol}}.", article:, concepts: [concept])
     end
 
@@ -88,11 +88,11 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "{{c2::TCP}} is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     let!(:cloze_note) do
-      concept = create(:concept, user:, name: "protocol")
+      concept = create(:concept, user: users.first, name: "protocol")
       create(:cloze_note, sentence: "TCP is a {{c1::protocol}}.", article:, concepts: [concept])
     end
 
-    before { create(:concept, user:, name: "TCP") }
+    before { create(:concept, user: users.first, name: "TCP") }
 
     it "updates the cloze note to have both concepts" do
       sync_article_to_cloze_notes
@@ -105,8 +105,8 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
     let(:content) { "TCP is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
 
     let!(:cloze_note) do
-      concept_one = create(:concept, user:, name: "protocol")
-      concept_two = create(:concept, user:, name: "TCP")
+      concept_one = create(:concept, user: users.first, name: "protocol")
+      concept_two = create(:concept, user: users.first, name: "TCP")
       create(:cloze_note, sentence: "{{c2::TCP}} is a {{c1::protocol}}.", article:, concepts: [concept_one, concept_two])
     end
 
@@ -120,11 +120,18 @@ RSpec.describe Article, "#sync_to_cloze_notes" do
 
   context "when content has one cloze matching an existing concept but there is a difference in case" do
     let(:content) { "TCP is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests." }
-    let!(:concept) { create(:concept, user:, name: "Protocol") }
+    let!(:concept) { create(:concept, user: users.first, name: "Protocol") }
 
     it "creates the cloze note and case-insensitively matches it to the existing concept" do
       sync_article_to_cloze_notes
       expect(article.cloze_notes.first.concepts.first).to eq concept
     end
+  end
+
+  # TODO: Tests that ensure this behaves correctly for:
+  context "when article belongs to a book with multiple users" do
+    # rubocop:disable RSpec/PendingWithoutReason
+    pending
+    # rubocop:enable RSpec/PendingWithoutReason
   end
 end

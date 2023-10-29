@@ -72,35 +72,37 @@ module Article::SyncToClozeNotes
 
   ##
   # Syncs the cloze sentences of the article with its cloze notes
-  def sync_to_cloze_notes(user:)
+  def sync_to_cloze_notes(users:)
     cloze_sent_concepts_structs = cloze_sentence_concepts_structs
     note_cloze_sentence_match = []
     synced_cloze_note_ids = []
 
-    cloze_sent_concepts_structs.each do |cloze_sent_concepts_struct|
-      cloze_sent_concepts_struct.cloze_note_synced = false
+    users.each do |user|
+      cloze_sent_concepts_structs.each do |cloze_sent_concepts_struct|
+        cloze_sent_concepts_struct.cloze_note_synced = false
 
-      concepts_for_cloze_note = []
-      cloze_sent_concepts_struct.concepts.each do |concept_name|
-        existing_concept = user.concepts.where("lower(name) = ?", concept_name.downcase).first
-        concepts_for_cloze_note << (existing_concept || user.concepts.create!(name: concept_name))
-      end
-      cloze_sent_concepts_struct.concepts = concepts_for_cloze_note
+        concepts_for_cloze_note = []
+        cloze_sent_concepts_struct.concepts.each do |concept_name|
+          existing_concept = user.concepts.where("lower(name) = ?", concept_name.downcase).first
+          concepts_for_cloze_note << (existing_concept || user.concepts.create!(name: concept_name))
+        end
+        cloze_sent_concepts_struct.concepts = concepts_for_cloze_note
 
-      cloze_sentence = cloze_sent_concepts_struct.sentence
+        cloze_sentence = cloze_sent_concepts_struct.sentence
 
-      # rubocop:disable Style/MultilineBlockChain
-      levenshtein_ordered_cloze_notes = cloze_notes.map do |cloze_note|
-        [cloze_note, Text::Levenshtein.distance(cloze_sentence, cloze_note.sentence)]
-      end.sort_by do |_, distance|
-        distance
-      end
-      # rubocop:enable Style/MultilineBlockChain
+        # rubocop:disable Style/MultilineBlockChain
+        levenshtein_ordered_cloze_notes = cloze_notes.map do |cloze_note|
+          [cloze_note, Text::Levenshtein.distance(cloze_sentence, cloze_note.sentence)]
+        end.sort_by do |_, distance|
+          distance
+        end
+        # rubocop:enable Style/MultilineBlockChain
 
-      levenshtein_ordered_cloze_notes.each do |cloze_note_with_distance|
-        note_cloze_sentence_match << ClozeNoteSentenceMatch.new(article_sentence: cloze_sentence,
-                                                                cloze_note: cloze_note_with_distance[0],
-                                                                distance: cloze_note_with_distance[1])
+        levenshtein_ordered_cloze_notes.each do |cloze_note_with_distance|
+          note_cloze_sentence_match << ClozeNoteSentenceMatch.new(article_sentence: cloze_sentence,
+                                                                  cloze_note: cloze_note_with_distance[0],
+                                                                  distance: cloze_note_with_distance[1])
+        end
       end
     end
 

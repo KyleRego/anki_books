@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   before_action :require_login
 
   def download_anki_deck
-    anki_deck_file_path = CreateUserAnkiPackageJob.perform_now(user: current_user)
+    anki_deck_file_path = AnkiPackages::CreateUserAnkiPackageJob.perform_now(user: current_user)
     send_file(anki_deck_file_path, disposition: "attachment")
     DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(anki_deck_file_path:)
   end
