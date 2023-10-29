@@ -4,8 +4,8 @@
 
 # frozen_string_literal: true
 
-RSpec.describe UpdateUserAnkiPackagesJob do
-  subject(:update_user_anki_deck_job) { described_class.perform_now }
+RSpec.describe UpdateUserAnkiPackageJob do
+  subject(:update_user_anki_deck_job) { described_class.perform_now(user:) }
 
   let(:user) { create(:user) }
   let(:updated_package_fixture_path) { "spec/fixtures/anki_package_2.apkg" }

@@ -5,12 +5,16 @@
 <h1>Downloads</h2>
 
 <div class="my-2">
-  <%= link_to "Create and download Anki deck", user_download_anki_deck_path, data: { turbo: "false" }, class: "action" %>
+  <%= link_to "Create and download new Anki deck", user_download_anki_deck_path, data: { turbo: "false" }, class: "action" %>
+</div>
+
+<div class="my-3">
+  <%= link_to "Queue job to update Anki deck", user_update_anki_deck_path, data: { turbo: "false" }, class: "action" %>
 </div>
 
 <% if current_user.anki_package.attached? %>
 <div class="my-3">
-  <%= link_to "Download Anki deck created by job",
+  <%= link_to "Download Anki deck previously created by job (#{current_user.anki_package.created_at})",
       rails_blob_path(current_user.anki_package, disposition: "attachment"),
       data: { turbo: "false" }, class: "action" %>
 </div>

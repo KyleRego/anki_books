@@ -16,6 +16,13 @@ class UsersController < ApplicationController
     DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(anki_deck_file_path:)
   end
 
+  def update_anki_deck
+    # TODO: For real users, it will be necessary to check they are not spamming
+    # this endpoint
+    UpdateUserAnkiPackageJob.perform_later(user: current_user)
+    redirect_to downloads_path, flash: { notice: "Job queued successfully" }
+  end
+
   # :nocov:
 
   def download_books_data

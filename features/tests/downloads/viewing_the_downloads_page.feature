@@ -11,6 +11,7 @@ Feature: Visiting the Downloads page
 
   Scenario: Visiting the page when the user's Anki package attachment yet
     When I click the "Downloads" link
-    Then I should see "Create and download Anki deck"
+    Then I should see "Create and download new Anki deck"
+    And I should see "Queue job to update Anki deck"
     And I should not see a "Downloads" link
-    And I should not see a "Download Anki deck created by job" link
+    And I should not see "Download Anki deck previously created by job"
