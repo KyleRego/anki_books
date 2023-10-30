@@ -56,11 +56,9 @@ module Book::HasManyOrdinalChildren
   private
 
   def shift_articles_down_to_replace_missing_position(missing_position:)
-    # rubocop:disable Rails/FindEach
-    articles.where("ordinal_position > ?", missing_position).each do |article|
+    articles.where("ordinal_position > ?", missing_position).order(:ordinal_position).each do |article|
       article.update!(ordinal_position: article.ordinal_position - 1)
     end
-    # rubocop:enable Rails/FindEach
   end
 
   def ordinal_positions

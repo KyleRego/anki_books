@@ -59,11 +59,9 @@ module Article::HasManyOrdinalChildren
   private
 
   def shift_basic_notes_down_to_replace_missing_position(missing_position:)
-    # rubocop:disable Rails/FindEach
-    basic_notes.where("ordinal_position > ?", missing_position).each do |basic_note|
+    basic_notes.where("ordinal_position > ?", missing_position).order(:ordinal_position).each do |basic_note|
       basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
     end
-    # rubocop:enable Rails/FindEach
   end
 
   def ordinal_positions

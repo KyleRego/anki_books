@@ -3,8 +3,8 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to "Manage book", manage_book_path(@book), class: "font-semibold mr-4" %>
-  <%= link_to "Study cards", study_book_cards_path(@book), class: "font-semibold mr-4" %>
+  <li><%= link_to "Manage book", manage_book_path(@book), class: "font-semibold mr-4" %></li>
+  <li><%= link_to "Study cards", study_book_cards_path(@book), class: "font-semibold mr-4" %></li>
 <% end %>
 
 <h1 class="mt-2 pb-2 border-black-b">

@@ -4,10 +4,10 @@
 
 <% content_for :page_specific_links do %>
   <% if logged_in? && current_user.can_access_article?(article: @article) %>
-    <%= link_to("#{@book.title}", book_articles_path(@book), class: "font-semibold mr-4") %>
+    <li><%= link_to("#{@book.title}", book_articles_path(@book), class: "font-semibold mr-4") %></li>
   <% end %>
   <% if @article.basic_notes.any? %>
-    <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "font-semibold mr-4") %>
+    <li><%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "font-semibold mr-4") %></li>
   <% end %>
 <% end %>
 

@@ -3,7 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to "Manage concept", manage_concept_path(@concept), class: "font-semibold mr-4" %>
+  <li><%= link_to "Manage concept", manage_concept_path(@concept), class: "font-semibold mr-4" %></li>
 <% end %>
 
 <h2><%= @concept.name %></h2>

@@ -3,7 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% content_for :page_specific_links do %>
-  <%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %>
+  <li><%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %></li>
 <% end %>
 
 <h2>Manage book: <%= @book.title %></h2>

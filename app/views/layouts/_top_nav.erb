@@ -3,34 +3,34 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <nav id="top-nav" class="pt-2 sticky top-0 z-50 bg-white dark:bg-gray-900">
-  <div class="flex justify-end flex-wrap-reverse">
+  <ul class="flex justify-end flex-wrap-reverse">
 
     <%= yield :page_specific_links %>
 
     <% if logged_in? %>
-      <%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %>
+      <li><%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %></li>
 
-      <%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %>
+      <li><%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %></li>
 
       <% if show_link_to_concepts_in_top_nav? %>
-        <%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %>
+        <li><%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %></li>
       <% end %>
 
       <% if show_link_to_books_in_top_nav? %>
-        <%= link_to("Books", books_path, class: "font-semibold mr-4") %>
+        <li><%= link_to("Books", books_path, class: "font-semibold mr-4") %></li>
       <% end %>
 
       <% if show_link_to_downloads_in_top_nav? %>
-        <%= link_to("Downloads", downloads_path, class: "font-semibold mr-4") %>
+        <li><%= link_to("Downloads", downloads_path, class: "font-semibold mr-4") %></li>
       <% end %>
 
-      <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold mr-4" %>
+      <li><%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold mr-4" %></li>
 
     <% elsif current_page?(login_path) %>
-      <%= link_to "Home", root_path, class: "font-semibold mr-4" %>
+      <li><%= link_to "Home", root_path, class: "font-semibold mr-4" %></li>
     <% else %>
-      <%= link_to "Login", login_path, class: "font-semibold mr-4" %>
+      <li><%= link_to "Login", login_path, class: "font-semibold mr-4" %></li>
     <% end %>
 
-  </div>
+  </ul>
 </nav>
