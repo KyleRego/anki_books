@@ -20,14 +20,13 @@
   </div>
 
 <% if logged_in? || @basic_notes.any? %>
-  <div data-controller="set-top-under-nav set-height-to-article-content-area-height" class="basic-notes-area min-w-1-3 flex-grow-1 ml-1">
+  <div data-controller="set-top-under-nav" class="basic-notes-area min-w-1-3 flex-grow-1 ml-1">
     <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
     <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
     <div id="article-notes-<%= @article.id %>"
         class="max-h-screen position-sticky-sm-static overflow-y-auto-sm-scroll
                 reorderable-basic-note-units-container flex flex-col justify-start"
-                data-set-top-under-nav-target="element"
-                data-set-height-to-article-content-area-height-target="element">
+                data-set-top-under-nav-target="element">
 
       <% if logged_in? && !@use_book_version %>
         <%= render "articles/basic_note/first_new_basic_note_link" %>
