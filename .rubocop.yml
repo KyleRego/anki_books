@@ -23,6 +23,9 @@ Style/StringLiterals:
 Metrics/MethodLength:
   Max: 20
 
+Metrics/ClassLength:
+  Max: 200
+
 Metrics/BlockLength:
   Exclude:
     - config/routes.rb

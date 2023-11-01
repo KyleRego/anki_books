@@ -21,6 +21,7 @@ class BooksController < ApplicationController
     @book = Book.includes(articles: :basic_notes)
                 .order("articles.ordinal_position")
                 .order("basic_notes.ordinal_position").find(params[:id])
+    @html_page_title = @book.title
   end
 
   def new

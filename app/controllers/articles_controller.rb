@@ -4,7 +4,6 @@
 
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 # :nodoc:
 class ArticlesController < ApplicationController
   before_action :require_login
@@ -27,6 +26,7 @@ class ArticlesController < ApplicationController
     else
       @basic_notes = @article.basic_notes.ordered
     end
+    @html_page_title = @article.title
   end
 
   def new
@@ -155,4 +155,3 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :content, :book_id, :reading, :writing, :complete)
   end
 end
-# rubocop:enable Metrics/ClassLength
