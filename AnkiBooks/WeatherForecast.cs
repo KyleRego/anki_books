@@ -1,4 +1,4 @@
-namespace anki_books;
+namespace AnkiBooks;
 
 public class WeatherForecast
 {

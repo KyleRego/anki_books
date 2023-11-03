@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace anki_books.Controllers;
+namespace AnkiBooks.Controllers;
 
 [ApiController]
 [Route("[controller]")]
