@@ -18,7 +18,7 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Book> Get()
+    public IEnumerable<Book> Index()
     {
         return _dbContext.Books.Where(b => b.ParentBookId == null).ToList();
     }

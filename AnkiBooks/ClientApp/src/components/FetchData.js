@@ -41,7 +41,6 @@ export class FetchData extends Component {
   async populateBooksData() {
     const response = await fetch("book");
     const data = await response.json();
-    console.log(data);
     this.setState({ books: data, loading: false });
   }
 }
