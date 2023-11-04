@@ -1,9 +1,17 @@
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+using AnkiBooks;
 
-// Add services to the container.
+IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration((hostingContext, config) =>
+    {
+        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+    })
+    .Build();
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AnkiBooksDatabase>();
 
 WebApplication app = builder.Build();
 
@@ -23,7 +31,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
 
 app.MapControllerRoute(
     name: "default",
