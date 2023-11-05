@@ -2,12 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% content_for :page_specific_links do %>
-  <li><%= link_to @book.title, book_articles_path(@book), class: "font-semibold mr-4" %></li>
-<% end %>
-
 <% @book.articles.each do |article| %>
   <% @article = article %>
   <% @basic_notes = article.basic_notes %>
-  <div><%= render partial: "articles/content" %></div>
+  <div><%= render template: "articles/show" %></div>
 <% end %>
