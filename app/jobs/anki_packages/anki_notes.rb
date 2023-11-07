@@ -10,6 +10,10 @@ module AnkiRecord
   class NoteType # :nodoc:
     attr_accessor :id
   end
+
+  class Note # :nodoc:
+    attr_writer :tags
+  end
 end
 
 module AnkiPackages
@@ -65,6 +69,7 @@ module AnkiPackages
       anki_note.url = basic_note.url
       anki_note.downloaded_at = timestamp
       anki_note.guid = basic_note.anki_guid
+      anki_note.tags = [deck.name]
       anki_note.save
     end
 
@@ -116,6 +121,7 @@ module AnkiPackages
       anki_note.url = cloze_note.url
       anki_note.downloaded_at = timestamp
       anki_note.guid = cloze_note.anki_guid
+      anki_note.tags = [deck.name]
       anki_note.save
     end
   end
