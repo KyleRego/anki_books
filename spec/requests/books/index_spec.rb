@@ -19,11 +19,13 @@ RSpec.describe "GET /books", "#index" do
 
     context "when user has books including books with parent books" do
       before do
-        create_list(:book, 20, users: [user])
+        create_list(:book, 5, users: [user])
         parent_book = user.books.first
-        parent_book.books << user.books.last(3)
-        second_parent_book = parent_book.books.first
-        second_parent_book.books << user.books.last(6).first(3)
+        children_of_parent = create_list(:book, 3, users: [user])
+        parent_book.books << children_of_parent
+        second_parent_book = children_of_parent.first
+        children_of_second_parent = create_list(:book, 3, users: [user])
+        second_parent_book.books << children_of_second_parent
       end
 
       it "returns a success response" do

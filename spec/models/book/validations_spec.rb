@@ -25,11 +25,11 @@ RSpec.describe Book, "#valid?" do
 
   context "when parent_book_id is the book's id" do
     before do
+      book.save
       book.parent_book_id = book.id
     end
 
     it "is invalid" do
-      pending "implementing a validation for this"
       expect(book).not_to be_valid
     end
   end
@@ -41,7 +41,19 @@ RSpec.describe Book, "#valid?" do
     end
 
     it "is invalid" do
-      pending "implementing a validation for this"
+      expect(book).not_to be_valid
+    end
+  end
+
+  context "when parent_book_id is to a child of a child" do
+    before do
+      child_book = create(:book, parent_book: book)
+      nested_child_book = create(:book, parent_book: child_book)
+      book.parent_book_id = nested_child_book.id
+    end
+
+    it "is invalid" do
+      pending "implementation"
       expect(book).not_to be_valid
     end
   end

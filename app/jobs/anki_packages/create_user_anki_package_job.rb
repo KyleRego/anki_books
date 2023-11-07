@@ -13,6 +13,7 @@ module AnkiPackages
     queue_as :default
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def perform(user:)
       # TODO: Use a callback to update article cloze notes on saving article
       user.articles.each do |article|
@@ -22,26 +23,30 @@ module AnkiPackages
       downloaded_at_timestamp = DateTime.current.strftime("%b %d %I:%M %z")
 
       AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
-        deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
-        deck.save
-
         anki_basic_note_type = anki_books_basic_note_type(anki21_database:)
         anki_basic_note_type.save
-
-        user.basic_notes.each do |basic_note|
-          create_anki_basic_note(basic_note:, anki_basic_note_type:, deck:, timestamp: downloaded_at_timestamp)
-        end
 
         anki_cloze_note_type = anki_books_cloze_note_type(anki21_database:)
         anki_cloze_note_type.save
 
-        user.cloze_notes.each do |cloze_note|
-          create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, deck:, timestamp: downloaded_at_timestamp)
+        user.books.each do |book|
+          deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books::#{book.anki_deck_name}")
+
+          book.basic_notes.each do |basic_note|
+            create_anki_basic_note(basic_note:, anki_basic_note_type:, deck:, timestamp: downloaded_at_timestamp)
+          end
+
+          book.cloze_notes.each do |cloze_note|
+            create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, deck:, timestamp: downloaded_at_timestamp)
+          end
+
+          deck.save
         end
       end
       created_anki_deck_path
     end
     # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     private
 

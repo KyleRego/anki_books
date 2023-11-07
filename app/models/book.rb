@@ -22,6 +22,23 @@ class Book < ApplicationRecord
   include Book::HasManyOrdinalChildren
 
   validates :title, presence: true
+  validate :validate_parent_book
+
+  def validate_parent_book
+    return if parent_book_id.nil?
+
+    if parent_book_id == id
+      errors.add :parent_book, "cannot be the same as the book"
+      return
+    end
+
+    # TODO: This needs to check at a greater depth
+    child_book_ids = books.pluck(:id)
+
+    return unless child_book_ids.include?(parent_book_id)
+
+    errors.add :parent_book, "cannot be one of the book's child books"
+  end
 
   belongs_to :parent_book, optional: true, class_name: "Book", inverse_of: :books
   has_many :books, foreign_key: :parent_book_id, inverse_of: :parent_book, dependent: nil
@@ -30,6 +47,8 @@ class Book < ApplicationRecord
   has_many :users, through: :books_users
 
   has_many :articles, dependent: :destroy
+  has_many :basic_notes, through: :articles
+  has_many :cloze_notes, through: :articles
 
   scope :ordered, -> { order(:title) }
 
@@ -39,5 +58,13 @@ class Book < ApplicationRecord
     BasicNote.joins(article: :book)
              .where(articles: { book_id: id })
              .order("articles.ordinal_position, basic_notes.ordinal_position")
+  end
+
+  def anki_deck_name
+    if parent_book.nil?
+      title
+    else
+      "#{parent_book.anki_deck_name}::#{title}"
+    end
   end
 end
