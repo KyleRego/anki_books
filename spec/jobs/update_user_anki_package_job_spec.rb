@@ -13,8 +13,9 @@ RSpec.describe UpdateUserAnkiPackageJob do
   before do
     allow(AnkiPackages::CreateUserAnkiPackageJob).to receive(:perform_now).with(user:).and_return(updated_package_fixture_path)
     mock_job = class_double(DeleteAnkiPackageJob)
+    # TODO: A test here where the delete job is not mocked
     allow(DeleteAnkiPackageJob).to receive(:set).with(wait: 3.minutes).and_return(mock_job)
-    allow(mock_job).to receive(:perform_later).with(package_path: updated_package_fixture_path)
+    allow(mock_job).to receive(:perform_later).with(anki_deck_file_path: updated_package_fixture_path)
   end
 
   it "attaches the anki package to the user and schedules the job to delete the temporary file" do

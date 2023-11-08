@@ -24,6 +24,11 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validate :validate_parent_book
 
+  ##
+  # Validation that parent book is not set
+  # to a book that is also a child, which would
+  # create a cycle.
+  # TODO: Complete implementation
   def validate_parent_book
     return if parent_book_id.nil?
 
@@ -66,5 +71,9 @@ class Book < ApplicationRecord
     else
       "#{parent_book.anki_deck_name}::#{title}"
     end
+  end
+
+  def anki_tag_name
+    anki_deck_name.tr(" ", "_")
   end
 end

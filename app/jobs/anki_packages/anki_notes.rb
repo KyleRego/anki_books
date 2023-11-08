@@ -62,14 +62,14 @@ module AnkiPackages
       basic_note_type
     end
 
-    def create_anki_basic_note(basic_note:, anki_basic_note_type:, deck:, timestamp:)
-      anki_note = AnkiRecord::Note.new(note_type: anki_basic_note_type, deck:)
+    def create_anki_basic_note(basic_note:, anki_basic_note_type:, anki_deck:, timestamp:, book: nil)
+      anki_note = AnkiRecord::Note.new(note_type: anki_basic_note_type, deck: anki_deck)
       anki_note.front = basic_note.anki_front
       anki_note.back = basic_note.anki_back
       anki_note.url = basic_note.url
       anki_note.downloaded_at = timestamp
       anki_note.guid = basic_note.anki_guid
-      anki_note.tags = [deck.name]
+      anki_note.tags = [book.anki_tag_name] if book
       anki_note.save
     end
 
@@ -114,14 +114,14 @@ module AnkiPackages
       cloze_note_type
     end
 
-    def create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, deck:, timestamp:)
-      anki_note = AnkiRecord::Note.new(note_type: anki_cloze_note_type, deck:)
+    def create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, anki_deck:, timestamp:, book: nil)
+      anki_note = AnkiRecord::Note.new(note_type: anki_cloze_note_type, deck: anki_deck)
       anki_note.text = cloze_note.anki_text
       anki_note.back_extra = ""
       anki_note.url = cloze_note.url
       anki_note.downloaded_at = timestamp
       anki_note.guid = cloze_note.anki_guid
-      anki_note.tags = [deck.name]
+      anki_note.tags = [book.anki_tag_name] if book
       anki_note.save
     end
   end

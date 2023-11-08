@@ -33,11 +33,11 @@ module AnkiPackages
           deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books::#{book.anki_deck_name}")
 
           book.basic_notes.each do |basic_note|
-            create_anki_basic_note(basic_note:, anki_basic_note_type:, deck:, timestamp: downloaded_at_timestamp)
+            create_anki_basic_note(basic_note:, anki_basic_note_type:, anki_deck: deck, book:, timestamp: downloaded_at_timestamp)
           end
 
           book.cloze_notes.each do |cloze_note|
-            create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, deck:, timestamp: downloaded_at_timestamp)
+            create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, anki_deck: deck, book:, timestamp: downloaded_at_timestamp)
           end
 
           deck.save

@@ -14,7 +14,7 @@ class UpdateUserAnkiPackageJob < ApplicationJob
     @user = user
     package_path = AnkiPackages::CreateUserAnkiPackageJob.perform_now(user:)
     user.update_anki_package(package_path:, name_for_attachment:)
-    DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(package_path:)
+    DeleteAnkiPackageJob.set(wait: 3.minutes).perform_later(anki_deck_file_path: package_path)
   end
 
   private
