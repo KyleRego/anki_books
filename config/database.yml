@@ -23,22 +23,11 @@ default: &default
 
 development:
   <<: *default
-  database: anki_books_development
-  # The TCP port the server listens on. Defaults to 5432.
+  host: <%= ENV.fetch("DATABASE_HOST") %>
   port: 5432
-  #
-  # To use Docker Compose to run the app (`$ docker compose up`)
-  # uncomment (including ERB <%# comments) and use the following:
-  #
-  # host: <%# ENV.fetch("DATABASE_HOST") %>
-  # database: <%# ENV.fetch("POSTGRES_DB") %>
-  # The specified database role being used to connect to postgres.
-  # To create additional roles in postgres see `$ createuser --help`.
-  # When left blank, postgres will use the default role. This is
-  # the same name as the operating system user running Rails.
-  # username: <%# ENV.fetch("POSTGRES_USER") %>
-  # The password associated with the postgres role (username).
-  # password: <%# ENV.fetch("POSTGRES_PASSWORD") %>
+  database: <%= ENV.fetch("POSTGRES_DB") %>
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public

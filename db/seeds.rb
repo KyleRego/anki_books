@@ -21,19 +21,22 @@ system_article_basic_notes = [
   ["What is the normal merge strategy that merges two branches but can work when there is more than one possible merge base?", "Recursive"],
   ["After what packet in the TCP handshake can application data start being sent immediately?", "ACK"]
 ]
-user = User.create!(username: "test user", email: "test@example.com", password: "1234asdf!!!!")
+user = User.find_by(email: "test@example.com")
+user ||= User.create!(username: "test user", email: "test@example.com", password: "1234asdf!!!!")
 
 book_for_system_article = Book.create!(title: "Initial book with system article")
 user.books << book_for_system_article
 
 system_article = Article.create!(title: "Homepage system article", system: true, book: book_for_system_article, ordinal_position: 0)
-system_article.content = "<div class=\"trix-content\">\n  <h1>Hello world, this is the seeded system article.</h1>\n</div>\n"
+# rubocop:disable Layout/LineLength
+system_article.content = "<div class=\"trix-content\">\n  <h1>Hello world, this is the seeded system article. Login with the test user email: test@example.com and password: 1234asdf!!!!</h1>\n</div>\n"
+# rubocop:enable Layout/LineLength
 system_article.save!
 
 system_article_basic_notes.each do |raw_basic_note|
   front = raw_basic_note.first
   back = raw_basic_note.last
-  BasicNote.create!(article: system_article, front:, back:, ordinal_position: system_article.notes_count)
+  BasicNote.create!(article: system_article, front:, back:, ordinal_position: system_article.basic_notes_count)
 end
 
 book_for_testing_reordering = Book.create!(title: "Book for testing reordering")
@@ -60,9 +63,3 @@ book_with_a_lot_of_articles = Book.create!(title: "Book with a lot of articles")
     BasicNote.create!(article: article_for_book_with_lots, front:, back:, ordinal_position: j)
   end
 end
-
-programming_domain = Domain.create!(title: "Programming", user:)
-programming_domain.books << book_for_system_article
-
-other_domain = Domain.create!(title: "other", user:)
-other_domain.books = [book_for_testing_reordering, book_with_a_lot_of_articles]
