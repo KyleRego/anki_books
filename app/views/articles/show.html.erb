@@ -3,7 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <section class="article-section w-full break-anywhere" data-controller="set-top-under-nav">
-  <div class="sticky z-50 bg-white" data-set-top-under-nav-target="element">
+  <div class="sticky z-50 bg-white article-nav" data-set-top-under-nav-target="element">
     <%= link_to("#{@book.title}", book_articles_path(@book), class: "mr-4") if @book %>
     <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") %>
     <% if logged_in? %>
@@ -15,15 +15,15 @@
     <% end %>
   </div>
 
-  <div class="flex flex-row-sm-col">
-    <div class="min-w-2-3 flex-grow-2">
+  <div class="flex flex-row-sm-col" data-controller="article-notes-position-setter">
+    <div class="min-w-2-3 flex-grow-2" data-article-notes-position-setter-target="content">
       <%= @article.content_without_cloze_markers %>
     </div>
     <% if logged_in? || @basic_notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
       <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
-      <div id="article-notes-<%= @article.id %>"
-          class="max-h-screen position-sticky-sm-static top-0 overflow-y-auto-sm-scroll
+      <div id="article-notes-<%= @article.id %>" data-article-notes-position-setter-target="notes"
+          class="position-sticky-sm-static overflow-y-auto-sm-scroll
                   min-w-1-3 flex-grow-1 ml-1
                   reorderable-basic-note-units-container flex flex-col justify-start">
 

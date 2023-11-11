@@ -3,10 +3,6 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
-  .max-h-screen {
-    max-height: calc(100vh - 4rem);
-  }
-
   .h-1 {
     height: 0.25rem;
   }
