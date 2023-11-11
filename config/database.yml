@@ -23,11 +23,8 @@ default: &default
 
 development:
   <<: *default
-  host: <%= ENV.fetch("DATABASE_HOST") %>
   port: 5432
-  database: <%= ENV.fetch("POSTGRES_DB") %>
-  username: <%= ENV.fetch("POSTGRES_USER") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  database: anki_books_development
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
