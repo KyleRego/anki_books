@@ -56,5 +56,10 @@ RSpec.describe UsersController do
       path = "/books/#{book_id}/change_parent_book"
       expect(patch: path).to route_to("books#change_parent_book", id: book_id)
     end
+
+    it "routes to #update_child_books" do
+      path = "/books/#{book_id}/update_child_books"
+      expect(patch: path).to route_to("books#update_child_books", id: book_id)
+    end
   end
 end

@@ -105,9 +105,15 @@ class BooksController < ApplicationController
     end
 
     parent_book.books << @book
-    redirect_to manage_book_path(@book), flash: { notice: "Parent book successfully updated" }
+    redirect_to manage_book_path(@book), flash: { notice: "Parent book updated for #{@book.title}." }
   end
   # rubocop:enable Metrics/AbcSize
+
+  def update_child_books
+    child_book_ids = params[:child_book_ids]
+    @book.books = current_user.books.where(id: child_book_ids)
+    redirect_to books_path, flash: { notice: "Child books updated for #{@book.title}." }
+  end
 
   private
 

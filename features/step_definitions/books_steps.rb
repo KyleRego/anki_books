@@ -4,6 +4,8 @@
 
 # frozen_string_literal: true
 
+UPDATE_CHILD_BOOKS_SELECTOR = "#update-child-books-area"
+
 Given "the user {string} has a book called {string}" do |username, book_title|
   user = User.find_by(username:)
   create(:book, title: book_title, users: [user])
@@ -19,4 +21,15 @@ end
 
 When "I visit the Books page" do
   visit books_path
+end
+
+Given "I scroll to the update child books area" do
+  update_child_books_area = page.find(UPDATE_CHILD_BOOKS_SELECTOR)
+  scroll_to update_child_books_area
+end
+
+Given "I check the child book checkbox labeled {string}" do |string|
+  within(UPDATE_CHILD_BOOKS_SELECTOR) do
+    check string
+  end
 end

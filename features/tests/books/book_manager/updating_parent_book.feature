@@ -14,6 +14,6 @@ Feature: Parent book
     And I click the "Manage book" link
     When I choose "Book to be parent" from the "parent_book_id" select
     And I click the "Update parent book" button
-    Then I should see "Parent book successfully updated"
+    Then I should see "Parent book updated"
     When I click the "Book to be child" link
     Then I should see "Parent book: Book to be parent"

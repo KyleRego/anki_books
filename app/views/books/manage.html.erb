@@ -27,26 +27,23 @@
 </div>
 
 <% if @articles.count > 1 %>
-<div class="mt-4 pb-8 border-black-b">
+<div class="mt-4 pb-4 border-black-b">
   <%# TODO: Why is this id needed %>
   <h3 id="<%= "book-#{@book.id}" %>" class="mb-4">
     Reorder articles:
   </h3>
-
-  <div class="p-4 lg:max-w-4xl border-2 shadow-lg">
-    <% @articles.each do |article| %>
-      <div class="reorderable-unit">
-        <div data-controller="reorder-articles--article-draggable">
-          <div data-reorder-articles--article-draggable-target="article" draggable=true id="<%= article.id %>" class="cursor-pointer">
-            <%= article.title %>
-          </div>
-        </div>
-        <div data-controller="reorder-articles--article-dropzone">
-          <div data-reorder-articles--article-dropzone-target="dropzone" class="py-2"></div>
+  <% @articles.each do |article| %>
+    <div class="reorderable-unit">
+      <div data-controller="reorder-articles--article-draggable">
+        <div data-reorder-articles--article-draggable-target="article" draggable=true id="<%= article.id %>" class="cursor-pointer">
+          <%= article.title %>
         </div>
       </div>
-    <% end %>
-  </div>
+      <div data-controller="reorder-articles--article-dropzone">
+        <div data-reorder-articles--article-dropzone-target="dropzone" class="py-2"></div>
+      </div>
+    </div>
+  <% end %>
 </div>
 <% end %>
 
@@ -69,6 +66,23 @@
                       title: "Select a book to move articles to") %>
     </div>
     <%= form.submit "Move articles to selected book", class: "action mt-4" %>
+  <% end %>
+</div>
+<% end %>
+
+<% if @user_other_books.any? %>
+<div id="update-child-books-area" class="mt-4 pb-4">
+  <h3 class="mb-4">Update child books:</h3>
+  <%= form_with(model: @book, url: update_child_books_path(@book)) do |form| %>
+    <% @user_other_books.each do |book| %>
+      <div class="mb-2">
+        <%= label_tag(book[:title]) do %>
+          <%= check_box_tag("child_book_ids[]", book[:id], nil, id: book[:id]) %>
+          <span><%= book[:title] %></span>
+        <% end %>
+      </div>
+    <% end %>
+    <%= form.submit "Update child books", class: "action" %>
   <% end %>
 </div>
 <% end %>
