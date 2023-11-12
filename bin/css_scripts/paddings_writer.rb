@@ -10,61 +10,60 @@ require_relative "../license_comment"
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/BlockLength
 
-NOTABLE_MARGINS = <<-NOTABLE_MARGINS
-  .m-auto {
+NOTABLE_PADDINGS = <<-NOTABLE_PADDINGS
+  .p-auto {
     margin: auto;
   }
 
-  .mx-auto {
+  .px-auto {
     margin-left: auto;
     margin-right: auto;
   }
-NOTABLE_MARGINS
+NOTABLE_PADDINGS
 
 ##
-# MarginsWriter is a static metaprogramming class to generate
-# the margin CSS file _margins.css
-class MarginsWriter
+# PaddingsWriter generates app/assets/stylesheets/utilities/paddings.css
+class PaddingsWriter
   ##
   # Returns a string
-  def self.call(number_of_margin_ruleset_groups:)
+  def self.call(number_of_padding_ruleset_groups:)
     result = ""
     result += LICENSE_COMMENT
     result += "\n"
     result += "@layer utilities {"
     result += "\n"
-    result += NOTABLE_MARGINS
-    number_of_margin_ruleset_groups.times do |i|
+    result += NOTABLE_PADDINGS
+    number_of_padding_ruleset_groups.times do |i|
       num = i + 1
       rems = "#{0.25 * num}rem"
-      result += "\n  .m-#{num} {\n"
-      result += "    margin: #{rems};\n"
+      result += "\n  .p-#{num} {\n"
+      result += "    padding: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .mx-#{num} {\n"
-      result += "    margin-left: #{rems};\n"
-      result += "    margin-right: #{rems};\n"
+      result += "  .px-#{num} {\n"
+      result += "    padding-left: #{rems};\n"
+      result += "    padding-right: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .my-#{num} {\n"
-      result += "    margin-top: #{rems};\n"
-      result += "    margin-bottom: #{rems};\n"
+      result += "  .py-#{num} {\n"
+      result += "    padding-top: #{rems};\n"
+      result += "    padding-bottom: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .ml-#{num} {\n"
-      result += "    margin-left: #{rems};\n"
+      result += "  .pl-#{num} {\n"
+      result += "    padding-left: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .mr-#{num} {\n"
-      result += "    margin-right: #{rems};\n"
+      result += "  .pr-#{num} {\n"
+      result += "    padding-right: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .mt-#{num} {\n"
-      result += "    margin-top: #{rems};\n"
+      result += "  .pt-#{num} {\n"
+      result += "    padding-top: #{rems};\n"
       result += "  }\n"
       result += "\n"
-      result += "  .mb-#{num} {\n"
-      result += "    margin-bottom: #{rems};\n"
+      result += "  .pb-#{num} {\n"
+      result += "    padding-bottom: #{rems};\n"
       result += "  }"
       result += "\n"
     end
@@ -73,7 +72,7 @@ class MarginsWriter
   end
 
   def self.write_to(path:)
-    File.write(path, call(number_of_margin_ruleset_groups: 8))
+    File.write(path, call(number_of_padding_ruleset_groups: 8))
   end
 end
 # rubocop:enable Metrics/MethodLength
