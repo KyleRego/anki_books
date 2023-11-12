@@ -35,28 +35,16 @@ Copyright (C) 2023 Kyle Rego */
     display: inline;
   }
 
-  .sticky {
+  .position-sticky {
     position: sticky;
   }
 
-  .position-sticky-sm-static {
+  .position-sticky-static {
     position: static;
   }
 
-  @media (min-width: 640px) {
-    .position-sticky-sm-static {
-      position: sticky;
-    }
-  }
-
-  .overflow-y-auto-sm-scroll {
+  .overflow-y-auto {
     overflow-y: auto;
-  }
-
-  @media (min-width: 640px) {
-    .overflow-y-auto-sm-scroll {
-      overflow-y: scroll;
-    }
   }
 
   .top-0 {

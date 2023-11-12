@@ -4,8 +4,12 @@ Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
   @media (max-width: 640px) {
-    .sm-pr-0 {
-      padding-right: 0rem;
+    .sm-position-static {
+      position: static;
+    }
+
+    .sm-overflow-y-scroll {
+      overflow-y: scroll;
     }
   }
 }

@@ -4,8 +4,8 @@ Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
   @media (max-width: 640px) {
-    .sm-pr-0 {
-      padding-right: 0rem;
+    .sm-border-black-r-none {
+      border-right: none;
     }
   }
 }

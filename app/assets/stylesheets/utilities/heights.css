@@ -3,6 +3,10 @@ is licensed under the GNU Affero General Public License, version 3
 Copyright (C) 2023 Kyle Rego */
 
 @layer utilities {
+  .h-0 {
+    height: 0;
+  }
+
   .h-1 {
     height: 0.25rem;
   }

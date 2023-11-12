@@ -18,7 +18,7 @@ export default class extends Controller {
 
   configureToolbar() {
     const topNavBarHeight = document.querySelector("#top-nav").offsetHeight;
-    this.toolbarTarget.classList.add("sticky");
+    this.toolbarTarget.classList.add("position-sticky");
     this.toolbarTarget.classList.add("z-50");
     this.toolbarTarget.classList.add("bg-white");
     this.toolbarTarget.classList.add("dark:bg-gray-900");
