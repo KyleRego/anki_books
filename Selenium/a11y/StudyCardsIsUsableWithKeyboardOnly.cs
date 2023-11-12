@@ -1,5 +1,6 @@
 namespace Tests;
 
+using Tests.Extensions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -44,32 +45,9 @@ public class StudyCards
 
     studyCardsWait.Until(d => studyCards.Displayed);
 
+    driver.TabNTimes(12);
+
     new Actions(driver)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .Pause(TimeSpan.FromSeconds(1))
       .KeyDown(Keys.Enter)
       .KeyUp(Keys.Enter)
       .Perform();
@@ -79,24 +57,9 @@ public class StudyCards
 
     backToArticleWait.Until(d => backToArticle.Displayed);
 
+    driver.TabNTimes(8);
+
     new Actions(driver)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .KeyDown(Keys.Tab)
-      .KeyUp(Keys.Tab)
-      .Pause(TimeSpan.FromSeconds(1))
       .KeyDown(Keys.Enter)
       .KeyUp(Keys.Enter)
       .Perform();
