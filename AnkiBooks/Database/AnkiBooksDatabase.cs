@@ -43,8 +43,12 @@ public partial class AnkiBooksDatabase : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // TODO: Load connection string from a config file
-        optionsBuilder.UseNpgsql("Host=localhost;Database=anki_books_development;Username=postgres;Password=password;");
+        // TODO: This check may not be needed
+        if (!optionsBuilder.IsConfigured)
+        {
+            // TODO: Load connection string from a config file
+            optionsBuilder.UseNpgsql("Host=localhost;Database=anki_books_development;Username=postgres;Password=password;");
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
