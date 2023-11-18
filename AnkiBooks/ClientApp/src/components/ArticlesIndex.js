@@ -39,8 +39,13 @@ export class ArticlesIndex extends Component {
   }
 
   async populateArticlesData() {
-    const response = await fetch("/article");
-    const data = await response.json();
-    this.setState({ articles: data, loading: false });
+    try {
+      const response = await fetch("/articles");
+      const data = await response.json();
+      this.setState({ articles: data, loading: false });
+    } catch(error) {
+      console.log("Something went wrong:");
+      console.log(error);
+    }
   }
 }

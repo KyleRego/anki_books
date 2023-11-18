@@ -1,6 +1,6 @@
 using AnkiBooks.Models;
 
-namespace AnkiBooks;
+namespace AnkiBooks.Database;
 
 public partial class AnkiBooksDatabase : DbContext
 {

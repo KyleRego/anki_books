@@ -39,7 +39,7 @@ export class BooksIndex extends Component {
   }
 
   async populateBooksData() {
-    const response = await fetch("/book");
+    const response = await fetch("/books");
     const data = await response.json();
     this.setState({ books: data, loading: false });
   }

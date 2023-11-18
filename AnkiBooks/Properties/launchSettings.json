@@ -11,7 +11,7 @@
     "anki_books": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7134;http://localhost:5131",
+      "applicationUrl": "http://localhost:52345;https://localhost:5234",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
