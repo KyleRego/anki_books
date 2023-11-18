@@ -2,6 +2,7 @@ namespace Tests;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Tests.Extensions;
 
 [TestFixture]
 public class LoggingInAsTestUser {
@@ -24,7 +25,7 @@ public class LoggingInAsTestUser {
 
   [Test]
   public void Test() {
-    driver.Navigate().GoToUrl("http://ankibooks.io/");
+    driver.Navigate().GoToUrl("http://localhost:3000/");
     driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
     driver.FindElement(By.LinkText("Login")).Click();
     IWebElement emailInput = driver.FindElement(By.Id("email"));
@@ -32,5 +33,6 @@ public class LoggingInAsTestUser {
     emailInput.SendKeys("test@example.com");
     passwordInput.SendKeys("1234asdf!!!!");
     driver.FindElement(By.Id("login")).Click();
+    driver.PauseXSeconds(5);
   }
 }
