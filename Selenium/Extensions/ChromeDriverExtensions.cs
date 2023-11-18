@@ -6,6 +6,16 @@ namespace Tests.Extensions;
 
 public static class ChromeDriverExtensions
 {
+    public static void TryToLoginWithClick(this IWebDriver driver, string email, string password)
+    {
+        driver.FindElement(By.LinkText("Login")).Click();
+        IWebElement emailInput = driver.FindElement(By.Id("email"));
+        IWebElement passwordInput = driver.FindElement(By.Id("password"));
+        emailInput.SendKeys(email);
+        passwordInput.SendKeys(password);
+        driver.FindElement(By.Id("login")).Click();
+    }
+
     public static void TabNTimes(this IWebDriver driver, int n)
     {
         for (int i = 0; i < n; i++)

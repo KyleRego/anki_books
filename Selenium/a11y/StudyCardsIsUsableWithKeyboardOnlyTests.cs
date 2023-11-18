@@ -33,12 +33,7 @@ public class StudyCards
   {
     driver.Navigate().GoToUrl("http://localhost:3000/");
     driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
-    driver.FindElement(By.LinkText("Login")).Click();
-    IWebElement emailInput = driver.FindElement(By.Id("email"));
-    IWebElement passwordInput = driver.FindElement(By.Id("password"));
-    emailInput.SendKeys("test@example.com");
-    passwordInput.SendKeys("1234asdf!!!!");
-    driver.FindElement(By.Id("login")).Click();
+    driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
 
     IWebElement studyCards = driver.FindElement(By.LinkText("Study cards"));
     WebDriverWait studyCardsWait = new(driver, TimeSpan.FromSeconds(2));
