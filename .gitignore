@@ -43,3 +43,11 @@ anki_books_source_code_deck.apkg
 
 Selenium/obj/
 Selenium/bin/
+
+**/*/.env.development.local
+AnkiBooks/bin
+AnkiBooks/obj
+AnkiBooks/ClientApp/.env.development.local
+AnkiBooks/ClientApp/node_modules
+AnkiBooks.Tests/bin
+AnkiBooks.Tests/obj
