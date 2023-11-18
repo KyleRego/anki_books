@@ -24,7 +24,7 @@ public class LoggingInAsTestUser {
 
   [Test]
   public void Test() {
-    driver.Navigate().GoToUrl("http://localhost:3000/");
+    driver.Navigate().GoToUrl("http://ankibooks.io/");
     driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
     driver.FindElement(By.LinkText("Login")).Click();
     IWebElement emailInput = driver.FindElement(By.Id("email"));

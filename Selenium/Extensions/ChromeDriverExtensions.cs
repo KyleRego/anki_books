@@ -17,4 +17,11 @@ public static class ChromeDriverExtensions
                 .Perform();
         }
     }
+
+    public static void PauseXSeconds(this IWebDriver driver, int x)
+    {
+        new Actions(driver)
+            .Pause(TimeSpan.FromSeconds(x))
+            .Perform();
+    }
 }
