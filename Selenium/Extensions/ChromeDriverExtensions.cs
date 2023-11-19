@@ -70,7 +70,7 @@ public static partial class ChromeDriverExtensions
             return;
         }
 
-        for (int i = 0; i < 10; i += 1)
+        for (int i = 0; i < 20; i += 1)
         {
             driver.TabNTimes(1);
             IWebElement activeElement = driver.SwitchTo().ActiveElement();
@@ -95,7 +95,7 @@ public static partial class ChromeDriverExtensions
             return;
         }
 
-        for (int i = 0; i < 10; i += 1)
+        for (int i = 0; i < 20; i += 1)
         {
             driver.ShiftTabNTimes(1);
             IWebElement activeElement = driver.SwitchTo().ActiveElement();

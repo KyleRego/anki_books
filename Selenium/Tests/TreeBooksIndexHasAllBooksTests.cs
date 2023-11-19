@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 using Tests.Extensions;
 
 [TestFixture]
-public class TreeBooksIndexHasAllBooks : AppTests
+public class BooksIndex : AppTests
 {
   [Test]
   public void Test()
@@ -33,5 +33,6 @@ public class TreeBooksIndexHasAllBooks : AppTests
       Assert.That(treeLinksCounter, Is.Not.Zero);
       Assert.That(alphabeticaLinksCounter, Is.EqualTo(treeLinksCounter));
     });
+    driver.PauseXSeconds(5);
   }
 }

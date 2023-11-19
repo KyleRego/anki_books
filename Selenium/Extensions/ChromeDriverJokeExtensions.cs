@@ -8,7 +8,6 @@ public static partial class ChromeDriverExtensions
 {
     public static void DanceOnTopNav(this IWebDriver driver)
     {
-        driver.PressTabUntilOnText("Read");
         driver.PressTabUntilOnText("Logout");
         driver.PressShiftTabUntilOnText("Read");
         driver.PressTabUntilOnText("Downloads");
@@ -19,6 +18,5 @@ public static partial class ChromeDriverExtensions
         driver.PressShiftTabUntilOnText("Read");
         driver.PressTabUntilOnText("Write");
         driver.PressShiftTabUntilOnText("Read");
-        driver.PauseXSeconds(1);
     }
 }
