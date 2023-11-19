@@ -6,11 +6,12 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 using Tests.Extensions;
+using Tests.Interfaces;
 
 [TestFixture]
-public class BasicsNotesCreate : AppTests
+public class BasicsNotesCreate : AppTests, IScreenWidthTesting
 {
-    private void TryToCreateBasicNote()
+    private void CreateBasicNote()
     {
         driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
         driver.PressTabUntilOnText("Read");
@@ -31,7 +32,7 @@ public class BasicsNotesCreate : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(1600, 760);
-        TryToCreateBasicNote();
+        CreateBasicNote();
     }
 
     [Test]
@@ -39,7 +40,7 @@ public class BasicsNotesCreate : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
-        TryToCreateBasicNote();
+        CreateBasicNote();
     }
 
     [Test]
@@ -47,6 +48,6 @@ public class BasicsNotesCreate : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(350, 600);
-        TryToCreateBasicNote();
+        CreateBasicNote();
     }
 }

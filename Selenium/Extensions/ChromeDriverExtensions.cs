@@ -97,6 +97,17 @@ public static partial class ChromeDriverExtensions
                     return;
                 }
             }
+
+            for (int i = 0; i < 40; i += 1)
+            {
+                driver.ShiftTabNTimes(1);
+                IWebElement activeElement = driver.CurrentActiveElement();
+
+                if (activeElement.Text == text)
+                {
+                    return;
+                }
+            }
         }
     }
 

@@ -6,11 +6,12 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 using Tests.Extensions;
+using Tests.Interfaces;
 
 [TestFixture]
-public class StudyCards : AppTests
+public class StudyCards : AppTests, IScreenWidthTesting
 {
-    private void RandomOrder()
+    private void StudyCardsRandomOrder()
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
@@ -30,7 +31,7 @@ public class StudyCards : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(1600, 760);
-        RandomOrder();
+        StudyCardsRandomOrder();
     }
 
     [Test]
@@ -38,7 +39,7 @@ public class StudyCards : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
-        RandomOrder();
+        StudyCardsRandomOrder();
     }
 
     [Test]
@@ -46,6 +47,6 @@ public class StudyCards : AppTests
     {
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(350, 600);
-        RandomOrder();
+        StudyCardsRandomOrder();
     }
 }
