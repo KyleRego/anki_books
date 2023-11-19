@@ -4,7 +4,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace Tests.Extensions;
 
-public static class ChromeDriverExtensions
+public static partial class ChromeDriverExtensions
 {
     public static void TryToLoginWithClick(this IWebDriver driver, string email, string password)
     {
@@ -57,8 +57,19 @@ public static class ChromeDriverExtensions
             .Perform();
     }
 
-    public static void PressTabUntilOnLinkWithText(this IWebDriver driver, string text)
+    /// <summary>
+    /// It will try to tab through source order until the active element has the specified text
+    /// </summary>
+    /// <param name="driver"></param>
+    /// <param name="text"></param>
+    public static void PressTabUntilOnText(this IWebDriver driver, string text)
     {
+        IWebElement initialActiveElement = driver.SwitchTo().ActiveElement();
+        if (initialActiveElement.Text == text)
+        {
+            return;
+        }
+
         for (int i = 0; i < 10; i += 1)
         {
             driver.TabNTimes(1);
@@ -71,8 +82,19 @@ public static class ChromeDriverExtensions
         }
     }
 
-    public static void PressShiftTabUntilOnLinkWithText(this IWebDriver driver, string text)
-    {
+    /// <summary>
+    /// It will try to tab through reverse source order until the active element has the specified text
+    /// </summary>
+    /// <param name="driver"></param>
+    /// <param name="text"></param>
+    public static void PressShiftTabUntilOnText(this IWebDriver driver, string text)
+    {   
+        IWebElement initialActiveElement = driver.SwitchTo().ActiveElement();
+        if (initialActiveElement.Text == text)
+        {
+            return;
+        }
+
         for (int i = 0; i < 10; i += 1)
         {
             driver.ShiftTabNTimes(1);
