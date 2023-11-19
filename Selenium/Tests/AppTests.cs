@@ -5,22 +5,25 @@ using OpenQA.Selenium.Chrome;
 using Tests.Extensions;
 
 [TestFixture]
-public abstract class AppTests {
-  protected IWebDriver driver;
-  protected IDictionary<string, object> Vars {get; private set;}
-  protected IJavaScriptExecutor js;
+public abstract class AppTests
+{
+    protected IWebDriver driver;
+    protected IDictionary<string, object> Vars { get; private set; }
+    protected IJavaScriptExecutor js;
 
-  [SetUp]
-  protected void SetUp() {
-    driver = new ChromeDriver();
-    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-    js = (IJavaScriptExecutor)driver;
-    Vars = new Dictionary<string, object>();
-  }
+    [SetUp]
+    protected void SetUp()
+    {
+        driver = new ChromeDriver();
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+        js = (IJavaScriptExecutor)driver;
+        Vars = new Dictionary<string, object>();
+    }
 
-  [TearDown]
-  protected void TearDown() {
-    driver.PauseXSeconds(5);
-    driver.Quit();
-  }
+    [TearDown]
+    protected void TearDown()
+    {
+        driver.PauseXSeconds(5);
+        driver.Quit();
+    }
 }

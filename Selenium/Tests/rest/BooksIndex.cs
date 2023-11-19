@@ -6,9 +6,10 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 using Tests.Extensions;
+using Tests.Interfaces;
 
 [TestFixture]
-public class BooksIndex : AppTests
+public class BooksIndex : AppTests, IScreenWidthTesting
 {
     private void DoTest()
     {
@@ -60,5 +61,12 @@ public class BooksIndex : AppTests
     {
         driver.Manage().Window.Size = new System.Drawing.Size(350, 600);
         DoTest();
+    }
+
+    [Test]
+    public void VerySmallScreenTest()
+    {
+        driver.Manage().Window.Size = new System.Drawing.Size(200, 320);
+        DoTest();        
     }
 }

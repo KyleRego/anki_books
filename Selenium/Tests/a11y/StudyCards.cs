@@ -49,4 +49,12 @@ public class StudyCards : AppTests, IScreenWidthTesting
         driver.Manage().Window.Size = new System.Drawing.Size(350, 600);
         StudyCardsRandomOrder();
     }
+
+    [Test]
+    public void VerySmallScreenTest()
+    {
+        driver.Navigate().GoToUrl("http://localhost:3000/");
+        driver.Manage().Window.Size = new System.Drawing.Size(200, 320);
+        StudyCardsRandomOrder();
+    }
 }

@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 using Tests.Extensions;
+using Tests.Interfaces;
 
 [TestFixture]
 public class TopNav : AppTests

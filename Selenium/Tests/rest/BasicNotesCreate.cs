@@ -11,8 +11,9 @@ using Tests.Interfaces;
 [TestFixture]
 public class BasicsNotesCreate : AppTests, IScreenWidthTesting
 {
-    private void CreateBasicNote()
+    private void DoTest()
     {
+        driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
         driver.PressTabUntilOnText("Read");
         driver.PressEnter();
@@ -30,24 +31,28 @@ public class BasicsNotesCreate : AppTests, IScreenWidthTesting
     [Test]
     public void LargeScreenTest()
     {
-        driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(1600, 760);
-        CreateBasicNote();
+        DoTest();
     }
 
     [Test]
     public void MediumScreenTest()
     {
-        driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
-        CreateBasicNote();
+        DoTest();
     }
 
     [Test]
     public void SmallScreenTest()
     {
-        driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(350, 600);
-        CreateBasicNote();
+        DoTest();
+    }
+
+    [Test]
+    public void VerySmallScreenTest()
+    {
+        driver.Manage().Window.Size = new System.Drawing.Size(200, 320);
+        DoTest();
     }
 }
