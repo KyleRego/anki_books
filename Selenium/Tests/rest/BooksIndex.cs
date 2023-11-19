@@ -33,6 +33,5 @@ public class BooksIndex : AppTests
       Assert.That(treeLinksCounter, Is.Not.Zero);
       Assert.That(alphabeticaLinksCounter, Is.EqualTo(treeLinksCounter));
     });
-    driver.PauseXSeconds(5);
   }
 }

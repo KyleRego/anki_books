@@ -1,11 +1,17 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools.V116.Profiler;
 using OpenQA.Selenium.Interactions;
 
 namespace Tests.Extensions;
 
 public static partial class ChromeDriverExtensions
 {
+    private static IWebElement CurrentActiveElement(this IWebDriver driver)
+    {
+        return driver.SwitchTo().ActiveElement();
+    }
+
     public static void TryToLoginWithClick(this IWebDriver driver, string email, string password)
     {
         driver.FindElement(By.LinkText("Login")).Click();
@@ -64,20 +70,32 @@ public static partial class ChromeDriverExtensions
     /// <param name="text"></param>
     public static void PressTabUntilOnText(this IWebDriver driver, string text)
     {
-        IWebElement initialActiveElement = driver.SwitchTo().ActiveElement();
-        if (initialActiveElement.Text == text)
+        try
         {
-            return;
+            Inner(driver, text);
+        }
+        catch
+        {
+            Inner(driver, text);
         }
 
-        for (int i = 0; i < 20; i += 1)
+        static void Inner(IWebDriver driver, string text)
         {
-            driver.TabNTimes(1);
-            IWebElement activeElement = driver.SwitchTo().ActiveElement();
-
-            if (activeElement.Text == text)
+            IWebElement initialActiveElement = driver.CurrentActiveElement();
+            if (initialActiveElement.Text == text)
             {
                 return;
+            }
+
+            for (int i = 0; i < 20; i += 1)
+            {
+                driver.TabNTimes(1);
+                IWebElement activeElement = driver.CurrentActiveElement();
+
+                if (activeElement.Text == text)
+                {
+                    return;
+                }
             }
         }
     }
@@ -88,8 +106,8 @@ public static partial class ChromeDriverExtensions
     /// <param name="driver"></param>
     /// <param name="text"></param>
     public static void PressShiftTabUntilOnText(this IWebDriver driver, string text)
-    {   
-        IWebElement initialActiveElement = driver.SwitchTo().ActiveElement();
+    {
+        IWebElement initialActiveElement = driver.CurrentActiveElement();
         if (initialActiveElement.Text == text)
         {
             return;
@@ -98,12 +116,18 @@ public static partial class ChromeDriverExtensions
         for (int i = 0; i < 20; i += 1)
         {
             driver.ShiftTabNTimes(1);
-            IWebElement activeElement = driver.SwitchTo().ActiveElement();
+            IWebElement activeElement = driver.CurrentActiveElement();
 
             if (activeElement.Text == text)
             {
                 return;
             }
         }
+    }
+
+    public static void EnterTextInActiveElement(this IWebDriver driver, string text)
+    {
+        IWebElement activeElement = driver.CurrentActiveElement();
+        activeElement.SendKeys(text);
     }
 }

@@ -2,6 +2,7 @@ namespace Tests;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Tests.Extensions;
 
 [TestFixture]
 public abstract class AppTests {
@@ -19,6 +20,7 @@ public abstract class AppTests {
 
   [TearDown]
   protected void TearDown() {
+    driver.PauseXSeconds(5);
     driver.Quit();
   }
 }
