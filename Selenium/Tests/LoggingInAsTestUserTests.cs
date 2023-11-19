@@ -2,33 +2,17 @@ namespace Tests;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+
 using Tests.Extensions;
 
 [TestFixture]
-public class LoggingInAsTestUser {
-  private IWebDriver driver;
-  public IDictionary<string, object> Vars {get; private set;}
-  private IJavaScriptExecutor js;
-
-  [SetUp]
-  public void SetUp() {
-    driver = new ChromeDriver();
-    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-    js = (IJavaScriptExecutor)driver;
-    Vars = new Dictionary<string, object>();
-  }
-
-  [TearDown]
-  protected void TearDown() {
-    driver.Quit();
-  }
-
-  [Test]
-  public void Test() {
-    driver.Navigate().GoToUrl("http://localhost:3000/");
-    driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
-    driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
-    driver.FindElement(By.Id("login")).Click();
-    driver.PauseXSeconds(5);
-  }
+public class LoggingInAsTestUser : AppTests
+{
+    [Test]
+    public void Test()
+    {
+        driver.Navigate().GoToUrl("http://localhost:3000/");
+        driver.Manage().Window.Size = new System.Drawing.Size(948, 1003);
+        driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
+    }
 }

@@ -1,33 +1,15 @@
 namespace Tests;
 
-using Tests.Extensions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
+using Tests.Extensions;
+
 [TestFixture]
-public class StudyCards
+public class StudyCards : AppTests
 {
-  private IWebDriver driver;
-  public IDictionary<string, object> Vars { get; private set; }
-  private IJavaScriptExecutor js;
-
-  [SetUp]
-  public void SetUp()
-  {
-    driver = new ChromeDriver();
-    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-    js = (IJavaScriptExecutor)driver;
-    Vars = new Dictionary<string, object>();
-  }
-
-  [TearDown]
-  protected void TearDown()
-  {
-    driver.Quit();
-  }
-
   [Test]
   public void Test()
   {

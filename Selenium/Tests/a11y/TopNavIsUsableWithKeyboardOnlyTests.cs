@@ -2,27 +2,12 @@ namespace Tests;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+
 using Tests.Extensions;
 
 [TestFixture]
-public class Production {
-  private IWebDriver driver;
-  public IDictionary<string, object> Vars {get; private set;}
-  private IJavaScriptExecutor js;
-
-  [SetUp]
-  public void SetUp() {
-    driver = new ChromeDriver();
-    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-    js = (IJavaScriptExecutor)driver;
-    Vars = new Dictionary<string, object>();
-  }
-
-  [TearDown]
-  protected void TearDown() {
-    driver.Quit();
-  }
-
+public class TopNav : AppTests
+{
   [Test]
   public void Test() {
     driver.Navigate().GoToUrl("http://localhost:3000/");
