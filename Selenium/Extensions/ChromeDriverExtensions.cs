@@ -43,7 +43,7 @@ public static partial class ChromeDriverExtensions
                 .KeyDown(Keys.Tab)
                 .KeyUp(Keys.Tab)
                 .KeyUp(Keys.Shift)
-                .Pause(TimeSpan.FromSeconds(0.25))
+                .Pause(TimeSpan.FromSeconds(0.04))
                 .Perform();
         }
     }
