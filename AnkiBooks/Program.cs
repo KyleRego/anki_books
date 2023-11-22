@@ -1,4 +1,6 @@
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-WebApplication app = builder.Build();
+using AnkiBooks;
+
+WebApplicationBuilder builder = AnkiBooksApplication.ApplicationBuilder();
+WebApplication app = AnkiBooksApplication.Application(builder);
 
 app.Run();

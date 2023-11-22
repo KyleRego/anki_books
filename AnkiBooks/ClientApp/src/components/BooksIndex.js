@@ -39,7 +39,7 @@ export class BooksIndex extends Component {
   }
 
   async populateBooksData() {
-    const endpoint = "book";
+    const endpoint = "https://localhost:5234/api/books";
     console.log(endpoint);
     const response = await fetch(endpoint);
     console.log(response);

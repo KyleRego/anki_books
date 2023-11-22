@@ -6,17 +6,16 @@ using Microsoft.AspNetCore.Cors;
 namespace AnkiBooks.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class BookController : ApplicationController
+[Route("api/[controller]")]
+public class BooksController : ApplicationController
 {
-    public BookController(AnkiBooksDatabase dbContext,
-                      ILogger<BookController> logger) : base(dbContext, logger)
+    public BooksController(AnkiBooksDatabase dbContext,
+                      ILogger<BooksController> logger) : base(dbContext, logger)
     {
     }
 
-    [EnableCors("_myAllowSpecificOrigins")]
     [HttpGet]
-    public IEnumerable<Book> Index(ILogger<BookController> logger)
+    public IEnumerable<Book> Index(ILogger<BooksController> logger)
     {
         logger.LogInformation("Hello world from BooksController");
         return _dbContext.Books.Where(b => b.ParentBookId == null).ToList();
