@@ -15,11 +15,11 @@ export class BooksIndex extends Component {
   static renderBooksList(books) {
     return (
       <div>
-          {books.map(book =>
-            <div key={book.id}>
-              <span>{book.title}</span>
-            </div>
-          )}
+        {books.map(book =>
+          <div key={book.id}>
+            <span>{book.title}</span>
+          </div>
+        )}
       </div>
     );
   }
@@ -39,7 +39,10 @@ export class BooksIndex extends Component {
   }
 
   async populateBooksData() {
-    const response = await fetch("/books");
+    const endpoint = "book";
+    console.log(endpoint);
+    const response = await fetch(endpoint);
+    console.log(response);
     const data = await response.json();
     this.setState({ books: data, loading: false });
   }

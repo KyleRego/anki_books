@@ -40,7 +40,10 @@ export class ArticlesIndex extends Component {
 
   async populateArticlesData() {
     try {
-      const response = await fetch("/articles");
+      const endpoint = "article";
+      console.log(endpoint);
+      const response = await fetch(endpoint);
+      console.log(response);
       const data = await response.json();
       this.setState({ articles: data, loading: false });
     } catch(error) {

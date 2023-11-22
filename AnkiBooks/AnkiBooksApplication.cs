@@ -8,9 +8,22 @@ namespace AnkiBooks;
 /// </summary>
 public class AnkiBooksApplication
 {
+    static readonly private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
     public static WebApplicationBuilder ApplicationBuilder()
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddSwaggerGen();
@@ -34,6 +47,8 @@ public class AnkiBooksApplication
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+
+        app.UseCors(MyAllowSpecificOrigins);
 
         app.MapControllerRoute(
             name: "default",
