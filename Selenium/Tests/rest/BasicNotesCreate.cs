@@ -19,19 +19,20 @@ public class BasicsNotesCreate : AppTests, IScreenWidthTesting
         driver.PressEnter();
         driver.PressTabUntilOnText("New note");
         driver.PressEnter();
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Hello 1");
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Word 1");
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnSubmitInput();
         driver.PressEnter();
+        driver.PauseXSeconds(5);
         driver.PressTabUntilOnText("New note");
         driver.PressEnter();
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Hello 2");
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Word 2");
-        driver.TabNTimes(1);
+        driver.PressTabUntilOnSubmitInput();
         driver.PressEnter();
     }
 

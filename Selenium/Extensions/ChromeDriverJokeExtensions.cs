@@ -6,6 +6,10 @@ namespace Tests.Extensions;
 
 public static partial class ChromeDriverExtensions
 {
+    /// <summary>
+    /// Tabs and shift tabs in a pattern over the top nav
+    /// </summary>
+    /// <param name="driver"></param>
     public static void DanceOnTopNav(this IWebDriver driver)
     {
         driver.PressTabUntilOnText("Logout");
