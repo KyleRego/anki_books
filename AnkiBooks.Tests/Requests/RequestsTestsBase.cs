@@ -1,16 +1,16 @@
 using System.Net;
 using Microsoft.AspNetCore.Builder;
-using AnkiBooks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using AnkiBooks;
 
 namespace AnkiBooks.Tests.Requests;
 
-public abstract class AbstractRequestsTestsBase
+public abstract class RequestsTestsBase
 {
     protected HttpClient _httpClient;
     protected WebApplication _app;
 
-    protected AbstractRequestsTestsBase()
+    protected RequestsTestsBase()
     {
         _httpClient = new HttpClient
         {

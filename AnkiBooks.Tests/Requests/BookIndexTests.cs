@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace AnkiBooks.Tests.Requests;
 
-public class BookIndexTests : AbstractRequestsTestsBase
+public class BookIndexTests : RequestsTestsBase
 {
 
     public BookIndexTests() : base()
@@ -16,7 +16,7 @@ public class BookIndexTests : AbstractRequestsTestsBase
     [Fact]
     public async Task BookIndexReturns200OKAsync()
     {
-        string endpoint = "/book";
+        string endpoint = "/books";
 
         HttpRequestMessage request = new(HttpMethod.Get, endpoint);
 
