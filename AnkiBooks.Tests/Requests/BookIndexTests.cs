@@ -2,25 +2,27 @@ using Microsoft.AspNetCore.Builder;
 using AnkiBooks;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace AnkiBooks.Tests.Requests;
 
-public class BookIndexTests : RequestsTestsBase
+public class BookIndexTests : IClassFixture<WebApplicationFactory<Program>>
 {
+    protected readonly WebApplicationFactory<Program> _factory;
+    protected readonly HttpClient _client;
 
-    public BookIndexTests() : base()
+    public BookIndexTests(WebApplicationFactory<Program> factory)
     {
-        _app.Run();
+        _factory = factory;
+        _client = _factory.CreateClient();
     }
 
     [Fact]
-    public async Task BookIndexReturns200OKAsync()
+    public async Task GetBooksIndexReturns200OKAsync()
     {
-        string endpoint = "/books";
+        string endpoint = "/api/books";
 
-        HttpRequestMessage request = new(HttpMethod.Get, endpoint);
-
-        HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
+        HttpResponseMessage response = await _client.GetAsync(endpoint);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

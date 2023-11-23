@@ -6,14 +6,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
 builder.Services.AddCors(options =>
 {
-  options.AddPolicy(name: MyAllowSpecificOrigins,
-              policy =>
-              {
-                policy.WithOrigins("https://localhost:44454")
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-              });
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                policy =>
+                {
+                    policy.WithOrigins("https://localhost:44454")
+                              .AllowAnyMethod()
+                              .AllowAnyHeader()
+                              .AllowCredentials();
+                });
 });
 
 builder.Services.AddControllersWithViews();
@@ -24,7 +24,7 @@ WebApplication app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-  app.UseHsts();
+    app.UseHsts();
 }
 
 app.UseSwagger();
@@ -38,8 +38,14 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    pattern: "api/{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+namespace AnkiBooks
+{
+    // Exposes the implicitly defined Program class to the test project
+    public partial class Program { }
+}
