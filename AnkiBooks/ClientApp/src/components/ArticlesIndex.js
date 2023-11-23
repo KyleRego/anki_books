@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import client from "../client";
 
 export class ArticlesIndex extends Component {
   static displayName = ArticlesIndex.name;
@@ -40,11 +41,7 @@ export class ArticlesIndex extends Component {
 
   async populateArticlesData() {
     try {
-      const endpoint = "article";
-      console.log(endpoint);
-      const response = await fetch(endpoint);
-      console.log(response);
-      const data = await response.json();
+      const data = await client.get("articles");
       this.setState({ articles: data, loading: false });
     } catch(error) {
       console.log("Something went wrong:");

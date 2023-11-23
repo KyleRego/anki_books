@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import client from "../client";
 
 export class BooksIndex extends Component {
   static displayName = BooksIndex.name;
@@ -39,11 +40,12 @@ export class BooksIndex extends Component {
   }
 
   async populateBooksData() {
-    const endpoint = "https://localhost:5234/api/books";
-    console.log(endpoint);
-    const response = await fetch(endpoint);
-    console.log(response);
-    const data = await response.json();
-    this.setState({ books: data, loading: false });
+    try {
+      const data = await client.get("books");
+      this.setState({ books: data, loading: false });
+    } catch(error) {
+      console.log("Something went wrong:");
+      console.log(error);
+    }
   }
 }
