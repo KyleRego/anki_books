@@ -25,6 +25,7 @@ class ArticlesController < ApplicationController
       redirect_to root_path, status: :moved_permanently
     else
       @basic_notes = @article.basic_notes.ordered
+      @cloze_notes = @article.cloze_notes
     end
     @html_page_title = @article.title
   end

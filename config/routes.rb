@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   resources :articles, only: [], param: :id do
     resources :basic_notes, only: %i[new create edit update destroy]
+    resources :cloze_notes, only: %i[new create edit update]
   end
 
   get "/downloads", to: "users#downloads", as: "downloads"

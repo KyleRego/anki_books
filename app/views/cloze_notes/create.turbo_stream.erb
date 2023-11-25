@@ -1,0 +1,8 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<%= turbo_stream.replace new_cloze_note_turbo_id do %>
+  <%= render partial: "articles/cloze_note/new_cloze_note_link" %>
+  <%= render partial: "articles/cloze_note/show" %>
+<% end %>

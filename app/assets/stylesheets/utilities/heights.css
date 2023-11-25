@@ -30,4 +30,8 @@ Copyright (C) 2023 Kyle Rego */
   .h-6 {
     height: 1.5rem;
   }
+
+  .h-24 {
+    height: 6rem;
+  }
 }

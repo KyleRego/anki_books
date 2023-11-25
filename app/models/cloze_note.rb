@@ -25,6 +25,7 @@ class ClozeNote < ApplicationRecord
   include AnkiGuidable
 
   include ClozeNote::AnkiContentable
+  include ClozeNote::TurboFrameable
 
   # TODO: See if this (and same in Basic Note)
   # can be included into the module where they are used

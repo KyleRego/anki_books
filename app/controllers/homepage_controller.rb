@@ -27,5 +27,6 @@ class HomepageController < ApplicationController
     # view is completed.
     @article = Article.find_by(system: true)
     @basic_notes = @article.basic_notes.ordered
+    @cloze_notes = @article.cloze_notes
   end
 end

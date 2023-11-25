@@ -1,0 +1,17 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<div>
+  <%= turbo_frame_tag @cloze_note.turbo_id, class: "existing-cloze-note-turbo-frame min-w-max" do %>
+    <div class="flex flex-row mb-6">
+      <div class="min-w-0 flex-1">
+        <%= render partial: "articles/cloze_note/revealable_cloze_note" %>
+      </div>
+
+      <div class="flex-shrink flex flex-col wm-vertical-lr">
+        <div class="text-center"><%= render partial: "articles/cloze_note/edit_cloze_note_link" %></div>
+      </div>
+    </div>
+  <% end %>
+</div>
