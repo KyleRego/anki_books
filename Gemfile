@@ -84,3 +84,5 @@ gem "anki_record", "~> 0.4.1"
 gem "whenever", require: false
 
 gem "text", "~> 1.3"
+
+gem "foreman", "~> 0.87.2"
