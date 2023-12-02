@@ -20,7 +20,7 @@ class BooksController < ApplicationController
     @use_book_version = true
     @book = Book.includes(articles: :basic_notes)
                 .order("articles.ordinal_position")
-                .order("basic_notes.ordinal_position").find(params[:id])
+                .order("notes.ordinal_position").find(params[:id])
     @html_page_title = @book.title
   end
 
@@ -67,7 +67,7 @@ class BooksController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @book.ordered_basic_notes
+    @basic_notes = @book.ordered_notes
   end
 
   def transfer_articles

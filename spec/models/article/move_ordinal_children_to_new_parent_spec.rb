@@ -4,7 +4,6 @@
 
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/ExampleLength
 RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
   subject(:move_ordinal_children_to_new_parent) do
     article.move_ordinal_children_to_new_parent(children:, new_parent:)
@@ -91,4 +90,3 @@ RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
     end
   end
 end
-# rubocop:enable RSpec/ExampleLength

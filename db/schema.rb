@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_26_151536) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -68,19 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_151536) do
     t.check_constraint "ordinal_position >= 0", name: "articles_ordinal_position_check"
   end
 
-  create_table "basic_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "front"
-    t.text "back"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "article_id", null: false
-    t.integer "ordinal_position", null: false
-    t.string "anki_guid", null: false
-    t.index ["anki_guid"], name: "index_basic_notes_on_anki_guid", unique: true
-    t.index ["ordinal_position", "article_id"], name: "index_basic_notes_on_ordinal_position_and_article_id", unique: true
-    t.check_constraint "ordinal_position >= 0", name: "basic_notes_ordinal_position_check"
-  end
-
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -124,6 +111,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_151536) do
     t.index ["user_id", "name"], name: "index_concepts_on_user_id_and_name", unique: true
   end
 
+  create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "front"
+    t.text "back"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "article_id", null: false
+    t.integer "ordinal_position", null: false
+    t.string "anki_guid", null: false
+    t.string "type"
+    t.index ["anki_guid"], name: "index_notes_on_anki_guid", unique: true
+    t.index ["ordinal_position", "article_id"], name: "index_notes_on_ordinal_position_and_article_id", unique: true
+    t.check_constraint "ordinal_position >= 0", name: "notes_ordinal_position_check"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
     t.string "username"
@@ -137,7 +138,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_151536) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "books"
-  add_foreign_key "basic_notes", "articles"
   add_foreign_key "books", "books", column: "parent_book_id"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"

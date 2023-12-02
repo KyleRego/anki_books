@@ -23,7 +23,7 @@
 #
 #  fk_rails_...  (article_id => articles.id)
 #
-class BasicNote < ApplicationRecord
+class BasicNote < Note
   include AnkiTimestampable
   include AnkiGuidable
 

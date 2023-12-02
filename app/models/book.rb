@@ -59,10 +59,10 @@ class Book < ApplicationRecord
 
   delegate :count, to: :articles, prefix: true
 
-  def ordered_basic_notes
+  def ordered_notes
     BasicNote.joins(article: :book)
              .where(articles: { book_id: id })
-             .order("articles.ordinal_position, basic_notes.ordinal_position")
+             .order("articles.ordinal_position, notes.ordinal_position")
   end
 
   def anki_deck_name

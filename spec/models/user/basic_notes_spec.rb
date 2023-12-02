@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe User, "#notes" do
+RSpec.describe User, "#basic_notes" do
   include_context "when the user has two books, three articles, 5 basic notes per article"
 
   it "returns the basic notes of the user's books' articles" do

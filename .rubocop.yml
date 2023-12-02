@@ -42,8 +42,7 @@ RSpec/MultipleExpectations:
   Enabled: false
 
 RSpec/ExampleLength:
-  Exclude:
-    - spec/requests/**/*.rb
+  Max: 15
 
 Rails/I18nLocaleTexts:
   Enabled: false
