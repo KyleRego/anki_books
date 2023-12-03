@@ -9,7 +9,7 @@ class MoveClozeNotesToNotes < ActiveRecord::Migration[7.0]
   def up
     execute <<~SQL
       INSERT INTO notes (id, sentence, ordinal_position, article_id, created_at, updated_at, anki_guid, type)
-      SELECT id, sentence, (SELECT (MAX(ordinal_position) + round(random() * 100000)) FROM notes WHERE article_id = cn.article_id), article_id, created_at, updated_at, anki_guid, 'ClozeNote'
+      SELECT id, sentence, (round(random() * 100000)), article_id, created_at, updated_at, anki_guid, 'ClozeNote'
       FROM cloze_notes cn;
     SQL
   end
