@@ -14,7 +14,7 @@ class ConceptsController < ApplicationController
   end
 
   def show
-    @cloze_notes = @concept.cloze_notes.includes(:article)
+    @cloze_notes = @concept.notes.cloze.includes(:article)
   end
 
   def manage

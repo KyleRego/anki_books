@@ -16,8 +16,8 @@ class FixOrdinalPositionsJob < ApplicationJob
 
     Article.find_each do |a|
       unless a.correct_children_ordinal_positions?
-        a.basic_notes.order(:ordinal_position).each_with_index do |bn, i|
-          bn.update!(ordinal_position: i)
+        a.notes.order(:ordinal_position).each_with_index do |note, i|
+          note.update!(ordinal_position: i)
         end
       end
     end

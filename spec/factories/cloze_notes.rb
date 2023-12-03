@@ -21,5 +21,6 @@ TEST_SENTENCE = "Cloze note test sentence."
 FactoryBot.define do
   factory :cloze_note do
     sentence { TEST_SENTENCE }
+    ordinal_position { article&.notes_count }
   end
 end

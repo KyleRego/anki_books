@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_03_143640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -84,24 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
     t.index ["book_id", "user_id"], name: "index_books_users_on_book_id_and_user_id", unique: true
   end
 
-  create_table "cloze_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "sentence", null: false
-    t.uuid "article_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "anki_guid", null: false
-    t.index ["anki_guid"], name: "index_cloze_notes_on_anki_guid", unique: true
-    t.index ["article_id"], name: "index_cloze_notes_on_article_id"
-  end
-
-  create_table "cloze_notes_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "cloze_note_id", null: false
-    t.uuid "concept_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cloze_note_id", "concept_id"], name: "index_cloze_notes_concepts_on_cloze_note_id_and_concept_id", unique: true
-  end
-
   create_table "concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -109,6 +91,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
     t.uuid "user_id", null: false
     t.index "lower((name)::text)", name: "index_concepts_on_lower_name", unique: true
     t.index ["user_id", "name"], name: "index_concepts_on_user_id_and_name", unique: true
+  end
+
+  create_table "concepts_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "note_id", null: false
+    t.uuid "concept_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id", "concept_id"], name: "index_concepts_notes_on_note_id_and_concept_id", unique: true
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -119,7 +109,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
     t.uuid "article_id", null: false
     t.integer "ordinal_position", null: false
     t.string "anki_guid", null: false
-    t.string "type"
+    t.string "type", null: false
+    t.text "sentence"
     t.index ["anki_guid"], name: "index_notes_on_anki_guid", unique: true
     t.index ["ordinal_position", "article_id"], name: "index_notes_on_ordinal_position_and_article_id", unique: true
     t.check_constraint "ordinal_position >= 0", name: "notes_ordinal_position_check"
@@ -141,8 +132,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_144522) do
   add_foreign_key "books", "books", column: "parent_book_id"
   add_foreign_key "books_users", "books"
   add_foreign_key "books_users", "users"
-  add_foreign_key "cloze_notes", "articles"
-  add_foreign_key "cloze_notes_concepts", "cloze_notes"
-  add_foreign_key "cloze_notes_concepts", "concepts"
   add_foreign_key "concepts", "users"
+  add_foreign_key "concepts_notes", "concepts"
+  add_foreign_key "concepts_notes", "notes"
+  add_foreign_key "notes", "articles"
 end

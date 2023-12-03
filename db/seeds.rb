@@ -36,7 +36,7 @@ system_article.save!
 system_article_basic_notes.each do |raw_basic_note|
   front = raw_basic_note.first
   back = raw_basic_note.last
-  BasicNote.create!(article: system_article, front:, back:, ordinal_position: system_article.basic_notes_count)
+  BasicNote.create!(article: system_article, front:, back:, ordinal_position: system_article.notes_count)
 end
 
 book_for_testing_reordering = Book.create!(title: "Book for testing reordering")

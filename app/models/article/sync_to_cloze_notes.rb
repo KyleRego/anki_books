@@ -123,7 +123,8 @@ module Article::SyncToClozeNotes
 
     cloze_sent_concepts_structs.select { |sc_match| sc_match.cloze_note_synced == false }.each do |cloze_sent_concepts_struct|
       article_sentence = cloze_sent_concepts_struct.sentence
-      cloze_note = cloze_notes.create!(sentence: article_sentence, concepts: cloze_sent_concepts_struct.concepts)
+      cloze_note = cloze_notes.create!(sentence: article_sentence, concepts: cloze_sent_concepts_struct.concepts,
+                                       ordinal_position: notes_count)
       synced_cloze_note_ids << cloze_note.id
     end
 

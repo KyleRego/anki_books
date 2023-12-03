@@ -42,4 +42,46 @@ RSpec.describe Article, "#correct_children_ordinal_positions?" do
       expect(valid_child_ordinal_positions).to be false
     end
   end
+
+  context "when article has three cloze notes at positions 0, 1, and 2" do
+    before do
+      create(:cloze_note, article:, ordinal_position: 0)
+      create(:cloze_note, article:, ordinal_position: 1)
+      create(:cloze_note, article:, ordinal_position: 2)
+    end
+
+    it "returns true" do
+      expect(valid_child_ordinal_positions).to be true
+    end
+  end
+
+  context "when article has alternating basic and cloze notes at positions 0-5" do
+    before do
+      create(:basic_note, article:, ordinal_position: 0)
+      create(:cloze_note, article:, ordinal_position: 1)
+      create(:basic_note, article:, ordinal_position: 2)
+      create(:cloze_note, article:, ordinal_position: 3)
+      create(:basic_note, article:, ordinal_position: 4)
+    end
+
+    it "returns true" do
+      expect(valid_child_ordinal_positions).to be true
+    end
+  end
+
+  context "when article has a cloze note at a too far position" do
+    before do
+      create(:basic_note, article:, ordinal_position: 0)
+      create(:cloze_note, article:, ordinal_position: 1)
+      create(:basic_note, article:, ordinal_position: 2)
+      create(:cloze_note, article:, ordinal_position: 3)
+      create(:basic_note, article:, ordinal_position: 4)
+
+      create(:cloze_note, article:, ordinal_position: 7)
+    end
+
+    it "returns false" do
+      expect(valid_child_ordinal_positions).to be false
+    end
+  end
 end

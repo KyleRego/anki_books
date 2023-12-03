@@ -19,7 +19,7 @@
 #  fk_rails_...  (cloze_note_id => cloze_notes.id)
 #  fk_rails_...  (concept_id => concepts.id)
 #
-class ClozeNotesConcept < ApplicationRecord
-  belongs_to :cloze_note
+class ConceptsNote < ApplicationRecord
+  belongs_to :note
   belongs_to :concept
 end

@@ -21,6 +21,7 @@ class ClozeNotesController < ApplicationController
 
   def create
     @cloze_note = @article.cloze_notes.new(cloze_note_params)
+    @cloze_note.ordinal_position = @article.notes_count
     return if @cloze_note.save
 
     flash.now[:alert] = @cloze_note.errors.full_messages.first

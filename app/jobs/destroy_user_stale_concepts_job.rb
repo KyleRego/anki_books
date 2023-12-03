@@ -11,7 +11,7 @@ class DestroyUserStaleConceptsJob < ApplicationJob
 
   def perform(user:)
     user.concepts.find_each do |concept|
-      next if concept.cloze_notes.any?
+      next if concept.notes.any?
 
       concept.destroy
     end

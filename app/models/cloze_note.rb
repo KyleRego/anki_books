@@ -21,22 +21,10 @@
 #
 #  fk_rails_...  (article_id => articles.id)
 #
-class ClozeNote < ApplicationRecord
-  include AnkiGuidable
-
+class ClozeNote < Note
   include ClozeNote::AnkiContentable
   include ClozeNote::TurboFrameable
 
-  # TODO: See if this (and same in Basic Note)
-  # can be included into the module where they are used
-  # is used instead rather than here (AnkiContentable)
   include ERB::Util
   include Rails.application.routes.url_helpers
-
-  belongs_to :article
-
-  has_many :cloze_notes_concepts, dependent: :destroy
-  has_many :concepts, through: :cloze_notes_concepts
-
-  validates :sentence, presence: true
 end

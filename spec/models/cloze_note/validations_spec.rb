@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ClozeNote, "#valid?" do
-  subject(:basic_note) { build(:cloze_note, article:, sentence:, concepts:) }
+  subject(:cloze_note) { build(:cloze_note, article:, sentence:, concepts:) }
 
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
@@ -35,7 +35,7 @@ RSpec.describe ClozeNote, "#valid?" do
 
   context "when anki_guid is the same as a different cloze note" do
     before do
-      basic_note.anki_guid = create(:cloze_note, article:).anki_guid
+      cloze_note.anki_guid = create(:cloze_note, article:).anki_guid
     end
 
     it { is_expected.not_to be_valid }

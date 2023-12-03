@@ -25,21 +25,10 @@
 #
 class BasicNote < Note
   include AnkiTimestampable
-  include AnkiGuidable
 
   include BasicNote::AnkiContentable
   include BasicNote::TurboFrameable
 
   include ERB::Util
   include Rails.application.routes.url_helpers
-
-  validates :front, presence: true
-  validates :back, presence: true
-  validates :ordinal_position, presence: true,
-                               uniqueness: { scope: :article_id },
-                               numericality: { greater_than_or_equal_to: 0 }
-
-  belongs_to :article
-
-  scope :ordered, -> { order(:ordinal_position) }
 end

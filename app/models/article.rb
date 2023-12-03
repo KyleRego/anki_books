@@ -33,6 +33,7 @@ class Article < ApplicationRecord
 
   has_rich_text :content
 
+  has_many :notes, dependent: :destroy
   has_many :basic_notes, dependent: :destroy
   has_many :cloze_notes, dependent: :destroy
 
@@ -41,5 +42,5 @@ class Article < ApplicationRecord
 
   scope :ordered, -> { order(:ordinal_position) }
 
-  delegate :count, to: :basic_notes, prefix: true
+  delegate :count, to: :notes, prefix: true
 end

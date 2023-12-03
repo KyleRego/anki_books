@@ -25,7 +25,7 @@ module Article::HasManyOrdinalChildren
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
     removed_article_ordinal_position = child.ordinal_position
-    child.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
+    child.update(article: new_parent, ordinal_position: new_parent.notes_count)
     new_parent.reposition_ordinal_child(child:, new_ordinal_position:)
     basic_notes.order(:ordinal_position).where("ordinal_position > ?", removed_article_ordinal_position).each do |basic_note|
       basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
@@ -44,7 +44,7 @@ module Article::HasManyOrdinalChildren
     raise ArgumentError unless article_ids.uniq.count == 1 && article_ids.first == id
 
     children.order(:ordinal_position).each do |basic_note|
-      basic_note.update(article: new_parent, ordinal_position: new_parent.basic_notes_count)
+      basic_note.update(article: new_parent, ordinal_position: new_parent.notes_count)
     end
     basic_notes.ordered.each_with_index do |basic_note, index|
       basic_note.update(ordinal_position: index)
@@ -53,7 +53,7 @@ module Article::HasManyOrdinalChildren
   # rubocop:enable Metrics/AbcSize
 
   def expected_ordinal_positions
-    (0...basic_notes_count).to_a
+    (0...notes_count).to_a
   end
 
   private
@@ -65,7 +65,7 @@ module Article::HasManyOrdinalChildren
   end
 
   def ordinal_positions
-    basic_notes.ordered.pluck(:ordinal_position)
+    notes.ordered.pluck(:ordinal_position)
   end
 
   def child_belongs_to_parent?(child:)

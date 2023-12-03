@@ -87,7 +87,7 @@ end
 
 Then "the article {string} should have {int} basic notes" do |string, int|
   article = Article.find_by(title: string)
-  expect(article.basic_notes_count).to eq int
+  expect(article.basic_notes.count).to eq int
 end
 
 Then "I should be redirected to the article {string}" do |article_title|

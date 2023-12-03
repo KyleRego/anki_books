@@ -73,4 +73,35 @@ RSpec.describe FixOrdinalPositionsJob, ".perform" do
       expect(article.reload.correct_children_ordinal_positions?).to be true
     end
   end
+
+  context "when article has basic notes and cloze notes at invalid positions" do
+    let(:article) { create(:article, book: create(:book)) }
+
+    before do
+      create(:basic_note, article:, ordinal_position: 0)
+      create(:cloze_note, article:, ordinal_position: 2)
+      create(:basic_note, article:, ordinal_position: 3)
+      create(:cloze_note, article:, ordinal_position: 7)
+      create(:basic_note, article:, ordinal_position: 8)
+      create(:cloze_note, article:, ordinal_position: 15)
+    end
+
+    it "fixes the ordinal positions" do
+      expect(article.correct_children_ordinal_positions?).to be false
+      fix_ordinal_positions_job
+      article.basic_notes.reload
+      expect(article.reload.correct_children_ordinal_positions?).to be true
+    end
+
+    it "maintains the original order of the notes after correcting the positions" do
+      fix_ordinal_positions_job
+      article.basic_notes.reload
+      expect(article.notes.find_by(ordinal_position: 0).type).to eq "BasicNote"
+      expect(article.notes.find_by(ordinal_position: 1).type).to eq "ClozeNote"
+      expect(article.notes.find_by(ordinal_position: 2).type).to eq "BasicNote"
+      expect(article.notes.find_by(ordinal_position: 3).type).to eq "ClozeNote"
+      expect(article.notes.find_by(ordinal_position: 4).type).to eq "BasicNote"
+      expect(article.notes.find_by(ordinal_position: 5).type).to eq "ClozeNote"
+    end
+  end
 end

@@ -32,7 +32,7 @@ RSpec.describe Article, "#move_ordinal_child_to_new_parent" do
       it "moves the basic note and puts it at the end of the article (ordinal position 0)" do
         move_ordinal_child_to_new_parent
         expect(basic_note.reload.article).to eq new_parent
-        expect(basic_note.ordinal_position).to eq(new_parent.basic_notes_count - 1)
+        expect(basic_note.ordinal_position).to eq(new_parent.notes_count - 1)
         expect(article.correct_children_ordinal_positions?).to be true
         expect(new_parent.correct_children_ordinal_positions?).to be true
       end

@@ -29,8 +29,8 @@ class Concept < ApplicationRecord
 
   belongs_to :user, optional: false
 
-  has_many :cloze_notes_concepts, dependent: :destroy
-  has_many :cloze_notes, through: :cloze_notes_concepts
+  has_many :concepts_notes, dependent: :destroy
+  has_many :notes, through: :concepts_notes
 
   scope :ordered, -> { order(:name) }
 end
