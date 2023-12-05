@@ -12,6 +12,24 @@ RSpec.describe Article, "#reposition_ordinal_child" do
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
 
+  context "when article has basic notes and cloze notes" do
+    before do
+      create(:basic_note, article:, ordinal_position: 0)
+      create(:cloze_note, article:, ordinal_position: 1)
+      create(:basic_note, article:, ordinal_position: 2)
+      create(:cloze_note, article:, ordinal_position: 3)
+    end
+
+    let(:basic_note) { article.basic_notes.find_by(ordinal_position: 2) }
+    let(:new_ordinal_position) { 1 }
+
+    it "rearranges both basic notes and cloze notes to reposition the basic note" do
+      expect(reposition_ordinal_child).to be true
+      expect(basic_note.reload.ordinal_position).to eq 1
+      expect(article.correct_children_ordinal_positions?).to be true
+    end
+  end
+
   context "when article has two basic notes" do
     before { create_list(:basic_note, 2, article:) }
 

@@ -51,6 +51,35 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
         end
       end
 
+      context "when the article has cloze notes and basic notes" do
+        before do
+          create(:basic_note, article:, ordinal_position: 0)
+          create(:cloze_note, article:, ordinal_position: 1)
+          create(:basic_note, article:, ordinal_position: 2)
+          create(:cloze_note, article:, ordinal_position: 3)
+        end
+
+        context "when basic note is added at the end" do
+          let(:ordinal_position) { 4 }
+          let(:turbo_id) { "todo-put turbo id here after refactor front end" }
+
+          it "creates a basic note at the end" do
+            expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+            expect(article.correct_children_ordinal_positions?).to be true
+          end
+        end
+
+        context "when basic note is added in the middle" do
+          let(:ordinal_position) { 1 }
+          let(:turbo_id) { "todo" }
+
+          it "creates a basic note at the ordinal position given by the param" do
+            expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
+            expect(article.correct_children_ordinal_positions?).to be true
+          end
+        end
+      end
+
       context "when the ordinal position param is greater than how many basic notes the article has" do
         let(:ordinal_position) { 2 }
         let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }

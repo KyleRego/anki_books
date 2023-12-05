@@ -75,10 +75,10 @@ module Article::HasManyOrdinalChildren
   end
 
   def ordinally_positioned_children
-    basic_notes
+    notes
   end
 
   def ordinally_positioned_children_count
-    basic_notes.count
+    notes.count
   end
 end
