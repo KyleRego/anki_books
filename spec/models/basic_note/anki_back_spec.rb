@@ -9,7 +9,7 @@ RSpec.describe BasicNote, "#anki_back" do
   let(:basic_note) { create(:basic_note, article:) }
 
   let(:article_id) { article.id }
-  let(:turbo_id) { basic_note.turbo_id }
+  let(:turbo_id) { basic_note.turbo_dom_id }
 
   it "replaces newline characters with HTML linebreaks" do
     basic_note.back = "hello\nworld"

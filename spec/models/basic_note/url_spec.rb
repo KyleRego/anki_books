@@ -12,6 +12,6 @@ RSpec.describe BasicNote, "#url" do
   let(:content) { "anchor_tag_content" }
 
   it "returns a URL with the article path and basic note turbo ID in the URL" do
-    expect(url).to include "/articles/#{article.id}##{basic_note.turbo_id}"
+    expect(url).to include "/articles/#{article.id}##{basic_note.turbo_dom_id}"
   end
 end

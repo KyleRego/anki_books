@@ -4,6 +4,6 @@
 
 <% @book.articles.each do |article| %>
   <% @article = article %>
-  <% @basic_notes = article.basic_notes %>
+  <% @notes = article.notes %>
   <div><%= render template: "articles/show" %></div>
 <% end %>

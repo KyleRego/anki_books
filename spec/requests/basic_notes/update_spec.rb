@@ -16,7 +16,7 @@ RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
   let(:basic_note) { create(:basic_note, article:) }
   let(:front) { "new front" }
   let(:back) { "new back" }
-  let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
+  let(:headers) { { "Turbo-Frame": basic_note.turbo_dom_id } }
   let(:on_study_cards) { false }
 
   include_examples "user is not logged in and needs to be"

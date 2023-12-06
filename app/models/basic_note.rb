@@ -27,7 +27,6 @@ class BasicNote < Note
   include AnkiTimestampable
 
   include BasicNote::AnkiContentable
-  include BasicNote::TurboFrameable
 
   include ERB::Util
   include Rails.application.routes.url_helpers

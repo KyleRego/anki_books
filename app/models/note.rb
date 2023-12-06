@@ -34,4 +34,19 @@ class Note < ApplicationRecord
       errors.add(:sentence, "can't be blank") if sentence.blank?
     end
   end
+
+  public
+
+  # TODO: Unit tests on these, remove old tests
+  def self.ordinal_position_zero_turbo_dom_id
+    "article-first-new-note"
+  end
+
+  def turbo_dom_id
+    "note-#{id}"
+  end
+
+  def new_next_sibling_note_turbo_id
+    "next-note-sibling-after-note-#{id}"
+  end
 end

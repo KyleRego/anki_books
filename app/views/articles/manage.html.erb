@@ -28,7 +28,7 @@
 <% if @article_basic_notes.any? %>
   <div class="mt-4 pb-4 border-black-b">
     <h3 class="mb-4">Transfer basic notes to a different article:</h3>
-    <%= form_with(model: @article, url: article_transfer_basic_notes_path(@article)) do |form| %>
+    <%= form_with(model: @article, url: article_transfer_notes_path(@article)) do |form| %>
       <% @article_basic_notes.each do |basic_note| %>
         <div class="mb-4">
           <%= label_tag(basic_note.id) do %>

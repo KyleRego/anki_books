@@ -71,7 +71,7 @@ module Article::HasManyOrdinalChildren
   def child_belongs_to_parent?(child:)
     return false if child.new_record?
 
-    basic_notes.include?(child)
+    notes.include?(child)
   end
 
   def ordinally_positioned_children

@@ -36,43 +36,64 @@ RSpec.describe "POST /articles/:id/change_note_ordinal_position", "#change_note_
 
     context "when the article belongs to the user's book and is the note's current article" do
       let(:book) { create(:book, users: [user]) }
-      let(:note_to_move) { note_a }
-      let!(:note_a) { create(:basic_note, article: target_article) }
-      let!(:note_b) { create(:basic_note, article: target_article) }
-      let!(:note_c) { create(:basic_note, article: target_article) }
-      let(:new_ordinal_position) { 2 }
 
-      it "changes the ordinal_position of the note and shifts the other notes" do
-        post_articles_change_note_ordinal_position
-        expect(note_a.reload.ordinal_position).to eq new_ordinal_position
-        expect(note_b.reload.ordinal_position).to eq 0
-        expect(note_c.reload.ordinal_position).to eq 1
-      end
+      context "when article has two basic notes and two cloze notes" do
+        before do
+          create(:basic_note, article: target_article, ordinal_position: 0)
+          create(:cloze_note, article: target_article, ordinal_position: 1)
+          create(:basic_note, article: target_article, ordinal_position: 2)
+          create(:cloze_note, article: target_article, ordinal_position: 3)
+        end
 
-      context "when the desired new_ordinal_position is negative" do
-        let(:new_ordinal_position) { -1 }
+        let(:note_to_move) { target_article.cloze_notes.find_by(ordinal_position: 3) }
+        let(:new_ordinal_position) { 0 }
 
-        it "returns a 422 response" do
+        it "changes the ordinal position of the note and shifts the other notes" do
           post_articles_change_note_ordinal_position
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(note_to_move.reload.ordinal_position).to eq new_ordinal_position
+          expect(target_article.correct_children_ordinal_positions?).to be true
         end
       end
 
-      context "when the desired new_ordinal_position is the number of notes the article has" do
-        let(:new_ordinal_position) { target_article.notes_count }
+      context "when article has three basic notes" do
+        let(:note_to_move) { note_a }
+        let!(:note_a) { create(:basic_note, article: target_article) }
+        let!(:note_b) { create(:basic_note, article: target_article) }
+        let!(:note_c) { create(:basic_note, article: target_article) }
+        let(:new_ordinal_position) { 2 }
 
-        it "returns a 422 response" do
+        it "changes the ordinal_position of the note and shifts the other notes" do
           post_articles_change_note_ordinal_position
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(note_a.reload.ordinal_position).to eq new_ordinal_position
+          expect(note_b.reload.ordinal_position).to eq 0
+          expect(note_c.reload.ordinal_position).to eq 1
         end
-      end
 
-      context "when the desired new_ordinal_position is the ordinal position that the note has already" do
-        let(:new_ordinal_position) { note_a.ordinal_position }
+        context "when the desired new_ordinal_position is negative" do
+          let(:new_ordinal_position) { -1 }
 
-        it "returns a 200 response" do
-          post_articles_change_note_ordinal_position
-          expect(response).to have_http_status(:success)
+          it "returns a 422 response" do
+            post_articles_change_note_ordinal_position
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+
+        context "when the desired new_ordinal_position is the number of notes the article has" do
+          let(:new_ordinal_position) { target_article.notes_count }
+
+          it "returns a 422 response" do
+            post_articles_change_note_ordinal_position
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+
+        context "when the desired new_ordinal_position is the ordinal position that the note has already" do
+          let(:new_ordinal_position) { note_a.ordinal_position }
+
+          it "returns a 200 response" do
+            post_articles_change_note_ordinal_position
+            expect(response).to have_http_status(:success)
+          end
         end
       end
     end

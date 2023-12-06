@@ -6,8 +6,6 @@
 
 # :nodoc:
 class ClozeNotesController < ApplicationController
-  include ClozeNotesHelper
-
   before_action :require_login
   before_action :require_turbo_request
   before_action :find_article_from_article_id_param
@@ -25,7 +23,7 @@ class ClozeNotesController < ApplicationController
     return if @cloze_note.save
 
     flash.now[:alert] = @cloze_note.errors.full_messages.first
-    render turbo_stream: turbo_stream.replace(new_cloze_note_turbo_id,
+    render turbo_stream: turbo_stream.replace(new_cloze_note.turbo_dom_id,
                                               template: "cloze_notes/new",
                                               locals: { cloze_note: @cloze_note })
   end

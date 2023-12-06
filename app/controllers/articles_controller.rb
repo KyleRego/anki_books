@@ -24,8 +24,7 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to root_path, status: :moved_permanently
     else
-      @basic_notes = @article.basic_notes.ordered
-      @cloze_notes = @article.cloze_notes
+      @notes = @article.notes.ordered
     end
     @html_page_title = @article.title
   end
@@ -78,22 +77,22 @@ class ArticlesController < ApplicationController
   # TODO: If this can also move note to other article, it should
   # be renamed
   def change_note_ordinal_position
-    basic_note = BasicNote.find(params[:note_id])
-    unless @current_user.can_access_note?(note: basic_note)
+    note = Note.find(params[:note_id])
+    unless @current_user.can_access_note?(note:)
       head :unprocessable_entity
       return
     end
 
     new_ordinal_position = params[:new_ordinal_position].to_i
-    if @article.id == basic_note.article_id
-      if @article.reposition_ordinal_child(child: basic_note, new_ordinal_position:)
+    if @article.id == note.article_id
+      if @article.reposition_ordinal_child(child: note, new_ordinal_position:)
         head :ok
       else
         head :unprocessable_entity
       end
     else
-      # TODO: basic_note.move_to_new_parent to remove LoD dependency
-      basic_note.article.move_ordinal_child_to_new_parent(new_parent: @article, child: basic_note, new_ordinal_position:)
+      # TODO: note.move_to_new_parent to remove LoD dependency
+      note.article.move_ordinal_child_to_new_parent(new_parent: @article, child: note, new_ordinal_position:)
       head :ok
     end
   end
@@ -127,13 +126,13 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def transfer_basic_notes
+  def transfer_notes
     target_article = @book.articles.find_by(id: params[:target_article_id])
 
     if target_article.nil?
       not_found_or_unauthorized
     else
-      children_to_position = @article.basic_notes.where(id: params[:basic_note_ids])
+      children_to_position = @article.notes.where(id: params[:note_ids])
       @article.move_ordinal_children_to_new_parent(children: children_to_position, new_parent: target_article)
       redirect_to manage_article_path(@article), flash: { notice: "Selected basic notes moved to #{target_article.title}." }
     end

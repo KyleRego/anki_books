@@ -11,7 +11,7 @@ RSpec.describe "GET /articles/:article_id/basic_notes/:id/edit", "#edit" do
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
-  let(:headers) { { "Turbo-Frame": basic_note.turbo_id } }
+  let(:headers) { { "Turbo-Frame": basic_note.turbo_dom_id } }
 
   include_examples "user is not logged in and needs to be"
 

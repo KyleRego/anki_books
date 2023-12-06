@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_frame_tag first_new_basic_note_turbo_id, class: "new-note-turbo-frame" do %>
+<%= turbo_frame_tag Note.ordinal_position_zero_turbo_dom_id, class: "new-note-turbo-frame" do %>
   <div>
     <%= link_to "New note", new_article_basic_note_path(@article), class: "action" %>
   </div>

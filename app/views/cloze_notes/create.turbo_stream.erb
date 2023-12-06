@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_stream.replace new_cloze_note_turbo_id do %>
+<%= turbo_stream.replace new_cloze_note.turbo_dom_id do %>
   <%= render partial: "articles/cloze_note/new_cloze_note_link" %>
   <%= render partial: "articles/cloze_note/show" %>
 <% end %>

@@ -13,8 +13,6 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
          headers: { "Turbo-Frame": turbo_id }
   end
 
-  include BasicNotesHelper
-
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
@@ -31,7 +29,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when Turbo-Frame header is the first new basic note turbo id" do
-      let(:turbo_id) { first_new_basic_note_turbo_id }
+      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
 
       it "creates a basic note with ordinal position 0" do
         expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)
@@ -41,7 +39,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
       context "when the ordinal position param is negative" do
         let(:ordinal_position) { -1 }
-        let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
+        let(:turbo_id) { article.basic_notes.first.new_next_sibling_note_turbo_id }
 
         before { create(:basic_note, article:) }
 
@@ -82,7 +80,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
       context "when the ordinal position param is greater than how many basic notes the article has" do
         let(:ordinal_position) { 2 }
-        let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
+        let(:turbo_id) { article.basic_notes.first.new_next_sibling_note_turbo_id }
 
         before { create(:basic_note, article:) }
 
@@ -95,7 +93,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
     context "when article has 1 note and the ordinal position param is 1" do
       let(:ordinal_position) { 1 }
-      let(:turbo_id) { article.basic_notes.first.new_sibling_note_turbo_id }
+      let(:turbo_id) { article.basic_notes.first.new_next_sibling_note_turbo_id }
 
       before { create(:basic_note, article:) }
 
@@ -117,7 +115,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
 
     context "when article has 2 notes and the ordinal position param is 1" do
       let(:ordinal_position) { 1 }
-      let(:turbo_id) { article.basic_notes.find_by(ordinal_position: 1).new_sibling_note_turbo_id }
+      let(:turbo_id) { article.basic_notes.find_by(ordinal_position: 1).new_next_sibling_note_turbo_id }
 
       before { create_list(:basic_note, 2, article:) }
 

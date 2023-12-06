@@ -16,7 +16,7 @@ module BasicNote::AnkiContentable
   end
 
   def url
-    "#{article_url(article)}##{turbo_id}"
+    "#{article_url(article)}##{turbo_dom_id}"
   end
 
   private

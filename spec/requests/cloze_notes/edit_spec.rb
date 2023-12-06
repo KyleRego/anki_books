@@ -7,13 +7,11 @@
 RSpec.describe "GET /articles/:article_id/cloze_notes/edit", "#edit" do
   subject(:get_cloze_notes_edit) { get edit_article_cloze_note_path(article, cloze_note), headers: }
 
-  include ClozeNotesHelper
-
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
   let(:cloze_note) { create(:cloze_note, article:) }
-  let(:headers) { { "Turbo-Frame": cloze_note.turbo_id } }
+  let(:headers) { { "Turbo-Frame": cloze_note.turbo_dom_id } }
 
   include_examples "user is not logged in and needs to be"
 

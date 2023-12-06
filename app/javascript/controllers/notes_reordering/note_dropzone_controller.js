@@ -8,7 +8,8 @@ export default class extends Controller {
   static targets = ["dropzone"];
 
   initialize() {
-    this.turboBasicNoteIdPrefix = "basic-note-";
+    console.log("initialized notes-reordering--note-dropzone")
+    this.turboBasicNoteIdPrefix = "note-";
     this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
@@ -57,6 +58,8 @@ export default class extends Controller {
     this.nestedDragEnterLevels = 0;
     this.removeColorFromDropzone();
     const data = event.dataTransfer.getData("text/plain");
+    console.log(data);
+    console.log("hello");
     const noteId = JSON.parse(data)["noteId"];
     const sourceArticleId = JSON.parse(data)["sourceArticleId"];
     this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);

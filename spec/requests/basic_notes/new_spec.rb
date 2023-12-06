@@ -21,7 +21,7 @@ RSpec.describe "GET /articles/:article_id/basic_notes/new", "#new" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when the Turbo-Frame header is for a basic note at the first position" do
-      let(:turbo_id) { BasicNote::TurboFrameable::TURBO_FIRST_NEW_BASIC_NOTE_ID }
+      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
 
       it "returns a successful response" do
         get_basic_notes_new
@@ -29,9 +29,9 @@ RSpec.describe "GET /articles/:article_id/basic_notes/new", "#new" do
       end
     end
 
-    context "when the Turbo-Frame header is the new_sibling_note_turbo_id of the previous sibling" do
+    context "when the Turbo-Frame header is the new_next_sibling_note_turbo_id of the previous sibling" do
       let(:previous_sibling) { create(:basic_note, article:) }
-      let(:turbo_id) { previous_sibling.new_sibling_note_turbo_id }
+      let(:turbo_id) { previous_sibling.new_next_sibling_note_turbo_id }
 
       it "returns a successful response" do
         get_basic_notes_new

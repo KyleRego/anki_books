@@ -6,8 +6,6 @@
 
 # :nodoc:
 class BasicNotesController < ApplicationController
-  include BasicNotesHelper
-
   before_action :require_login, only: %i[create edit update new destroy]
   before_action :require_turbo_request, except: %i[destroy]
   before_action :set_article, only: %i[create edit update new destroy]
@@ -21,7 +19,7 @@ class BasicNotesController < ApplicationController
     # which is the previous sibling. If it's the very first new basic note
     # turbo frame element, it is not the id of a previous sibling.
     sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if sibling_note_id == first_new_basic_note_turbo_id
+    @previous_sibling = if sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
                           nil
                         else
                           BasicNote.find(sibling_note_id)
@@ -41,7 +39,7 @@ class BasicNotesController < ApplicationController
     if @basic_note.save
       @article.reposition_ordinal_child(child: @basic_note, new_ordinal_position: ordinal_position_param)
     else
-      turbo_id = @previous_sibling ? @previous_sibling.new_sibling_note_turbo_id : first_new_basic_note_turbo_id
+      turbo_id = @previous_sibling ? @previous_sibling.new_next_sibling_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new",
                                                 locals: { basic_note: @basic_note })
@@ -51,11 +49,12 @@ class BasicNotesController < ApplicationController
   def update
     if @basic_note.update(basic_note_params)
       if params[:options][:on_study_cards] == "true"
-        render turbo_stream: turbo_stream.replace(@basic_note.turbo_id,
+        render turbo_stream: turbo_stream.replace(@basic_note.turbo_dom_id,
                                                   partial: "study_cards/basic_note",
                                                   locals: { basic_note: @basic_note })
       else
-        render partial: "articles/basic_note/show"
+        @note = @basic_note
+        render partial: "articles/note/show"
       end
     else
       render :edit, status: :unprocessable_entity

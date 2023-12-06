@@ -7,8 +7,6 @@
 RSpec.describe "GET /download_anki_deck", "#download_anki_deck" do
   subject(:get_users_download_anki_deck) { get user_download_anki_deck_path }
 
-  include BasicNotesHelper
-
   let(:user) { create(:user) }
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }

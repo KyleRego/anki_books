@@ -10,6 +10,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   connect() {
+    console.log("connected the third one")
     this.reorderableBasicNotesContainerCSSSelector = ".reorderable-basic-note-units-container";
     this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
     // Targets the direct child reorderableBasicNote of the container; this means the container

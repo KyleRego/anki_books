@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 ##
-# Superclass of the controllers.
+# Parent class of the app's controllers.
 class ApplicationController < ActionController::Base
   NOT_FOUND_FLASH_MESSAGE = "The requested resource was not found."
 

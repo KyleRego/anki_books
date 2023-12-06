@@ -7,8 +7,6 @@
 RSpec.describe "GET /random_reading_article", "#random_reading_article" do
   subject(:get_users_random_reading_article) { get user_random_reading_article_path }
 
-  include BasicNotesHelper
-
   let(:user) { create(:user) }
 
   include_examples "user is not logged in and needs to be"

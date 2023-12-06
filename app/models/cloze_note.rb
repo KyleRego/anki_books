@@ -23,7 +23,6 @@
 #
 class ClozeNote < Note
   include ClozeNote::AnkiContentable
-  include ClozeNote::TurboFrameable
 
   include ERB::Util
   include Rails.application.routes.url_helpers

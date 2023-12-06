@@ -8,7 +8,8 @@ export default class extends Controller {
   static targets = ["note"];
 
   initialize() {
-    this.turboBasicNoteIdPrefix = "basic-note-";
+    console.log("initialized notes-reordering--draggable-note")
+    this.turboBasicNoteIdPrefix = "note-";
     this.turboBasicNoteIdPrefixLength = this.turboBasicNoteIdPrefix.length;
     this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.boundHandleDragStart = this.handleDragStart.bind(this);
@@ -23,6 +24,8 @@ export default class extends Controller {
     const noteId = noteDOMId.slice(this.turboBasicNoteIdPrefixLength);
     this.articleNotesArea = this.noteTarget.closest(this.articleNotesAreaSelector);
     const sourceArticleId = this.articleNotesArea.id.split("article-notes-").slice(1).join("-");
+    console.log("handleDragStart");
+    console.log(sourceArticleId);
     const data = {noteId: noteId, sourceArticleId: sourceArticleId}
     event.dataTransfer.setData("text/plain", JSON.stringify(data));
   }

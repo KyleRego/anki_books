@@ -7,8 +7,6 @@
 RSpec.describe "GET /update_anki_deck", "#update_anki_deck" do
   subject(:get_users_update_anki_deck) { get user_update_anki_deck_path }
 
-  include BasicNotesHelper
-
   let(:user) { create(:user) }
   let(:book) { create(:book) }
   let(:article) { create(:article, book:) }
