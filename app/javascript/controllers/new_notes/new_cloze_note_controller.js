@@ -5,24 +5,22 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "newBasicNoteFormContainer" ];
+  static targets = [ "newClozeNoteFormContainer" ];
 
   initialize() {
     this.reorderableNoteUnitSelector = ".reorderable-note-unit";
-    this.existingBasicNoteTurboFrameSelector = ".existing-basic-note-turbo-frame";
-    this.newNoteTurboFrameSelector = ".new-note-turbo-frame"
     this.formSubmit = this.handleFormSubmit.bind(this);
   }
 
   connect() {
-    this.formTarget = this.newBasicNoteFormContainerTarget.querySelector("form");
+    this.formTarget = this.newClozeNoteFormContainerTarget.querySelector("form");
     this.formTarget.addEventListener("submit", this.formSubmit);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     const url = this.formTarget.action;
-    const params = { basic_note: { front: this.getFront(), back: this.getBack() }, ordinal_position: this.getOrdinalPosition() };
+    const params = { cloze_note: { sentence: this.getSentence() }, ordinal_position: this.getOrdinalPosition() };
     const authenticityToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ?? null;
 
     fetch(url, {
@@ -30,31 +28,26 @@ export default class extends Controller {
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-Token": authenticityToken,
-        "Turbo-frame": "new_basic_note"
+        "Turbo-frame": "new_cloze_note"
       },
       body: JSON.stringify(params),
     }).then((response) => {
       if (response.ok) {
         response.text().then(html => {
           Turbo.renderStreamMessage(html);
-          this.newBasicNoteFormContainerTarget.parentNode.hidden = true;
+          this.newClozeNoteFormContainerTarget.parentNode.hidden = true;
         });
       }
     })
   }
 
-  getFront() {
-    const front = this.newBasicNoteFormContainerTarget.querySelector("#basic_note_front");
+  getSentence() {
+    const front = this.newClozeNoteFormContainerTarget.querySelector("#cloze_note_sentence");
     return front.value;
   }
 
-  getBack() {
-    const back = this.newBasicNoteFormContainerTarget.querySelector("#basic_note_back");
-    return back.value;
-  }
-
   getOrdinalPosition() {
-    const parentReorderableUnit = this.newBasicNoteFormContainerTarget.closest(this.reorderableNoteUnitSelector);
+    const parentReorderableUnit = this.newClozeNoteFormContainerTarget.closest(this.reorderableNoteUnitSelector);
     if (parentReorderableUnit === null) {
       return 0;
     }

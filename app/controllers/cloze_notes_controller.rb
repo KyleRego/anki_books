@@ -27,8 +27,8 @@ class ClozeNotesController < ApplicationController
   def create
     @cloze_note = @article.cloze_notes.new(cloze_note_params)
     @cloze_note.ordinal_position = @article.notes_count
-    @previous_sibling = @article.cloze_notes.find_by(ordinal_position: ordinal_position_param - 1)
-    
+    @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
+
     if @cloze_note.save
       @article.reposition_ordinal_child(child: @cloze_note, new_ordinal_position: ordinal_position_param)
     else
@@ -53,8 +53,7 @@ class ClozeNotesController < ApplicationController
   private
 
   def ordinal_position_param
-    # @ordinal_position_param ||= params[:ordinal_position].to_i
-    0
+    @ordinal_position_param ||= params[:ordinal_position].to_i
   end
 
   def find_article_from_article_id_param
