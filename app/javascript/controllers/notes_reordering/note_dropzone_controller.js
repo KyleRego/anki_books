@@ -11,7 +11,7 @@ export default class extends Controller {
     console.log("initialized notes-reordering--note-dropzone")
     this.turboBasicNoteIdPrefix = "note-";
     this.articleNotesAreaSelector = "[id^='article-notes-']";
-    this.reorderableBasicNoteCSSSelector = ".reorderable-basic-note-unit";
+    this.reorderableBasicNoteCSSSelector = ".reorderable-note-unit";
     this.boundHandleDragEnter = this.handleDragEnter.bind(this);
     this.boundHandleDragLeave = this.handleDragLeave.bind(this);
     this.boundHandleDragOver = this.handleDragOver.bind(this);

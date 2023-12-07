@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 def reorderable_basic_note_unit_selector
-  ".reorderable-basic-note-unit"
+  ".reorderable-note-unit"
 end
 
 When "I click {string} on the basic note" do |string|

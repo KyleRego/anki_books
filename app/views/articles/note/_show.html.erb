@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="reorderable-basic-note-unit" data-controller="notes-reordering--position-added-reorderable-unit">
+<div class="reorderable-note-unit" data-controller="notes-reordering--position-added-reorderable-unit">
   <div data-controller="notes-reordering--note-dropzone">
 
     <div data-notes-reordering--note-dropzone-target="dropzone" class="note-droppable-area">
@@ -15,7 +15,7 @@
                 <% if @note.instance_of?(BasicNote) %>
                   <% @basic_note = @note %>
                   <%= render partial: "articles/basic_note/flippable_basic_note" %>
-                <% elsif %>
+                <% elsif @note.instance_of?(ClozeNote) %>
                   <% @cloze_note = @note %>
                   <%= render partial: "articles/cloze_note/revealable_cloze_note" %>
                 <% end %>
@@ -24,7 +24,11 @@
           </div>
 
           <div class="flex-shrink flex flex-col wm-vertical-lr">
-            <div class="text-center"><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
+            <% if @note.instance_of?(BasicNote) %>
+              <div class="text-center"><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
+            <% elsif @note.instance_of?(ClozeNote) %>
+              <div class="text-center"><%= render partial: "articles/cloze_note/edit_cloze_note_link" %></div>
+            <% end %>
           </div>
         </div>
 
@@ -32,7 +36,7 @@
     </div>
 
     <div>
-      <%= render partial: "articles/basic_note/sibling_new_basic_note_link", locals: { previous_sibling: @note } %>
+      <%= render partial: "articles/note/new_next_sibling_note_links", locals: { previous_sibling: @note } %>
     </div>
   </div>
 </div>

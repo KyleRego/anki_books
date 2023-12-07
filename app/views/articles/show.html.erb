@@ -21,11 +21,11 @@
     </div>
     <% if logged_in? || @notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
-      <%# The divs with class reorderable-basic-note-unit must be direct children of this container %>
+      <%# The divs with class reorderable-note-unit must be direct children of this container %>
       <div id="article-notes-<%= @article.id %>" data-article-notes-position-setter-target="notes"
           class="position-sticky sm-position-static overflow-y-auto sm-overflow-y-scroll
                   min-w-1-3 flex-grow-1 ml-1
-                  reorderable-basic-note-units-container flex flex-col justify-start">
+                  reorderable-note-units-container flex flex-col justify-start">
 
         <% if logged_in? && !@use_book_version %>
           <%= render "articles/basic_note/first_new_basic_note_link" %>

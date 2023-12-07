@@ -22,7 +22,7 @@ class BasicNotesController < ApplicationController
     @previous_sibling = if sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
                           nil
                         else
-                          BasicNote.find(sibling_note_id)
+                          Note.find(sibling_note_id)
                         end
     @basic_note = @article.basic_notes.new
   end
@@ -34,7 +34,7 @@ class BasicNotesController < ApplicationController
   def create
     @basic_note = @article.basic_notes.new(basic_note_params)
     @basic_note.ordinal_position = @article.notes_count
-    @previous_sibling = @article.basic_notes.find_by(ordinal_position: ordinal_position_param - 1)
+    @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
     if @basic_note.save
       @article.reposition_ordinal_child(child: @basic_note, new_ordinal_position: ordinal_position_param)

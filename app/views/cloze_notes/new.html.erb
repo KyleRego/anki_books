@@ -2,6 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_frame_tag new_cloze_note.turbo_dom_id do %>
-  <%= render "form", url: article_cloze_notes_path(@article.id) %>
+<%= turbo_frame_tag (@previous_sibling&.new_next_sibling_note_turbo_id || Note.ordinal_position_zero_turbo_dom_id), class: "new-note-turbo-frame" do %>
+  <!-- <div data-controller="new-basic-note" data-new-basic-note-target="newBasicNoteFormContainer"> -->
+    <%= render "form", url: article_cloze_notes_path(@article) %>
+  <!-- </div> -->
 <% end %>

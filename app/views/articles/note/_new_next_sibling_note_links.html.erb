@@ -4,4 +4,5 @@
 
 <%= turbo_frame_tag previous_sibling.new_next_sibling_note_turbo_id, class: "new-note-turbo-frame" do %>
   <%= link_to "New note", new_article_basic_note_path(@article), class: "action" %>
+  <%= link_to "New cloze note", new_article_cloze_note_path(@article), class: "action" %>
 <% end %>

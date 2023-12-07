@@ -2,7 +2,22 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_stream.replace new_cloze_note.turbo_dom_id do %>
-  <%= render partial: "articles/cloze_note/new_cloze_note_link" %>
-  <%= render partial: "articles/cloze_note/show" %>
+<% @note = @cloze_note %>
+<% if @previous_sibling %>
+
+  <%= turbo_stream.replace @previous_sibling.new_next_sibling_note_turbo_id do %>
+    <%= render partial: "articles/note/new_next_sibling_note_links", locals: { previous_sibling: @previous_sibling } %>
+  <% end %>
+
+  <%= turbo_stream.after @previous_sibling.turbo_dom_id do %>
+    <%= render partial: "articles/note/show" %>
+  <% end %>
+
+<% else %>
+
+  <%= turbo_stream.replace Note.ordinal_position_zero_turbo_dom_id do %>
+    <%= render partial: "articles/basic_note/first_new_basic_note_link" %>
+    <%= render partial: "articles/note/show" %>
+  <% end %>
+
 <% end %>
