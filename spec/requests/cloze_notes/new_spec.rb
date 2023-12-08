@@ -21,12 +21,24 @@ RSpec.describe "GET /articles/:article_id/cloze_notes/new", "#new" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when the Turbo-Frame header is present" do
-      let(:turbo_id) { new_cloze_note.turbo_dom_id }
+      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
 
       it "returns a successful response" do
-        pending "feature not done"
         get_cloze_notes_new
         expect(response).to have_http_status(:success)
+      end
+
+      context "when article has a note already and making a new one after it" do
+        before do
+          create(:basic_note, article:, ordinal_position: 0)
+        end
+
+        let(:turbo_id) { article.notes.find_by(ordinal_position: 0).new_next_sibling_note_turbo_id }
+
+        it "returns a successful response" do
+          get_cloze_notes_new
+          expect(response).to have_http_status(:success)
+        end
       end
     end
   end

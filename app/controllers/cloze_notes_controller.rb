@@ -12,11 +12,11 @@ class ClozeNotesController < ApplicationController
   before_action :find_cloze_note_from_cloze_note_id_param, only: %w[edit update]
 
   def new
-    sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
+    previous_sibling_note_id = request.headers["Turbo-Frame"].last(36)
+    @previous_sibling = if previous_sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
                           nil
                         else
-                          Note.find(sibling_note_id)
+                          Note.find(previous_sibling_note_id)
                         end
     @cloze_note = @article.cloze_notes.new
   end
