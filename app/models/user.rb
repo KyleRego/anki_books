@@ -39,11 +39,7 @@ class User < ApplicationRecord
   ##
   # Returns all of the user's cloze notes
   def cloze_notes
-    ClozeNote.joins("inner join articles on cloze_notes.article_id = articles.id
-                     inner join books on articles.book_id = books.id
-                     inner join books_users on books_users.book_id = books.id
-                     inner join users on books_users.user_id = users.id
-                     where users.id = '#{id}'")
+    ClozeNote.joins(article: { book: :books_users }).where(books_users: { user_id: id })
   end
 
   # :nodoc:
