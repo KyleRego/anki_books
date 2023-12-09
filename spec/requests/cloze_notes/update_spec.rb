@@ -9,7 +9,7 @@ RSpec.describe "PATCH /articles/:article_id/cloze_notes/:id", "#update" do
     patch article_cloze_note_path(article, cloze_note), params:, headers:
   end
 
-  let(:params) { { cloze_note: { text: new_sentence } } }
+  let(:params) { { cloze_note: { sentence: new_sentence } } }
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }

@@ -79,7 +79,7 @@ class ClozeNotesController < ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def update
-    if @cloze_note.update(sentence: params[:cloze_note][:text])
+    if @cloze_note.update(sentence: params[:cloze_note][:sentence])
       @note = @cloze_note
       render partial: "articles/note/show"
     else
