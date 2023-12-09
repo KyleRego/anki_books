@@ -24,37 +24,58 @@ class ClozeNotesController < ApplicationController
   def edit; end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def create
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
     turbo_id = @previous_sibling ? @previous_sibling.new_next_sibling_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
 
     text = params[:cloze_note][:text]
-    sentences = ::ClozeTextHelperModule.split_text_to_cloze_sentences(text:)
 
-    if sentences.empty?
+    if text.blank?
+      @cloze_note = @article.cloze_notes.new
+      @cloze_note.errors.add(:base, :invalid, message: "Text can't be blank")
+
+      render turbo_stream: turbo_stream.replace(turbo_id, template: "cloze_notes/new") and return    
+    end
+
+    cloze_sentences = ::ClozeTextHelperModule.split_text_to_cloze_sentences(text:)
+
+    if cloze_sentences.empty?
       @cloze_note = @article.cloze_notes.new
       @cloze_note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
 
-      render turbo_stream: turbo_stream.replace(turbo_id,
-                                                template: "cloze_notes/new",
-                                                status: :unprocessable_entity)
-      return
+      render turbo_stream: turbo_stream.replace(turbo_id, template: "cloze_notes/new") and return
     end
 
-    # @cloze_note = @article.cloze_notes.new(cloze_note_params)
-    # @cloze_note.ordinal_position = @article.notes_count
-    
+    @cloze_notes = []
 
-    # if @cloze_note.save
-    #   @article.reposition_ordinal_child(child: @cloze_note, new_ordinal_position: ordinal_position_param)
-    # else
-    #   flash.now[:alert] = @cloze_note.errors.full_messages.first
-      
-      
-    # end
+    cloze_sentences.each do |cloze_sentence|
+      concept_names = ::ClozeTextHelperModule.extract_concept_names_from_text(text: cloze_sentence)
+      concepts_for_cloze_note = []
+
+      concept_names.each do |concept_name|
+        concept = current_user.find_existing_concept(concept_name:)
+
+        concept = current_user.concepts.create!(name: concept_name) if concept.nil?
+
+        concepts_for_cloze_note << concept
+      end
+
+      cloze_note = @article.cloze_notes.new(sentence: cloze_sentence)
+      cloze_note.ordinal_position = @article.notes_count
+      cloze_note.save!
+      cloze_note.concepts = concepts_for_cloze_note
+      @article.reposition_ordinal_child(child: cloze_note, new_ordinal_position: ordinal_position_param)
+      @cloze_notes << cloze_note
+    end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength
 
   def update
     if @cloze_note.update(sentence: params[:cloze_note][:text])

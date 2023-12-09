@@ -35,14 +35,6 @@ RSpec.describe AnkiPackages::CreateUserAnkiPackageJob do
         create(:concept, user:, name: "neuron")
       end
 
-      xit "creates the missing concept" do
-        expect { create_user_anki_deck }.to change(Concept, :count).by(1)
-      end
-
-      xit "creates the user's cloze notes" do
-        expect { create_user_anki_deck }.to change(ClozeNote, :count).by(6)
-      end
-
       it "creates an Anki deck zip file in the system tmp directory" do
         create_user_anki_deck
         expect(File).to exist(anki_deck_file_path)

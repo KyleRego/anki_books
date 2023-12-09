@@ -31,7 +31,7 @@ RSpec.describe ClozeTextHelperModule, ".extract_concept_names_from_text" do
     end
 
     it "returns an array with the two concept names" do
-      expect(extract_concept_names_from_text).to eq ["cell", "life"]
+      expect(extract_concept_names_from_text).to eq %w[cell life]
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe ClozeTextHelperModule, ".extract_concept_names_from_text" do
     end
 
     it "returns an array with all of the concept names" do
-      expected_result = ["Caffeine", "adenosine", "Sleep", "concept"]
+      expected_result = %w[Caffeine adenosine Sleep concept]
       expect(extract_concept_names_from_text).to eq expected_result
     end
   end

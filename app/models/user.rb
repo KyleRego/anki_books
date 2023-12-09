@@ -31,6 +31,12 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 12 }, on: :create
 
   ##
+  # Returns user's concept with name +concept_name+ found by downcase comparison (or nil if not found)
+  def find_existing_concept(concept_name:)
+    concepts.where("lower(name) = ?", concept_name.downcase).first
+  end
+
+  ##
   # Returns all of the user's basic notes
   def basic_notes
     BasicNote.joins(article: { book: :books_users }).where(books_users: { user_id: id })

@@ -36,6 +36,8 @@ end
 
 ##
 # Module for methods related to extracting cloze notes from articles
+# This is only here right now as some of the code can be reused elsewhere
+# but it is being removed
 module Article::SyncToClozeNotes
   ##
   # Returns the article content with Anki cloze deletion markers removed
@@ -56,14 +58,10 @@ module Article::SyncToClozeNotes
   # what concepts are present in them
   def cloze_sentence_concepts_structs
     cloze_sentences.map do |cloze_sent|
-      concepts = 
-      ClozeSentenceConcepts.new(sentence: cloze_sent, concepts:)
+      concepts =
+        ClozeSentenceConcepts.new(sentence: cloze_sent, concepts:)
     end
   end
-
-
-
-  public
 
   ##
   # Syncs the cloze sentences of the article with its cloze notes

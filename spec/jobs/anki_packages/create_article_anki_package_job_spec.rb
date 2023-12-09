@@ -32,14 +32,6 @@ RSpec.describe AnkiPackages::CreateArticleAnkiPackageJob do
         "{{c2::TCP}} is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests."
       end
 
-      xit "creates the two concepts" do
-        expect { create_article_anki_deck }.to change(Concept, :count).by(2)
-      end
-
-      xit "creates one cloze note" do
-        expect { create_article_anki_deck }.to change(ClozeNote, :count).by(1)
-      end
-
       it "creates an Anki deck zip file in the system tmp directory" do
         create_article_anki_deck
         expect(File).to exist(anki_deck_file_path)

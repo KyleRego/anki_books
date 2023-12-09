@@ -2,7 +2,6 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% @note = @cloze_note %>
 <% if @previous_sibling %>
 
   <%= turbo_stream.replace @previous_sibling.new_next_sibling_note_turbo_id do %>
@@ -10,14 +9,24 @@
   <% end %>
 
   <%= turbo_stream.after @previous_sibling.turbo_dom_id do %>
-    <%= render partial: "articles/note/show" %>
+
+    <% @cloze_notes.each do |cloze_note| %>
+      <% @note = cloze_note %>
+      <%= render partial: "articles/note/show" %>
+    <% end %>
+
   <% end %>
 
 <% else %>
 
   <%= turbo_stream.replace Note.ordinal_position_zero_turbo_dom_id do %>
     <%= render partial: "articles/basic_note/first_new_basic_note_link" %>
-    <%= render partial: "articles/note/show" %>
+
+    <% @cloze_notes.each do |cloze_note| %>
+      <% @note = cloze_note %>
+      <%= render partial: "articles/note/show" %>
+    <% end %>
+
   <% end %>
 
 <% end %>
