@@ -42,7 +42,7 @@ export default class extends Controller {
   }
 
   getText() {
-    const clozeNotesText = this.newClozeNoteFormContainerTarget.querySelector("#cloze_note_text");
+    const clozeNotesText = this.newClozeNoteFormContainerTarget.querySelector("#text");
     return clozeNotesText.value;
   }
 

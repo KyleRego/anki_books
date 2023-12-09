@@ -36,9 +36,8 @@ RSpec.describe "POST /articles/:article_id/cloze_notes", "#create" do
         end
 
         it "returns a 200 Ok response with error explaining that the text must have a cloze sentence" do
-          pending "working on this"
           expect { post_cloze_notes_create }.not_to change(ClozeNote, :count)
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:ok)
           expect(response.body).to include "Text must have at least one cloze sentence"
         end
       end

@@ -3,7 +3,21 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= turbo_frame_tag (@previous_sibling&.new_next_sibling_note_turbo_id || Note.ordinal_position_zero_turbo_dom_id), class: "new-note-turbo-frame" do %>
+  
   <div data-controller="new-notes--new-cloze-note" data-new-notes--new-cloze-note-target="newClozeNoteFormContainer">
-    <%= render "form", url: article_cloze_notes_path(@article) %>
+    <div class="mx-auto">
+      <%= form_tag(article_cloze_notes_path(@article), class: "contents") do %>
+        <div class="border-black text-center mx-auto px-4 mr-6 pb-2 pt-6 my-1">
+
+          <%= render "errors" %>
+
+          <%= label_tag :text, nil, class: "hidden" %>
+          <%= text_area_tag :text, @cloze_notes_text, class: "w-full h-24", required: true %>
+
+          <%= submit_tag "Create cloze notes", class: "action" %>
+        </div>
+      <% end %>
+    </div>
   </div>
+
 <% end %>

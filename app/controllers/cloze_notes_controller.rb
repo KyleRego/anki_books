@@ -46,6 +46,7 @@ class ClozeNotesController < ApplicationController
     if cloze_sentences.empty?
       @cloze_note = @article.cloze_notes.new
       @cloze_note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
+      @cloze_notes_text = text
 
       render turbo_stream: turbo_stream.replace(turbo_id, template: "cloze_notes/new") and return
     end
