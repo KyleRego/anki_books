@@ -6,6 +6,9 @@
 
 require "text"
 
+# Some of this can be reused possibly, so I'm leaving it here for now.
+# Article::SyncToClozeNotes was a module included into Article
+# when the cloze notes were created from sentences in the article
 ##
 # A mapping between an article cloze sentence and one of the article's cloze notes
 class ClozeNoteSentenceMatch
@@ -45,7 +48,7 @@ module Article::SyncToClozeNotes
   ##
   # Returns an array of strings which are the sentences that match the cloze sentence regular expression
   def cloze_sentences
-    content.to_plain_text.scan(cloze_sentence_regular_expression).map(&:first)
+    content.to_plain_text
   end
 
   ##
@@ -53,20 +56,12 @@ module Article::SyncToClozeNotes
   # what concepts are present in them
   def cloze_sentence_concepts_structs
     cloze_sentences.map do |cloze_sent|
-      concepts = cloze_sent.scan(CLOZE_MARKERS_CONTAINER).flatten
+      concepts = 
       ClozeSentenceConcepts.new(sentence: cloze_sent, concepts:)
     end
   end
 
-  CLOZE_SENTENCE_START = /(?<=\A|\n|\. )/
-  CLOZE_MARKERS_CONTAINER = /\{\{c\d::(.*?)\}\}/
-  CLOZE_SENTENCE_END = /\."?/
 
-  private
-
-  def cloze_sentence_regular_expression
-    /(#{CLOZE_SENTENCE_START}[^.\n]*#{CLOZE_MARKERS_CONTAINER}[^.\n]*#{CLOZE_SENTENCE_END})/o
-  end
 
   public
 

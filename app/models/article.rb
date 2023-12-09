@@ -26,7 +26,6 @@ ClozeSentenceConcepts = Struct.new("ClozeSentenceConcepts", :sentence, :concepts
 #  fk_rails_...  (book_id => books.id)
 #
 class Article < ApplicationRecord
-  include Article::SyncToClozeNotes
   include Article::HasManyOrdinalChildren
 
   belongs_to :book

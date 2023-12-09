@@ -5,10 +5,7 @@
 <%# TODO: See if can abstract the errors because this is duplicated from basic notes %>
 
 <% if @cloze_note.errors.any? %>
-  <div class="p-2 mb-4 border
-              border-red-400
-              bg-red-50 dark:bg-inherit
-              text-red-900 dark:text-inherit">
+  <div class="p-2 mb-4">
     <div class="flex justify-center align-middle">
       <span><%= pluralize(@cloze_note.errors.count, "validation error") %> occurred:</span>
     </div>

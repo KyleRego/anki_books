@@ -25,24 +25,39 @@ class ClozeNotesController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def create
-    @cloze_note = @article.cloze_notes.new(cloze_note_params)
-    @cloze_note.ordinal_position = @article.notes_count
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    if @cloze_note.save
-      @article.reposition_ordinal_child(child: @cloze_note, new_ordinal_position: ordinal_position_param)
-    else
-      flash.now[:alert] = @cloze_note.errors.full_messages.first
-      turbo_id = @previous_sibling ? @previous_sibling.new_next_sibling_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
+    turbo_id = @previous_sibling ? @previous_sibling.new_next_sibling_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
+
+    text = params[:cloze_note][:text]
+    sentences = ::ClozeTextHelperModule.split_text_to_cloze_sentences(text:)
+
+    if sentences.empty?
+      @cloze_note = @article.cloze_notes.new
+      @cloze_note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
+
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "cloze_notes/new",
-                                                locals: { cloze_note: @cloze_note })
+                                                status: :unprocessable_entity)
+      return
     end
+
+    # @cloze_note = @article.cloze_notes.new(cloze_note_params)
+    # @cloze_note.ordinal_position = @article.notes_count
+    
+
+    # if @cloze_note.save
+    #   @article.reposition_ordinal_child(child: @cloze_note, new_ordinal_position: ordinal_position_param)
+    # else
+    #   flash.now[:alert] = @cloze_note.errors.full_messages.first
+      
+      
+    # end
   end
   # rubocop:enable Metrics/AbcSize
 
   def update
-    if @cloze_note.update(cloze_note_params)
+    if @cloze_note.update(sentence: params[:cloze_note][:text])
       @note = @cloze_note
       render partial: "articles/note/show"
     else
@@ -68,9 +83,5 @@ class ClozeNotesController < ApplicationController
     return if @cloze_note
 
     not_found_or_unauthorized
-  end
-
-  def cloze_note_params
-    params.require(:cloze_note).permit(:sentence)
   end
 end

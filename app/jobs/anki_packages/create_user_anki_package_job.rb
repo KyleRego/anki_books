@@ -13,13 +13,7 @@ module AnkiPackages
     queue_as :default
 
     # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def perform(user:)
-      # TODO: Use a callback to update article cloze notes on saving article
-      user.articles.each do |article|
-        article.sync_to_cloze_notes(users: [user])
-      end
-
       downloaded_at_timestamp = DateTime.current.strftime("%b %d %I:%M %z")
 
       AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
@@ -46,7 +40,6 @@ module AnkiPackages
       created_anki_deck_path
     end
     # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
 
     private
 

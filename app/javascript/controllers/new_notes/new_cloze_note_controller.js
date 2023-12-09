@@ -20,7 +20,7 @@ export default class extends Controller {
   handleFormSubmit(event) {
     event.preventDefault();
     const url = this.formTarget.action;
-    const params = { cloze_note: { sentence: this.getSentence() }, ordinal_position: this.getOrdinalPosition() };
+    const params = { cloze_note: { text: this.getText() }, ordinal_position: this.getOrdinalPosition() };
     const authenticityToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ?? null;
 
     fetch(url, {
@@ -41,9 +41,9 @@ export default class extends Controller {
     })
   }
 
-  getSentence() {
-    const front = this.newClozeNoteFormContainerTarget.querySelector("#cloze_note_sentence");
-    return front.value;
+  getText() {
+    const clozeNotesText = this.newClozeNoteFormContainerTarget.querySelector("#cloze_note_text");
+    return clozeNotesText.value;
   }
 
   getOrdinalPosition() {

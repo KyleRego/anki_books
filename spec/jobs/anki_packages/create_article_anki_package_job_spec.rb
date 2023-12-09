@@ -32,11 +32,11 @@ RSpec.describe AnkiPackages::CreateArticleAnkiPackageJob do
         "{{c2::TCP}} is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests."
       end
 
-      it "creates the two concepts" do
+      xit "creates the two concepts" do
         expect { create_article_anki_deck }.to change(Concept, :count).by(2)
       end
 
-      it "creates one cloze note" do
+      xit "creates one cloze note" do
         expect { create_article_anki_deck }.to change(ClozeNote, :count).by(1)
       end
 

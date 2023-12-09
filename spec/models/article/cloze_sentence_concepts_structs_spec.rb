@@ -4,7 +4,7 @@
 
 # frozen_string_literal: true
 
-RSpec.describe Article, "#cloze_sentence_concepts_structs" do
+RSpec.xdescribe Article, "#cloze_sentence_concepts_structs" do
   subject(:cloze_sentence_concepts_structs) do
     article.cloze_sentence_concepts_structs
   end

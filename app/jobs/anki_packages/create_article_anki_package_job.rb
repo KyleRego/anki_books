@@ -15,8 +15,6 @@ module AnkiPackages
 
     # rubocop:disable Metrics/AbcSize
     def perform(article:)
-      article.sync_to_cloze_notes(users: article.book.users)
-
       downloaded_at_timestamp = DateTime.current.strftime("%b %d %I:%M %z")
 
       AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
