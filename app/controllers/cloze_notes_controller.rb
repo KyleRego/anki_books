@@ -13,7 +13,7 @@ class ClozeNotesController < ApplicationController
 
   def new
     previous_sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if previous_sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
+    @previous_sibling = if previous_sibling_note_id == Note.new_ordinal_position_zero_note_turbo_id
                           nil
                         else
                           Note.find(previous_sibling_note_id)
@@ -30,7 +30,11 @@ class ClozeNotesController < ApplicationController
   def create
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    turbo_id = @previous_sibling ? @previous_sibling.new_next_note_sibling_after_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
+    turbo_id = if @previous_sibling
+                 @previous_sibling.new_next_note_sibling_after_note_turbo_id
+               else
+                 Note.new_ordinal_position_zero_note_turbo_id
+               end
 
     text = params[:cloze_note][:text]
 

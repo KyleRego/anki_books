@@ -28,7 +28,7 @@
                   reorderable-note-units-container flex flex-col justify-start">
 
         <% if !@use_book_version %>
-          <%= render "articles/basic_note/first_new_basic_note_link" %>
+          <%= render partial: "articles/note/new_ordinal_position_zero_note" %>
         <% end %>
         <% @notes.each do |note| %>
           <% @note = note %>

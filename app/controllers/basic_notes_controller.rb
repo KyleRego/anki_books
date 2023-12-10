@@ -19,7 +19,7 @@ class BasicNotesController < ApplicationController
     # which is the previous sibling. If it's the very first new basic note
     # turbo frame element, it is not the id of a previous sibling.
     sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if sibling_note_id == Note.ordinal_position_zero_turbo_dom_id
+    @previous_sibling = if sibling_note_id == Note.new_ordinal_position_zero_note_turbo_id
                           nil
                         else
                           Note.find(sibling_note_id)
@@ -39,7 +39,12 @@ class BasicNotesController < ApplicationController
     if @basic_note.save
       @article.reposition_ordinal_child(child: @basic_note, new_ordinal_position: ordinal_position_param)
     else
-      turbo_id = @previous_sibling ? @previous_sibling.new_next_note_sibling_after_note_turbo_id : Note.ordinal_position_zero_turbo_dom_id
+      turbo_id = if @previous_sibling
+                   @previous_sibling.new_next_note_sibling_after_note_turbo_id
+                 else
+                   Note.new_ordinal_position_zero_note_turbo_id
+                 end
+
       render turbo_stream: turbo_stream.replace(turbo_id,
                                                 template: "basic_notes/new",
                                                 locals: { basic_note: @basic_note })

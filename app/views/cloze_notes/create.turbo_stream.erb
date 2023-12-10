@@ -5,7 +5,7 @@
 <% if @previous_sibling %>
 
   <%= turbo_stream.replace @previous_sibling.new_next_note_sibling_after_note_turbo_id do %>
-    <%= render partial: "articles/note/new_next_sibling_note_links", locals: { previous_sibling: @previous_sibling } %>
+    <%= render partial: "articles/note/new_next_note_sibling_after_note", locals: { previous_sibling: @previous_sibling } %>
   <% end %>
 
   <%= turbo_stream.after @previous_sibling.turbo_dom_id do %>
@@ -19,8 +19,8 @@
 
 <% else %>
 
-  <%= turbo_stream.replace Note.ordinal_position_zero_turbo_dom_id do %>
-    <%= render partial: "articles/basic_note/first_new_basic_note_link" %>
+  <%= turbo_stream.replace Note.new_ordinal_position_zero_note_turbo_id do %>
+    <%= render partial: "articles/note/new_ordinal_position_zero_note" %>
 
     <% @cloze_notes.each do |cloze_note| %>
       <% @note = cloze_note %>

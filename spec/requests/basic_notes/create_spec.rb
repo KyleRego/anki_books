@@ -29,7 +29,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when Turbo-Frame header is the first new basic note turbo id" do
-      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
+      let(:turbo_id) { Note.new_ordinal_position_zero_note_turbo_id }
 
       it "creates a basic note with ordinal position 0" do
         expect { post_basic_notes_create }.to change(BasicNote, :count).by(1)

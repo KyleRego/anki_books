@@ -37,8 +37,7 @@ class Note < ApplicationRecord
 
   public
 
-  # TODO: Unit tests on these, remove old tests
-  def self.ordinal_position_zero_turbo_dom_id
+  def self.new_ordinal_position_zero_note_turbo_id
     "article-first-new-note"
   end
 

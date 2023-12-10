@@ -28,7 +28,7 @@ RSpec.describe "POST /articles/:article_id/cloze_notes", "#create" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when Turbo-Frame header is present" do
-      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
+      let(:turbo_id) { Note.new_ordinal_position_zero_note_turbo_id }
 
       context "when text does not have a cloze sentence" do
         let(:text) do

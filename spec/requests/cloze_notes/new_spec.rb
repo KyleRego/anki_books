@@ -21,7 +21,7 @@ RSpec.describe "GET /articles/:article_id/cloze_notes/new", "#new" do
     include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when the Turbo-Frame header is present" do
-      let(:turbo_id) { Note.ordinal_position_zero_turbo_dom_id }
+      let(:turbo_id) { Note.new_ordinal_position_zero_note_turbo_id }
 
       it "returns a successful response" do
         get_cloze_notes_new
