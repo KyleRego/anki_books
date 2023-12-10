@@ -3,8 +3,8 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= turbo_frame_tag Note.new_ordinal_position_zero_note_turbo_id, class: "new-note-turbo-frame" do %>
-  <div>
-    <%= link_to "New note", new_article_basic_note_path(@article), class: "action" %>
+  <div class="flex flex-row justify-around">
+    <%= link_to "New basic note", new_article_basic_note_path(@article), class: "action" %>
     <%= link_to "New cloze note", new_article_cloze_note_path(@article), class: "action" %>
   </div>
 <% end %>

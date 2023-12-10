@@ -22,10 +22,10 @@ Feature: Updating a basic note
     And I click the "Update Basic note" button
     Then I should see "Front Value"
     And I should see "Edit" in a basic note
-    And I should see "New note" 2 times
+    And I should see "New basic note" 2 times
 
   Scenario: Starting creating a note and then starting updating the previous note sibling above
-    When I click the 2nd link with text "New note"
+    When I click the 2nd link with text "New basic note"
     And I fill in the basic note edit form with the following data:
     | Field   | Value |
     | Front   | front of a new note |

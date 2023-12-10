@@ -17,7 +17,7 @@ public class BasicsNotesCreate : AppTests, IScreenWidthTesting
         driver.TryToLoginWithClick("test@example.com", "1234asdf!!!!");
         driver.PressTabUntilOnText("Read");
         driver.PressEnter();
-        driver.PressTabUntilOnText("New note");
+        driver.PressTabUntilOnText("New basic note");
         driver.PressEnter();
         driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Hello 1");
@@ -26,7 +26,7 @@ public class BasicsNotesCreate : AppTests, IScreenWidthTesting
         driver.PressTabUntilOnSubmitInput();
         driver.PressEnter();
         driver.PauseXSeconds(5);
-        driver.PressTabUntilOnText("New note");
+        driver.PressTabUntilOnText("New basic note");
         driver.PressEnter();
         driver.PressTabUntilOnTextarea();
         driver.EnterTextInActiveElement("Hello 2");

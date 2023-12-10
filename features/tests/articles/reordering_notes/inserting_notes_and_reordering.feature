@@ -12,7 +12,7 @@ Feature: Flipping a basic note between front and back
     And the article "test article 1" has 1 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I am viewing the article "test article 1"
-    When I click the 1st link with text "New note"
+    When I click the 1st link with text "New basic note"
     And I fill in the "Front" field with "test insert note"
     And I fill in the "Back" field with "test insert note back"
     And I click the "Create Basic note" button
@@ -26,7 +26,7 @@ Feature: Flipping a basic note between front and back
     And the article "test article 1" has 2 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I am viewing the article "test article 1"
-    When I click the 3rd link with text "New note"
+    When I click the 3rd link with text "New basic note"
     And I fill in the "Front" field with "test insert note"
     And I fill in the "Back" field with "test insert note back"
     And I click the "Create Basic note" button
@@ -41,7 +41,7 @@ Feature: Flipping a basic note between front and back
     And the article "test article 1" has 2 basic notes
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I am viewing the article "test article 1"
-    When I click the 2nd link with text "New note"
+    When I click the 2nd link with text "New basic note"
     And I fill in the "Front" field with "test insert note"
     And I fill in the "Back" field with "test insert note back"
     And I click the "Create Basic note" button

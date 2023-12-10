@@ -19,8 +19,8 @@ Feature: Reading an article with no notes
   Scenario: I should see the Create Basic note form if I am logged in
     When I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I am viewing the article "test article 0"
-    Then I should see "New note"
-    When I click the "New note" link
+    Then I should see "New basic note"
+    When I click the "New basic note" link
     Then I should see an input with value "Create Basic note"
 
   Scenario: I should not see the Study cards link of an article with no notes

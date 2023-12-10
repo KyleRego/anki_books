@@ -40,7 +40,7 @@ Feature: Reading an article
     When I click on the span with text "First card"
     And I click on the span with text "Front of note 0"
     Then I should see "Back of note 0"
-    And I should not see "New note"
+    And I should not see "New basic note"
 
   Scenario: Clicking the First card span followed by Next card should show me the cards in order looping to the first card
     When I click on the span with text "First card"

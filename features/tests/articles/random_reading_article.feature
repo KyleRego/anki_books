@@ -13,4 +13,4 @@ Feature: Going to a random reading article
     Then I should see "Read"
     And I should see "Write"
     When I click the "Read" link
-    Then I should see "New note"
+    Then I should see "New basic note"
