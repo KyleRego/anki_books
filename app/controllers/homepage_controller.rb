@@ -17,7 +17,9 @@ class HomepageController < ApplicationController
     @book = @article.book
   end
 
-  def study_cards; end
+  def study_cards
+    @basic_notes = @article.basic_notes.ordered
+  end
 
   private
 
