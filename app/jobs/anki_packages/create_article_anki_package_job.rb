@@ -25,14 +25,14 @@ module AnkiPackages
         anki_basic_note_type.save
 
         article.basic_notes.each do |basic_note|
-          create_anki_basic_note(basic_note:, anki_basic_note_type:, anki_deck: deck, timestamp: downloaded_at_timestamp)
+          create_anki_basic_note(basic_note:, anki_basic_note_type:, anki_deck: deck, timestamp: downloaded_at_timestamp, book: nil)
         end
 
         anki_cloze_note_type = anki_books_cloze_note_type(anki21_database:)
         anki_cloze_note_type.save
 
         article.cloze_notes.each do |cloze_note|
-          create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, anki_deck: deck, timestamp: downloaded_at_timestamp)
+          create_anki_cloze_note(cloze_note:, anki_cloze_note_type:, anki_deck: deck, timestamp: downloaded_at_timestamp, book: nil)
         end
       end
       created_anki_deck_path

@@ -10,8 +10,7 @@ RSpec.describe AnkiPackages::CreateArticleAnkiPackageJob do
 
     let(:user) { create(:user) }
     let(:book) { create(:book, users: [user]) }
-    let(:article) { create(:article, book:, content:) }
-    let(:content) { "" }
+    let(:article) { create(:article, book:) }
 
     let(:anki_deck_file_path) { subject }
 
@@ -27,9 +26,12 @@ RSpec.describe AnkiPackages::CreateArticleAnkiPackageJob do
       expect(anki_deck_file_path).to match(AnkiPackages::SharedAnkiPackageJobMethods.path_to_anki_package_regex)
     end
 
-    context "when article content has 2 cloze concepts in 1 sentence" do
-      let(:content) do
-        "{{c2::TCP}} is a {{c1::protocol}}. UDP is a protocol. Ethernet is in the link layer. Tests."
+    context "when article has basic notes and cloze notes" do
+      before do
+        create(:basic_note, article:, front: "Hello", back: "World")
+        create(:cloze_note, article:, sentence: "Hello {{c1::world}}.")
+        create(:basic_note, article:, front: "yes", back: "no")
+        create(:cloze_note, article:, sentence: "Two {{c1::notes}} {{c2::here}}.")
       end
 
       it "creates an Anki deck zip file in the system tmp directory" do

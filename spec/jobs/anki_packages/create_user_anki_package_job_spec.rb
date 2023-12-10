@@ -24,15 +24,18 @@ RSpec.describe AnkiPackages::CreateUserAnkiPackageJob do
       expect(anki_deck_file_path).to match(AnkiPackages::SharedAnkiPackageJobMethods.path_to_anki_package_regex)
     end
 
-    context "when article content has 6 cloze notes for 3 concepts where 2 already exist" do
+    context "when user has a two articles, two books, one book is the other's parent book" do
       before do
-        book = create(:book, users: [user])
-        content = "The {{c1::nervous system}}. {{c2::brain}}. Thinking {{c3::brain}} time."
-        content += " There is a {{c1::neuron}}. The {{c1::brain}} has a {{c2::neuron}}."
-        content += " One {{c2::brain}} per {{c1::nervous system}}."
-        create(:article, book:, content:)
-        create(:concept, user:, name: "nervous system")
-        create(:concept, user:, name: "neuron")
+        parent_book = create(:book, users: [user])
+        child_book = create(:book, users: [user], parent_book_id: parent_book.id)
+        parent_book_article = create(:article, book: parent_book)
+        child_book_article = create(:article, book: child_book)
+
+        create_list(:basic_note, 2, article: parent_book_article)
+        create_list(:cloze_note, 2, article: child_book_article)
+
+        create_list(:basic_note, 2, article: parent_book_article)
+        create_list(:cloze_note, 2, article: child_book_article)
       end
 
       it "creates an Anki deck zip file in the system tmp directory" do
