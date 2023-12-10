@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_frame_tag (@previous_sibling&.new_next_sibling_note_turbo_id || Note.ordinal_position_zero_turbo_dom_id), class: "new-note-turbo-frame" do %>
+<%= turbo_frame_tag (@previous_sibling&.new_next_note_sibling_after_note_turbo_id || Note.ordinal_position_zero_turbo_dom_id), class: "new-note-turbo-frame" do %>
   
   <div data-controller="new-notes--new-cloze-note" data-new-notes--new-cloze-note-target="newClozeNoteFormContainer">
     <div class="mx-auto">

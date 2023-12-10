@@ -126,7 +126,7 @@ RSpec.describe "POST /articles/:article_id/cloze_notes", "#create" do
           create(:cloze_note, article:, ordinal_position: 5)
         end
 
-        let(:turbo_id) { article.notes.find_by(ordinal_position: 2).new_next_sibling_note_turbo_id }
+        let(:turbo_id) { article.notes.find_by(ordinal_position: 2).new_next_note_sibling_after_note_turbo_id }
         let(:ordinal_position) { 3 }
 
         it "creates the cloze note at that position and shifts other notes" do

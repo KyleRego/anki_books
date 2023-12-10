@@ -33,7 +33,7 @@ RSpec.describe "GET /articles/:article_id/cloze_notes/new", "#new" do
           create(:basic_note, article:, ordinal_position: 0)
         end
 
-        let(:turbo_id) { article.notes.find_by(ordinal_position: 0).new_next_sibling_note_turbo_id }
+        let(:turbo_id) { article.notes.find_by(ordinal_position: 0).new_next_note_sibling_after_note_turbo_id }
 
         it "returns a successful response" do
           get_cloze_notes_new

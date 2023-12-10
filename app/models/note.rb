@@ -46,7 +46,7 @@ class Note < ApplicationRecord
     "note-#{id}"
   end
 
-  def new_next_sibling_note_turbo_id
-    "next-note-sibling-after-note-#{id}"
+  def new_next_note_sibling_after_note_turbo_id
+    "new-next-note-sibling-after-note-#{id}"
   end
 end

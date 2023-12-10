@@ -5,7 +5,7 @@
 <% @note = @basic_note %>
 <% if @previous_sibling %>
 
-  <%= turbo_stream.replace @previous_sibling.new_next_sibling_note_turbo_id do %>
+  <%= turbo_stream.replace @previous_sibling.new_next_note_sibling_after_note_turbo_id do %>
     <%= render partial: "articles/note/new_next_sibling_note_links", locals: { previous_sibling: @previous_sibling } %>
   <% end %>
 

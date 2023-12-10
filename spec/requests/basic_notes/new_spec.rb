@@ -29,9 +29,9 @@ RSpec.describe "GET /articles/:article_id/basic_notes/new", "#new" do
       end
     end
 
-    context "when the Turbo-Frame header is the new_next_sibling_note_turbo_id of the previous sibling" do
+    context "when the Turbo-Frame header is the new_next_note_sibling_after_note_turbo_id of the previous sibling" do
       let(:previous_sibling) { create(:basic_note, article:) }
-      let(:turbo_id) { previous_sibling.new_next_sibling_note_turbo_id }
+      let(:turbo_id) { previous_sibling.new_next_note_sibling_after_note_turbo_id }
 
       it "returns a successful response" do
         get_basic_notes_new
