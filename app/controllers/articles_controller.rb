@@ -132,7 +132,7 @@ class ArticlesController < ApplicationController
     if target_article.nil?
       not_found_or_unauthorized
     else
-      children_to_position = @article.notes.where(id: params[:note_ids])
+      children_to_position = @article.notes.where(id: params[:basic_note_ids])
       @article.move_ordinal_children_to_new_parent(children: children_to_position, new_parent: target_article)
       redirect_to manage_article_path(@article), flash: { notice: "Selected basic notes moved to #{target_article.title}." }
     end

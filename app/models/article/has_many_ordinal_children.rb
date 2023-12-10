@@ -11,8 +11,8 @@ module Article::HasManyOrdinalChildren
   include HasManyOrdinalChildrenBase
 
   ##
-  # Destroys +child+ basic note and shifts the other
-  # basic notes of self appropriately
+  # Destroys +child+ note and shifts the other
+  # notes of self appropriately
   def destroy_ordinal_child(child:)
     raise ArgumentError unless child_belongs_to_parent?(child:)
 
@@ -35,8 +35,8 @@ module Article::HasManyOrdinalChildren
   # rubocop:disable Metrics/AbcSize
 
   ##
-  # Moves +children+ basic notes to +new_parent+ and shifts the other
-  # basic notes of self appropriately
+  # Moves +children+ notes to +new_parent+ and shifts the other
+  # notes of self appropriately
   def move_ordinal_children_to_new_parent(children:, new_parent:)
     raise ArgumentError unless new_parent.book == book
 

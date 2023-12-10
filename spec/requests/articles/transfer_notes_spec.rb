@@ -7,7 +7,7 @@
 # TODO: Needs some refactoring
 RSpec.describe "PATCH /articles/:id/transfer_notes", "#transfer_notes" do
   subject(:patch_articles_transfer_notes) do
-    params = { target_article_id: target_article.id, note_ids: }
+    params = { target_article_id: target_article.id, basic_note_ids: note_ids }
     patch article_transfer_notes_path(article), params:
   end
 
