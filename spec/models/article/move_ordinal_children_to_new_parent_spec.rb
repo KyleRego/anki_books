@@ -6,20 +6,56 @@
 
 RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
   subject(:move_ordinal_children_to_new_parent) do
-    article.move_ordinal_children_to_new_parent(children:, new_parent:)
+    source_article.move_ordinal_children_to_new_parent(children:, new_parent:)
   end
 
   let(:book) { create(:book) }
-  let(:article) { create(:article, book:) }
-  let(:children) { article.basic_notes.limit(4) }
-  let(:new_parent) { create(:article, book: article.book) }
+  let(:source_article) { create(:article, book:) }
+  let(:children) { source_article.basic_notes.limit(4) }
+  let(:new_parent) { create(:article, book: source_article.book) }
 
-  before { create_list(:basic_note, 8, article:) }
+  before { create_list(:basic_note, 8, article: source_article) }
+
+  context "when article has both basic notes and cloze notes" do
+    before do
+      create_list(:cloze_note, 2, article: source_article)
+      create_list(:basic_note, 2, article: source_article)
+      create_list(:cloze_note, 3, article: source_article)
+      create_list(:basic_note, 4, article: source_article)
+      create_list(:cloze_note, 3, article: source_article)
+      create_list(:basic_note, 7, article: source_article)
+    end
+
+    let(:children) do
+      source_article.notes.where(ordinal_position: [2, 3, 4, 5, 6])
+    end
+
+    it "moves children to target article preserving order and shifts source article notes" do
+      note_to_check1 = source_article.notes.find_by(ordinal_position: 2)
+      note_to_check2 = source_article.notes.find_by(ordinal_position: 3)
+      note_to_check3 = source_article.notes.find_by(ordinal_position: 4)
+      note_to_check4 = source_article.notes.find_by(ordinal_position: 5)
+      note_to_check5 = source_article.notes.find_by(ordinal_position: 6)
+
+      move_ordinal_children_to_new_parent
+
+      expect(source_article.correct_children_ordinal_positions?).to be true
+      expect(new_parent.correct_children_ordinal_positions?).to be true
+
+      expect(note_to_check1.reload.article).to eq new_parent
+      expect(note_to_check2.reload.ordinal_position).to eq 1
+      expect(note_to_check3.reload.ordinal_position).to eq 2
+      expect(note_to_check4.reload.ordinal_position).to eq 3
+      expect(note_to_check5.reload.ordinal_position).to eq 4
+    end
+  end
 
   it "moves children to target article preserving order and shifts source article basic notes" do
     lowest_child = children.ordered.first
     highest_child = children.ordered.last
+
     move_ordinal_children_to_new_parent
+
     expect(book.correct_children_ordinal_positions?).to be true
     expect(new_parent.correct_children_ordinal_positions?).to be true
     expect(new_parent.basic_notes.reload.find_by(ordinal_position: 0)).to eq lowest_child
@@ -27,13 +63,15 @@ RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
   end
 
   context "when children basic notes are all of the source article's basic notes" do
-    let(:children) { article.basic_notes }
+    let(:children) { source_article.basic_notes }
 
     it "moves the children to target article preserving their order" do
       lowest_child = children.ordered.first
       highest_child = children.ordered.last
+
       move_ordinal_children_to_new_parent
-      expect(book.correct_children_ordinal_positions?).to be true
+
+      expect(source_article.correct_children_ordinal_positions?).to be true
       expect(new_parent.correct_children_ordinal_positions?).to be true
 
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 0)).to eq lowest_child
@@ -48,7 +86,8 @@ RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
       lowest_child = children.ordered.first
       highest_child = children.ordered.last
       move_ordinal_children_to_new_parent
-      expect(book.correct_children_ordinal_positions?).to be true
+
+      expect(source_article.correct_children_ordinal_positions?).to be true
       expect(new_parent.correct_children_ordinal_positions?).to be true
 
       expect(new_parent.basic_notes.reload.find_by(ordinal_position: 5)).to eq lowest_child
@@ -78,11 +117,10 @@ RSpec.describe Article, "#move_ordinal_children_to_new_parent" do
 
   context "when some but not all children do not belong to source article" do
     let(:children) do
-      article = create(:article)
       other_article = create(:article)
-      create_list(:basic_note, 4, article:)
+      create_list(:basic_note, 4, article: source_article)
       create_list(:basic_note, 4, article: other_article)
-      article.basic_notes + other_article.basic_notes
+      source_article.basic_notes + other_article.basic_notes
     end
 
     it "raises an ArgumentError" do

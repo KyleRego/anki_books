@@ -18,7 +18,7 @@ module Article::HasManyOrdinalChildren
 
     deleted_ordinal_position = child.ordinal_position
     child.destroy!
-    shift_basic_notes_down_to_replace_missing_position(missing_position: deleted_ordinal_position)
+    shift_notes_down_to_replace_missing_position(missing_position: deleted_ordinal_position)
   end
 
   def move_ordinal_child_to_new_parent(child:, new_parent:, new_ordinal_position:)
@@ -27,8 +27,8 @@ module Article::HasManyOrdinalChildren
     removed_article_ordinal_position = child.ordinal_position
     child.update(article: new_parent, ordinal_position: new_parent.notes_count)
     new_parent.reposition_ordinal_child(child:, new_ordinal_position:)
-    basic_notes.order(:ordinal_position).where("ordinal_position > ?", removed_article_ordinal_position).each do |basic_note|
-      basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
+    notes.order(:ordinal_position).where("ordinal_position > ?", removed_article_ordinal_position).each do |note|
+      note.update!(ordinal_position: note.ordinal_position - 1)
     end
   end
 
@@ -43,11 +43,11 @@ module Article::HasManyOrdinalChildren
     article_ids = children.pluck(:article_id)
     raise ArgumentError unless article_ids.uniq.count == 1 && article_ids.first == id
 
-    children.order(:ordinal_position).each do |basic_note|
-      basic_note.update(article: new_parent, ordinal_position: new_parent.notes_count)
+    children.order(:ordinal_position).each do |note|
+      note.update(article: new_parent, ordinal_position: new_parent.notes_count)
     end
-    basic_notes.ordered.each_with_index do |basic_note, index|
-      basic_note.update(ordinal_position: index)
+    notes.ordered.each_with_index do |note, index|
+      note.update(ordinal_position: index)
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -58,9 +58,9 @@ module Article::HasManyOrdinalChildren
 
   private
 
-  def shift_basic_notes_down_to_replace_missing_position(missing_position:)
-    basic_notes.where("ordinal_position > ?", missing_position).order(:ordinal_position).each do |basic_note|
-      basic_note.update!(ordinal_position: basic_note.ordinal_position - 1)
+  def shift_notes_down_to_replace_missing_position(missing_position:)
+    notes.where("ordinal_position > ?", missing_position).order(:ordinal_position).each do |note|
+      note.update!(ordinal_position: note.ordinal_position - 1)
     end
   end
 
