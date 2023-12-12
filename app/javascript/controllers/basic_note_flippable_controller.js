@@ -13,7 +13,6 @@ export default class extends Controller {
 
   connect() {
     this.flippableNoteTarget.addEventListener("click", this.boundChangeNoteState);
-    this.flippableNoteTarget.addEventListener("focus", this.boundChangeNoteState);
   }
 
   changeNoteState = () => {
