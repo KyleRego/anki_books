@@ -13,6 +13,7 @@ export default class extends Controller {
 
   connect() {
     this.revealableNoteTarget.addEventListener("click", this.boundChangeNoteState);
+    this.revealableNoteTarget.addEventListener("focus", this.boundChangeNoteState);
   }
 
   changeNoteState = () => {
