@@ -10,11 +10,18 @@ RSpec.describe ClozeNote, "#cloze_sentence_answer" do
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
-  let(:cloze_note) do
-    create(:cloze_note, article:, sentence: "hello {{c1::world}}.")
+  let(:cloze_note) { create(:cloze_note, article:, sentence:) }
+  let(:sentence) { "hello {{c1::world}}." }
+
+  it "returns the sentence with {{ci::abc}} removed showing abc" do
+    expect(cloze_sentence_answer).to eq "hello world."
   end
 
-  it "returns the cloze note's entire sentence" do
-    expect(cloze_sentence_answer).to eq cloze_note.sentence
+  context "when sentence has multiple {{ci::}}" do
+    let(:sentence) { "{{c1::hello}} world is the {{c2::first}} {{c3::program}}. Written {{c1::usually}}." }
+
+    it "returns the sentence with all {{ci::abc}} removed showing abc" do
+      expect(cloze_sentence_answer).to eq "hello world is the first program. Written usually."
+    end
   end
 end
