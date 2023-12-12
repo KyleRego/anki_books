@@ -2,6 +2,17 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="cursor-pointer p-2 border-black text-center" tabindex="0">
-  <span class="whitespace-pre-wrap break-words"><%= @cloze_note.sentence %></span>
+<div data-controller="cloze-note-revealable">
+  <div data-cloze-note-revealable-target="revealableNote"
+        class="cursor-pointer p-2 border-black text-center" tabindex="0">
+
+    <div data-cloze-note-revealable-target="revealableNoteFront">
+      <span class="whitespace-pre-wrap break-words"><%= @cloze_note.cloze_sentence_question %></span>
+    </div>
+
+    <div data-cloze-note-revealable-target="revealableNoteBack" hidden>
+      <span class="whitespace-pre-wrap break-words"><%= @cloze_note.cloze_sentence_answer %></span>
+    </div>
+
+  </div>
 </div>

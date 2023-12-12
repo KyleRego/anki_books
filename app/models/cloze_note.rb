@@ -26,4 +26,12 @@ class ClozeNote < Note
 
   include ERB::Util
   include Rails.application.routes.url_helpers
+
+  def cloze_sentence_answer
+    sentence
+  end
+
+  def cloze_sentence_question
+    sentence.gsub(ClozeTextHelperModule.cloze_markers_container_regex, "[...]")
+  end
 end

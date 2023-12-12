@@ -13,6 +13,10 @@ module ClozeTextHelperModule
 
   # TODO: See about making those constants private to this module
 
+  def self.cloze_markers_container_regex
+    CLOZE_MARKERS_CONTAINER
+  end
+
   def self.cloze_sentence_regular_expression
     /(#{CLOZE_SENTENCE_START}[^.\n]*#{CLOZE_MARKERS_CONTAINER}[^.\n]*#{CLOZE_SENTENCE_END})/o
   end
