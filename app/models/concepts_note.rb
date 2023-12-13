@@ -6,7 +6,7 @@
 
 # == Schema Information
 #
-# Table name: cloze_notes_concepts
+# Table name: cloze_concepts_notes
 #
 #  id            :uuid             not null, primary key
 #  cloze_note_id :uuid             not null

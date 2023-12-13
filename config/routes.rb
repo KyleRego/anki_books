@@ -54,6 +54,6 @@ Rails.application.routes.draw do
   get "/download_concepts_data", to: "users#download_concepts_data", as: "download_concepts_data"
   get "/download_basic_notes_data", to: "users#download_basic_notes_data", as: "download_basic_notes_data"
   get "/download_cloze_notes_data", to: "users#download_cloze_notes_data", as: "download_cloze_notes_data"
-  get "/download_cloze_notes_concepts_data", to: "users#download_cloze_notes_concepts_data", as: "download_cloze_notes_concepts_data"
+  get "/download_concepts_notes_data", to: "users#download_concepts_notes_data", as: "download_concepts_notes_data"
   # :nocov:
 end

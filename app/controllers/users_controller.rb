@@ -97,20 +97,20 @@ class UsersController < ApplicationController
     send_data data, filename: "cloze_notes.csv"
   end
 
-  def download_cloze_notes_concepts_data
-    attributes = %w[cloze_note_id concept_id]
+  def download_concepts_notes_data
+    attributes = %w[note_id concept_id]
 
     data = CSV.generate(headers: true) do |csv|
       csv << attributes
 
       current_user.concepts.each do |concept|
-        concept.cloze_notes_concepts.each do |cloze_notes_concept|
-          csv << attributes.map { |attr| cloze_notes_concept.send(attr) }
+        concept.concepts_notes.each do |concept_note|
+          csv << attributes.map { |attr| concept_note.send(attr) }
         end
       end
     end
 
-    send_data data, filename: "cloze_notes_concepts.csv"
+    send_data data, filename: "concept_notes.csv"
   end
 
   # :nocov:
