@@ -6,7 +6,9 @@
 
 ##
 # Methods related to the Anki content generated for basic notes
-module BasicNote::AnkiContentable
+module HasAnkiContentable::BasicNote
+  extend ActiveSupport::Concern
+
   def anki_front
     format_for_input_to_anki(field: front)
   end

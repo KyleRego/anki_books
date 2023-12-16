@@ -22,7 +22,7 @@
 #  fk_rails_...  (article_id => articles.id)
 #
 class ClozeNote < Note
-  include ClozeNote::AnkiContentable
+  include HasAnkiContentable::ClozeNote
 
   include ERB::Util
   include Rails.application.routes.url_helpers

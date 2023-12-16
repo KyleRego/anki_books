@@ -6,7 +6,9 @@
 
 ##
 # Methods related to the Anki content generated for Anki cloze deletion notes
-module ClozeNote::AnkiContentable
+module HasAnkiContentable::ClozeNote
+  extend ActiveSupport::Concern
+
   def anki_text
     html_escape(sentence)
   end
