@@ -19,7 +19,7 @@
 #  fk_rails_...  (parent_book_id => books.id)
 #
 class Book < ApplicationRecord
-  include Book::HasManyOrdinalChildren
+  include HasManyOrdinalChildren::Book
 
   validates :title, presence: true
   validate :validate_parent_book

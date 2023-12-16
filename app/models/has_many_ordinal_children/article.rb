@@ -7,8 +7,8 @@
 ##
 # Concrete implementations for the abstract template methods in
 # HasManyOrdinalChildrenBase for Article
-module Article::HasManyOrdinalChildren
-  include HasManyOrdinalChildrenBase
+module HasManyOrdinalChildren::Article
+  include HasManyOrdinalChildren::Base
 
   ##
   # Destroys +child+ note and shifts the other

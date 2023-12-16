@@ -15,7 +15,7 @@
 #
 # This module should not be used directly because it only has template
 # methods
-module HasManyOrdinalChildrenBase
+module HasManyOrdinalChildren::Base
   extend ActiveSupport::Concern
 
   included do

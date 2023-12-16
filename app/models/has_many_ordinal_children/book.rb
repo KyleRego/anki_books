@@ -7,8 +7,8 @@
 ##
 # Concrete implementations for the abstract template methods in
 # HasManyOrdinalChildrenBase for Book
-module Book::HasManyOrdinalChildren
-  include HasManyOrdinalChildrenBase
+module HasManyOrdinalChildren::Book
+  include HasManyOrdinalChildren::Base
 
   ##
   # Destroys +child+ article and shifts the other
