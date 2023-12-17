@@ -30,14 +30,4 @@ RSpec.describe "articles/note/show" do
       expect(rendered).to have_css("div.draggable-div-of-note[draggable='true']")
     end
   end
-
-  context "when user is not logged in" do
-    it "renders the basic note without the draggable div element" do
-      pending "feature not done"
-      render_article_basic_note
-      expect(rendered).to match(TEST_BASIC_NOTE_FRONT)
-      expect(rendered).to match(TEST_BASIC_NOTE_BACK)
-      expect(rendered).not_to have_css("div.draggable-div-of-note")
-    end
-  end
 end

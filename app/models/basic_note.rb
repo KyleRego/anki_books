@@ -24,8 +24,6 @@
 #  fk_rails_...  (article_id => articles.id)
 #
 class BasicNote < Note
-  include AnkiTimestampable
-
   include HasAnkiContentable::BasicNote
 
   include ERB::Util

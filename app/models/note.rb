@@ -26,14 +26,16 @@ class Note < ApplicationRecord
 
   private
 
+  # rubocop:disable Style/IfInsideElse
   def validate_correct_attributes_for_note_type
     if type == "BasicNote"
       errors.add(:front, "can't be blank") if front.blank?
       errors.add(:back, "can't be blank") if back.blank?
-    elsif type == "ClozeNote"
+    else
       errors.add(:sentence, "can't be blank") if sentence.blank?
     end
   end
+  # rubocop:enable Style/IfInsideElse
 
   public
 
