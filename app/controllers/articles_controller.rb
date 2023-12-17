@@ -101,7 +101,8 @@ class ArticlesController < ApplicationController
     if @article.system
       redirect_to homepage_study_cards_path, status: :moved_permanently
     else
-      @basic_notes = @article.basic_notes.ordered
+      @notes = @article.notes.ordered
+      render "study_cards/index"
     end
   end
 

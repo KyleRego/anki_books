@@ -1,0 +1,33 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<%= turbo_frame_tag @note.turbo_dom_id, class: "existing-basic-note-turbo-frame min-w-max" do %>
+
+  <div class="flex flex-row">
+    <div class="min-w-0 flex-1">
+      <div data-controller="notes-reordering--draggable-note">
+        <div draggable="true"
+          data-notes-reordering--draggable-note-target="note"
+          data-notes-reordering--note-dropzone-target="dropzoneNote">
+          <% if @note.instance_of?(BasicNote) %>
+            <% @basic_note = @note %>
+            <%= render partial: "articles/basic_note/flippable_basic_note" %>
+          <% elsif @note.instance_of?(ClozeNote) %>
+            <% @cloze_note = @note %>
+            <%= render partial: "articles/cloze_note/revealable_cloze_note" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-shrink flex flex-col wm-vertical-lr">
+      <% if @note.instance_of?(BasicNote) %>
+        <div class="text-center"><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
+      <% elsif @note.instance_of?(ClozeNote) %>
+        <div class="text-center"><%= render partial: "articles/cloze_note/edit_cloze_note_link" %></div>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>

@@ -12,7 +12,7 @@
 
     <% @cloze_notes.each do |cloze_note| %>
       <% @note = cloze_note %>
-      <%= render partial: "articles/note/show" %>
+      <%= render partial: "articles/note/show_with_new_note_links_below" %>
     <% end %>
 
   <% end %>
@@ -24,7 +24,7 @@
 
     <% @cloze_notes.each do |cloze_note| %>
       <% @note = cloze_note %>
-      <%= render partial: "articles/note/show" %>
+      <%= render partial: "articles/note/show_with_new_note_links_below" %>
     <% end %>
 
   <% end %>

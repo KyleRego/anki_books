@@ -67,7 +67,8 @@ class BooksController < ApplicationController
   end
 
   def study_cards
-    @basic_notes = @book.ordered_notes
+    @notes = @book.ordered_notes
+    render "study_cards/index"
   end
 
   def transfer_articles

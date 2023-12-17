@@ -16,10 +16,10 @@
 
     <% css_class_for_div_wrapping_studiable_notes = "w-96 mx-auto #{logged_in? ? "mt-6 mb-2" : "my-6"}" %>
     <div class="<%= css_class_for_div_wrapping_studiable_notes %>">
-      <% @basic_notes&.each do |basic_note| %>
-        <% @basic_note = basic_note %>
+      <% @notes&.each do |note| %>
+        <% @note = note %>
         <div class="studiable-note max-w-2-3 mx-auto" hidden>
-          <%= render partial: "study_cards/basic_note" %>
+          <%= render partial: "articles/note/show_with_edit_link" %>
         </div>
       <% end %>
     </div>

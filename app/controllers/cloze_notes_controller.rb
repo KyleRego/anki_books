@@ -85,7 +85,7 @@ class ClozeNotesController < ApplicationController
   def update
     if @cloze_note.update(sentence: params[:cloze_note][:sentence])
       @note = @cloze_note
-      render partial: "articles/note/show"
+      render partial: "articles/note/show_with_new_note_links_below"
     else
       render :edit, status: :unprocessable_entity
     end

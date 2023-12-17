@@ -8,8 +8,6 @@ export default class extends Controller {
   static targets = [ "startStudyWithFirstCard", "startRandomOrderStudy", "studyPreviousCard", "studyNextCard" ];
 
   initialize() {
-    this.boundHandleStudyCardsKeydown = this.handleStudyCardsKeydown.bind(this);
-
     this.boundHandleStudyWithFirstCardKeydown = this.handleStudyWithFirstCardKeydown.bind(this);
     this.boundHandleStudyWithRandomCardKeydown = this.handleStudyWithRandomCardKeydown.bind(this);
   }
@@ -36,10 +34,6 @@ export default class extends Controller {
 
   currentCard() {
     return this.cardsToStudy[this.ordinalPositionOfCurrentCard];
-  }
-
-  currentFlippableBack() {
-    return this.currentCard().querySelector('[data-basic-note-flippable-target="flippableNoteBack"]');
   }
 
   handleStudyWithFirstCardKeydown(event) {
@@ -72,24 +66,6 @@ export default class extends Controller {
       this.studyNextCardTarget.hidden = false;
     }
     document.addEventListener("keydown", this.boundHandleStudyCardsKeydown);
-  }
-
-  handleStudyCardsKeydown(event) {
-    if (event.target.tagName !== "textarea") {
-      if (event.key === " ") {
-        if (this.currentFlippableBack().hidden) {
-          this.currentFlippableBack().hidden = false;
-        } else {
-          this.studyNextCard();
-        }
-      } else if (event.key === "1") {
-        if (!this.currentFlippableBack().hidden) {
-          this.currentFlippableBack().hidden = true;
-        } else {
-          this.studyPreviousCard();
-        }
-      }
-    }
   }
 
   studyNextCard() {

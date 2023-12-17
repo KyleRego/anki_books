@@ -53,14 +53,9 @@ class BasicNotesController < ApplicationController
 
   def update
     if @basic_note.update(basic_note_params)
-      if params[:options][:on_study_cards] == "true"
-        render turbo_stream: turbo_stream.replace(@basic_note.turbo_dom_id,
-                                                  partial: "study_cards/basic_note",
-                                                  locals: { basic_note: @basic_note })
-      else
-        @note = @basic_note
-        render partial: "articles/note/show"
-      end
+      @note = @basic_note
+      render turbo_stream: turbo_stream.replace(@basic_note.turbo_dom_id,
+                                                partial: "articles/note/show_with_edit_link")
     else
       render :edit, status: :unprocessable_entity
     end

@@ -10,14 +10,14 @@
   <% end %>
 
   <%= turbo_stream.after @previous_sibling.turbo_dom_id do %>
-    <%= render partial: "articles/note/show" %>
+    <%= render partial: "articles/note/show_with_new_note_links_below" %>
   <% end %>
 
 <% else %>
 
   <%= turbo_stream.replace Note.new_ordinal_position_zero_note_turbo_id do %>
     <%= render "articles/note/new_ordinal_position_zero_note" %>
-    <%= render partial: "articles/note/show" %>
+    <%= render partial: "articles/note/show_with_new_note_links_below" %>
   <% end %>
 
 <% end %>

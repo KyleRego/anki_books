@@ -7,18 +7,15 @@
 ##
 # Controller for the site homepage and endpoint to
 # study the cards of the homepage.
-# (These are the pages accessible without being logged in.)
 class HomepageController < ApplicationController
   before_action :setup_homepage
 
   def show
-    return unless current_user&.can_access_article?(article: @article)
-
-    @book = @article.book
+    render "articles/show"
   end
 
   def study_cards
-    @basic_notes = @article.basic_notes.ordered
+    render "study_cards/index"
   end
 
   private
