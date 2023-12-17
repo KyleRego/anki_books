@@ -59,7 +59,7 @@ export default class extends Controller {
         break;
       }
     }
-    console.log(position);
+
     return position;
   }
 }

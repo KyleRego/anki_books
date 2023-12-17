@@ -5,10 +5,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["dropzone"];
+  static targets = ["dropzone", "dropzoneNote"];
 
   initialize() {
-    console.log("initialized notes-reordering--note-dropzone")
     this.turboBasicNoteIdPrefix = "note-";
     this.articleNotesAreaSelector = "[id^='article-notes-']";
     this.reorderableBasicNoteCSSSelector = ".reorderable-note-unit";
@@ -33,11 +32,11 @@ export default class extends Controller {
   }
 
   addColorToDropzone() {
-    this.dropzoneTarget.classList.add("bg-blue-200");
+    this.dropzoneNoteTarget.classList.add("bg-blue-200");
   }
 
   removeColorFromDropzone() {
-    this.dropzoneTarget.classList.remove("bg-blue-200");
+    this.dropzoneNoteTarget.classList.remove("bg-blue-200");
   }
 
   handleDragLeave(event) {
@@ -58,8 +57,6 @@ export default class extends Controller {
     this.nestedDragEnterLevels = 0;
     this.removeColorFromDropzone();
     const data = event.dataTransfer.getData("text/plain");
-    console.log(data);
-    console.log("hello");
     const noteId = JSON.parse(data)["noteId"];
     const sourceArticleId = JSON.parse(data)["sourceArticleId"];
     this.noteOfDropzone = this.dropzoneTarget.closest(this.reorderableBasicNoteCSSSelector);

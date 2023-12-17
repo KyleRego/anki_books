@@ -11,7 +11,9 @@
         <div class="flex flex-row">
           <div class="min-w-0 flex-1">
             <div data-controller="notes-reordering--draggable-note">
-              <div class="draggable-div-of-note" draggable="true" data-notes-reordering--draggable-note-target="note">
+              <div draggable="true"
+                data-notes-reordering--draggable-note-target="note"
+                data-notes-reordering--note-dropzone-target="dropzoneNote">
                 <% if @note.instance_of?(BasicNote) %>
                   <% @basic_note = @note %>
                   <%= render partial: "articles/basic_note/flippable_basic_note" %>
