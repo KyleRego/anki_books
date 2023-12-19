@@ -8,7 +8,9 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: anki_books
+          POSTGRES_DB: anki_books_test
+          POSTGRES_PASSWORD: postgres
         ports:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -21,12 +23,22 @@ jobs:
       - name: Setup test database
         env:
           RAILS_ENV: test
-          PG_DATABASE:
           PGHOST: localhost
-          PGUSER: anki_books
+          POSTGRES_DB: anki_books_test
+          POSTGRES_USER: anki_books
+          POSTGRES_PASSWORD: postgres
         run: |
+          cp config/database.ci.yml config/database.yml
           bin/rails db:setup
-      - run: bundle exec rspec
+      - name: Run specs
+        env:
+          PGHOST: localhost
+          POSTGRES_DB: anki_books_test
+          POSTGRES_USER: anki_books
+          POSTGRES_PASSWORD: postgres
+          PGPORT: 5432
+          RAILS_ENV: test
+        run: bundle exec rspec
       - name: Upload SimpleCov artifact
         uses: actions/upload-artifact@v4
         with:
