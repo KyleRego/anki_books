@@ -19,6 +19,12 @@ Given "the book {string} has {int} numbered articles" do |book_title, int|
   end
 end
 
+Given "the book {string} is a child of the book {string}" do |child_title, parent_title|
+  child = Book.find_by(title: child_title)
+  parent = Book.find_by(title: parent_title)
+  child.update(parent_book_id: parent.id)
+end
+
 When "I visit the Books page" do
   visit books_path
 end

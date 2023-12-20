@@ -2,22 +2,47 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<% book_node_has_children = @book_node.books.any? %>
+
+<% if book_node_has_children %>
+<ul data-controller="book-link-tree-node">
+<% else %>
 <ul>
+<% end %>
+
   <% if @tree_depth > 0 %>
   <li class="pl-8">
   <% else %>
   <li>
   <% end %>
+
+    <% if book_node_has_children %>
+    <button data-book-link-tree-node-target="expandButton" title="Expand tree node" type="button">
+      <%= render partial: "layouts/heroicons/plus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+    </button>
+
+    <button data-book-link-tree-node-target="unexpandButton" title="Unexpand tree node" type="button" hidden>
+      <%= render partial: "layouts/heroicons/minus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+    </button>
+    <% end %>
+
     <%= link_to @book_node.title, book_articles_path(@book_node) %>
+
     <% if @book_node.public %>
       <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
     <% end %>
-  <% if @book_node.books.any? %>
+
+  <% if book_node_has_children %>
+    <div data-book-link-tree-node-target="childrenBookLinkNodes" hidden>
     <% @book_node.books.order(:title).each do |inner_book| %>
       <% @book_node = inner_book %>
       <% @tree_depth += 1 %>
+      
       <%= render "book_link_tree_node" %>
+      
     <% end %>
+    </div>
   <% end %>
+
   </li>
 </ul>
