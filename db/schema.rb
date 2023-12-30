@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_03_143640) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_30_135146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -98,7 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_03_143640) do
     t.uuid "concept_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["note_id", "concept_id"], name: "index_concepts_notes_on_note_id_and_concept_id", unique: true
+    t.index ["concept_id", "note_id"], name: "index_concepts_notes_on_concept_id_and_note_id"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
