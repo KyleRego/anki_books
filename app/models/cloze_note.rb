@@ -8,14 +8,18 @@
 # Represents an Anki cloze note
 # == Schema Information
 #
-# Table name: cloze_notes
+# Table name: notes
 #
-#  id         :uuid             not null, primary key
-#  sentence   :text             not null
-#  article_id :uuid             not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  anki_guid  :string           not null
+#  id               :uuid             not null, primary key
+#  front            :text
+#  back             :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  article_id       :uuid             not null
+#  ordinal_position :integer          not null
+#  anki_guid        :string           not null
+#  type             :string           not null
+#  sentence         :text
 #
 # Foreign Keys
 #

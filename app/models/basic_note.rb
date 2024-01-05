@@ -8,7 +8,7 @@
 # Represents an Anki basic note (front and back flashcard)
 # == Schema Information
 #
-# Table name: basic_notes
+# Table name: notes
 #
 #  id               :uuid             not null, primary key
 #  front            :text
@@ -18,6 +18,8 @@
 #  article_id       :uuid             not null
 #  ordinal_position :integer          not null
 #  anki_guid        :string           not null
+#  type             :string           not null
+#  sentence         :text
 #
 # Foreign Keys
 #

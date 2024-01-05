@@ -6,18 +6,18 @@
 
 # == Schema Information
 #
-# Table name: cloze_concepts_notes
+# Table name: concepts_notes
 #
-#  id            :uuid             not null, primary key
-#  cloze_note_id :uuid             not null
-#  concept_id    :uuid             not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id         :uuid             not null, primary key
+#  note_id    :uuid             not null
+#  concept_id :uuid             not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Foreign Keys
 #
-#  fk_rails_...  (cloze_note_id => cloze_notes.id)
 #  fk_rails_...  (concept_id => concepts.id)
+#  fk_rails_...  (note_id => notes.id)
 #
 class ConceptsNote < ApplicationRecord
   belongs_to :note

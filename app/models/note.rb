@@ -1,5 +1,24 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: notes
+#
+#  id               :uuid             not null, primary key
+#  front            :text
+#  back             :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  article_id       :uuid             not null
+#  ordinal_position :integer          not null
+#  anki_guid        :string           not null
+#  type             :string           not null
+#  sentence         :text
+#
+# Foreign Keys
+#
+#  fk_rails_...  (article_id => articles.id)
+#
 # Anki Books, a note-taking app to organize knowledge,
 # is licensed under the GNU Affero General Public License, version 3
 # Copyright (C) 2023 Kyle Rego

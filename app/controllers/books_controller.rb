@@ -123,7 +123,7 @@ class BooksController < ApplicationController
   end
 
   def set_public_book
-    @book = Book.where(public: true).find_by(id: params[:id])
+    @book = Book.where(allow_anonymous: true).find_by(id: params[:id])
   end
 
   def set_book

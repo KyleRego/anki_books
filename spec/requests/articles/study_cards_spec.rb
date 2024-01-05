@@ -7,14 +7,14 @@
 RSpec.describe "GET /articles/:id/study_cards", "#study_cards" do
   subject(:get_articles_study_cards) { get study_article_cards_path(article) }
 
-  let(:book) { create(:book, public: false) }
+  let(:book) { create(:book, allow_anonymous: false) }
   let(:article) { create(:article, book:) }
   let(:basic_note) { create(:basic_note, article:) }
 
   include_examples "user is not logged in and needs to be"
 
   context "when article's book is public" do
-    let(:book) { create(:book, public: true) }
+    let(:book) { create(:book, allow_anonymous: true) }
 
     it "returns a 200 response" do
       pending "implementation"

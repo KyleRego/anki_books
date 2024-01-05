@@ -7,8 +7,8 @@
 RSpec.describe "GET /books/:id", "#show" do
   subject(:get_books_show) { get book_path(book) }
 
-  let(:book) { create(:book, public:) }
-  let(:public) { false }
+  let(:book) { create(:book, allow_anonymous:) }
+  let(:allow_anonymous) { false }
 
   before do
     3.times do
@@ -25,7 +25,7 @@ RSpec.describe "GET /books/:id", "#show" do
   end
 
   context "when the book is public" do
-    let(:public) { true }
+    let(:allow_anonymous) { true }
 
     it "returns a success response" do
       get_books_show
@@ -42,7 +42,7 @@ RSpec.describe "GET /books/:id", "#show" do
     end
 
     context "when the book is public" do
-      let(:public) { true }
+      let(:allow_anonymous) { true }
 
       it "returns a success response" do
         get_books_show

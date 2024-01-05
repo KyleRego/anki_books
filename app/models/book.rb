@@ -8,11 +8,12 @@
 #
 # Table name: books
 #
-#  id             :uuid             not null, primary key
-#  title          :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  parent_book_id :uuid
+#  id              :uuid             not null, primary key
+#  title           :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  parent_book_id  :uuid
+#  allow_anonymous :boolean          default(FALSE), not null
 #
 # Foreign Keys
 #
