@@ -19,7 +19,7 @@ RSpec.describe "POST /login", "#create" do
     it "logs the user in successfully" do
       expect(session[:user_id]).to eq(user.id)
       expect(flash[:notice]).to eq("Logged in successfully.")
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(books_path)
     end
   end
 

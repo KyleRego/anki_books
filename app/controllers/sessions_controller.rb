@@ -46,7 +46,7 @@ class SessionsController < ApplicationController
       session[:redirect_path] = nil
       redirect_to redirect_path, flash: { notice: "Logged in successfully." }
     else
-      redirect_to root_path, flash: { notice: "Logged in successfully." }
+      redirect_to books_path, flash: { notice: "Logged in successfully." }
     end
   end
 end
