@@ -9,7 +9,7 @@
 - `passenger-config restart-app`
 - `sudo service apache2 restart`
 
-`RAILS_ENV=production bundle exec passenger start` if the Passenger application server was not already running.
+`RAILS_ENV=production bundle exec passenger start --daemonize` if the Passenger application server was not already running.
 
 Note that `apache2.conf` and `ankibooks.io.conf` have absolute file path references to the Ruby interpreter and Passenger gem that will need to be updated if newer versions of these are used.
 
