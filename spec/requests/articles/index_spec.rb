@@ -31,6 +31,7 @@ RSpec.describe "GET /books/:id/articles", "#index" do
         before { book.destroy }
 
         it "redirects to the homepage" do
+          get_articles_index
           expect(response).to redirect_to(root_path)
         end
       end
