@@ -11,7 +11,7 @@
 <%= form_with(model: @article, url:) do |form| %>
   <div class="my-1">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "w-full" %>
+    <%= form.text_field :title, class: "w-full", required: true %>
   </div>
 
   <div data-controller="article-editor" data-article-editor-target="editorContainer">
