@@ -13,7 +13,7 @@ end
 SimpleCov.start do
   enable_coverage :branch
 
-  add_filter "spec/rails_helper.rb"
+  add_filter "spec"
 
   add_group "Models", %r{app/models/.*}
   add_group "Controllers", %r{app/controllers/.*}
