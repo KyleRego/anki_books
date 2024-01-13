@@ -40,6 +40,7 @@ RSpec.describe "GET /articles/:id/manage", "#manage" do
         before { article.destroy }
 
         it "redirects to the homepage" do
+          get_articles_manage
           expect(response).to redirect_to root_path
         end
       end
