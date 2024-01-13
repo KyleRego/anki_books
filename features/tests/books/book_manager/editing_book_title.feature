@@ -8,7 +8,6 @@ Feature: Editing a book's title
     Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
     And the user "test_user" has a book called "My first book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I click the "Books" link
     And I click the last "My first book" link
     And I click the "Manage book" link
     And I click the "Edit book" link

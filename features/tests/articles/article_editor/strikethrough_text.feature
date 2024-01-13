@@ -16,5 +16,4 @@ Feature: Adding strikethrough when editing an article
     When I click the "Strikethrough" button
     And I fill in the article editor with "some strikethrough text"
     And I click the "Update Article" button
-    Then I should be redirected to the article "test article 0"
-    And I should see "some strikethrough text" with a strikethrough
+    Then I should see "some strikethrough text" with a strikethrough

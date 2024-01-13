@@ -12,7 +12,6 @@ Feature: Updating a book's child books
     And the user "test_user" has a book called "Test book 3"
     And the user "test_user" has a book called "Test book 4"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I click the "Books" link
     And I click the last "Test book 1" link
     And I click the "Manage book" link
     And I scroll to the update child books area

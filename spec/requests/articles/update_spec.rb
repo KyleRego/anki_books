@@ -7,7 +7,10 @@
 RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
   subject(:patch_articles_update) do
     params = { article: { title:, content:, reading:, writing:, complete: } }
-    patch article_path(article), params:
+
+    patch(article_path(article, format: :turbo_stream),
+          params:,
+          headers: { "Turbo-Frame": "article_#{article.id}" })
   end
 
   let(:title) { "new title 1 2 3" }
@@ -31,48 +34,44 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
     context "when the article belongs to one of the user's books" do
       let(:book) { create(:book, users: [user]) }
 
-      context "when the article belongs to one of the user's books" do
-        let(:book) { create(:book, users: [user]) }
+      it "updates the article and returns a Turbo Stream response" do
+        patch_articles_update
+        expect(article.reload.title).to eq(title)
+        expect(response.media_type).to eq Mime[:turbo_stream]
+      end
 
-        it "updates the article and redirects to the article" do
+      context "when reading, writing, complete are in the params" do
+        let(:reading) { false }
+        let(:writing) { true }
+        let(:complete) { false }
+
+        it "updates the article with those attributes updated to the param values" do
+          patch_articles_update
+          expect(article.reload.reading).to be reading
+          expect(article.reload.writing).to be writing
+          expect(article.reload.complete).to be complete
+          expect(response.media_type).to eq Mime[:turbo_stream]
+        end
+      end
+
+      context "when it is the system article" do
+        let(:article) { create(:article, book:, system: true) }
+
+        it "updates the article and returns a Turbo Stream response" do
           patch_articles_update
           expect(article.reload.title).to eq(title)
-          expect(flash[:notice]).to eq("Article updated successfully.")
-          expect(response).to redirect_to(article_path(article))
+          expect(response.media_type).to eq Mime[:turbo_stream]
         end
+      end
 
-        context "when reading, writing, complete are in the params" do
-          let(:reading) { false }
-          let(:writing) { true }
-          let(:complete) { false }
+      context "when the parameters are invalid" do
+        let(:title) { "" }
 
-          it "updates the article with those attributes updated to the param values" do
-            patch_articles_update
-            expect(article.reload.reading).to be reading
-            expect(article.reload.writing).to be writing
-            expect(article.reload.complete).to be complete
-          end
-        end
-
-        context "when it is the system article" do
-          let(:article) { create(:article, book:, system: true) }
-
-          it "updates the article and redirects to the root path" do
-            patch_articles_update
-            expect(article.reload.title).to eq(title)
-            expect(flash[:notice]).to eq("Article updated successfully.")
-            expect(response).to redirect_to root_path
-          end
-        end
-
-        context "when the parameters are invalid" do
-          let(:title) { "" }
-
-          it "does not update the article" do
-            patch_articles_update
-            expect(article.reload.title).not_to eq("")
-            expect(flash[:alert]).not_to be_empty
-          end
+        it "does not update the article" do
+          patch_articles_update
+          expect(article.reload.title).not_to eq("")
+          expect(response.media_type).to eq Mime[:turbo_stream]
+          expect(response.body).to include("Title can&#39;t be blank")
         end
       end
     end

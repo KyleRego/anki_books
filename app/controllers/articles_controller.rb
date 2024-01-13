@@ -54,14 +54,9 @@ class ArticlesController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def update
-    if @article.update(article_params)
-      flash[:notice] = "Article updated successfully."
-      redirect_to @article.system ? root_path : article_path(@article)
-    else
-      @book = @article.book
-      flash.now[:alert] = @article.errors.full_messages.first
-      render :edit, status: :unprocessable_entity
-    end
+    return if @article.update(article_params)
+
+    render turbo_stream: turbo_stream.replace(@article, template: "articles/edit")
   end
 
   def destroy

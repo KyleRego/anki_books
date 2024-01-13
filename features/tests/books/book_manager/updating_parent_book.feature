@@ -9,7 +9,6 @@ Feature: Parent book
     And the user "test_user" has a book called "Book to be parent"
     And the user "test_user" has a book called "Book to be child"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I click the "Books" link
     And I click the last "Book to be child" link
     And I click the "Manage book" link
     When I choose "Book to be parent" from the "parent_book_id" select

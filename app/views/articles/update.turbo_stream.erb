@@ -2,6 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_frame_tag @article do %>
-  <%= render "form", url: article_path(@article) %>
+<%= turbo_stream.replace @article do %>
+  <% turbo_frame_tag @article do %>
+    <%= render partial: "content" %>
+  <% end %>
 <% end %>

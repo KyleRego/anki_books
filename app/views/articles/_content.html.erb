@@ -2,6 +2,5 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= turbo_frame_tag @article do %>
-  <%= render "form", url: article_path(@article) %>
-<% end %>
+<%= @article.content %>
+<%= link_to("Edit", edit_article_path(@article), class: "action") %>

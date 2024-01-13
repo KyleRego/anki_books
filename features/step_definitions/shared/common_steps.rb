@@ -12,7 +12,7 @@ end
 
 When "I refresh the page" do
   visit current_path
-  sleep 1 if @test_article&.basic_notes&.any?
+  sleep 1.5
 end
 
 When "I fill in the {string} field with {string}" do |field, value|

@@ -6,6 +6,8 @@
   <%= render "trix_config" %>
 <% end %>
 
+<%= render "errors" %>
+
 <%= form_with(model: @article, url:) do |form| %>
   <div class="my-1">
     <%= form.label :title %>

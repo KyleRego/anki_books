@@ -17,4 +17,5 @@ Feature: Adding code blocks when editing an article
     And I fill in the article editor with '#include<iostream>;int main(){std::cout<<"Hello, world!";}'
     And I click the "Update Article" button
     And I refresh the page
+    Then show JavaScript console
     Then I should see a code block with syntax highlighting

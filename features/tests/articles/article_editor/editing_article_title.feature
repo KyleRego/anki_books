@@ -13,5 +13,4 @@ Feature: Editing the article title
     And I am editing the article "test article 0"
     And I fill in the article editor with "some text"
     And I click the "Update Article" button
-    Then I should be redirected to the article "test article 0"
-    And I should see "some text"
+    Then I should see "some text"

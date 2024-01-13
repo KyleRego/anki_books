@@ -1,0 +1,16 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
+
+<% if @article.errors.any? %>
+  <div class="flex flex-col">
+    <div>
+      <span><%= pluralize(@article.errors.count, "validation error") %> occurred:</span>
+    </div>
+    <ul>
+      <% @article.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -12,7 +12,6 @@ Feature: Moving articles to a different book from the manage book page
     And the book "source book" has the article "test article 3 - c"
     And the user "test_user" has a book called "target book"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
-    And I click the "Books" link
     And I click the last "source book" link
     And I click the "Manage book" link
   
