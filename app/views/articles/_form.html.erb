@@ -2,10 +2,6 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% content_for :head do %>
-  <%= render "trix_config" %>
-<% end %>
-
 <%= render "errors" %>
 
 <%= form_with(model: @article, url:) do |form| %>
