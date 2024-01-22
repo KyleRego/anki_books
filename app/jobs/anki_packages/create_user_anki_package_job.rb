@@ -17,6 +17,8 @@ module AnkiPackages
       downloaded_at_timestamp = DateTime.current.strftime("%b %d %I:%M %z")
 
       AnkiRecord::AnkiPackage.create(name:, target_directory:) do |anki21_database|
+        deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
+
         anki_basic_note_type = anki_books_basic_note_type(anki21_database:)
         anki_basic_note_type.save
 
@@ -24,8 +26,6 @@ module AnkiPackages
         anki_cloze_note_type.save
 
         user.books.each do |book|
-          deck = AnkiRecord::Deck.new(anki21_database:, name: "Anki Books")
-
           book.basic_notes.each do |basic_note|
             create_anki_basic_note(basic_note:, anki_basic_note_type:, anki_deck: deck, book:, timestamp: downloaded_at_timestamp)
           end
