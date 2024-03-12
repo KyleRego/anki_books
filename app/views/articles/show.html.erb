@@ -8,6 +8,7 @@
     <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") %>
     <% if logged_in? %>
       <%= link_to("Manage article", manage_article_path(@article), class: "action mr-4") %>
+      <%= link_to("Edit article", edit_article_path(@article), class: "action mr-4") %>
     <% end %>
     <% if @article.basic_notes.any? %>
       <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "action") %>
@@ -16,9 +17,7 @@
 
   <div class="flex flex-row sm-flex-col" data-controller="article-notes-position-setter">
     <div class="min-w-2-3 flex-grow-2" data-article-notes-position-setter-target="content">
-      <%= turbo_frame_tag @article do %>
-        <%= render partial: "articles/content" %>
-      <% end %>
+      <%= @article.content %>
     </div>
     <% if logged_in? || @notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>

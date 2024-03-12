@@ -54,9 +54,11 @@ class ArticlesController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def update
-    return if @article.update(article_params)
-
-    render turbo_stream: turbo_stream.replace(@article, template: "articles/edit")
+    if @article.update(article_params)
+      redirect_to article_path(@article)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

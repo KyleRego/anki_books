@@ -8,9 +8,7 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
   subject(:patch_articles_update) do
     params = { article: { title:, content:, reading:, writing:, complete: } }
 
-    patch(article_path(article, format: :turbo_stream),
-          params:,
-          headers: { "Turbo-Frame": "article_#{article.id}" })
+    patch(article_path(article), params:)
   end
 
   let(:title) { "new title 1 2 3" }
@@ -37,7 +35,6 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
       it "updates the article and returns a Turbo Stream response" do
         patch_articles_update
         expect(article.reload.title).to eq(title)
-        expect(response.media_type).to eq Mime[:turbo_stream]
       end
 
       context "when reading, writing, complete are in the params" do
@@ -50,7 +47,6 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
           expect(article.reload.reading).to be reading
           expect(article.reload.writing).to be writing
           expect(article.reload.complete).to be complete
-          expect(response.media_type).to eq Mime[:turbo_stream]
         end
       end
 
@@ -60,7 +56,6 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
         it "updates the article and returns a Turbo Stream response" do
           patch_articles_update
           expect(article.reload.title).to eq(title)
-          expect(response.media_type).to eq Mime[:turbo_stream]
         end
       end
 
@@ -70,7 +65,6 @@ RSpec.describe "PATCH /articles/:id for a non-system article", "#update" do
         it "does not update the article" do
           patch_articles_update
           expect(article.reload.title).not_to eq("")
-          expect(response.media_type).to eq Mime[:turbo_stream]
           expect(response.body).to include("Title can&#39;t be blank")
         end
       end
