@@ -53,7 +53,7 @@ This command starts the PostgreSQL database server:
 sudo service postgresql start
 ```
 
-It is probably best to add an alias for this command. With Ubuntu, adding the following to the `.bashrc` creates the alias when the Bash shell starts:
+With Ubuntu, adding the following to the `.bashrc` creates the alias when the Bash shell starts:
 
 `alias startpg='sudo service postgresql start'`
 

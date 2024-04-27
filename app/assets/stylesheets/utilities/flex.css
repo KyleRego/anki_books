@@ -66,4 +66,18 @@ Copyright (C) 2023 Kyle Rego */
   .flex-col-reverse {
     flex-direction: column-reverse;
   }
+
+  @media (max-width: 640px) {
+    .sm\:flex-row-reverse {
+      flex-direction: row-reverse;
+    }
+
+    .sm\:flex-col {
+      flex-direction: column;
+    }
+
+    .sm\:flex-col-reverse {
+      flex-direction: column-reverse;
+    }
+  }
 }

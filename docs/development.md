@@ -36,10 +36,6 @@ In my case, this was due to the Ruby executable being missing from the directory
 
 If you need to debug further, `echo $PATH | tr ':' '\n'` will print the `$PATH` variable with each directory on its own line.
 
-## TailwindCSS
-
-The Tailwind CSS IntelliSense VS Code extension makes working with Tailwind even nicer. Add the suggested mapping between plaintext and html in the extension settings to enable it for ERB files.
-
 ## Overcommit
 
 Overcommit is a gem being used to manage the Git hooks. It (hopefully) outputs something like the following when commiting a change:

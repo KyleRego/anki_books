@@ -51,3 +51,5 @@ AnkiBooks/ClientApp/.env.development.local
 AnkiBooks/ClientApp/node_modules
 AnkiBooks.Tests/bin
 AnkiBooks.Tests/obj
+
+.mono
