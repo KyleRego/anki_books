@@ -6,6 +6,8 @@
 
 # :nodoc:
 class BooksController < ApplicationController
+  caches_action :show
+
   before_action :require_login, except: %w[show]
   before_action :set_public_book, only: %w[show]
   before_action :set_book, except: %w[index new create]
@@ -18,9 +20,6 @@ class BooksController < ApplicationController
 
   def show
     @use_book_version = true
-    @book = Book.includes(articles: :notes)
-                .order("articles.ordinal_position")
-                .order("notes.ordinal_position").find(params[:id])
     @html_page_title = @book.title
   end
 
@@ -123,14 +122,22 @@ class BooksController < ApplicationController
   end
 
   def set_public_book
-    @book = Book.where(allow_anonymous: true).find_by(id: params[:id])
+    @book = Book.where(allow_anonymous: true)
+                .includes(articles: :notes)
+                .order("articles.ordinal_position")
+                .order("notes.ordinal_position")
+                .find_by(id: params[:id])
   end
 
   def set_book
     return if @book
 
     if logged_in?
-      @book ||= current_user.books.find_by(id: params[:id])
+      @book ||= current_user.books
+                            .includes(articles: :notes)
+                            .order("articles.ordinal_position")
+                            .order("notes.ordinal_position")
+                            .find_by(id: params[:id])
       return if @book
     end
 
