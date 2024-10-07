@@ -19,7 +19,7 @@
     <div class="min-w-2-3 flex-grow-2" data-article-notes-position-setter-target="content">
       <%= @article.content %>
     </div>
-    <% if logged_in? || @notes.any? %>
+    <% if @notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
       <%# The divs with class reorderable-note-unit must be direct children of this container %>
       <div id="article-notes-<%= @article.id %>" data-article-notes-position-setter-target="notes"

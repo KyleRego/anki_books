@@ -3,7 +3,7 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= turbo_frame_tag Note.new_ordinal_position_zero_note_turbo_id, class: "new-note-turbo-frame" do %>
-  <div class="flex flex-row justify-around">
+  <div class="flex flex-row justify-around <%= logged_in? ? "" : "visibility-hidden" %>">
     <%= link_to "New basic note", new_article_basic_note_path(@article), class: "action" %>
     <%= link_to "New cloze note", new_article_cloze_note_path(@article), class: "action" %>
   </div>

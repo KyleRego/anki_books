@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="flex-shrink flex flex-col wm-vertical-lr">
+    <div class="flex-shrink flex flex-col wm-vertical-lr <%= logged_in? ? "" : "visibility-hidden" %>">
       <% if @note.instance_of?(BasicNote) %>
         <div class="text-center"><%= render partial: "articles/basic_note/edit_basic_note_link" %></div>
       <% elsif @note.instance_of?(ClozeNote) %>
