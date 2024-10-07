@@ -6,8 +6,8 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login
-  before_action :set_article_and_book, except: %i[index new create]
+  before_action :require_login, except: %i[study_cards]
+  before_action :set_article_and_book, except: %i[index new create study_cards]
 
   def index
     @book = Book.includes(:articles).find_by(id: params[:book_id])
@@ -95,8 +95,16 @@ class ArticlesController < ApplicationController
   end
 
   def study_cards
+    @article = Article.includes(:book).find_by(id: params[:id])
+    @book = @article.book
+
     if @article.system
       redirect_to homepage_study_cards_path, status: :moved_permanently
+    elsif @book.allow_anonymous
+      @notes = @article.notes.ordered
+      render "study_cards/index"
+    elsif !current_user || !current_user.can_access_article?(article: @article)
+        not_found_or_unauthorized
     else
       @notes = @article.notes.ordered
       render "study_cards/index"

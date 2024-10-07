@@ -17,7 +17,6 @@ RSpec.describe "GET /articles/:id/study_cards", "#study_cards" do
     let(:book) { create(:book, allow_anonymous: true) }
 
     it "returns a 200 response" do
-      pending "implementation"
       get_articles_study_cards
       expect(response).to be_successful
     end

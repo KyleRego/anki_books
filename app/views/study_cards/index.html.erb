@@ -6,14 +6,6 @@
 
   <div data-controller="study-cards">
 
-    <div class="mt-16">
-      <% if @article %>
-        <%= link_to "Back to article", back_to_article_path(@article), class: "" %>
-      <% elsif @book %>
-        <%= link_to "Back to book", book_articles_path(@book), class: "" %>
-      <% end %>
-    </div>
-
     <% css_class_for_div_wrapping_studiable_notes = "w-96 mx-auto #{logged_in? ? "mt-6 mb-2" : "my-6"}" %>
     <div class="<%= css_class_for_div_wrapping_studiable_notes %>">
       <% @notes&.each do |note| %>
