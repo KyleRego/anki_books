@@ -76,7 +76,6 @@ group :test do
   gem "puma"
   gem "selenium-webdriver"
   gem "simplecov", require: false
-  gem "webdrivers"
 end
 
 gem "bcrypt", "~> 3.1"

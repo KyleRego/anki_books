@@ -9,7 +9,7 @@ require "pry"
 require "cucumber/rails"
 require "capybara/cucumber"
 require "selenium-webdriver"
-require "webdrivers"
+
 require_relative "../../spec/simplecov_helper"
 
 World(FactoryBot::Syntax::Methods)
