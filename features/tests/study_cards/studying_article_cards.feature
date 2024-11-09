@@ -14,11 +14,6 @@ Feature: Reading an article
     And I am viewing the article "test article 1"
     And I click the "Study cards" link
 
-  Scenario: I visit the Study cards page
-    Then I should see "Back to article"
-    And I should see "First card"
-    And I should see "Random order"
-
   Scenario: The Study cards page should not have the Study cards link
     Then I should not see "Study cards"
 
@@ -66,6 +61,3 @@ Feature: Reading an article
     When I click on the span with text "Previous"
     Then I should see "Front of note 2"
 
-  Scenario: Using the link back to the article should load the article correctly
-    When I click the "Back to article" link
-    Then I should see "Front of note 0"

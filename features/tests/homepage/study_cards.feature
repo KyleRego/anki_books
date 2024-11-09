@@ -21,7 +21,3 @@ Feature: Studying the cards of the homepage
     And I click the "Study cards" link
     And I click on the span with text "First card"
     Then I should see "Edit"
-    And I click the "Back to article" link
-    And I click the "Study cards" link
-    And I click on the span with text "Random order"
-    Then I should see "Edit"

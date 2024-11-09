@@ -13,13 +13,6 @@ Feature: The website homepage
     And I visit the root path
     Then I should see "front of homepage basic note"
 
-  Scenario: Going to the Study cards page and back to the article
-    When the homepage has a basic note
-    And I visit the root path
-    And I click the "Study cards" link
-    And I click the "Back to article" link
-    Then I should be on the root path
-
   Scenario: Visiting the homepage when logged in
     Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"

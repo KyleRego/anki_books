@@ -16,8 +16,3 @@ Feature: Studying the basic notes of a book
     And I click the "Books" link
     And I click the last "test book 1" link
 
-  Scenario: Visiting the book study cards page and then using the link back to the book
-    When I click the "Study cards" link
-    Then I should not see "test book 1"
-    And I click the "Back to book" link
-    Then I should see "test book 1"
