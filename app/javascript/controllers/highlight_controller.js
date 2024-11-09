@@ -3,13 +3,17 @@
 // Copyright (C) 2023 Kyle Rego
 
 import { Controller } from "@hotwired/stimulus";
+import hljs from "highlight.js";
 
 export default class extends Controller {
-  static targets = [ "message", "closeIcon" ];
-
   connect() {
-    this.closeIconTarget.addEventListener("click", () => {
-      this.messageTarget.classList.add("hidden");
-    })
+    hljs.configure({ lineNumbers: true });
+    this.highlightCodeBlocks();
+  }
+
+  highlightCodeBlocks() {
+    this.element.querySelectorAll("pre").forEach((block) => {
+      hljs.highlightElement(block);
+    });
   }
 }
