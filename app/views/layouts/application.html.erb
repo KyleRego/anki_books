@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head data-controller="trix-config">
     <% if @html_page_title %>
       <title><%= @html_page_title %></title>
     <% else %>
@@ -16,8 +16,6 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= csp_meta_tag %>
-    <%= render "layouts/trix_config" %>
     <%= yield :head %>
   </head>
 

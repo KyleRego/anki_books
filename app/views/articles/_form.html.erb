@@ -10,7 +10,8 @@
     <%= form.text_field :title, class: "w-full", required: true %>
   </div>
 
-  <div data-controller="article-editor" data-article-editor-target="editorContainer">
+  <div  data-controller="article-editor"
+        data-article-editor-target="editorContainer">
     <%= form.label :content %>
     <%= form.rich_text_area :content %>
   </div>
