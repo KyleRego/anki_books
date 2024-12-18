@@ -20,8 +20,9 @@
   </head>
 
   <body>
+    <%= render "layouts/top_nav" %>
+
     <main class="ml-4 mr-4 mb-4 flex-col">
-      <%= render "layouts/top_nav" %>
       <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>

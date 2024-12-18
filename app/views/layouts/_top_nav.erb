@@ -2,35 +2,58 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<nav id="top-nav" class="pt-2 position-sticky top-0 z-50 bg-white dark:bg-gray-900">
-  <ul class="flex justify-end flex-wrap-reverse">
+<nav id="top-nav" class="navbar navbar-expand-lg position-sticky top-0 z-50 bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand border-primary border-bottom" href="/">Anki Books 📚</a>
 
-    <%= yield :page_specific_links %>
-
-    <% if logged_in? %>
-      <li><%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %></li>
-
-      <li><%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %></li>
-
-      <% if show_link_to_concepts_in_top_nav? %>
-        <li><%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %></li>
+    <div class="d-flex column-gap-3">
+      <% if logged_in? %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       <% end %>
+      <div class="d-flex d-lg-none">
+        <% if logged_in? %>
+          <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold btn btn-outline-primary" %>
+        <% else %>
+          <%= link_to "Login", login_path, class: "font-semibold btn btn-outline-primary" %>
+        <% end %>
+      </div>
+    </div>
 
-      <% if show_link_to_books_in_top_nav? %>
-        <li><%= link_to("Books", books_path, class: "font-semibold mr-4") %></li>
+    <div id="navbarNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <%= yield :page_specific_links %>
+
+        <% if logged_in? %>
+          <li><%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %></li>
+
+          <li><%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %></li>
+
+          <% if show_link_to_concepts_in_top_nav? %>
+            <li><%= link_to("Concepts", concepts_path, class: "font-semibold mr-4") %></li>
+          <% end %>
+
+          <% if show_link_to_books_in_top_nav? %>
+            <li><%= link_to("Books", books_path, class: "font-semibold mr-4") %></li>
+          <% end %>
+
+          <% if show_link_to_downloads_in_top_nav? %>
+            <li><%= link_to("Downloads", downloads_path, class: "font-semibold mr-4") %></li>
+          <% end %>
+        <% end %>
+
+      </ul>
+    </div>
+
+    <div class="d-none d-lg-flex">
+      <% if logged_in? %>
+        <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold btn btn-outline-primary" %>
+      <% else %>
+        <%= link_to "Login", login_path, class: "font-semibold btn btn-outline-primary" %>
       <% end %>
+    </div>
 
-      <% if show_link_to_downloads_in_top_nav? %>
-        <li><%= link_to("Downloads", downloads_path, class: "font-semibold mr-4") %></li>
-      <% end %>
-
-      <li><%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, class: "font-semibold mr-4" %></li>
-
-    <% elsif current_page?(login_path) %>
-      <li><%= link_to "Home", root_path, class: "font-semibold mr-4" %></li>
-    <% else %>
-      <li><%= link_to "Login", login_path, class: "font-semibold mr-4" %></li>
-    <% end %>
-
-  </ul>
+  </div>
 </nav>

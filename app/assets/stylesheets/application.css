@@ -5,6 +5,7 @@ Copyright (C) 2023 Kyle Rego */
 /* 
  *= require "config/colors.css"
  *= require "preflight-reset"
+ *= require_tree "./bootstrap"
  *= require_tree "./base"
  *= require_tree "./colors"
  *= require_tree "./utilities"
@@ -13,4 +14,4 @@ Copyright (C) 2023 Kyle Rego */
  *= require "actiontext"
  */
 
-@layer reset, config, base, components, utilities, railscasts;
+@layer reset, bootstrap, config, base, components, utilities, railscasts;
