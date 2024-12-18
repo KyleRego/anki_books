@@ -19,10 +19,10 @@
     <%= yield :head %>
   </head>
 
-  <body>
+  <body class="bg-white">
     <%= render "layouts/top_nav" %>
 
-    <main class="ml-4 mr-4 mb-4 flex-col">
+    <main class="container">
       <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>

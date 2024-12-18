@@ -5,12 +5,18 @@
 <div class="max-w-96 mx-auto">
   <h1 class="text-center">Anki Books</h1>
   <%= form_with(url: login_path, local: true) do |form| %>
-    <%= form.label :email %>
-    <%= form.email_field :email, autocomplete: "username", class: "w-full", name: "session[email]", required: true %>
+    <div>
+      <%= form.label :email, class: "form-label" %>
+      <%= form.email_field :email, autocomplete: "username", class: "w-100 form-control", name: "session[email]", required: true %>
+    </div>
 
-    <%= form.label :password %>
-    <%= form.password_field :password, autocomplete: "current-password", class: "w-full", name: "session[password]", required: true %>
-
-    <%= form.submit "Log in", id: "login", class: "action" %>
+    <div class="mt-2">
+      <%= form.label :password, class: "form-label" %>
+      <%= form.password_field :password, autocomplete: "current-password", class: "w-100 form-control", name: "session[password]", required: true %>
+    </div>
+    
+    <div class="mt-4">
+      <%= form.submit "Log in", id: "login", class: "btn btn-outline-primary w-100" %>
+    </div>
   <% end %>
 </div>

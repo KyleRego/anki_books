@@ -8,8 +8,8 @@
   <%= link_to "New book", new_book_path, class: "action" %>
 </div>
 
-<div class="flex flex-row sm:flex-col-reverse">
-  <div class="pr-4 sm-pr-0 border-black-r sm-border-black-r-none sm-mt-4" id="alphabetical-books-index">
+<div class="mt-4 d-flex flex-row column-gap-5 flex-wrap-reverse">
+  <div class="" id="alphabetical-books-index">
     <h3 class="mb-2">Alphabetical</h2>
 
     <% @books.each do |book| %>
@@ -22,7 +22,7 @@
     <% end %>
   </div>
 
-  <div class="ml-4 sm-ml-0 mt-0" id="tree-books-index">
+  <div class="" id="tree-books-index">
     <h3 class="mb-2">Tree</h2>
     <% @root_books.each do |book| %>
       <% @book_node = book %>

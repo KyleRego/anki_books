@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div data-controller="basic-note-flippable">
+<div class="card border border-black rounded-0" data-controller="basic-note-flippable">
   <div data-basic-note-flippable-target="flippableNote"
         class="cursor-pointer p-2 border-black text-center" tabindex="0">
 
@@ -10,7 +10,7 @@
       <span class="whitespace-pre-wrap break-words"><%= @basic_note.front %></span>
     </div>
 
-    <div data-basic-note-flippable-target="flippableNoteBack" class="mt-2 pt-2 border-black-t" hidden>
+    <div data-basic-note-flippable-target="flippableNoteBack" class="mt-2 pt-2 border-top border-black" hidden>
       <span class="whitespace-pre-wrap break-words"><%= @basic_note.back %></span>
     </div>
 
