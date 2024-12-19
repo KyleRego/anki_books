@@ -8,9 +8,20 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "trix";
 import "@rails/actiontext";
-import "bootstrap";
+import "bootstrap"
+import { Modal } from "bootstrap";
 
 import Trix from "trix";
+
+document.addEventListener("turbo:frame-load", (event) => {
+  if (event.target.id === "modal") {
+    const modalElement = document.querySelector("#modal .modal");
+    if (modalElement) {
+      const modalInstance = new Modal(modalElement);
+      modalInstance.show();
+    }
+  }
+});
 
 Trix.config.blockAttributes.heading2 = {
   tagName: "h2",

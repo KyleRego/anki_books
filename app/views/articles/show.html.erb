@@ -2,24 +2,27 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<section class="article-section w-full break-anywhere">
-  <div class="position-sticky bg-white article-nav">
-    <%= link_to("#{@book.title}", book_articles_path(@book), class: "mr-4") if @book %>
-    <%= link_to("#{@article.title}", article_path(@article), class: "mr-4") %>
-    <% if logged_in? %>
-      <%= link_to("Manage article", manage_article_path(@article), class: "action mr-4") %>
-      <%= link_to("Edit article", edit_article_path(@article), class: "action mr-4") %>
-    <% end %>
-    <% if @article.basic_notes.any? %>
-      <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "action") %>
-    <% end %>
-  </div>
+<turbo-frame id="modal" target="_top">
 
-  <div class="d-flex flex-sm-row flex-col">
-    <div class="min-w-2-3 flex-grow-2"
-          data-controller="highlight">
-      <%= @article.content %>
+</turbo-frame>
+
+<section class="article-section w-full break-anywhere h-100">
+  <nav class="mb-2" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% if @book %>
+        <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_articles_path(@book)) %></li>
+      <% end %>
+      <li class="breadcrumb-item active" aria-current="page"><%= @article.title %></li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-md-row flex-col">
+    <div class="min-w-2-3 flex-grow-2" data-controller="highlight">
+      <turbo-frame id="article">  
+        <%= @article.content %>
+      </turbo-frame>
     </div>
+
     <% if logged_in? || @notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
       <%# The divs with class reorderable-note-unit must be direct children of this container %>
@@ -38,4 +41,25 @@
       </div>
     <% end %>
   </div>
+
+  <turbo-frame id="action-bar">
+    <div class="sticky-bottom bottom-0 bg-light p-4">
+      <div class="d-flex justify-content-around">
+        <% if logged_in? %>
+          <%= link_to("Manage article", manage_article_path(@article), class: "btn btn-primary text-white") %>
+          <%= link_to("Edit article", edit_article_path(@article),
+            class: "btn btn-primary text-white", data: { turbo_frame: "modal" }) %>
+        <% end %>
+
+        <% if @article.basic_notes.any? %>
+          <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
+        <% end %>
+
+        <% if logged_in? %>
+          <%= link_to("New note", "#", class: "btn btn-primary text-white") %>
+        <% end %>
+
+      </div>
+    </div>
+  </turbo-frame>
 </section>

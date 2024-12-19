@@ -4,16 +4,15 @@
 
 <%= render "errors" %>
 
-<%= form_with(model: @article, url:) do |form| %>
+<%= form_with(model: @article, url:, id: "article-form") do |form| %>
   <div class="my-1">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "w-full", required: true %>
+    <%= form.text_field :title, class: "w-full form-control", required: true %>
   </div>
 
-  <div  data-controller="article-editor"
-        data-article-editor-target="editorContainer">
+  <div data-controller="article-editor" data-article-editor-target="editorContainer">
     <%= form.label :content %>
-    <%= form.rich_text_area :content %>
+    <%= form.rich_text_area :content, class: "form-control trix-content" %>
   </div>
 
   <div class="my-1">
@@ -33,6 +32,5 @@
 
   <div class="mt-1">
     <%= form.hidden_field :book_id, value: @book.id %>
-    <%= form.submit class: "action" %>
   </div>
 <% end %>

@@ -114,8 +114,3 @@ trix-editor pre {
   background-color: white !important;
 }
 
-trix-toolbar {
-  top: 0;
-  position: sticky;
-  z-index: 1;
-}
