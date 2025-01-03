@@ -2,32 +2,38 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<h1 id="books-index-heading">Books</h1>
+<div class="mt-2 d-flex justify-content-between align-items-center column-gap-3">
+  <h1 id="books-index-heading">Books</h1>
 
-<div class="my-2">
-  <%= link_to "New book", new_book_path, class: "action" %>
+  <%= link_to "New book", new_book_path, class: "btn btn-primary text-white" %>
 </div>
 
-<div class="mt-4 d-flex flex-row column-gap-5 flex-wrap-reverse">
+<div class="text-center mt-2 d-flex flex-row column-gap-5 flex-wrap-reverse row-gap-3">
   <div class="" id="alphabetical-books-index">
-    <h3 class="mb-2">Alphabetical</h2>
+    <h3 class="mb-2">Alphabetical 🔠</h2>
 
-    <% @books.each do |book| %>
-      <div>
-        <%= link_to book.title, book_articles_path(book) %>
-        <% if book.allow_anonymous %>
-          <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-        <% end %>
-      </div>
-    <% end %>
+    <ol class="list-group">
+      <% @books.each do |book| %>
+          <%= link_to book_articles_path(book), class: "list-group-item list-group-item-action" do %>
+            <div class="d-flex justify-content-between column-gap-3 align-items-center">
+              <%= book.title %>
+              <% if book.allow_anonymous %>
+                <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+              <% end %>
+            </div>
+          <% end %>
+      <% end %>
+    </ol>
   </div>
 
   <div class="" id="tree-books-index">
-    <h3 class="mb-2">Tree</h2>
-    <% @root_books.each do |book| %>
-      <% @book_node = book %>
-      <% @tree_depth = 0 %>
-      <%= render "book_link_tree_node" %>
-    <% end %>
+    <h3 class="mb-2">Tree 🎋</h2>
+    <ol class="list-group">
+      <% @root_books.each do |book| %>
+        <% @book_node = book %>
+        <% @tree_depth = 0 %>
+        <%= render "book_link_tree_node" %>
+      <% end %>
+    </ol>
   </div>
 </div>

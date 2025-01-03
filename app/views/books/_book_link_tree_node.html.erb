@@ -3,46 +3,48 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <% book_node_has_children = @book_node.books.any? %>
+<% data_controller = book_node_has_children ? "book-link-tree-node" : "" %>
 
-<% if book_node_has_children %>
-<ul data-controller="book-link-tree-node">
-<% else %>
-<ul>
-<% end %>
+<li data-controller="<%= data_controller %>">
 
-  <% if @tree_depth > 0 %>
-  <li class="pl-8">
-  <% else %>
-  <li>
+  <%= link_to book_articles_path(@book_node),
+      class: "list-group-item list-group-item-action" do %>
+      <div class="d-flex justify-content-between align-items-center column-gap-3">
+        <div class="d-flex justify-content-start column-gap-3 align-items-center">
+          <% if book_node_has_children %>
+          
+            <button
+                data-book-link-tree-node-target="expandButton"
+                data-action="click->book-link-tree-node#showHiddenChildBookLinkNodes" title="Expand tree node" type="button">
+              <%= render partial: "layouts/heroicons/plus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+            </button>
+
+            <button
+                data-book-link-tree-node-target="unexpandButton"
+                data-action="click->book-link-tree-node#hideShownChildBookLinkNodes" title="Unexpand tree node" type="button" hidden>
+              <%= render partial: "layouts/heroicons/minus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+            </button>
+          <% end %>
+
+          <%= @book_node.title %>
+        </div>
+
+        <% if @book_node.allow_anonymous %>
+          <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+        <% end %>
+      </div>
   <% end %>
-
-    <% if book_node_has_children %>
-    <button data-book-link-tree-node-target="expandButton" title="Expand tree node" type="button">
-      <%= render partial: "layouts/heroicons/plus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-    </button>
-
-    <button data-book-link-tree-node-target="unexpandButton" title="Unexpand tree node" type="button" hidden>
-      <%= render partial: "layouts/heroicons/minus", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-    </button>
-    <% end %>
-
-    <%= link_to @book_node.title, book_articles_path(@book_node) %>
-
-    <% if @book_node.allow_anonymous %>
-      <%= render partial: "layouts/heroicons/lock_open", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-    <% end %>
 
   <% if book_node_has_children %>
-    <div data-book-link-tree-node-target="childrenBookLinkNodes" hidden>
-    <% @book_node.books.order(:title).each do |inner_book| %>
-      <% @book_node = inner_book %>
-      <% @tree_depth += 1 %>
+    <ol class="ml-4 list-group" data-book-link-tree-node-target="childrenBookLinkNodes" hidden>
+      <% @book_node.books.order(:title).each do |inner_book| %>
+        <% @book_node = inner_book %>
+        <% @tree_depth += 1 %>
 
-      <%= render "book_link_tree_node" %>
+        <%= render "book_link_tree_node" %>
 
-    <% end %>
-    </div>
+      <% end %>
+    </ol>
   <% end %>
 
-  </li>
-</ul>
+</li>

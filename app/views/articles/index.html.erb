@@ -7,36 +7,45 @@
   <li><%= link_to "Study cards", study_book_cards_path(@book), class: "font-semibold mr-4" %></li>
 <% end %>
 
-<h1 class="mt-2 pb-2 border-black-b">
-  <%= link_to "Book: #{@book.title}", book_path(@book) %>
-</h1>
-
-<% if @parent_book %>
-<div class="my-4 pb-4 border-black-b">
-  <%= link_to "Parent book: #{@parent_book.title}", book_articles_path(@parent_book) %>
-</div>
-<% end %>
-
-<div class="my-4 pb-4 border-black-b">
-  <h4>Articles:</h4>
-  <div class="my-2">
-    <%= link_to "New article", new_book_article_path(@book), class: "action" %>
-  </div>
-  <% @articles.each do |article| %>
-    <div>
-      <%= link_to article.title, article_path(article) %>
-      <% if article.complete %>
-        <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+<nav class="mb-2" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% if @parent_book %>
+        <li class="breadcrumb-item"><%= link_to("#{@parent_book.title}", book_articles_path(@parent_book)) %></li>
       <% end %>
-    </div>
+      <li class="breadcrumb-item active" aria-current="page"><%= @book.title %></li>
+    </ol>
+  </nav>
+
+<div class="mt-2 d-flex justify-content-around flex-wrap align-items-center">
+  <h1 class="border-black-b">
+    <%= @book.title %>
+  </h1>
+  <% if logged_in? %>
+    <%= link_to "New article", new_book_article_path(@book), class: "btn btn-primary text-white" %>
   <% end %>
 </div>
 
+<div class="my-2 pb-4 border-black-b">
+  <h2>Articles:</h2>
+  <ol class="list-group">
+    <% @articles.each do |article| %>
+        <%= link_to article_path(article), class: "list-group-item list-group-item-action" do %>
+            <%= article.title %>
+            <% if article.complete %>
+              <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+            <% end %>
+        <% end %>
+    <% end %>
+  </ol>
+</div>
+
 <% if @child_books.any? %>
-  <div class="my-4 pb-4 border-black-b">
-    <h4 class="mb-2">Children books:</h4>
+  <h3>Child books:</h3>
+  <div class="d-flex">
     <% @child_books.each do |child_book| %>
-      <div><%= link_to child_book.title, book_articles_path(child_book) %></div>
+      <%= link_to book_articles_path(child_book), class: "card p-4 w-24" do %>
+        <%= child_book.title %>
+      <% end %>
     <% end %>
   </div>
 <% end %>
