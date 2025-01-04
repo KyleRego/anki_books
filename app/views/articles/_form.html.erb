@@ -5,29 +5,33 @@
 <%= render "errors" %>
 
 <%= form_with(model: @article, url:, id: "article-form") do |form| %>
-  <div class="my-1">
-    <%= form.label :title %>
+  <div class="mt-2">
+    <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "w-full form-control", required: true %>
   </div>
 
-  <div data-controller="article-editor" data-article-editor-target="editorContainer">
-    <%= form.label :content %>
+  <div class="d-flex justify-content-start column-gap-3 mt-2">
+    <div class="form-check">
+      <%= form.check_box :reading, { class: "form-check-input" } %>
+      <%= form.label :reading, class: "form-check-label" %>
+    </div>
+
+    <div class="form-check">
+      <%= form.check_box :writing, { class: "form-check-input" } %>
+      <%= form.label :writing %>
+    </div>
+
+    <div class="form-check">
+      <%= form.check_box :complete, { class: "form-check-input" } %>
+      <%= form.label :complete %>
+    </div>
+  </div>
+
+  <div class="mt-2"
+        data-controller="article-editor"
+        data-article-editor-target="editorContainer">
+    <%= form.label :content, class: "form-label" %>
     <%= form.rich_text_area :content, class: "form-control trix-content" %>
-  </div>
-
-  <div class="my-1">
-    <%= form.label :reading %>
-    <%= form.check_box(:reading, {}) %>
-  </div>
-
-  <div class="my-1">
-    <%= form.label :writing %>
-    <%= form.check_box(:writing, {}) %>
-  </div>
-
-  <div class="my-1">
-    <%= form.label :complete %>
-    <%= form.check_box(:complete, {}) %>
   </div>
 
   <div class="mt-1">
