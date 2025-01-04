@@ -24,7 +24,7 @@ class BooksController < ApplicationController
   end
 
   def new
-    @book = Book.new
+    @book = Book.new(title: "My new book")
   end
 
   def edit; end

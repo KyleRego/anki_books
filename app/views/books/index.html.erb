@@ -2,13 +2,11 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="mt-2 d-flex justify-content-start align-items-center column-gap-5">
-  <h1 id="books-index-heading">Books</h1>
+<turbo-frame id="modal" target="_top"></turbo-frame>
 
-  <%= link_to "New book", new_book_path, class: "btn btn-primary text-white" %>
-</div>
+<h1 class="text-center mt-2" id="books-index-heading">Books</h1>
 
-<div class="mt-2 d-flex column-gap-5 flex-wrap-reverse row-gap-3">
+<div class="text-center my-2 d-flex justify-content-center column-gap-5 flex-wrap-reverse row-gap-3">
   <div class="" id="alphabetical-books-index">
     <h3 class="mb-2">Alphabetical 🔠</h3>
 
@@ -36,5 +34,17 @@
         <%= render "book_link_tree_node" %>
       <% end %>
     </ol>
+  </div>
+</div>
+
+<div class="sticky-bottom bottom-0 bg-light p-4">
+  <div class="d-flex justify-content-center column-gap-5">
+
+    <div class="btn-group">
+        <%= link_to "New book", new_book_path,
+          class: "btn btn-primary text-white",
+          data: { turbo_frame: "modal" } %>
+    </div>
+
   </div>
 </div>

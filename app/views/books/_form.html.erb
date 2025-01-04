@@ -2,8 +2,9 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<%= form_with(model: @book, url:) do |form| %>
-  <%= form.label :title %>
-  <%= form.text_field :title, class: "w-full", required: true %>
-  <%= form.submit class: "action" %>
+<%= form_with(model: @book, url:, id:  "book-form") do |form| %>
+  <div class="mt-2">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
+  </div>
 <% end %>

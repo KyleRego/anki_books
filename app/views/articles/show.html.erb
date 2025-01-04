@@ -40,28 +40,26 @@
     <% end %>
   </div>
 
-  <turbo-frame id="action-bar">
-    <div class="sticky-bottom bottom-0 bg-light p-4">
-      <div class="d-flex justify-content-center column-gap-5">
+  <div class="sticky-bottom bottom-0 bg-light p-4">
+    <div class="d-flex justify-content-center column-gap-5">
 
-        <div class="btn-group">
-          <% if logged_in? %>
-            <%= link_to("Edit article", edit_article_path(@article),
-              class: "btn btn-primary text-white", data: { turbo_frame: "modal" }) %>
-            <%= link_to("Manage article", manage_article_path(@article), class: "btn btn-primary text-white") %>
-          <% end %>
-        </div>
-
-        <div class="btn-group">
-          <% if logged_in? %>
-            <%= link_to("New note", "#", class: "btn btn-primary text-white") %>
-          <% end %>
-          <% if @article.basic_notes.any? %>
-            <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
-          <% end %>
-        </div>
-
+      <div class="btn-group">
+        <% if logged_in? %>
+          <%= link_to("Edit article", edit_article_path(@article),
+            class: "btn btn-primary text-white", data: { turbo_frame: "modal" }) %>
+          <%= link_to("Manage article", manage_article_path(@article), class: "btn btn-primary text-white") %>
+        <% end %>
       </div>
+
+      <div class="btn-group">
+        <% if logged_in? %>
+          <%= link_to("New note", "#", class: "btn btn-primary text-white") %>
+        <% end %>
+        <% if @article.basic_notes.any? %>
+          <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
+        <% end %>
+      </div>
+
     </div>
-  </turbo-frame>
+  </div>
 </section>

@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<turbo-frame id="modal"></turbo-frame>
+<turbo-frame id="modal" target="_top"></turbo-frame>
 
 <%# TODO: Show entire breadcrumbs to root book %>
 <nav class="mb-2" aria-label="breadcrumb">
@@ -46,20 +46,18 @@
   <% end %>
 </div>
 
-<turbo-frame id="action-bar">
-    <div class="sticky-bottom bottom-0 bg-light p-4">
-      <div class="d-flex justify-content-center">
-        <div class="btn-group">
-          <% if logged_in? %>
-            <%= link_to "New article",
-                      new_book_article_path(@book),
-                      class: "btn btn-primary text-white",
-                      data: { turbo_frame: "modal" } %>
-            <%= link_to "Manage book", manage_book_path(@book), class: "btn btn-primary text-white" %>
-          <% end %>
+<div class="sticky-bottom bottom-0 bg-light p-4">
+  <div class="d-flex justify-content-center">
+    <div class="btn-group">
+      <% if logged_in? %>
+        <%= link_to "New article",
+                  new_book_article_path(@book),
+                  class: "btn btn-primary text-white",
+                  data: { turbo_frame: "modal" } %>
+        <%= link_to "Manage book", manage_book_path(@book), class: "btn btn-primary text-white" %>
+      <% end %>
 
-          <%= link_to "Study cards", study_book_cards_path(@book), class: "btn btn-primary text-white" %>
-        </div>
-      </div>
+      <%= link_to "Study cards", study_book_cards_path(@book), class: "btn btn-primary text-white" %>
     </div>
-</turbo-frame>
+  </div>
+</div>
