@@ -32,7 +32,8 @@ end
 
 When "I am editing the article {string}" do |article_title|
   article = Article.find_by(title: article_title)
-  visit edit_article_path(article)
+  visit article_path(article)
+  click_link "Edit article"
 end
 
 When "I fill in the article editor with {string}" do |text|
@@ -67,11 +68,6 @@ When "I click the URL form {string} button" do |text|
   within "[data-trix-dialog='href']" do
     click_button text
   end
-end
-
-When "I click the Update Article button" do
-  click_button "Update Article"
-  sleep 0.5
 end
 
 When "I drop the fixture image {string} on the article editor" do |string|

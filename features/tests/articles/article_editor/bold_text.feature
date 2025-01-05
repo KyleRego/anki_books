@@ -15,12 +15,12 @@ Feature: Adding bold text when editing an article
   Scenario: Adding bold text to the article and saving it
     When I click the "Bold" button
     And I fill in the article editor with "some bold text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some bold text" in bold
 
   Scenario: Using the keyboard shortcut to add bold text
     When I focus the article editor
     And I use the ctrl + "b" keyboard shortcut
     And I fill in the article editor with "some bold text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some bold text" in bold

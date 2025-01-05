@@ -20,7 +20,7 @@ Feature: Adding links when editing an article
     When I click the "Link" button
     And I fill in the link URL form with "https://kylerego.github.io"
     And I click the URL form "Link" button
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see the text "https://kylerego.github.io" linking to "https://kylerego.github.io"
 
   Scenario: Adding a link after selecting some text
@@ -29,7 +29,7 @@ Feature: Adding links when editing an article
     And I click the "Link" button
     And I fill in the link URL form with "https://kylerego.github.io"
     And I click the URL form "Link" button
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see the text "this is my link" linking to "https://kylerego.github.io"
 
   Scenario: Selecting a link and making it not a link

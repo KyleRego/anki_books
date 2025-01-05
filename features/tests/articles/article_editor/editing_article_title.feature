@@ -12,5 +12,5 @@ Feature: Editing the article title
     And I am logged in as the user "test_user" with password: "1234asdf!!!!"
     And I am editing the article "test article 0"
     And I fill in the article editor with "some text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some text"

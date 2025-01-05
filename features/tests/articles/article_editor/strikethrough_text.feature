@@ -15,5 +15,5 @@ Feature: Adding strikethrough when editing an article
   Scenario: Adding strikethrough text to the article and saving it
     When I click the "Strikethrough" button
     And I fill in the article editor with "some strikethrough text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some strikethrough text" with a strikethrough

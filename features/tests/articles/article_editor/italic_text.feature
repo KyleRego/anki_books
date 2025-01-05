@@ -15,12 +15,12 @@ Feature: Adding italic text when editing an article
   Scenario: Adding italic text to the article and saving it
     When I click the "Italic" button
     And I fill in the article editor with "some italic text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some italic text" in italics
 
   Scenario: Using the keyboard shortcut to add italic text
     When I focus the article editor
     And I use the ctrl + "i" keyboard shortcut
     And I fill in the article editor with "some italic text"
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "some italic text" in italics

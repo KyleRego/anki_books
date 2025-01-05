@@ -35,5 +35,5 @@ Feature: Uploading images when editing an article
     When I drop the fixture image "test_image.png" on the article editor
     And I click on the span with text "test_image.png"
     And I type "this is my caption" on the focused element
-    And I click the "Update Article" button
+    And I click the "Save changes" button
     Then I should see "this is my caption"
