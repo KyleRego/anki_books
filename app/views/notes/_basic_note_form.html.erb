@@ -1,0 +1,18 @@
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2025 Kyle Rego %>
+
+<%= form_with url: article_basic_notes_path(@article.id),
+              method: :post,
+              scope: :basic_note,
+              id: "note-form" do |form| %>
+  <div class="mt-2">
+    <%= form.label :front, class: "form-label" %>
+    <%= form.text_area :front, class: "form-control", required: true %>
+  </div>
+
+  <div class="mt-2">
+    <%= form.label :back, class: "form-label" %>
+    <%= form.text_area :back, class: "form-control", required: true %>
+  </div>
+<% end %>

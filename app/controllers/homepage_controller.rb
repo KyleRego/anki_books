@@ -21,9 +21,6 @@ class HomepageController < ApplicationController
   private
 
   def setup_homepage
-    # TODO: Probably move the system boolean to books, possibly calling
-    # it homepage and having the homepage be a book once the larger book
-    # view is completed.
     @article = Article.find_by(system: true)
     @notes = @article.notes.ordered
   end

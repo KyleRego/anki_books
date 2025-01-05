@@ -23,6 +23,16 @@ document.addEventListener("turbo:frame-load", (event) => {
   }
 });
 
+document.addEventListener("turbo:before-stream-render", (event) => {
+  if (event.target.getAttribute("target") === "modal") {
+    const modalElement = document.querySelector("#modal .modal");
+    if (modalElement) {
+      const modalInstance = Modal.getInstance(modalElement);
+      modalInstance.hide();
+    }
+  }
+});
+
 Trix.config.blockAttributes.heading2 = {
   tagName: "h2",
   terminal: true,

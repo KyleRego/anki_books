@@ -2,22 +2,28 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<div class="mx-auto">
+<div class="mx-auto my-2">
   <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-    <div class="border-black text-center mx-auto px-4 mr-6 pb-2 pt-6 my-1">
+    <div class="card card-body mx-auto">
 
       <%= render "errors" %>
 
-      <%= form.label :front, class: "hidden" %>
-      <%= form.text_area :front, class: "w-full", required: true %>
+      <div class="">
+        <%= form.label :front, class: "form-label" %>
+        <%= form.text_area :front, class: "form-control", required: true %>
+      </div>
 
-      <%= form.label :back, class: "hidden" %>
-      <%= form.text_area :back, class: "w-full", required: true %>
+      <div>
+        <%= form.label :back, class: "form-label" %>
+        <%= form.text_area :back, class: "form-control", required: true %>
+      </div>
 
       <% on_study_cards_value = @on_study_cards ? "true" : "false" %>
       <%= hidden_field :options, :on_study_cards, value: on_study_cards_value %>
 
-      <%= form.submit class: "action" %>
+      <div class="mt-2">
+        <%= form.submit class: "action" %>
+      </div>
     </div>
   <% end %>
 </div>

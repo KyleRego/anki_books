@@ -2,12 +2,12 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<turbo-frame id="modal" target="_top"></turbo-frame>
+<%= render "layouts/modal_frame" %>
 
 <h1 class="text-center mt-2" id="books-index-heading">Books</h1>
 
 <div class="text-center my-2 d-flex justify-content-center column-gap-5 flex-wrap-reverse row-gap-3">
-  <div class="" id="alphabetical-books-index">
+  <div class="card card-body" id="alphabetical-books-index">
     <h3 class="mb-2">Alphabetical 🔠</h3>
 
     <div class="list-group list-group-flush">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="" id="tree-books-index">
+  <div class="card card-body" id="tree-books-index">
     <h3 class="mb-2">Tree 🎋</h3>
 
     <ol class="list-group list-group-flush">
