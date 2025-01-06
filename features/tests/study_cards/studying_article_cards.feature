@@ -27,6 +27,11 @@ Feature: Studying the cards of an article
     And I should see "Next card"
     When I click the "Next card" button
     Then I should see "Front of note 1"
+    When I click the "Show answer" button
+    And I click the "Next card" button
+    And I click the "Show answer" button
+    And I click the "Next card" button
+    Then I should see "Congratulations!"
 
   Scenario: Studying cards in random order
     When I click the "Random order" button

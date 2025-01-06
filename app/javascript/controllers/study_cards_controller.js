@@ -77,23 +77,14 @@ export default class extends Controller {
 
   studyNextCard() {
     this.currentCard().hidden = true;
-    this.ordinalPositionOfCurrentCard = this.nextOrdinalPosition();
+    this.ordinalPositionOfCurrentCard = this.ordinalPositionOfCurrentCard + 1;
+    this.studyNextCardTarget.hidden = true;
     if (this.ordinalPositionOfCurrentCard < this.numberOfCards) {
       this.currentCard().hidden = false;
-      this.studyNextCardTarget.hidden = true;
       this.showAnswerBtnTarget.hidden = false;
       this.showAnswerBtnTarget.focus();
     } else {
       this.completedStudyingInstructionsTarget.hidden = false;
-    }
-    
-  }
-
-  nextOrdinalPosition() {
-    if (this.ordinalPositionOfCurrentCard === (this.numberOfCards - 1)) {
-      return 0;
-    } else {
-      return this.ordinalPositionOfCurrentCard + 1;
     }
   }
 
