@@ -5,27 +5,32 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "startStudyWithFirstCard", "startRandomOrderStudy", "studyPreviousCard", "studyNextCard" ];
-
-  initialize() {
-    this.boundHandleStudyWithFirstCardKeydown = this.handleStudyWithFirstCardKeydown.bind(this);
-    this.boundHandleStudyWithRandomCardKeydown = this.handleStudyWithRandomCardKeydown.bind(this);
-  }
+  static targets = [ "chooseStudyModeButtons", "studyButtons",
+                    "startStudyWithFirstCard", "startRandomOrderStudy",
+                    "studyNextCard", "showAnswerBtn",
+                    "initialInstructions", "completedStudyingInstructions" ];
 
   connect() {
     this.cardsToStudy = this.cardsToStudy();
     this.numberOfCards = this.cardsToStudy.length;
+  
     this.startStudyWithFirstCardTarget.addEventListener("click", () => this.startStudyWithFirstCard());
-
-    this.startStudyWithFirstCardTarget.addEventListener("keydown", this.boundHandleStudyWithFirstCardKeydown);
-
     this.startRandomOrderStudyTarget.addEventListener("click", () => this.startRandomOrderStudy());
-
-    this.startRandomOrderStudyTarget.addEventListener("keydown", this.boundHandleStudyWithRandomCardKeydown);
-
-    this.studyPreviousCardTarget.addEventListener("click", () => this.studyPreviousCard());
+    this.showAnswerBtnTarget.addEventListener("click", () => this.handleCardShowAnswer());
     this.studyNextCardTarget.addEventListener("click", () => this.studyNextCard());
+    
     this.ordinalPositionOfCurrentCard = 0;
+  }
+
+  hideInitialInstructions() {
+    this.initialInstructionsTarget.hidden = true;
+  }
+
+  hideChooseStudyModeButtons() {
+    this.chooseStudyModeButtonsTarget.hidden = true;
+    // Bootstrap class d-flex has !important so it will
+    // override the hidden attribute unless it is removed
+    this.chooseStudyModeButtonsTarget.classList.remove("d-flex");
   }
 
   cardsToStudy() {
@@ -36,48 +41,52 @@ export default class extends Controller {
     return this.cardsToStudy[this.ordinalPositionOfCurrentCard];
   }
 
-  handleStudyWithFirstCardKeydown(event) {
-    if (event.key == "Enter") {
-      this.startStudyWithFirstCard(true);
-    }
-  }
-
-  startStudyWithFirstCard(usingKeyboard = false) {
-    this.startStudy(usingKeyboard);
+  startStudyWithFirstCard() {
+    this.startStudy();
     this.cardsToStudy[0].hidden = false;
   }
 
   handleStudyWithRandomCardKeydown(event) {
     if (event.key == "Enter") {
-      this.startStudyWithFirstCard(true);
+      this.startStudyWithFirstCard();
     }
   }
 
-  startRandomOrderStudy(usingKeyboard = false) {
-    this.startStudy(usingKeyboard);
+  startRandomOrderStudy() {
+    this.startStudy();
     this.randomizeCards();
   }
 
-  startStudy(usingKeyboard = false) {
-    this.startStudyWithFirstCardTarget.hidden = true;
-    this.startRandomOrderStudyTarget.hidden = true;
-    if (usingKeyboard == false) {
-      this.studyPreviousCardTarget.hidden = false;
-      this.studyNextCardTarget.hidden = false;
-    }
-    document.addEventListener("keydown", this.boundHandleStudyCardsKeydown);
+  startStudy() {
+    this.hideInitialInstructions();
+    this.hideChooseStudyModeButtons();
+    this.studyButtonsTarget.hidden = false;
+  }
+
+  handleCardShowAnswer() {
+    this.currentCard().querySelectorAll(".card-question").forEach((element) => {
+      element.hidden = true;
+    })
+    this.currentCard().querySelectorAll(".card-answer").forEach((element) => {
+      element.hidden = false;
+    });
+    this.showAnswerBtnTarget.hidden = true;
+    this.studyNextCardTarget.hidden = false;
+    this.studyNextCardTarget.focus();
   }
 
   studyNextCard() {
     this.currentCard().hidden = true;
     this.ordinalPositionOfCurrentCard = this.nextOrdinalPosition();
-    this.currentCard().hidden = false;
-  }
-
-  studyPreviousCard() {
-    this.currentCard().hidden = true;
-    this.ordinalPositionOfCurrentCard = this.previousOrdinalPosition();
-    this.currentCard().hidden = false;
+    if (this.ordinalPositionOfCurrentCard < this.numberOfCards) {
+      this.currentCard().hidden = false;
+      this.studyNextCardTarget.hidden = true;
+      this.showAnswerBtnTarget.hidden = false;
+      this.showAnswerBtnTarget.focus();
+    } else {
+      this.completedStudyingInstructionsTarget.hidden = false;
+    }
+    
   }
 
   nextOrdinalPosition() {

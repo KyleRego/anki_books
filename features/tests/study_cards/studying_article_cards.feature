@@ -1,9 +1,9 @@
 # Anki Books, a note-taking app to organize knowledge,
 # is licensed under the GNU Affero General Public License, version 3
-# Copyright (C) 2023 Kyle Rego
+# Copyright (C) 2025 Kyle Rego
 
 @javascript
-Feature: Reading an article
+Feature: Studying the cards of an article
 
   Background:
     Given there is a user "test_user", email "test@example.com", and password "1234asdf!!!!"
@@ -14,50 +14,28 @@ Feature: Reading an article
     And I am viewing the article "test article 1"
     And I click the "Study cards" link
 
-  Scenario: The Study cards page should not have the Study cards link
-    Then I should not see "Study cards"
-
-  Scenario: Studying in normal order should adjust the spans
-    When I click on the span with text "First card"
-    Then I should not see "First card"
+  Scenario: Studying the cards in order
+    When I click the "First card" button
+    Then I should see "Front of note 0"
+    And I should not see "Back of note 0"
+    And I should not see "First card"
     And I should not see "Random order"
-    And I should see "Previous card"
-    And I should see "Next card"
-
-  Scenario: Studying in random order should adjust the spans
-    When I click on the span with text "Random order"
-    Then I should not see "First card"
-    And I should not see "Random order"
-    And I should see "Previous card"
-    And I should see "Next card"
-
-  Scenario: Clicking the card should reveal the back of the card
-    When I click on the span with text "First card"
-    And I click on the span with text "Front of note 0"
+    And I should see "Show answer"
+    And I should not see "Next card"
+    When I click the "Show answer" button
     Then I should see "Back of note 0"
-    And I should not see "New basic note"
-
-  Scenario: Clicking the First card span followed by Next card should show me the cards in order looping to the first card
-    When I click on the span with text "First card"
-    Then I should see "Front of note 0"
-    When I click on the span with text "Next card"
-    Then I should see "Front of note 1"
-    When I click on the span with text "Next card"
-    Then I should see "Front of note 2"
-    When I click on the span with text "Next card"
-    Then I should see "Front of note 0"
-    When I click on the span with text "Next card"
+    And I should see "Next card"
+    When I click the "Next card" button
     Then I should see "Front of note 1"
 
-  Scenario: Clicking the First card span followed by Previous card should show me the cards in reverse order looping back to the first
-    When I click on the span with text "First card"
-    Then I should see "Front of note 0"
-    When I click on the span with text "Previous card"
-    Then I should see "Front of note 2"
-    When I click on the span with text "Previous card"
-    Then I should see "Front of note 1"
-    When I click on the span with text "Previous card"
-    Then I should see "Front of note 0"
-    When I click on the span with text "Previous"
-    Then I should see "Front of note 2"
-
+  Scenario: Studying cards in random order
+    When I click the "Random order" button
+    Then I should not see "First card"
+    And I should not see "Random order"
+    And I should see "Show answer"
+    And I should not see "Next card"
+    When I click the "Show answer" button
+    Then I should see "Next card"
+    And I should not see "Show answer"
+    When I click the "Next card" button
+    Then I should see "Show answer"

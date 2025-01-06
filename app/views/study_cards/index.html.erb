@@ -2,12 +2,18 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 <div class="d-flex flex-column h-100 justify-content-end" data-controller="study-cards">
-  <div class="flex-grow-1 d-flex flex-column justify-content-center mx-auto text-center">
-    <div class="mx-auto">
+  <div class="flex-grow-1 d-flex w-100 justify-content-center align-items-center text-center">
+    <div class="w-100">
+      <p data-study-cards-target="initialInstructions">
+        Please select random order or first card below to begin studying
+      </p>
+      <p data-study-cards-target="completedStudyingInstructions" hidden>
+        Congratulations! You have finished studying this set of cards
+      </p>
       <% @notes&.each do |note| %>
         <% @note = note %>
-        <div class="studiable-note mx-auto" hidden>
-          <%= render partial: "articles/note/show_with_edit_link" %>
+        <div class="studiable-note w-100" hidden>
+          <%= render "study_cards/card" %>
         </div>
       <% end %>
     </div>
@@ -15,21 +21,30 @@
 
   <div class="bg-light p-4">
     <div class="d-flex justify-content-center">
-      <div class="btn-group" role="toolbar" aria-label="Action buttons">
-        <button type="button"
-                data-study-cards-target="studyPreviousCard"
-                class="btn btn-primary" hidden tabindex="0">
-          Previous card
-        </button>
-        <button type="button" data-study-cards-target="startStudyWithFirstCard" class="btn btn-primary" tabindex="0">
-          First card
-        </button>
-        <button type="button" data-study-cards-target="startRandomOrderStudy" class="btn btn-primary" tabindex="0">
-          Random order
-        </button>
-        <button type="button" data-study-cards-target="studyNextCard" class="btn btn-primary" hidden tabindex="0">
-          Next card
-        </button>
+      <div role="toolbar" aria-label="Action buttons">
+        <div class="d-flex justify-content-center column-gap-5" data-study-cards-target="chooseStudyModeButtons">
+          <button type="button" data-study-cards-target="startRandomOrderStudy" class="btn btn-primary" tabindex="0">
+            Random order
+          </button>
+          <button type="button" data-study-cards-target="startStudyWithFirstCard" class="btn btn-primary" tabindex="0">
+            First card
+          </button>
+        </div>
+    
+        <div class="" data-study-cards-target="studyButtons" hidden>
+          <button type="button"
+                  data-study-cards-target="showAnswerBtn"
+                    class="btn btn-primary"
+                    tabindex="0">
+              Show answer
+          </button>
+          <button type="button" hidden
+                data-study-cards-target="studyNextCard"
+                class="btn btn-primary"
+                tabindex="0">
+            Next card
+          </button>
+        </div>
       </div>
     </div>
   </div>
