@@ -2,6 +2,10 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<%= turbo_stream.replace "modal" do %>
+  <%= render "layouts/modal_frame" %>
+<% end %>
+
 <% @note = @basic_note %>
 <% if @previous_sibling %>
 

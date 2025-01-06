@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/articles/:id/study_cards", to: "articles#study_cards", as: "study_article_cards"
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
 
+  get "/articles/:article_id/notes/new", to: "notes#new", as: "new_note"
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"

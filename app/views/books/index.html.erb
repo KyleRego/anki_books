@@ -2,13 +2,13 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<turbo-frame id="modal" target="_top"></turbo-frame>
+<%= render "layouts/modal_frame" %>
 
-<h1 class="text-center mt-2" id="books-index-heading">Books</h1>
+<h1 class="my-4" id="books-index-heading">Your Books</h1>
 
 <div class="text-center my-2 d-flex justify-content-center column-gap-5 flex-wrap-reverse row-gap-3">
-  <div class="" id="alphabetical-books-index">
-    <h3 class="mb-2">Alphabetical 🔠</h3>
+  <div class="card card-body " id="alphabetical-books-index">
+    <h3 class="card-title">Alphabetical 🔠</h3>
 
     <div class="list-group list-group-flush">
       <% @books.each do |book| %>
@@ -24,16 +24,16 @@
     </div>
   </div>
 
-  <div class="" id="tree-books-index">
-    <h3 class="mb-2">Tree 🎋</h3>
+  <div class="card card-body" id="tree-books-index">
+    <h3 class="card-title">Tree 🎋</h3>
 
-    <ol class="list-group list-group-flush">
+    <div class="list-group list-group-flush">
       <% @root_books.each do |book| %>
         <% @book_node = book %>
         <% @tree_depth = 0 %>
         <%= render "book_link_tree_node" %>
       <% end %>
-    </ol>
+    </div>
   </div>
 </div>
 

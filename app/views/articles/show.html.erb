@@ -2,7 +2,7 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<turbo-frame id="modal" target="_top"></turbo-frame>
+<%= render "layouts/modal_frame" %>
 
 <section class="article-section w-full break-anywhere h-100">
   <nav class="mb-2" aria-label="breadcrumb">
@@ -45,15 +45,22 @@
 
       <div class="btn-group">
         <% if logged_in? %>
-          <%= link_to("Edit article", edit_article_path(@article),
-            class: "btn btn-primary text-white", data: { turbo_frame: "modal" }) %>
-          <%= link_to("Manage article", manage_article_path(@article), class: "btn btn-primary text-white") %>
+          <%= link_to("Edit article",
+                      edit_article_path(@article),
+                      class: "btn btn-primary text-white",
+                      data: { turbo_frame: "modal" }) %>
+          <%= link_to("Manage article",
+                      manage_article_path(@article),
+                      class: "btn btn-primary text-white") %>
         <% end %>
       </div>
 
       <div class="btn-group">
         <% if logged_in? %>
-          <%= link_to("New note", "#", class: "btn btn-primary text-white") %>
+          <%= link_to("New note",
+                      new_note_path(@article, note_type: "BasicNote"),
+                      class: "btn btn-primary text-white",
+                      data: { turbo_frame: "modal" }) %>
         <% end %>
         <% if @article.basic_notes.any? %>
           <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
