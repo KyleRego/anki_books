@@ -1,0 +1,27 @@
+<div class="dropdown">
+  <button type="button"
+          class="btn btn-sm btn-outline-primary dropdown-toggle"
+          data-bs-toggle="dropdown">
+    <% if @note_type == NotesController::BASIC_NOTE_TYPE %>
+      Basic note
+    <% elsif @note_type == NotesController::CLOZE_NOTE_TYPE %>
+      Cloze note
+    <% end %>
+  </button>
+  <ul class="dropdown-menu">
+    <% unless @note_type.instance_of?(BasicNote) %>
+    <li><%= link_to("Basic note",
+          new_note_path(@article, note_type: NotesController::BASIC_NOTE_TYPE),
+          class: "dropdown-item",
+          data: { turbo_frame: "modal" }) %>
+    </li>
+    <% end %>
+    <% unless @note_type.instance_of?(ClozeNote) %>
+    <li><%= link_to("Cloze note",
+          new_note_path(@article, note_type: NotesController::CLOZE_NOTE_TYPE),
+          class: "dropdown-item",
+          data: { turbo_frame: "modal" }) %>
+    </li>
+    <% end %>
+  </ul>
+</div>

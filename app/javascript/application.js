@@ -15,6 +15,11 @@ import Trix from "trix";
 
 document.addEventListener("turbo:frame-load", (event) => {
   if (event.target.id === "modal") {
+    const modalBackdrop = document.querySelector("div.modal-backdrop");
+    if (modalBackdrop) {
+      modalBackdrop.remove();
+    }
+
     const modalElement = document.querySelector("#modal .modal");
     if (modalElement) {
       const modalInstance = new Modal(modalElement);
