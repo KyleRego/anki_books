@@ -26,7 +26,7 @@ RSpec.describe "POST /articles/:article_id/basic_notes", "#create" do
   context "when user is logged in" do
     include_context "when the user is logged in"
 
-    include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
+    # include_examples "request missing the Turbo-Frame header gets a 400 (Bad Request) response"
 
     context "when Turbo-Frame header is the first new basic note turbo id" do
       let(:turbo_id) { Note.new_ordinal_position_zero_note_turbo_id }

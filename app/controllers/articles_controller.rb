@@ -6,27 +6,42 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login, except: %i[study_cards]
-  before_action :set_article_and_book, except: %i[index new create study_cards]
+  before_action :require_login, except: %i[study_cards show]
+  before_action :set_article_and_book, except: %i[new create show study_cards]
 
-  def index
-    @book = Book.includes(:articles).find_by(id: params[:book_id])
-    if @book && current_user.can_access_book?(book: @book)
-      @articles = @book.articles.ordered
-      @parent_book = @book.parent_book
-      @child_books = @book.books
+  def show
+    @article = Article.includes(:book).find_by(id: params[:id])
+    not_found_or_unauthorized && return unless @article
+
+    @book = @article.book
+
+    if @article.system
+      redirect_to root_path, status: :moved_permanently
+    elsif @book.allow_anonymous || current_user&.can_access_book?(book: @book)
+      @notes = @article.notes.ordered
+      ord_pos = @article.ordinal_position
+      @previous_article = @book.articles.find_by(ordinal_position: ord_pos - 1)
+      @next_article = @book.articles.find_by(ordinal_position: ord_pos + 1)
     else
       not_found_or_unauthorized
     end
+    @html_page_title = @article.title
   end
 
-  def show
+  def study_cards
+    @article = Article.includes(:book).find_by(id: params[:id])
+    not_found_or_unauthorized && return unless @article
+
+    @book = @article.book
+
     if @article.system
-      redirect_to root_path, status: :moved_permanently
-    else
+      redirect_to homepage_study_cards_path, status: :moved_permanently
+    elsif @book.allow_anonymous || current_user&.can_access_book?(book: @book)
       @notes = @article.notes.ordered
+      render "study_cards/index"
+    else
+      not_found_or_unauthorized
     end
-    @html_page_title = @article.title
   end
 
   def new
@@ -67,7 +82,7 @@ class ArticlesController < ApplicationController
     else
       @book.destroy_ordinal_child(child: @article)
       flash[:notice] = "Article successfully deleted."
-      redirect_to book_articles_path(@book), status: :see_other
+      redirect_to book_path(@book), status: :see_other
     end
   end
 
@@ -94,23 +109,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def study_cards
-    @article = Article.includes(:book).find_by(id: params[:id])
-    @book = @article.book
-
-    if @article.system
-      redirect_to homepage_study_cards_path, status: :moved_permanently
-    elsif @book.allow_anonymous
-      @notes = @article.notes.ordered
-      render "study_cards/index"
-    elsif !current_user || !current_user.can_access_article?(article: @article)
-        not_found_or_unauthorized
-    else
-      @notes = @article.notes.ordered
-      render "study_cards/index"
-    end
-  end
-
   def manage
     @user_other_books = current_user.books.where.not(id: @book.id)
     @article_basic_notes = @article.basic_notes.ordered
@@ -127,7 +125,7 @@ class ArticlesController < ApplicationController
     else
       @book.move_ordinal_child_to_new_parent(new_parent: @target_book, child: @article,
                                              new_ordinal_position: @target_book.articles_count)
-      redirect_to book_articles_path(@book),
+      redirect_to book_path(@book),
                   flash: { notice: "#{@article.title} successfully moved to #{@target_book.title}" }
     end
   end

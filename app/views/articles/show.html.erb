@@ -3,17 +3,11 @@
 <%# Copyright (C) 2023 Kyle Rego %>
 
 <%= content_for :action_bar_content do %>
-  <div class="d-flex justify-content-center column-gap-5">
+  <div class="d-flex justify-content-between">
 
-    <div class="btn-group">
-      <% if logged_in? %>
-        <%= link_to("Edit article",
-                    edit_article_path(@article),
-                    class: "btn btn-primary text-white",
-                    data: { turbo_frame: "modal" }) %>
-        
-      <% end %>
-    </div>
+    <%= link_to("Previous article",
+            article_path(@previous_article || ""),
+            class: "btn btn-primary text-white #{"disabled" unless @previous_article}") %>
 
     <div class="btn-group">
       <% if logged_in? %>
@@ -21,11 +15,20 @@
                     new_note_path(@article, note_type: "BasicNote"),
                     class: "btn btn-primary text-white",
                     data: { turbo_frame: "modal" }) %>
+        <%= link_to("Edit article",
+                    edit_article_path(@article),
+                    class: "btn btn-primary text-white",
+                    data: { turbo_frame: "modal" }) %>
       <% end %>
       <% if @article.basic_notes.any? %>
         <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
       <% end %>
     </div>
+
+
+    <%= link_to("Next article",
+            article_path(@next_article || ""),
+            class: "btn btn-primary text-white #{"disabled" unless @next_article}") %>
 
   </div>
 <% end %>
@@ -36,7 +39,7 @@
   <nav class="mb-2" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <% if @book %>
-        <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_articles_path(@book)) %></li>
+        <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
       <% end %>
       <li class="breadcrumb-item active" aria-current="page">
         <span class="d-flex align-items-center column-gap-1">

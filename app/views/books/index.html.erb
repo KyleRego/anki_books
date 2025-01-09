@@ -22,7 +22,7 @@
 
     <div class="list-group list-group-flush">
       <% @books.each do |book| %>
-        <%= link_to book_articles_path(book), class: "list-group-item list-group-item-action" do %>
+        <%= link_to book_path(book), class: "list-group-item list-group-item-action" do %>
           <div class="d-flex justify-content-between column-gap-3 align-items-center">
             <%= book.title %>
             <% if book.allow_anonymous %>

@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get "/concepts/:id/manage", to: "concepts#manage", as: "manage_concept"
 
   resources :books, except: %i[destroy] do
-    resources :articles, only: %i[new index]
+    resources :articles, only: %i[new]
   end
   get "/books/:id/manage", to: "books#manage", as: "manage_book"
   post "/books/:id/change_article_ordinal_position", to: "books#change_article_ordinal_position",

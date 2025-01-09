@@ -19,7 +19,7 @@ RSpec.describe "articles/manage" do
 
   it "includes a link to the articles of the article's book in the nav" do
     render template: "articles/manage", layout: "layouts/application"
-    expect(rendered).to have_selector("a[href=\"#{book_articles_path(book)}\"]")
+    expect(rendered).to have_selector("a[href=\"#{book_path(book)}\"]")
   end
 
   it "does not show 'Transfer basic notes to a different article:' when the article has no basic notes" do

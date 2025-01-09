@@ -1,11 +1,42 @@
 <%# Anki Books, a note-taking app to organize knowledge, %>
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
-<div class="d-flex flex-column h-100 justify-content-end" data-controller="study-cards">
+
+<% content_for :action_bar_content do %>
+  <div class="d-flex justify-content-center">
+    <div role="toolbar" aria-label="Action buttons">
+      <div class="d-flex justify-content-center column-gap-5" data-study-cards-target="chooseStudyModeButtons">
+        <button type="button" data-study-cards-target="startRandomOrderStudy" class="btn btn-primary" tabindex="0">
+          Random order
+        </button>
+        <button type="button" data-study-cards-target="startStudyWithFirstCard" class="btn btn-primary" tabindex="0">
+          First card
+        </button>
+      </div>
+  
+      <div class="" data-study-cards-target="studyButtons" hidden>
+        <button type="button"
+                data-study-cards-target="showAnswerBtn"
+                  class="btn btn-primary"
+                  tabindex="0">
+            Show answer
+        </button>
+        <button type="button" hidden
+              data-study-cards-target="studyNextCard"
+              class="btn btn-primary"
+              tabindex="0">
+          Next card
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="d-flex flex-column h-100 justify-content-end">
   <div class="flex-grow-1 d-flex w-100 justify-content-center align-items-center text-center">
     <div class="w-100">
       <p data-study-cards-target="initialInstructions">
-        Please select random order or first card below to begin studying
+        Please select random order or first card below to begin studying 🤓
       </p>
       <p data-study-cards-target="completedStudyingInstructions" hidden>
         Congratulations! You have finished studying this set of cards
@@ -16,36 +47,6 @@
           <%= render "study_cards/card" %>
         </div>
       <% end %>
-    </div>
-  </div>
-
-  <div class="bg-light p-4">
-    <div class="d-flex justify-content-center">
-      <div role="toolbar" aria-label="Action buttons">
-        <div class="d-flex justify-content-center column-gap-5" data-study-cards-target="chooseStudyModeButtons">
-          <button type="button" data-study-cards-target="startRandomOrderStudy" class="btn btn-primary" tabindex="0">
-            Random order
-          </button>
-          <button type="button" data-study-cards-target="startStudyWithFirstCard" class="btn btn-primary" tabindex="0">
-            First card
-          </button>
-        </div>
-    
-        <div class="" data-study-cards-target="studyButtons" hidden>
-          <button type="button"
-                  data-study-cards-target="showAnswerBtn"
-                    class="btn btn-primary"
-                    tabindex="0">
-              Show answer
-          </button>
-          <button type="button" hidden
-                data-study-cards-target="studyNextCard"
-                class="btn btn-primary"
-                tabindex="0">
-            Next card
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </div>

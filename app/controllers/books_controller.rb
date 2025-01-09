@@ -19,8 +19,15 @@ class BooksController < ApplicationController
   end
 
   def show
-    @use_book_version = true
-    @html_page_title = @book.title
+    not_found_or_unauthorized unless @book
+
+    if @book.allow_anonymous || current_user&.can_access_book?(book: @book)
+      @articles = @book.articles.ordered
+      @parent_book = @book.parent_book
+      @child_books = @book.books
+    else
+      not_found_or_unauthorized
+    end
   end
 
   def new

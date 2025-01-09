@@ -7,10 +7,19 @@
 RSpec.describe "GET /articles/:id", "#show" do
   subject(:get_articles_show) { get article_path(article) }
 
-  let(:book) { create(:book) }
+  let(:book) { create(:book, allow_anonymous: false) }
   let(:article) { create(:article, book:) }
 
   include_examples "user is not logged in and needs to be"
+
+  context "when article's book is public" do
+    let(:book) { create(:book, allow_anonymous: true) }
+
+    it "shows the article to unauthenticated user" do
+      get_articles_show
+      expect(response).to be_successful
+    end
+  end
 
   context "when user is logged in" do
     include_context "when the user is logged in"

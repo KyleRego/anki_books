@@ -2,8 +2,62 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
-<% @book.articles.each do |article| %>
-  <% @article = article %>
-  <% @notes = article.notes %>
-  <div><%= render template: "articles/show" %></div>
+<% content_for :action_bar_content do %>
+  <div class="d-flex justify-content-center">
+    <div class="btn-group">
+      <% if logged_in? %>
+        <%= link_to "New article",
+                  new_book_article_path(@book),
+                  class: "btn btn-primary text-white",
+                  data: { turbo_frame: "modal" } %>
+        <%= link_to "Manage book", manage_book_path(@book), class: "btn btn-primary text-white" %>
+      <% end %>
+
+      <%= link_to "Study cards", study_book_cards_path(@book), class: "btn btn-primary text-white" %>
+    </div>
+  </div>
 <% end %>
+
+<turbo-frame id="modal" target="_top"></turbo-frame>
+
+<%# TODO: Show entire breadcrumbs to root book %>
+<nav class="mb-2" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <% if @parent_book %>
+      <li class="breadcrumb-item"><%= link_to("#{@parent_book.title}", book_path(@parent_book)) %></li>
+    <% end %>
+    <li class="breadcrumb-item active" aria-current="page"><%= @book.title %></li>
+  </ol>
+</nav>
+
+<h1 class=""><%= @book.title %></h1>
+
+<div class="mt-4 d-flex column-gap-5 flex-wrap-reverse row-gap-3">
+  <div class="">
+    <h3>Articles:</h3>
+    <div class="list-group list-group-flush">
+      <% @articles.each do |article| %>
+          <%= link_to article_path(article), class: "list-group-item list-group-item-action" do %>
+              <%= article.title %>
+              <% if article.complete %>
+                <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
+              <% end %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @child_books.any? %>
+    <div>
+      <h3>Child books:</h3>
+      <div class="list-group list-group-flush">
+        <% @child_books.each do |child_book| %>
+          <%= link_to book_path(child_book),
+                  class: "list-group-item list-group-item-action" do %>
+            <%= child_book.title %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -19,7 +19,8 @@
     <%= yield :head %>
   </head>
 
-  <body class="bg-white vh-100 d-flex flex-column">
+  <body class="bg-white vh-100 d-flex flex-column"
+      data-controller=<%= "#{"study-cards" if request.path.ends_with?("/study_cards")}" %> >
     <%= render "layouts/top_nav" %>
 
     <main class="container flex-grow-1">

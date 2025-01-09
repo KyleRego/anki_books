@@ -7,7 +7,7 @@
 # :nodoc:
 class BasicNotesController < ApplicationController
   before_action :require_login, only: %i[create edit update new destroy]
-  before_action :require_turbo_request, except: %i[destroy, create]
+  before_action :require_turbo_request, except: %i[destroy create]
   before_action :set_article, only: %i[create edit update new destroy]
   before_action :require_user_can_access_article, only: %i[create edit update new destroy]
   before_action :set_basic_note, only: %i[edit update destroy]
