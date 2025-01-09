@@ -10,7 +10,15 @@
       <% if @book %>
         <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_articles_path(@book)) %></li>
       <% end %>
-      <li class="breadcrumb-item active" aria-current="page"><%= @article.title %></li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <span class="d-flex align-items-center column-gap-1">
+          <%= @article.title %>
+          <%= link_to manage_article_path(@article), title: "Manage article" do %>
+            <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+          <% end %>
+           
+        </span>
+      </li>
     </ol>
   </nav>
 
@@ -49,9 +57,7 @@
                       edit_article_path(@article),
                       class: "btn btn-primary text-white",
                       data: { turbo_frame: "modal" }) %>
-          <%= link_to("Manage article",
-                      manage_article_path(@article),
-                      class: "btn btn-primary text-white") %>
+          
         <% end %>
       </div>
 
