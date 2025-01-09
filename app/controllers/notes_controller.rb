@@ -14,11 +14,18 @@ class NotesController < ApplicationController
   VALID_NOTE_TYPES = [BASIC_NOTE_TYPE, CLOZE_NOTE_TYPE].freeze
 
   def new
+    # TODO: This should be last note type that the user used
+    @note_type = BASIC_NOTE_TYPE
+  end
+
+  def switch_note_type
     @note_type = params[:note_type]
 
-    if @note_type.nil? || VALID_NOTE_TYPES.exclude?(@note_type)
-      @note_type = BASIC_NOTE_TYPE_PARAM
-    end
+    render turbo_stream: [
+      turbo_stream.replace("modal-header", partial: "modal_header"),
+      turbo_stream.replace("modal-body", partial: "modal_body"),
+      turbo_stream.replace("modal-footer", partial: "modal_footer")
+    ]
   end
 
   private

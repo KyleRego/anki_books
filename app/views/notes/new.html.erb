@@ -6,32 +6,9 @@
   <div class="modal" tabindex="-1" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header">
-          <div class="d-flex justify-content-start column-gap-3 align-items-center">
-            <h5 class="modal-title">
-              <% if @note_type == NotesController::BASIC_NOTE_TYPE %>
-                New basic note
-              <% elsif @note_type == NotesController::CLOZE_NOTE_TYPE %>
-                New cloze note
-              <% end %>
-            </h5>
-          </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body pt-0">
-          <% if @note_type == NotesController::BASIC_NOTE_TYPE %>
-            <%= render "basic_note_form" %>
-          <% elsif @note_type == NotesController::CLOZE_NOTE_TYPE %>
-            <%= render "cloze_note_form" %>
-          <% end %>
-        </div>
-        <div class="modal-footer">
-          <%= render "dropdown" %>
-
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" form="note-form" class="btn btn-primary">Create note</button>
-
-        </div>
+        <%= render "modal_header" %>
+        <%= render "modal_body" %>
+        <%= render "modal_footer" %>
       </div>
     </div>
   </div>

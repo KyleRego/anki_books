@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
 
   get "/articles/:article_id/notes/new", to: "notes#new", as: "new_note"
+  get "/articles/:article_id/notes/new/switch_note_type", to: "notes#switch_note_type", as: "switch_note_type"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
