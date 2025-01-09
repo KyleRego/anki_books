@@ -2,6 +2,16 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<%= content_for :action_bar_content do %>
+<div class="d-flex justify-content-center column-gap-5">
+  <div class="btn-group">
+      <%= link_to "New book", new_book_path,
+        class: "btn btn-primary text-white",
+        data: { turbo_frame: "modal" } %>
+  </div>
+</div>
+<% end %>
+
 <%= render "layouts/modal_frame" %>
 
 <h1 class="my-4" id="books-index-heading">Your Books</h1>
@@ -34,17 +44,5 @@
         <%= render "book_link_tree_node" %>
       <% end %>
     </div>
-  </div>
-</div>
-
-<div class="sticky-bottom bottom-0 bg-light p-4">
-  <div class="d-flex justify-content-center column-gap-5">
-
-    <div class="btn-group">
-        <%= link_to "New book", new_book_path,
-          class: "btn btn-primary text-white",
-          data: { turbo_frame: "modal" } %>
-    </div>
-
   </div>
 </div>

@@ -2,6 +2,34 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<%= content_for :action_bar_content do %>
+  <div class="d-flex justify-content-center column-gap-5">
+
+    <div class="btn-group">
+      <% if logged_in? %>
+        <%= link_to("Edit article",
+                    edit_article_path(@article),
+                    class: "btn btn-primary text-white",
+                    data: { turbo_frame: "modal" }) %>
+        
+      <% end %>
+    </div>
+
+    <div class="btn-group">
+      <% if logged_in? %>
+        <%= link_to("New note",
+                    new_note_path(@article, note_type: "BasicNote"),
+                    class: "btn btn-primary text-white",
+                    data: { turbo_frame: "modal" }) %>
+      <% end %>
+      <% if @article.basic_notes.any? %>
+        <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>
+
 <%= render "layouts/modal_frame" %>
 
 <section class="article-section w-full break-anywhere h-100">
@@ -46,33 +74,5 @@
         <% end %>
       </div>
     <% end %>
-  </div>
-
-  <div class="sticky-bottom bottom-0 bg-light p-4">
-    <div class="d-flex justify-content-center column-gap-5">
-
-      <div class="btn-group">
-        <% if logged_in? %>
-          <%= link_to("Edit article",
-                      edit_article_path(@article),
-                      class: "btn btn-primary text-white",
-                      data: { turbo_frame: "modal" }) %>
-          
-        <% end %>
-      </div>
-
-      <div class="btn-group">
-        <% if logged_in? %>
-          <%= link_to("New note",
-                      new_note_path(@article, note_type: "BasicNote"),
-                      class: "btn btn-primary text-white",
-                      data: { turbo_frame: "modal" }) %>
-        <% end %>
-        <% if @article.basic_notes.any? %>
-          <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
-        <% end %>
-      </div>
-
-    </div>
   </div>
 </section>
