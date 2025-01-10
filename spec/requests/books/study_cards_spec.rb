@@ -7,10 +7,19 @@
 RSpec.describe "GET /books/:id/study_cards", "#study_cards" do
   subject(:get_book_study_cards) { get study_book_cards_path(book) }
 
-  let(:book) { create(:book) }
+  let(:book) { create(:book, allow_anonymous: false) }
   let(:article) { create(:article, book:) }
 
   include_examples "user is not logged in and needs to be"
+
+  context "when book has allow_anonymous true" do
+    let(:book) { create(:book, allow_anonymous: true) }
+
+    it "permits unauthenticated user to study cards" do
+      get_book_study_cards
+      expect(response).to be_successful
+    end
+  end
 
   context "when user is logged in" do
     include_context "when the user is logged in"

@@ -8,8 +8,8 @@
 class BooksController < ApplicationController
   caches_action :show
 
-  before_action :require_login, except: %w[show]
-  before_action :set_public_book, only: %w[show]
+  before_action :require_login, except: %w[show study_cards]
+  before_action :set_public_book, only: %w[show study_cards]
   before_action :set_book, except: %w[index new create]
   before_action :set_articles, only: %w[manage]
 
@@ -25,6 +25,17 @@ class BooksController < ApplicationController
       @articles = @book.articles.ordered
       @parent_book = @book.parent_book
       @child_books = @book.books
+    else
+      not_found_or_unauthorized
+    end
+  end
+
+  def study_cards
+    not_found_or_unauthorized unless @book
+
+    if @book.allow_anonymous || current_user&.can_access_book?(book: @book)
+      @notes = @book.ordered_notes
+      render "study_cards/index"
     else
       not_found_or_unauthorized
     end
@@ -70,11 +81,6 @@ class BooksController < ApplicationController
     else
       head :unprocessable_entity
     end
-  end
-
-  def study_cards
-    @notes = @book.ordered_notes
-    render "study_cards/index"
   end
 
   def transfer_articles
