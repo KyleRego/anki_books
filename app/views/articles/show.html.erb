@@ -7,7 +7,7 @@
 
     <%= link_to("Previous article",
             article_path(@previous_article || ""),
-            class: "btn btn-primary text-white #{"disabled" unless @previous_article}") %>
+            class: "btn btn-primary text-white #{"disabled invisible" unless @previous_article}") %>
 
     <div class="btn-group">
       <% if logged_in? %>
@@ -28,7 +28,7 @@
 
     <%= link_to("Next article",
             article_path(@next_article || ""),
-            class: "btn btn-primary text-white #{"disabled" unless @next_article}") %>
+            class: "btn btn-primary text-white #{"disabled invisible" unless @next_article}") %>
 
   </div>
 <% end %>
@@ -42,9 +42,11 @@
         <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
       <% end %>
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="d-flex align-items-center column-gap-1">
-          <%= @article.title %>
-          <%= link_to manage_article_path(@article), title: "Manage article" do %>
+        <span class="d-flex align-items-end gap-2">
+          <span><%= @article.title %></span>
+          <%= link_to manage_article_path(@article),
+              title: "Manage article",
+              class: "" do %>
             <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
           <% end %>
            

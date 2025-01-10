@@ -10,7 +10,6 @@
                   new_book_article_path(@book),
                   class: "btn btn-primary text-white",
                   data: { turbo_frame: "modal" } %>
-        <%= link_to "Manage book", manage_book_path(@book), class: "btn btn-primary text-white" %>
       <% end %>
 
       <%= link_to "Study cards", study_book_cards_path(@book), class: "btn btn-primary text-white" %>
@@ -26,7 +25,14 @@
     <% if @parent_book %>
       <li class="breadcrumb-item"><%= link_to("#{@parent_book.title}", book_path(@parent_book)) %></li>
     <% end %>
-    <li class="breadcrumb-item active" aria-current="page"><%= @book.title %></li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <span class="d-flex align-items-end gap-2">
+        <span><%= @book.title %></span>
+        <%= link_to manage_book_path(@book), title: "Manage book" do %>
+          <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+        <% end %>
+      </span>
+    </li>
   </ol>
 </nav>
 
