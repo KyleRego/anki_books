@@ -6,6 +6,28 @@
   <li><%= link_to @book.title, book_path(@book), class: "font-semibold mr-4" %></li>
 <% end %>
 
-<h2>Edit book: <%= @book.title %></h2>
+<%# Anki Books, a note-taking app to organize knowledge, %>
+<%# is licensed under the GNU Affero General Public License, version 3 %>
+<%# Copyright (C) 2023 Kyle Rego %>
 
-<%= render "form", url: book_path(@book) %>
+<turbo-frame id="modal">
+  <div class="modal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Editing book "<%= @book.title %>"
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-0">
+          <%= render "form", url: book_path(@book) %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" form="book-form" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

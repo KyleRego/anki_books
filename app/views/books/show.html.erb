@@ -2,6 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<%= render "layouts/modal_frame" %>
+
 <% content_for :action_bar_content do %>
   <div class="d-flex justify-content-center">
     <div class="btn-group">
@@ -17,8 +19,6 @@
   </div>
 <% end %>
 
-<turbo-frame id="modal" target="_top"></turbo-frame>
-
 <%# TODO: Show entire breadcrumbs to root book %>
 <nav class="mb-2" aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -26,21 +26,27 @@
       <li class="breadcrumb-item"><%= link_to("#{@parent_book.title}", book_path(@parent_book)) %></li>
     <% end %>
     <li class="breadcrumb-item active" aria-current="page">
-      <span class="d-flex align-items-end gap-2">
-        <span><%= @book.title %></span>
-        <%= link_to manage_book_path(@book), title: "Manage book" do %>
-          <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+      <div class="d-flex align-items-center column-gap-3">
+        <span class="flex-grow-1"><%= @book.title %></span>
+        <% if logged_in? %>
+          <%= link_to manage_book_path(@book), title: "Manage book" do %>
+            <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+          <% end %>
+
+          <%= link_to edit_book_path(@book), 
+                      title: "Edit book",
+                      data: { turbo_frame: "modal" } do %>
+            <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
+          <% end %>
         <% end %>
-      </span>
+      </div>
     </li>
   </ol>
 </nav>
 
-<h1 class=""><%= @book.title %></h1>
-
 <div class="mt-4 d-flex column-gap-5 flex-wrap-reverse row-gap-3">
   <div class="">
-    <h3>Articles:</h3>
+    <h1>Articles:</h1>
     <div class="list-group list-group-flush">
       <% @articles.each do |article| %>
           <%= link_to article_path(article), class: "list-group-item list-group-item-action" do %>

@@ -2,6 +2,8 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2023 Kyle Rego %>
 
+<%= render "layouts/modal_frame" %>
+
 <%= content_for :action_bar_content do %>
   <div class="d-flex justify-content-between">
 
@@ -20,12 +22,6 @@
                       new_note_path(@article, note_type: "BasicNote"),
                       class: "dropdown-item #{"disabled" unless logged_in? }",
                       data: { turbo_frame: "modal" }) %>
-            </li>
-
-            <li><%= link_to "Edit article",
-                        edit_article_path(@article),
-                        class: "dropdown-item #{"disabled" unless logged_in? }",
-                        data: { turbo_frame: "modal" } %>
             </li>
           <% end %>
 
@@ -52,8 +48,6 @@
   </div>
 <% end %>
 
-<%= render "layouts/modal_frame" %>
-
 <section class="article-section w-full break-anywhere h-100">
   <nav class="mb-2" aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -61,13 +55,20 @@
         <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
       <% end %>
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="d-flex align-items-end gap-2">
+        <span class="d-flex align-items-center column-gap-3">
           <span><%= @article.title %></span>
-          <%= link_to manage_article_path(@article),
-              title: "Manage article",
-              class: "" do %>
-            <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+          <% if logged_in? %>
+            <%= link_to manage_article_path(@article),
+                title: "Manage article",
+                class: "" do %>
+              <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+            <% end %>
+            <%= link_to edit_article_path(@article), 
+                      title: "Edit book",
+                      data: { turbo_frame: "modal" } do %>
+            <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
           <% end %>
+        <% end %>
            
         </span>
       </li>

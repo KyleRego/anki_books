@@ -4,12 +4,24 @@
 
 # frozen_string_literal: true
 
-RSpec.describe "GET /random_reading_article", "#random_reading_article" do
+RSpec.describe "GET /random_reading_article", "#random_article" do
   subject(:get_users_random_reading_article) { get random_article_path }
 
   let(:user) { create(:user) }
 
-  include_examples "user is not logged in and needs to be"
+  context "when user is unauthenticated" do
+    context "when there is a public book with an article" do
+      before do
+        book = create(:book, allow_anonymous: true)
+        create(:article, book:)
+      end
+
+      it "is successful" do
+        get_users_random_reading_article
+        expect(response).to have_http_status(:found)
+      end
+    end
+  end
 
   context "when user is logged in" do
     include_context "when the user is logged in"

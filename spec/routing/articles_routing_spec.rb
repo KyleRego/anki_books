@@ -9,6 +9,10 @@ RSpec.describe ArticlesController do
   let(:article_id) { "1e8e5d81-09b4-4757-bbea-f024997d6b35" }
 
   describe "routing" do
+    it "routes to #random_article" do
+      expect(get: "/random_reading_article").to route_to("articles#random_article")
+    end
+
     it "routes to #new" do
       expect(get: "/books/#{book_id}/articles/new").to route_to("articles#new", book_id:)
     end
