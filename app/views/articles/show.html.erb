@@ -5,7 +5,7 @@
 <%= content_for :action_bar_content do %>
   <div class="d-flex justify-content-between">
 
-    <%= link_to("Previous article",
+    <%= link_to("Previous",
             article_path(@previous_article || ""),
             class: "btn btn-primary text-white #{"disabled invisible" unless @previous_article}") %>
 
@@ -45,7 +45,7 @@
         </ul>
     </div>
 
-    <%= link_to("Next article",
+    <%= link_to("Next",
             article_path(@next_article || ""),
             class: "btn btn-primary text-white #{"disabled invisible" unless @next_article}") %>
 
