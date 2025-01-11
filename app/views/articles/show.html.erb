@@ -9,7 +9,7 @@
 
     <%= link_to("Previous",
             article_path(@previous_article || ""),
-            class: "btn btn-primary text-white #{"disabled invisible" unless @previous_article}") %>
+            class: "btn btn-outline-primary #{"disabled invisible" unless @previous_article}") %>
 
     <div class="btn-group">
       <a role="button" class="btn btn-outline-primary">Actions</button>
@@ -43,7 +43,7 @@
 
     <%= link_to("Next",
             article_path(@next_article || ""),
-            class: "btn btn-primary text-white #{"disabled invisible" unless @next_article}") %>
+            class: "btn btn-outline-primary #{"disabled invisible" unless @next_article}") %>
 
   </div>
 <% end %>
