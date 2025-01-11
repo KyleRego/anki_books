@@ -27,7 +27,7 @@
         <%= yield :page_specific_links %>
 
         <% if logged_in? %>
-          <li><%= link_to("Read", user_random_reading_article_path, class: "font-semibold mr-4") %></li>
+          <li><%= link_to("Read", random_article_path, class: "font-semibold mr-4") %></li>
 
           <li><%= link_to("Write", user_random_writing_article_path, class: "font-semibold mr-4") %></li>
 

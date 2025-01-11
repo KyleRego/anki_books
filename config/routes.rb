@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
   get "/download_anki_deck", to: "users#download_anki_deck", as: "user_download_anki_deck"
   get "/update_anki_deck", to: "users#update_anki_deck", as: "user_update_anki_deck"
-  get "/random_reading_article", to: "users#random_reading_article", as: "user_random_reading_article"
+  get "/random_reading_article", to: "articles#random_article", as: "random_article"
   get "/random_writing_article", to: "users#random_writing_article", as: "user_random_writing_article"
 
   resources :articles, only: [], param: :id do

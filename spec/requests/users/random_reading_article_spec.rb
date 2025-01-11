@@ -5,7 +5,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "GET /random_reading_article", "#random_reading_article" do
-  subject(:get_users_random_reading_article) { get user_random_reading_article_path }
+  subject(:get_users_random_reading_article) { get random_article_path }
 
   let(:user) { create(:user) }
 

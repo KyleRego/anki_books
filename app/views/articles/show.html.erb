@@ -10,21 +10,40 @@
             class: "btn btn-primary text-white #{"disabled invisible" unless @previous_article}") %>
 
     <div class="btn-group">
-      <% if logged_in? %>
-        <%= link_to("New note",
-                    new_note_path(@article, note_type: "BasicNote"),
-                    class: "btn btn-primary text-white",
-                    data: { turbo_frame: "modal" }) %>
-        <%= link_to("Edit article",
-                    edit_article_path(@article),
-                    class: "btn btn-primary text-white",
-                    data: { turbo_frame: "modal" }) %>
-      <% end %>
-      <% if @article.basic_notes.any? %>
-        <%= link_to("Study cards", study_article_cards_path_helper(article: @article), class: "btn btn-primary text-white") %>
-      <% end %>
-    </div>
+      <a role="button" class="btn btn-outline-primary">Actions</button>
+      <a role="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Toggle Dropdown</span>
+      </a>
+        <ul class="dropdown-menu">
+          <% if logged_in? %>
+            <li><%= link_to("New note",
+                      new_note_path(@article, note_type: "BasicNote"),
+                      class: "dropdown-item #{"disabled" unless logged_in? }",
+                      data: { turbo_frame: "modal" }) %>
+            </li>
 
+            <li><%= link_to "Edit article",
+                        edit_article_path(@article),
+                        class: "dropdown-item #{"disabled" unless logged_in? }",
+                        data: { turbo_frame: "modal" } %>
+            </li>
+          <% end %>
+
+          <% if @article.basic_notes.any? %>
+            <li>
+              <%= link_to("Study cards",
+                          study_article_cards_path_helper(article: @article),
+                          class: "dropdown-item") %>
+            </li>
+          <% end %>
+
+          <li>
+            <%= link_to("Read something else",
+                        random_article_path,
+                        class: "dropdown-item") %>
+          </li>
+        </ul>
+    </div>
 
     <%= link_to("Next article",
             article_path(@next_article || ""),

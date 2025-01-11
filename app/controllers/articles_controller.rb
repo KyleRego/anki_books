@@ -6,8 +6,8 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  before_action :require_login, except: %i[study_cards show]
-  before_action :set_article_and_book, except: %i[new create show study_cards]
+  before_action :require_login, except: %i[show study_cards random_article]
+  before_action :set_article_and_book, except: %i[new create show study_cards random_article]
 
   def show
     @article = Article.includes(:book).find_by(id: params[:id])
@@ -41,6 +41,25 @@ class ArticlesController < ApplicationController
       render "study_cards/index"
     else
       not_found_or_unauthorized
+    end
+  end
+
+  def random_article
+    if current_user
+      article = current_user.random_reading_article
+
+      if article
+        redirect_to article_path(article)
+      else
+        flash[:notice] = "No incomplete reading articles found."
+        redirect_to books_path
+      end
+    else
+      article = Article.joins(:book)
+                       .where(books: { allow_anonymous: true })
+                       .order(Arel.sql("RANDOM()"))
+                       .first
+      redirect_to article
     end
   end
 
