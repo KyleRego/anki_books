@@ -1,6 +1,6 @@
 <%# Anki Books, a note-taking app to organize knowledge, %>
 <%# is licensed under the GNU Affero General Public License, version 3 %>
-<%# Copyright (C) 2023 Kyle Rego %>
+<%# Copyright (C) 2025 Kyle Rego %>
 
 <%= render "layouts/modal_frame" %>
 
@@ -75,8 +75,8 @@
     </ol>
   </nav>
 
-  <div class="d-flex flex-md-row flex-col">
-    <div class="min-w-2-3 flex-grow-2" data-controller="highlight">
+  <div class="d-flex flex-column">
+    <div class="flex-grow-1" data-controller="highlight">
       <turbo-frame id="article" target="_top">  
         <%= @article.content %>
       </turbo-frame>
@@ -86,9 +86,11 @@
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
       <%# The divs with class reorderable-note-unit must be direct children of this container %>
       <div id="article-notes-<%= @article.id %>"
-          class="position-sticky sm-position-static overflow-y-auto sm-overflow-y-scroll
-                  min-w-1-3 flex-grow-1 ml-1
-                  reorderable-note-units-container flex flex-col justify-start">
+          class="position-sticky overflow-y-auto sm-overflow-y-scroll
+                  flex-grow-1 mt-8 container
+                  reorderable-note-units-container flex flex-column justify-start">
+                  <h2>Article notes
+                    </h2>
 
         <% if !@use_book_version %>
           <%= render partial: "articles/note/new_ordinal_position_zero_note" %>
