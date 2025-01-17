@@ -109,10 +109,9 @@ RSpec.describe "POST /articles/:article_id/cloze_notes", "#create" do
       context "when text param is blank" do
         let(:text) { "   " }
 
-        it "does not create a cloze note" do
+        it "returns bad request" do
           expect { post_cloze_notes_create }.not_to change(ClozeNote, :count)
-          # TODO: Call a method on this string with normal ' that escapes it for equality
-          expect(response.body).to include "Text can&#39;t be blank"
+          expect(response).to have_http_status :bad_request
         end
       end
 

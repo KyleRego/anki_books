@@ -6,8 +6,6 @@
   <%= render "layouts/modal_frame" %>
 <% end %>
 
-<% @note = @basic_note %>
-
 <%= turbo_stream.after Note.new_ordinal_position_zero_note_turbo_id do %>
   <%= render partial: "articles/note/show" %>
 <% end %>

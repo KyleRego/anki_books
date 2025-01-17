@@ -6,7 +6,10 @@
 
 RSpec.describe "PATCH /articles/:article_id/cloze_notes/:id", "#update" do
   subject(:patch_cloze_notes_update) do
-    patch article_cloze_note_path(article, cloze_note), params:, headers:
+    patch article_cloze_note_path(article,
+                                  cloze_note,
+                                  format: :turbo_stream),
+          params:, headers:
   end
 
   let(:params) { { cloze_note: { sentence: new_sentence } } }

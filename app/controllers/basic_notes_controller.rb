@@ -6,60 +6,37 @@
 
 # :nodoc:
 class BasicNotesController < ApplicationController
-  before_action :require_login, only: %i[create edit update new destroy]
+  before_action :require_login, only: %i[create update destroy]
   before_action :require_turbo_request, except: %i[destroy create]
-  before_action :set_article, only: %i[create edit update new destroy]
-  before_action :require_user_can_access_article, only: %i[create edit update new destroy]
-  before_action :set_basic_note, only: %i[edit update destroy]
-  before_action :require_user_can_access_note, only: %i[edit update destroy]
-
-  def new
-    # Turbo-Frame header has the id of the turbo frame element
-    # and the last 36 characters of this are the id of the basic note
-    # which is the previous sibling. If it's the very first new basic note
-    # turbo frame element, it is not the id of a previous sibling.
-    sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if sibling_note_id == Note.new_ordinal_position_zero_note_turbo_id
-                          nil
-                        else
-                          Note.find(sibling_note_id)
-                        end
-    @basic_note = @article.basic_notes.new
-  end
-
-  def edit
-    @on_study_cards = true if request.referer&.end_with?("study_cards")
-  end
+  before_action :set_article, only: %i[create update destroy]
+  before_action :require_user_can_access_article, only: %i[create update destroy]
+  before_action :set_basic_note, only: %i[update destroy]
+  before_action :require_user_can_access_note, only: %i[update destroy]
 
   def create
-    @basic_note = @article.basic_notes.new(basic_note_params)
-    @basic_note.ordinal_position = @article.notes_count
+    @note = @article.basic_notes.new(basic_note_params)
+    @note.ordinal_position = @article.notes_count
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    if @basic_note.save
-      @article.reposition_ordinal_child(child: @basic_note, new_ordinal_position: ordinal_position_param)
+    if @note.save # rubocop:disable Style/GuardClause
+      @article.reposition_ordinal_child(child: @note, new_ordinal_position: ordinal_position_param)
     else
-      turbo_id = if @previous_sibling
-                   @previous_sibling.new_next_note_sibling_after_note_turbo_id
-                 else
-                   Note.new_ordinal_position_zero_note_turbo_id
-                 end
-
-      render turbo_stream: turbo_stream.replace(turbo_id,
-                                                template: "basic_notes/new",
-                                                locals: { basic_note: @basic_note })
+      render turbo_stream: turbo_stream.replace("note-form",
+                                                partial: "basic_notes/form") and return
     end
   end
 
   def update
-    if @basic_note.update(basic_note_params)
+    if @basic_note.update(basic_note_params) # rubocop:disable Style/GuardClause
       @note = @basic_note
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.replace("note-form",
+                                                partial: "basic_notes/form"),
+             status: :unprocessable_entity and return
     end
   end
 
-  # TODO: Flash message on successful basic note deletion
+  # TODO: Flash message on successful basic note deletion?
   def destroy
     @article.destroy_ordinal_child(child: @basic_note)
     redirect_to manage_article_path(@article)

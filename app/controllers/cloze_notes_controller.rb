@@ -9,28 +9,15 @@ class ClozeNotesController < ApplicationController
   before_action :require_login
   before_action :require_turbo_request
   before_action :find_article_from_article_id_param
-  before_action :find_cloze_note_from_cloze_note_id_param, only: %w[edit update]
-
-  def new
-    previous_sibling_note_id = request.headers["Turbo-Frame"].last(36)
-    @previous_sibling = if previous_sibling_note_id == Note.new_ordinal_position_zero_note_turbo_id
-                          nil
-                        else
-                          Note.find(previous_sibling_note_id)
-                        end
-    @cloze_note = @article.cloze_notes.new
-  end
-
-  def edit; end
+  before_action :find_cloze_note_from_cloze_note_id_param, only: %w[update]
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/PerceivedComplexity
   def create
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    text = params[:cloze_note][:sentence]
+    text = params[:cloze_note][:text]
 
     head :bad_request and return if text.blank?
 
@@ -74,16 +61,17 @@ class ClozeNotesController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
 
   def update
     # TODO: This needs to validate that the edited
     # note still has valid cloze deletions
-    if @cloze_note.update(cloze_note_params)
+    if @cloze_note.update(cloze_note_params) # rubocop:disable Style/GuardClause
       @note = @cloze_note
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.replace("note-form",
+                                                partial: "cloze_notes/form",
+                                                status: :unprocessable_entity) and return 
     end
   end
 
