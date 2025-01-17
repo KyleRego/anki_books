@@ -5,10 +5,10 @@
 <%# TODO: See if can abstract the errors because this is duplicated from basic notes %>
 
 <% if @note&.errors&.any? %>
-<div class="p-2">
-  <h3>
+<div class="p-2 mt-2">
+  <h4>
     <%= pluralize(@note.errors.count, "validation error") %> occurred:
-  </h3>
+  </h4>
   <ul class="list-group">
     <% @note.errors.full_messages.each do |message| %>
       <li class="list-group-item">

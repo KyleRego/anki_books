@@ -42,7 +42,7 @@ class ClozeNotesController < ApplicationController
       @cloze_notes_text = text
 
       render turbo_stream: turbo_stream.replace("note-form",
-                                                partial: "notes/cloze_note_form") and return 
+                                                partial: "cloze_notes/form") and return 
     end
 
     @cloze_notes = []
@@ -78,6 +78,8 @@ class ClozeNotesController < ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def update
+    # TODO: This needs to validate that the edited
+    # note still has valid cloze deletions
     if @cloze_note.update(cloze_note_params)
       @note = @cloze_note
     else

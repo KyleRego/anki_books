@@ -1,29 +1,21 @@
 <%# Anki Books, a note-taking app to organize knowledge, %>
 <%# is licensed under the GNU Affero General Public License, version 3 %>
-<%# Copyright (C) 2023 Kyle Rego %>
+<%# Copyright (C) 2025 Kyle Rego %>
 
-<div class="mx-auto my-2">
-  <%= form_with model: [@article, @basic_note], url:, class: "contents" do |form| %>
-    <div class="card card-body mx-auto">
+<%= form_with model: [@article, @note],
+              url: @editing ?
+                  article_basic_note_path(@article.id, @note) :
+                  article_basic_notes_path(@article.id),
+              method: @editing ? :patch : :post,
+              scope: :basic_note,
+              id: "note-form" do |form| %>
+  <div class="mt-2">
+    <%= form.label :front, class: "form-label" %>
+    <%= form.text_area :front, class: "form-control", required: true %>
+  </div>
 
-      <%= render "errors" %>
-
-      <div class="">
-        <%= form.label :front, class: "form-label" %>
-        <%= form.text_area :front, class: "form-control", required: true %>
-      </div>
-
-      <div>
-        <%= form.label :back, class: "form-label" %>
-        <%= form.text_area :back, class: "form-control", required: true %>
-      </div>
-
-      <% on_study_cards_value = @on_study_cards ? "true" : "false" %>
-      <%= hidden_field :options, :on_study_cards, value: on_study_cards_value %>
-
-      <div class="mt-2">
-        <%= form.submit class: "action" %>
-      </div>
-    </div>
-  <% end %>
-</div>
+  <div class="mt-2">
+    <%= form.label :back, class: "form-label" %>
+    <%= form.text_area :back, class: "form-control", required: true %>
+  </div>
+<% end %>
