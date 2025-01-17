@@ -30,29 +30,19 @@ class ClozeNotesController < ApplicationController
   def create
     @previous_sibling = @article.notes.find_by(ordinal_position: ordinal_position_param - 1)
 
-    turbo_id = if @previous_sibling
-                 @previous_sibling.new_next_note_sibling_after_note_turbo_id
-               else
-                 Note.new_ordinal_position_zero_note_turbo_id
-               end
+    text = params[:cloze_note][:sentence]
 
-    text = params[:cloze_note][:text]
-
-    if text.blank?
-      @cloze_note = @article.cloze_notes.new
-      @cloze_note.errors.add(:base, :invalid, message: "Text can't be blank")
-
-      render turbo_stream: turbo_stream.replace(turbo_id, template: "cloze_notes/new") and return    
-    end
+    head :bad_request and return if text.blank?
 
     cloze_sentences = ::ClozeTextHelperModule.split_text_to_cloze_sentences(text:)
 
     if cloze_sentences.empty?
-      @cloze_note = @article.cloze_notes.new
-      @cloze_note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
+      @note = @article.cloze_notes.new(sentence: text)
+      @note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
       @cloze_notes_text = text
 
-      render turbo_stream: turbo_stream.replace(turbo_id, template: "cloze_notes/new") and return
+      render turbo_stream: turbo_stream.replace("note-form",
+                                                partial: "notes/cloze_note_form") and return 
     end
 
     @cloze_notes = []
@@ -76,6 +66,11 @@ class ClozeNotesController < ApplicationController
       @article.reposition_ordinal_child(child: cloze_note, new_ordinal_position: ordinal_position_param)
       @cloze_notes << cloze_note
     end
+
+    # TODO: This is a temporary workaround
+    # Probably need to make only one cloze note record
+    # and have cards created from that instead of what the above is doing
+    @note = @cloze_notes.first
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
@@ -83,15 +78,18 @@ class ClozeNotesController < ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def update
-    if @cloze_note.update(sentence: params[:cloze_note][:sentence])
+    if @cloze_note.update(cloze_note_params)
       @note = @cloze_note
-      render partial: "articles/note/show_with_new_note_links_below"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   private
+
+  def cloze_note_params
+    params.require(:cloze_note).permit(:sentence)
+  end
 
   def ordinal_position_param
     @ordinal_position_param ||= params[:ordinal_position].to_i

@@ -54,8 +54,6 @@ class BasicNotesController < ApplicationController
   def update
     if @basic_note.update(basic_note_params)
       @note = @basic_note
-      render turbo_stream: turbo_stream.replace(@basic_note.turbo_dom_id,
-                                                partial: "articles/note/show_with_edit_link")
     else
       render :edit, status: :unprocessable_entity
     end

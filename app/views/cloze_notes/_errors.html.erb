@@ -4,15 +4,17 @@
 
 <%# TODO: See if can abstract the errors because this is duplicated from basic notes %>
 
-<% if @cloze_note.errors.any? %>
-  <div class="p-2 mb-4">
-    <div class="flex justify-center align-middle">
-      <span><%= pluralize(@cloze_note.errors.count, "validation error") %> occurred:</span>
-    </div>
-    <ul>
-      <% @cloze_note.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+<% if @note&.errors&.any? %>
+<div class="p-2">
+  <h3>
+    <%= pluralize(@note.errors.count, "validation error") %> occurred:
+  </h3>
+  <ul class="list-group">
+    <% @note.errors.full_messages.each do |message| %>
+      <li class="list-group-item">
+        <%= message %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 <% end %>

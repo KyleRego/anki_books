@@ -5,8 +5,21 @@
 <turbo-frame id="modal-header">
   <div class="modal-header">
     <h5 class="modal-title d-flex justify-content-start column-gap-3 align-items-center">
-      <span>New</span> <%= render "note_type_dropdown" %>
+      <span>
+        <% unless @editing %>
+          New note
+        <% else %>
+          Editing note
+        <% end %>
+      </span>
+
+      <% unless @editing %>
+        <%= render "note_type_dropdown" %>
+      <% end %>
     </h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <button type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close">
+    </button>
   </div>
 </turbo-frame>

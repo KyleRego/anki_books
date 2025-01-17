@@ -13,8 +13,11 @@
 
     <div class="btn-group">
       <a role="button" class="btn btn-outline-primary">Actions</button>
-      <a role="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="visually-hidden">Toggle Dropdown</span>
+      <a role="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+          data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">
+          Toggle Dropdown
+        </span>
       </a>
         <ul class="dropdown-menu">
           <% if logged_in? %>
@@ -84,20 +87,17 @@
 
     <% if logged_in? || @notes.any? %>
       <%# The id attribute here is used to POST the right article_id param to articles#change_note_ordinal_position %>
-      <%# The divs with class reorderable-note-unit must be direct children of this container %>
+      <h2 class="my-0">Article notes</h2>
       <div id="article-notes-<%= @article.id %>"
           class="position-sticky overflow-y-auto sm-overflow-y-scroll
-                  flex-grow-1 mt-8 container
-                  reorderable-note-units-container flex flex-column justify-start">
-                  <h2>Article notes
-                    </h2>
+                  flex-grow-1 container
+                  reorderable-note-units-container d-flex flex-column row-gap-3">
+        <%= turbo_frame_tag Note.new_ordinal_position_zero_note_turbo_id, 
+              class: "new-note-turbo-frame" %>
 
-        <% if !@use_book_version %>
-          <%= render partial: "articles/note/new_ordinal_position_zero_note" %>
-        <% end %>
         <% @notes.each do |note| %>
           <% @note = note %>
-          <%= render partial: "articles/note/show_with_new_note_links_below" %>
+          <%= render partial: "articles/note/show" %>
         <% end %>
       </div>
     <% end %>

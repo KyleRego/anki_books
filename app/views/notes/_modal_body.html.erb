@@ -4,9 +4,9 @@
 
 <turbo-frame id="modal-body">
   <div class="modal-body pt-0">
-    <% if @note_type == NotesController::BASIC_NOTE_TYPE %>
+    <% if @target_note_type == NotesController::BASIC_NOTE_TYPE %>
       <%= render "basic_note_form" %>
-    <% elsif @note_type == NotesController::CLOZE_NOTE_TYPE %>
+    <% elsif @target_note_type == NotesController::CLOZE_NOTE_TYPE %>
       <%= render "cloze_note_form" %>
     <% end %>
   </div>

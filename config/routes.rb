@@ -1,6 +1,6 @@
 # Anki Books, a note-taking app to organize knowledge,
 # is licensed under the GNU Affero General Public License, version 3
-# Copyright (C) 2023 Kyle Rego
+# Copyright (C) 2025 Kyle Rego
 
 # frozen_string_literal: true
 
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/books/:id/study_cards", to: "books#study_cards", as: "study_book_cards"
 
   get "/articles/:article_id/notes/new", to: "notes#new", as: "new_note"
+  get "/articles/:article_id/notes/:id/edit", to: "notes#edit", as: "edit_note"
   get "/articles/:article_id/notes/new/switch_note_type", to: "notes#switch_note_type", as: "switch_note_type"
 
   get "/login", to: "sessions#new"

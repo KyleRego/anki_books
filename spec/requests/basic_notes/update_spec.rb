@@ -6,7 +6,9 @@
 
 RSpec.describe "PATCH /articles/:article_id/basic_notes/:id", "#update" do
   subject(:patch_basic_notes_update) do
-    patch article_basic_note_path(article, basic_note), params:, headers:
+    patch article_basic_note_path(article,
+                                  basic_note, format: :turbo_stream),
+          params:, headers:
   end
 
   let(:params) { { basic_note: { front:, back: }, options: { on_study_cards: } } }

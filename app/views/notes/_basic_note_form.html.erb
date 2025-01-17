@@ -2,8 +2,11 @@
 <%# is licensed under the GNU Affero General Public License, version 3 %>
 <%# Copyright (C) 2025 Kyle Rego %>
 
-<%= form_with url: article_basic_notes_path(@article.id),
-              method: :post,
+<%= form_with model: [@article, @note],
+              url: @editing ?
+                  article_basic_note_path(@article.id, @note) :
+                  article_basic_notes_path(@article.id),
+              method: @editing ? :patch : :post,
               scope: :basic_note,
               id: "note-form" do |form| %>
   <div class="mt-2">

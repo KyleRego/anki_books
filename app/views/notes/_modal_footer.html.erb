@@ -4,8 +4,18 @@
 
 <turbo-frame id="modal-footer">
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="submit" form="note-form" class="btn btn-primary">Create note</button>
+    <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">
+      Close
+    </button>
+    <button type="submit" form="note-form"
+          class="btn btn-primary">
+      <% if @editing %>      
+        Update note
+      <% else %>
+        Create note
+      <% end %>
+    </button>
 
   </div>
 </turbo-frame>
