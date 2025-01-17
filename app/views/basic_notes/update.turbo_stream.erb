@@ -6,6 +6,6 @@
   <%= render "layouts/modal_frame" %>
 <% end %>
 
-<%= turbo_stream.after @note.turbo_dom_id do %>
+<%= turbo_stream.replace @note.turbo_dom_id do %>
   <%= render partial: "articles/note/show" %>
 <% end %>
