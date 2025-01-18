@@ -8,7 +8,7 @@
 # Controller for the site homepage and endpoint to
 # study the cards of the homepage.
 class HomepageController < ApplicationController
-  caches_action :show, :study_cards, if: -> { !logged_in? }
+  # caches_action :show, :study_cards, if: -> { !logged_in? }
 
   before_action :setup_homepage
 

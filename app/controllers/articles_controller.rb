@@ -6,7 +6,7 @@
 
 # :nodoc:
 class ArticlesController < ApplicationController
-  caches_action :show, :study_cards, if: -> { !logged_in? }
+  # caches_action :show, :study_cards, if: -> { !logged_in? }
   before_action :require_login, except: %i[show study_cards random_article]
 
   before_action :set_article_and_book, except: %i[new create show study_cards random_article]

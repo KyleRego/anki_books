@@ -6,7 +6,7 @@
 
 # :nodoc:
 class BooksController < ApplicationController
-  caches_action :show, :study_cards, if: -> { !logged_in? }
+  # caches_action :show, :study_cards, if: -> { !logged_in? }
   before_action :require_login, except: %w[show study_cards]
 
   before_action :set_public_book, only: %w[show study_cards]
