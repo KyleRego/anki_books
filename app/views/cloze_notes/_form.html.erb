@@ -14,7 +14,10 @@
 
     <div class="mt-2">
       <%= form.label :text, class: "form-label" %>
-      <%= form.text_area :text, class: "form-control", required: true %>
+      <%= form.text_area :text,
+                class: "form-control",
+                required: true,
+                value: @note.sentence %>
     </div>
   </div>
 <% end %>

@@ -78,7 +78,7 @@ class ClozeNotesController < ApplicationController
   private
 
   def cloze_note_params
-    params.require(:cloze_note).permit(:sentence)
+    params.require(:cloze_note).permit(:text)
   end
 
   def ordinal_position_param

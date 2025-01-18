@@ -9,6 +9,7 @@
 # note_type param is the note type of an existing note being edited
 # target_note_type is the type of note being created/switched to
 class NotesController < ApplicationController
+  before_action :require_login
   before_action :set_article
 
   BASIC_NOTE_TYPE = BasicNote.name
@@ -56,6 +57,7 @@ class NotesController < ApplicationController
   def load_note
     raise RuntimeError if @note_type.nil?
 
+    # TODO: scope loading note to user's data
     @note = case @note_type
             when BASIC_NOTE_TYPE
               BasicNote.joins(:article).find_by(id: params[:id])
