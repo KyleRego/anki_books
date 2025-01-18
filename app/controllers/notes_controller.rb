@@ -33,9 +33,10 @@ class NotesController < ApplicationController
   end
 
   def switch_note_type
+    @note_type = params[:note_type]
     @target_note_type = params[:target_note_type]
 
-    load_note if params[:id]
+    load_note
 
     render turbo_stream: [
       turbo_stream.replace("modal-header", partial: "modal_header"),
@@ -57,12 +58,21 @@ class NotesController < ApplicationController
   def load_note
     raise RuntimeError if @note_type.nil?
 
-    # TODO: scope loading note to user's data
-    @note = case @note_type
-            when BASIC_NOTE_TYPE
-              BasicNote.joins(:article).find_by(id: params[:id])
-            when CLOZE_NOTE_TYPE
-              ClozeNote.joins(:article).find_by(id: params[:id])
+    @note = if params[:id]
+              # TODO: scope loading note to user's data
+              case @note_type
+              when BASIC_NOTE_TYPE
+                BasicNote.joins(:article).find_by(id: params[:id])
+              when CLOZE_NOTE_TYPE
+                ClozeNote.joins(:article).find_by(id: params[:id])
+              end
+            else
+              case @target_note_type
+              when BASIC_NOTE_TYPE
+                BasicNote.new
+              when CLOZE_NOTE_TYPE
+                ClozeNote.new
+              end
             end
   end
 end
