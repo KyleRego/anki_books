@@ -32,21 +32,19 @@
   </div>
 <% end %>
 
-<div class="d-flex flex-column h-100 justify-content-end">
-  <div class="flex-grow-1 d-flex w-100 justify-content-center align-items-center text-center">
-    <div class="w-100">
-      <p data-study-cards-target="initialInstructions">
-        Please select random order or first card below to begin studying 🤓
-      </p>
-      <p data-study-cards-target="completedStudyingInstructions" hidden>
-        Congratulations! You have finished studying this set of cards
-      </p>
-      <% @notes&.each do |note| %>
-        <% @note = note %>
-        <div class="studiable-note w-100" hidden>
-          <%= render "study_cards/card" %>
-        </div>
-      <% end %>
-    </div>
+<div class="flex-grow-1 text-center d-flex justify-content-center align-items-center">
+  <div class="w-100">
+    <p data-study-cards-target="initialInstructions">
+      Please select random order or first card below to begin studying 🤓
+    </p>
+    <p data-study-cards-target="completedStudyingInstructions" hidden>
+      Congratulations! You have finished studying this set of cards
+    </p>
+    <% @notes&.each do |note| %>
+      <% @note = note %>
+      <div class="studiable-note w-100" hidden>
+        <%= render "study_cards/card" %>
+      </div>
+    <% end %>
   </div>
 </div>

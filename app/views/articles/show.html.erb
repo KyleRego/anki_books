@@ -51,8 +51,8 @@
   </div>
 <% end %>
 
-<section class="article-section w-full break-anywhere h-100">
-  <nav class="mb-2" aria-label="breadcrumb">
+<section data-controller="breadcrumbs-top" class="article-section w-full break-anywhere h-100">
+  <nav data-breadcrumbs-top-target="breadcrumbs" class="mb-2 sticky-top z-2 bg-white pt-1 pl-2 pb-2" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <% if @book %>
         <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>

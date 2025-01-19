@@ -19,11 +19,11 @@
     <%= yield :head %>
   </head>
 
-  <body class="bg-white vh-100 d-flex flex-column"
+  <body class="bg-white d-flex flex-column min-vh-100"
       data-controller=<%= "#{"study-cards" if request.path.ends_with?("/study_cards")}" %> >
     <%= render "layouts/top_nav" %>
 
-    <main class="container flex-grow-1">
+    <main class="container flex-grow-1 d-flex flex-column">
       <%= render "layouts/flash_messages" %>
       <%= yield %>
     </main>
