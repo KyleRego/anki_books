@@ -51,33 +51,33 @@
   </div>
 <% end %>
 
-<section data-controller="breadcrumbs-top" class="article-section w-full break-anywhere h-100">
-  <nav data-breadcrumbs-top-target="breadcrumbs" class="mb-2 sticky-top z-2 bg-white pt-1 pl-2 pb-2" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <% if @book %>
-        <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
-      <% end %>
-      <li class="breadcrumb-item active" aria-current="page">
-        <span class="d-flex align-items-center column-gap-3">
-          <span><%= @article.title %></span>
-          <% if logged_in? %>
-            <%= link_to manage_article_path(@article),
-                title: "Manage article",
-                class: "" do %>
-              <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
-            <% end %>
-            <%= link_to edit_article_path(@article), 
-                      title: "Edit book",
-                      data: { turbo_frame: "modal" } do %>
-            <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
-          <% end %>
+<%= content_for :breadcrumbs_nav_content do %>
+<ol class="breadcrumb">
+  <% if @book %>
+    <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
+  <% end %>
+  <li class="breadcrumb-item active" aria-current="page">
+    <span class="d-flex align-items-center column-gap-3">
+      <span><%= @article.title %></span>
+      <% if logged_in? %>
+        <%= link_to manage_article_path(@article),
+            title: "Manage article",
+            class: "" do %>
+          <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
         <% end %>
-           
-        </span>
-      </li>
-    </ol>
-  </nav>
+        <%= link_to edit_article_path(@article), 
+                  title: "Edit book",
+                  data: { turbo_frame: "modal" } do %>
+        <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
+      <% end %>
+    <% end %>
+        
+    </span>
+  </li>
+</ol>
+<% end %>
 
+<section class="article-section w-full break-anywhere h-100">
   <div class="d-flex flex-column">
     <div class="flex-grow-1" data-controller="highlight">
       <turbo-frame id="article" target="_top">  
