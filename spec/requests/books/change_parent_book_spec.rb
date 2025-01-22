@@ -21,9 +21,9 @@ RSpec.describe "GET /books/:id/change_parent_book", "#change_parent_book" do
 
     let(:book) { create(:book, users: [user]) }
 
-    it "returns a success response" do
+    it "updates the parent book and redirects to the book" do
       patch_books_change_parent_book
-      expect(response).to redirect_to(manage_book_path(book))
+      expect(response).to redirect_to(book_path(book))
       expect(book.reload.parent_book).to eq parent_book
     end
 

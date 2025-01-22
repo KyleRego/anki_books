@@ -118,7 +118,7 @@ class BooksController < ApplicationController
     end
 
     parent_book.books << @book
-    redirect_to manage_book_path(@book), flash: { notice: "Parent book updated for #{@book.title}." }
+    redirect_to book_path(@book), flash: { notice: "Parent book updated for #{@book.title}." }
   end
   # rubocop:enable Metrics/AbcSize
 
