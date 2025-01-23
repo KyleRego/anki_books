@@ -20,11 +20,11 @@
 #  fk_rails_...  (article_id => articles.id)
 #
 
-TEST_SENTENCE = "Cloze note test sentence."
+FACTORY_CLOZE_TEXT = "Cloze note test sentence."
 
 FactoryBot.define do
   factory :cloze_note do
-    sentence { TEST_SENTENCE }
+    cloze_text { FACTORY_CLOZE_TEXT }
     ordinal_position { article&.notes_count }
   end
 end

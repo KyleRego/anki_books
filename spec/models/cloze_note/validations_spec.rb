@@ -5,12 +5,12 @@
 # frozen_string_literal: true
 
 RSpec.describe ClozeNote, "#valid?" do
-  subject(:cloze_note) { build(:cloze_note, article:, sentence:, concepts:) }
+  subject(:cloze_note) { build(:cloze_note, article:, cloze_text:, concepts:) }
 
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
-  let(:sentence) { "The half life of caffeine is about 5 hours." }
+  let(:cloze_text) { "The half life of caffeine is about 5 hours." }
   let(:concepts) { [create(:concept, name: "caffeine", user:)] }
 
   it { is_expected.to be_valid }
@@ -22,13 +22,13 @@ RSpec.describe ClozeNote, "#valid?" do
   end
 
   context "when sentence is an empty string" do
-    let(:sentence) { "" }
+    let(:cloze_text) { "" }
 
     it { is_expected.not_to be_valid }
   end
 
   context "when sentence is nil" do
-    let(:sentence) { nil }
+    let(:cloze_text) { nil }
 
     it { is_expected.not_to be_valid }
   end

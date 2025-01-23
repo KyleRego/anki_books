@@ -10,15 +10,15 @@ RSpec.describe ClozeNote, "#cloze_sentence_question" do
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
-  let(:cloze_note) { create(:cloze_note, article:, sentence:) }
-  let(:sentence) { "hello {{c1::world}}." }
+  let(:cloze_note) { create(:cloze_note, article:, cloze_text:) }
+  let(:cloze_text) { "hello {{c1::world}}." }
 
   it "returns the cloze note's entire sentence" do
     expect(cloze_sentence_question).to eq "hello [...]."
   end
 
   context "when sentence has multiple {{c1::}}" do
-    let(:sentence) do
+    let(:cloze_text) do
       "Hello {{c1::world}}! I am an {{c1::Anki}} {{c2::cloze}} {{c3::deletion}} note."
     end
 

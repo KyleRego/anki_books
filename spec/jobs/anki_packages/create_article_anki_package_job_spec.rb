@@ -29,9 +29,9 @@ RSpec.describe AnkiPackages::CreateArticleAnkiPackageJob do
     context "when article has basic notes and cloze notes" do
       before do
         create(:basic_note, article:, front: "Hello", back: "World")
-        create(:cloze_note, article:, sentence: "Hello {{c1::world}}.")
+        create(:cloze_note, article:, cloze_text: "Hello {{c1::world}}.")
         create(:basic_note, article:, front: "yes", back: "no")
-        create(:cloze_note, article:, sentence: "Two {{c1::notes}} {{c2::here}}.")
+        create(:cloze_note, article:, cloze_text: "Two {{c1::notes}} {{c2::here}}.")
       end
 
       it "creates an Anki deck zip file in the system tmp directory" do

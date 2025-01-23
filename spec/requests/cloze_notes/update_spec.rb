@@ -12,7 +12,7 @@ RSpec.describe "PATCH /articles/:article_id/cloze_notes/:id", "#update" do
           params:, headers:
   end
 
-  let(:params) { { cloze_note: { sentence: new_sentence } } }
+  let(:params) { { cloze_note: { cloze_text: new_sentence } } }
   let(:user) { create(:user) }
   let(:book) { create(:book, users: [user]) }
   let(:article) { create(:article, book:) }
@@ -27,7 +27,7 @@ RSpec.describe "PATCH /articles/:article_id/cloze_notes/:id", "#update" do
 
     it "updates the cloze note" do
       patch_cloze_notes_update
-      expect(cloze_note.reload.sentence).to eq new_sentence
+      expect(cloze_note.reload.cloze_text).to eq new_sentence
     end
 
     context "when sentence param is blank" do
@@ -35,7 +35,7 @@ RSpec.describe "PATCH /articles/:article_id/cloze_notes/:id", "#update" do
 
       it "does not update the cloze note" do
         patch_cloze_notes_update
-        expect(cloze_note.sentence).not_to be_nil
+        expect(cloze_note.text).not_to be_nil
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

@@ -24,7 +24,7 @@ class ClozeNotesController < ApplicationController
     cloze_sentences = ::ClozeTextHelperModule.split_text_to_cloze_sentences(text:)
 
     if cloze_sentences.empty?
-      @note = @article.cloze_notes.new(sentence: text)
+      @note = @article.cloze_notes.new(cloze_text: text)
       @note.errors.add(:base, :invalid, message: "Text must have at least one cloze sentence")
       @cloze_notes_text = text
 
@@ -46,7 +46,7 @@ class ClozeNotesController < ApplicationController
         concepts_for_cloze_note << concept
       end
 
-      cloze_note = @article.cloze_notes.new(sentence: cloze_sentence)
+      cloze_note = @article.cloze_notes.new(cloze_text: cloze_sentence)
       cloze_note.ordinal_position = @article.notes_count
       cloze_note.save!
       cloze_note.concepts = concepts_for_cloze_note
@@ -78,7 +78,7 @@ class ClozeNotesController < ApplicationController
   private
 
   def cloze_note_params
-    params.require(:cloze_note).permit(:text)
+    params.require(:cloze_note).permit(:cloze_text)
   end
 
   def ordinal_position_param

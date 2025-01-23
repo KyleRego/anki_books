@@ -11,6 +11,6 @@
 <div class="mt-4 pb-4 border-black-b">
   <h4 class="pb-2">Cloze notes:</h4>
   <% @cloze_notes.each do |cloze_note| %>
-    <p><%= link_to cloze_note.sentence, article_path(cloze_note.article) %></p>
+    <p><%= link_to cloze_note.text, article_path(cloze_note.article) %></p>
   <% end %>
 </div>

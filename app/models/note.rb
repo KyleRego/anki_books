@@ -51,7 +51,7 @@ class Note < ApplicationRecord
       errors.add(:front, "can't be blank") if front.blank?
       errors.add(:back, "can't be blank") if back.blank?
     else
-      errors.add(:sentence, "can't be blank") if sentence.blank?
+      errors.add(:cloze_text, "can't be blank") if cloze_text.blank?
     end
   end
   # rubocop:enable Style/IfInsideElse

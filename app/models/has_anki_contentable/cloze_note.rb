@@ -10,7 +10,7 @@ module HasAnkiContentable::ClozeNote
   extend ActiveSupport::Concern
 
   def anki_text
-    html_escape(sentence)
+    html_escape(cloze_text)
   end
 
   def url

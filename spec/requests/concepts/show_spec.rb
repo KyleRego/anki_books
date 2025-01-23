@@ -32,9 +32,9 @@ RSpec.describe "GET /concepts/:id", "#show" do
           book = create(:book, users: [user])
           article = create(:article, book:)
           concept = create(:concept, user:, name: "nervous system")
-          create(:cloze_note, sentence: "Research into the {{c1::nervous system}} oftentimes is related to neuroplasticity.",
+          create(:cloze_note, cloze_text: "Research into the {{c1::nervous system}} oftentimes is related to neuroplasticity.",
                               concepts: [concept], article:)
-          create(:cloze_note, sentence: "New neurons continue to grow throughout the life of the {{c1::nervous system}}.",
+          create(:cloze_note, cloze_text: "New neurons continue to grow throughout the life of the {{c1::nervous system}}.",
                               concepts: [concept], article:)
         end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_104706) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_23_191420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
@@ -110,7 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_104706) do
     t.integer "ordinal_position", null: false
     t.string "anki_guid", null: false
     t.string "type", null: false
-    t.text "sentence"
+    t.text "cloze_text"
     t.index ["anki_guid"], name: "index_notes_on_anki_guid", unique: true
     t.index ["ordinal_position", "article_id"], name: "index_notes_on_ordinal_position_and_article_id", unique: true
     t.check_constraint "ordinal_position >= 0", name: "notes_ordinal_position_check"

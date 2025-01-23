@@ -13,8 +13,8 @@ RSpec.describe ClozeNote, "#url" do
 
   let(:cloze_note) do
     concept = create(:concept, user:, name: "brain")
-    sentence = "The {{c1::brain}} decides the next action in the current plan."
-    create(:cloze_note, article:, sentence:, concepts: [concept])
+    cloze_text = "The {{c1::brain}} decides the next action in the current plan."
+    create(:cloze_note, article:, cloze_text:, concepts: [concept])
   end
 
   it "returns a URL with the article path" do
