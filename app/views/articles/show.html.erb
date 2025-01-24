@@ -56,23 +56,29 @@
   <% if @book %>
     <li class="breadcrumb-item"><%= link_to("#{@book.title}", book_path(@book)) %></li>
   <% end %>
-  <li class="breadcrumb-item active" aria-current="page">
-    <span class="d-flex align-items-center column-gap-3">
-      <span><%= @article.title %></span>
+  <li class="breadcrumb-item active flex-grow-1" aria-current="page">
+    <div class="d-flex align-items-center justify-content-between h-100">
+      <div class="d-flex justify-content-center align-items-center column-gap-3">
+        <h1 class="mb-0 fs-6">
+          <%= render partial: "articles/span", locals: { article: @article } %>
+        </h1>
+        <% if logged_in? %>
+          <%= link_to edit_article_path(@article), 
+                    title: "Edit book",
+                    data: { turbo_frame: "modal" } do %>
+            <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
+          <% end %>
+        <% end %>
+      </div>
+      
       <% if logged_in? %>
         <%= link_to manage_article_path(@article),
             title: "Manage article",
             class: "" do %>
           <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
         <% end %>
-        <%= link_to edit_article_path(@article), 
-                  title: "Edit book",
-                  data: { turbo_frame: "modal" } do %>
-        <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
       <% end %>
-    <% end %>
-        
-    </span>
+    </div>
   </li>
 </ol>
 <% end %>

@@ -19,7 +19,7 @@
   </div>
 <% end %>
 
-<%= content_for :breadcrumbs_nav_content do %>
+<% content_for :breadcrumbs_nav_content do %>
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <% if @parent_book %>
@@ -28,35 +28,38 @@
       <%= link_to("Books", books_path) %>
     <% end %>
   </li>
-  <li class="breadcrumb-item active" aria-current="page">
-    <div class="d-flex align-items-center column-gap-3">
-      <span class="flex-grow-1"><%= @book.title %></span>
-      <% if logged_in? %>
-        <%= link_to manage_book_path(@book), title: "Manage book" do %>
-          <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+  <li class="breadcrumb-item active flex-grow-1" aria-current="page">
+    <div class="d-flex align-items-center justify-content-between h-100">
+      <div class="d-flex justify-content-center column-gap-3">
+        <h1 class="flex-grow-1 fs-6 mb-0"><%= @book.title %></h1>
+        <% if logged_in? %>
+          <%= link_to edit_book_path(@book), 
+                      title: "Edit book",
+                      data: { turbo_frame: "modal" } do %>
+            <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
+          <% end %>
         <% end %>
+      </div>
 
-        <%= link_to edit_book_path(@book), 
-                    title: "Edit book",
-                    data: { turbo_frame: "modal" } do %>
-          <%= render "layouts/heroicons/pen", css_class: "w-5 h-5" %>
+      <div>
+        <% if logged_in? %>
+          <%= link_to manage_book_path(@book), title: "Manage book" do %>
+            <%= render "layouts/heroicons/gear", css_class: "w-5 h-5" %> 
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </li>
 </ol>
 <% end %>
 
-<div class="mt-4 d-flex column-gap-5 flex-wrap-reverse row-gap-3">
+<div class="d-flex column-gap-5 flex-wrap-reverse row-gap-3">
   <div class="">
-    <h1>Articles:</h1>
+    <h2 class="fs-2">Articles:</h3>
     <div class="list-group list-group-flush">
       <% @articles.each do |article| %>
           <%= link_to article_path(article), class: "list-group-item list-group-item-action" do %>
-              <%= article.title %>
-              <% if article.complete %>
-                <%= render partial: "layouts/heroicons/check", locals: { css_class: "vertical-align-text-bottom inline w-5 h-5" } %>
-              <% end %>
+              <%= render partial: "articles/span", locals: { article: article } %>
           <% end %>
       <% end %>
     </div>
@@ -64,7 +67,7 @@
 
   <% if @child_books.any? %>
     <div>
-      <h3>Child books:</h3>
+      <h3 class="fs-2">Child books:</h3>
       <div class="list-group list-group-flush">
         <% @child_books.each do |child_book| %>
           <%= link_to book_path(child_book),
